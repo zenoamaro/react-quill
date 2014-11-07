@@ -1,0 +1,8 @@
+*~
+~*
+*.tmp
+*.orig
+*.bak
+*.log
+/tmp
+/node_modules

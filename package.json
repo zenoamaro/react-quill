@@ -1,0 +1,65 @@
+{
+  "name": "react-quill",
+  "version": "0.0.1",
+  "description": "The Quill rich-text editor as a React component.",
+  "author": "zenoamaro <zenoamaro@gmail.com>",
+  "homepage": "https://github.com/zenoamaro/react-quill",
+  "license": "MIT",
+
+  "bugs": {
+    "url": "https://github.com/zenoamaro/react-quill/issues",
+    "email": "zenoamaro@gmail.com"
+  },
+
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/zenoamaro/react-quill.git"
+  },
+
+  "main": "./dist/react-quill.js",
+
+  "scripts": {
+    "test": "make test",
+    "build": "make build"
+  },
+
+  "engines": {
+    "node": ">= 0.8.x"
+  },
+
+  "keywords": [
+    "rich",
+    "text",
+    "richtext",
+    "textarea"
+  ],
+
+  "files": [
+    "./dist",
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE"
+  ],
+
+  "dependencies": {
+    "quilljs": "^0.18.1"
+  },
+
+  "peerDependencies": {
+    "react": "^0.11.0"
+  },
+
+  "devDependencies": {
+    "blanket": "^1.1.6",
+    "jsdom": "^1.2.0",
+    "jshint": "^2.5.8",
+    "mocha": "^2.0.1",
+    "mocha-text-cov": "^0.1.0",
+    "react": "^0.11.0",
+    "should": "^4.1.0",
+    "sinon": "^1.11.1",
+    "travis-cov": "^0.2.5",
+    "uglify-js": "^2.4.15",
+    "webpack": "^1.4.12"
+  }
+}
