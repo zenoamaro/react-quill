@@ -16,7 +16,7 @@
     "url": "https://github.com/zenoamaro/react-quill.git"
   },
 
-  "main": "./dist/react-quill.js",
+  "main": "dist/react-quill.js",
 
   "scripts": {
     "test": "make test",
@@ -35,7 +35,8 @@
   ],
 
   "files": [
-    "./dist",
+    "src/",
+    "dist/",
     "README.md",
     "CHANGELOG.md",
     "LICENSE"
