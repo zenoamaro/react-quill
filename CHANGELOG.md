@@ -1,8 +1,8 @@
 Changelog
 =========
 
-next
-----
+v0.0.3
+------
 - Switched from `quilljs` package to `quill`.
 - Using the new `destroy()` from Quill.
 
