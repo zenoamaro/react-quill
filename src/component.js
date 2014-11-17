@@ -34,6 +34,7 @@ var QuillComponent = React.createClass({
 	getDefaultProps: function() {
 		return {
 			className: '',
+			theme: 'base',
 			modules: {}
 		};
 	},
@@ -67,6 +68,8 @@ var QuillComponent = React.createClass({
 
 	componentWillUnmount: function() {
 		this.destroyEditor(this.state.editor);
+		// NOTE: Don't set the state to null here
+		//       as it would generate a loop.
 	},
 
 	shouldComponentUpdate: function(nextProps, nextState) {

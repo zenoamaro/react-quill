@@ -56,6 +56,7 @@ Changelog
 ---------
 #### next
 - Switched from `quilljs` package to `quill`.
+- Using the new `destroy()` from Quill.
 
 #### v0.0.2
 - Compatible with React 0.12.

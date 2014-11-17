@@ -26,18 +26,16 @@ var QuillMixin = {
 	},
 
 	updateEditor: function(editor, config) {
-		// TODO: Unfortunately, while we can add modules and
-		//       stuff, we can't remove them. And there is
-		//       little API to update other parts of the config.
-		//       But if we could tear down the editor, at least
-		//       we could do a re-init with the new config.
-		throw new Error('Not implemented');
+		// NOTE: This tears the editor down, and reinitializes
+		//       it with the new config. Ugly but necessary
+		//       as there is no api for updating it.
+		this.destroyEditor(editor);
+		this.createEditor(config);
+		return editor;
 	},
 
 	destroyEditor: function(editor) {
-		// TODO: How to destroy this?
-		// editor.destroy();
-		editor.removeAllListeners();
+		editor.destroy();
 	},
 
 	/*
