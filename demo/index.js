@@ -26,20 +26,27 @@ var Editor = React.createClass({
 					value: this.state.value,
 					onChange: this.onTextareaChange
 				}),
-				this.transferPropsTo(
-					ReactQuill({
-						theme: 'snow',
-						defaultValue: this.state.value,
-						onChange: this.onEditorChange
-					})
-				)
+				ReactQuill({
+					theme: 'snow',
+					defaultValue: this.state.value,
+					onChange: this.onEditorChange
+				})
 			)
 		);
 	}
 
 });
 
-React.renderComponent(
+// Support React 0.11 and 0.12
+// FIXME: Remove with React 0.13
+if (React.createFactory) {
+	Editor = React.createFactory(Editor);
+	ReactQuill = React.createFactory(ReactQuill);
+}
+
+// Support React 0.11 and 0.12
+// FIXME: Remove with React 0.13
+(React.render||React.renderComponent)(
 	Editor(),
 	document.body
 );

@@ -5,6 +5,12 @@ var React = require('react'),
 	QuillMixin = require('./mixin'),
 	T = React.PropTypes;
 
+// Support React 0.11 and 0.12
+// FIXME: Remove with React 0.13
+if (React.createFactory) {
+	QuillToolbar = React.createFactory(QuillToolbar);
+}
+
 var QuillComponent = React.createClass({
 
 	displayName: 'Quill',
@@ -125,12 +131,14 @@ var QuillComponent = React.createClass({
 		} else {
 			return [
 				QuillToolbar({
-					items: this.props.toolbar,
-					ref:'toolbar'
+					key:'toolbar',
+					ref:'toolbar',
+					items: this.props.toolbar
 				}),
 				React.DOM.div({
-					className: 'quill-contents',
+					key:'editor',
 					ref:'editor',
+					className: 'quill-contents',
 					dangerouslySetInnerHTML: { __html:this.getEditorContents() }
 				})
 			];

@@ -47,20 +47,20 @@
   },
 
   "peerDependencies": {
-    "react": "^0.11.0"
+    "react": ">=0.11.0"
   },
 
   "devDependencies": {
     "blanket": "^1.1.6",
-    "jsdom": "^1.2.0",
-    "jshint": "^2.5.8",
+    "jsdom": "^1.2.1",
+    "jshint": "^2.5.10",
     "mocha": "^2.0.1",
     "mocha-text-cov": "^0.1.0",
-    "react": "^0.11.0",
-    "should": "^4.1.0",
-    "sinon": "^1.11.1",
+    "react": "^0.12.0",
+    "should": "^4.3.0",
+    "sinon": "^1.12.1",
     "travis-cov": "^0.2.5",
     "uglify-js": "^2.4.15",
-    "webpack": "^1.4.12"
+    "webpack": "^1.4.13"
   }
 }
