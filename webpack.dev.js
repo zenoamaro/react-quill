@@ -19,10 +19,10 @@ module.exports = {
 			'amd': 'react',
 			'root': 'React'
 		},
-		quilljs: {
-			'commonjs': 'quilljs',
-			'commonjs2': 'quilljs',
-			'amd': 'quilljs',
+		quill: {
+			'commonjs': 'quill',
+			'commonjs2': 'quill',
+			'amd': 'quill',
 			'root': 'Quill'
 		}
 	},

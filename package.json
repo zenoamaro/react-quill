@@ -5,35 +5,28 @@
   "author": "zenoamaro <zenoamaro@gmail.com>",
   "homepage": "https://github.com/zenoamaro/react-quill",
   "license": "MIT",
-
   "bugs": {
     "url": "https://github.com/zenoamaro/react-quill/issues",
     "email": "zenoamaro@gmail.com"
   },
-
   "repository": {
     "type": "git",
     "url": "https://github.com/zenoamaro/react-quill.git"
   },
-
   "main": "dist/react-quill.js",
-
   "scripts": {
     "test": "make test",
     "build": "make build"
   },
-
   "engines": {
     "node": ">= 0.8.x"
   },
-
   "keywords": [
     "rich",
     "text",
     "richtext",
     "textarea"
   ],
-
   "files": [
     "src/",
     "dist/",
@@ -41,15 +34,12 @@
     "CHANGELOG.md",
     "LICENSE"
   ],
-
   "dependencies": {
-    "quilljs": "^0.18.1"
+    "quill": "^0.19.4"
   },
-
   "peerDependencies": {
     "react": ">=0.11.0"
   },
-
   "devDependencies": {
     "blanket": "^1.1.6",
     "jsdom": "^1.2.1",

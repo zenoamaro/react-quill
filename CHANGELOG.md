@@ -1,6 +1,10 @@
 Changelog
 =========
 
+next
+----
+- Switched from `quilljs` package to `quill`.
+
 v0.0.2
 ------
 - Compatible with React 0.12.
