@@ -13,7 +13,8 @@
     "type": "git",
     "url": "https://github.com/zenoamaro/react-quill.git"
   },
-  "main": "dist/react-quill.js",
+  "browser": "dist/react-quill.js",
+  "main": "src/index.js",
   "scripts": {
     "test": "make test",
     "build": "make build"
