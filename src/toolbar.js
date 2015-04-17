@@ -84,14 +84,17 @@ var QuillToolbar = React.createClass({
 	},
 
 	renderItem: function(item) {
-		var mapping = {
-			'group': this.renderGroup,
-			'align': this.renderChoices,
-			'size': this.renderChoices,
-			'action': this.renderAction
-		};
-		var renderer = mapping[item.type] || mapping.action;
-		return renderer(item);
+		switch (item.type) {
+			case 'group':
+				return this.renderGroup(item);
+			case 'align':
+			case 'size':
+			case 'color':
+			case 'background':
+				return this.renderChoices(item);
+			default:
+				return this.renderAction(item);
+		}
 	},
 
 	getClassName: function() {
