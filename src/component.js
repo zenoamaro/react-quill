@@ -129,8 +129,8 @@ var QuillComponent = React.createClass({
 	configuration of toolbar and contents area.
 	*/
 	renderContents: function() {
-		if (React.Children.count(this.props.children) > 0) {
-			return React.Children.only(this.props.children);
+		if (React.Children.count(this.props.children)) {
+			return this.props.children;
 		} else {
 			return [
 				QuillToolbar({

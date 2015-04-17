@@ -5,6 +5,7 @@ v0.0.4
 ------
 - Added color toggle to toolbar (@chrismcv)
 - Exporting default item sets on `QuillToolbar`
+- Fixed `QuillComponent` only accepting a single child.
 
 v0.0.3
 ------
