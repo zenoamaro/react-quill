@@ -1,6 +1,11 @@
 Changelog
 =========
 
+v0.0.4
+------
+- Added color toggle to toolbar (@chrismcv)
+- Exporting default item sets on `QuillToolbar`
+
 v0.0.3
 ------
 - Switched from `quilljs` package to `quill`.

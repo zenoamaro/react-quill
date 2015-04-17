@@ -9,28 +9,136 @@ A [Quill] component for [React].
 **Warning**: The project is still in alpha stage. Use with caution.
 
   1. [Quick start](#quick-start)
-  2. [Usage guide](#usage-guide)
-  3. [API reference](#api-reference)
-  4. [Building and testing](#building-and-testing)
-  5. [Changelog](#changelog)
-  6. [License](#license)
+  2. [API reference](#api-reference)
+  3. [Building and testing](#building-and-testing)
+  4. [Changelog](#changelog)
+  5. [License](#license)
 
 
 Quick start
 -----------
-~~~~html
-<ReactQuill value="..."/>
-~~~~
+1. Use straight away:
 
+    ~~~jsx
+    var React = require('react');
+    var ReactQuill = require('react-quill');
 
-Usage guide
------------
-To be done.
+    var MyComponent = React.createClass({
+      /* ... */
+      
+      render: function() {
+        return (
+          <ReactQuill value={this.state.value} />
+        );
+      }
+    });
+    ~~~
+
+2. Customize a few settings:
+
+    ~~~jsx
+    var MyComponent = React.createClass({
+      /* ... */
+
+      onTextChange: function(value) {
+        this.setState({ text:value });
+      },
+
+      render: function() {
+        return (
+          <ReactQuill theme="snow"
+                      value={this.state.text}
+                      onChange={this.onTextChange} />
+        );
+      }
+    });
+    ~~~
+
+3. Custom controls:
+
+    ~~~jsx
+    var MyComponent = React.createClass({
+      /* ... */
+
+      render: function() {
+        return (
+          <ReactQuill>
+            <ReactQuill.Toolbar key="toolbar"
+                                ref="toolbar"
+                                items={ReactQuill.Toolbar.defaultItems} />
+            <div key="editor"
+                 ref="editor"
+                 className="quill-contents"
+                 dangerouslySetInnerHTML={{__html:this.getEditorContents()}} />
+          </ReactQuill>
+        );
+      }
+    });
+    ~~~
+
+4. Mixing in:
+
+    ~~~jsx
+    var MyComponent = React.createClass({
+      mixins: [ ReactQuill.Mixin ],
+
+      componentDidMount: function() {
+        var editor = this.createEditor(
+          this.getEditorElement(),
+          this.getEditorConfig()
+        );
+        this.setState({ editor:editor });
+      },
+
+      componentWillReceiveProps: function(nextProps) {
+        if ('value' in nextProps && nextProps.value !== this.props.value) {
+          this.setEditorContents(this.state.editor, nextProps.value);
+        }
+      },
+
+      /* ... */
+    });
+    ~~~
+
+    See [component.js](src/component.js) for a fully fleshed-out example.
 
 
 API reference
 -------------
-To be done.
+`ReactQuill` accepts a few props:
+
+`id`
+: ID to be applied to the DOM element.
+
+`className`
+: Classes to be applied to the DOM element.
+
+`value`
+: Value for the editor as a controlled component.
+
+`defaultValue`
+: Initial value for the editor as an uncontrolled component.
+
+`readOnly`
+: If true, the editor won't allow changing its contents.
+
+`toolbar`
+: An object with custom configuration for the toolbar. Defaults are available as `ReactQuill.Toolbar.defaultItems` and `ReactQuill.Toolbar.defaultColors`. See the [Toolbar module](http://quilljs.com/docs/modules/toolbar/).
+
+`formats`
+: An array of formats to be enabled during editing. All implemented formats are enabled by default. See [Formats](http://quilljs.com/docs/formats/) for a list.
+
+`styles`
+: An object with custom CSS styles to be added to the editor. See [configuration](http://quilljs.com/docs/configuration/) for details.
+
+`theme`
+: The name of the theme to apply to the editor. Defaults to `base`.
+
+`pollInterval`
+: Interval in ms between checks for local changes in editor contents.
+
+`onChange(value)`
+: Called back with the new contents of the editor after change.
 
 
 Building and testing
@@ -54,6 +162,10 @@ More tasks are available on the [Makefile](Makefile):
 
 Changelog
 ---------
+#### v0.0.4
+- Added color toggle to toolbar (@chrismcv)
+- Exporting default item sets on `QuillToolbar`
+
 #### v0.0.3
 - Switched from `quilljs` package to `quill`.
 - Using the new `destroy()` from Quill.
@@ -65,6 +177,14 @@ Changelog
 - Initial version.
 
 [Full changelog](CHANGELOG.md)
+
+
+Roadmap
+-------
+[ ] More solid management of the life-cycle
+[ ] First-class support for modules
+[ ] Better API for custom controls?
+[ ] Delta updates
 
 
 License
