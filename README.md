@@ -123,7 +123,7 @@ API reference
 : If true, the editor won't allow changing its contents.
 
 `toolbar`
-: An object with custom configuration for the toolbar. Defaults are available as `ReactQuill.Toolbar.defaultItems` and `ReactQuill.Toolbar.defaultColors`. See the [Toolbar module](http://quilljs.com/docs/modules/toolbar/).
+: A list of toolbar items to use as custom configuration for the toolbar. Defaults (that also double as reference) are available as [`ReactQuill.Toolbar.defaultItems`](src/toolbar.js#L21) and [`ReactQuill.Toolbar.defaultColors`](src/toolbar.js#L6). See also the [Toolbar module](http://quilljs.com/docs/modules/toolbar/) over the Quill documentation for more information on the inner workings.
 
 `formats`
 : An array of formats to be enabled during editing. All implemented formats are enabled by default. See [Formats](http://quilljs.com/docs/formats/) for a list.
