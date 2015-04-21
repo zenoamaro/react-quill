@@ -23,7 +23,7 @@ var QuillComponent = React.createClass({
 		value:        T.string,
 		defaultValue: T.string,
 		readOnly:     T.bool,
-		toolbar:      T.object,
+		toolbar:      T.array,
 		formats:      T.array,
 		styles:       T.object,
 		theme:        T.string,
