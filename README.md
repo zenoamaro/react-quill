@@ -162,8 +162,9 @@ More tasks are available on the [Makefile](Makefile):
 
 Changelog
 ---------
-#### Next
+#### v0.0.5
 - Default empty content for components with no value.
+- Fixes wrong `QuillToolbar` propType.
 
 #### v0.0.4
 - Added color toggle to toolbar (@chrismcv)
