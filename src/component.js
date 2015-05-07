@@ -117,7 +117,7 @@ var QuillComponent = React.createClass({
 	},
 
 	getEditorContents: function() {
-		return this.props.value || this.props.defaultValue;
+		return this.props.value || this.props.defaultValue || '';
 	},
 
 	getClassName: function() {

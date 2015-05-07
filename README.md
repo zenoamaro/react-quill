@@ -162,6 +162,9 @@ More tasks are available on the [Makefile](Makefile):
 
 Changelog
 ---------
+#### Next
+- Default empty content for components with no value.
+
 #### v0.0.4
 - Added color toggle to toolbar (@chrismcv)
 - Exporting default item sets on `QuillToolbar`
@@ -170,12 +173,6 @@ Changelog
 #### v0.0.3
 - Switched from `quilljs` package to `quill`.
 - Using the new `destroy()` from Quill.
-
-#### v0.0.2
-- Compatible with React 0.12.
-
-#### v0.0.1
-- Initial version.
 
 [Full changelog](CHANGELOG.md)
 
@@ -192,7 +189,7 @@ License
 -------
 The MIT License (MIT)
 
-Copyright (c) 2014, zenoamaro <zenoamaro@gmail.com>
+Copyright (c) 2015, zenoamaro <zenoamaro@gmail.com>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
