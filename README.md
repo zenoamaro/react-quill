@@ -162,7 +162,7 @@ More tasks are available on the [Makefile](Makefile):
 
 Changelog
 ---------
-#### Next
+#### v0.0.5
 - Default empty content for components with no value.
 
 #### v0.0.4
