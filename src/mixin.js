@@ -1,8 +1,6 @@
 'use strict';
 
-var React = require('react'),
-	Quill = require('quill'),
-	T = React.PropTypes;
+var Quill = require('quill');
 
 var QuillMixin = {
 
