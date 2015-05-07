@@ -162,7 +162,7 @@ More tasks are available on the [Makefile](Makefile):
 
 Changelog
 ---------
-#### Next
+#### v0.0.6
 - Added keywords for inclusion in [React.parts](https://react.parts).
 
 #### v0.0.5
