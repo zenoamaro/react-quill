@@ -1,6 +1,10 @@
 Changelog
 =========
 
+Next
+----
+- Added keywords for inclusion in [React.parts](https://react.parts).
+
 v0.0.5
 ------
 - Default empty content for components with no value.

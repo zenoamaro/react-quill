@@ -23,9 +23,11 @@
     "node": ">= 0.8.x"
   },
   "keywords": [
+    "react",
+    "react-component",
     "rich",
     "text",
-    "richtext",
+    "rich-text",
     "textarea"
   ],
   "files": [

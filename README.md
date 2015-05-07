@@ -162,6 +162,9 @@ More tasks are available on the [Makefile](Makefile):
 
 Changelog
 ---------
+#### Next
+- Added keywords for inclusion in [React.parts](https://react.parts).
+
 #### v0.0.5
 - Default empty content for components with no value.
 - Fixes wrong `QuillToolbar` propType.
@@ -170,10 +173,6 @@ Changelog
 - Added color toggle to toolbar (@chrismcv)
 - Exporting default item sets on `QuillToolbar`
 - Fixed `QuillComponent` only accepting a single child.
-
-#### v0.0.3
-- Switched from `quilljs` package to `quill`.
-- Using the new `destroy()` from Quill.
 
 [Full changelog](CHANGELOG.md)
 
