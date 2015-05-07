@@ -1,6 +1,10 @@
 Changelog
 =========
 
+Next
+------
+- Default empty content for components with no value.
+
 v0.0.4
 ------
 - Added color toggle to toolbar (@chrismcv)
