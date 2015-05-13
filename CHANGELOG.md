@@ -1,6 +1,10 @@
 Changelog
 =========
 
+Next
+------
+- Added support for toolbar separators.
+
 v0.0.6
 ------
 - Added keywords for inclusion in [React.parts](https://react.parts).

@@ -67,6 +67,12 @@ var QuillToolbar = React.createClass({
 		};
 	},
 
+	renderSeparator: function(item) {
+		return React.DOM.span({
+			className:'ql-format-separator'
+		});
+	},
+
 	renderGroup: function(item) {
 		return React.DOM.span({
 			key: item.label,
@@ -101,6 +107,8 @@ var QuillToolbar = React.createClass({
 
 	renderItem: function(item) {
 		switch (item.type) {
+			case 'separator':
+				return this.renderSeparator();
 			case 'group':
 				return this.renderGroup(item);
 			case 'align':
