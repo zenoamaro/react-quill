@@ -111,6 +111,7 @@ var QuillToolbar = React.createClass({
 				return this.renderSeparator();
 			case 'group':
 				return this.renderGroup(item);
+			case 'font':
 			case 'align':
 			case 'size':
 			case 'color':

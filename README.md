@@ -164,6 +164,7 @@ Changelog
 ---------
 #### Next
 - Added support for toolbar separators.
+- Added support for font family selectors.
 
 #### v0.0.6
 - Added keywords for inclusion in [React.parts](https://react.parts).
