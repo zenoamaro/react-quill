@@ -5,6 +5,7 @@ Next
 ------
 - Added support for toolbar separators.
 - Added support for font family selectors.
+- Updated the default toolbar to match Quill's.
 
 v0.0.6
 ------

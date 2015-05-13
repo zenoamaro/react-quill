@@ -21,17 +21,24 @@ var defaultColors = [
 var defaultItems = [
 
 	{ label:'Formats', type:'group', items: [
-		{ label:'Size', type:'size', items: [
-			{ label:'Normal', value:'' },
-			{ label:'Smaller', value:'0.8em' },
-			{ label:'Larger', value:'1.4em' },
-			{ label:'Huge', value:'2em' }
+		{ label:'Font', type:'font', items: [
+			{ label:'Sans Serif',  value:'sans-serif' },
+			{ label:'Serif',       value:'serif' },
+			{ label:'Monospace',   value:'monospace' }
 		]},
+		{ type:'separator' },
+		{ label:'Size', type:'size', items: [
+			{ label:'Normal',  value:'10px' },
+			{ label:'Smaller', value:'13px' },
+			{ label:'Larger',  value:'18px' },
+			{ label:'Huge',    value:'32px' }
+		]},
+		{ type:'separator' },
 		{ label:'Alignment', type:'align', items: [
-			{ label:'Center', value:'center' },
-			{ label:'Left', value:'left' },
-			{ label:'Right', value:'right' },
-			{ label:'Justify', value:'justify' }
+			{ label:'', value:'center' },
+			{ label:'', value:'left' },
+			{ label:'', value:'right' },
+			{ label:'', value:'justify' }
 		]}
 	]},
 
@@ -40,12 +47,14 @@ var defaultItems = [
 		{ type:'italic', label:'Italic' },
 		{ type:'strike', label:'Strike' },
 		{ type:'underline', label:'Underline' },
-		{ type:'link', label:'Link' },
+		{ type:'separator' },
 		{ type:'color', label:'Color', items:defaultColors },
+		{ type:'background', label:'Background color', items:defaultColors },
 	]},
 
 	{ label:'Blocks', type:'group', items: [
 		{ type:'bullet', label:'Bullet' },
+		{ type:'separator' },
 		{ type:'list', label:'List' }
 	]}
 
