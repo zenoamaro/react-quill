@@ -6,6 +6,7 @@ Next
 - Added support for toolbar separators.
 - Added support for font family selectors.
 - Updated the default toolbar to match Quill's.
+- Updated Quill to v0.19.12.
 
 v0.0.6
 ------
