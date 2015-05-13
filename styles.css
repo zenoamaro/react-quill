@@ -1,0 +1,43 @@
+* {
+	box-sizing: border-box;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+
+html,
+body,
+.app {
+	height: 100%;
+}
+
+.app {
+
+}
+
+.editor,
+.preview {
+	float: left;
+	width: 50%;
+	height: 100%;
+}
+
+.preview {
+	padding: 2rem;
+	padding-top: 4rem;
+	border: none;
+	background: #F0F0FF;
+	font-family: monospace;
+	font-size: 1.2rem;
+}
+
+.editor .ql-toolbar {
+	box-shadow: 0 1px 10px rgba(0, 0, 0, .1);
+}
+
+.editor .ql-editor {
+	padding: 1rem;
+}
