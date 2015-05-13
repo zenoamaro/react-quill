@@ -1,5 +1,5 @@
 /*
-React-Quill v0.0.3
+React-Quill v0.1.0
 https://github.com/zenoamaro/react-quill
 */
 module.exports = require('./component');

@@ -3,8 +3,11 @@ React-Quill ![](https://travis-ci.org/zenoamaro/react-quill.svg?branch=master)
 
 A [Quill] component for [React].
 
-[Quill]: http://quilljs.com
-[React]: http://facebook.github.io/react/
+See the [live demo].
+
+[Quill]: https://quilljs.com
+[React]: https://facebook.github.io/react/
+[live demo]: https://zenoamaro.github.io/react-quill/
 
 **Warning**: The project is still in alpha stage. Use with caution.
 
@@ -162,7 +165,7 @@ More tasks are available on the [Makefile](Makefile):
 
 Changelog
 ---------
-#### Next
+#### v0.1.0
 - Added support for toolbar separators.
 - Added support for font family selectors.
 - Updated the default toolbar to match Quill's.

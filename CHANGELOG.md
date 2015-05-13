@@ -1,7 +1,7 @@
 Changelog
 =========
 
-Next
+v0.1.0
 ------
 - Added support for toolbar separators.
 - Added support for font family selectors.
