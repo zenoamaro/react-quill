@@ -15,7 +15,7 @@ body,
 }
 
 .app {
-
+	overflow: hidden;
 }
 
 .editor,
@@ -26,12 +26,9 @@ body,
 }
 
 .preview {
+	margin: 0;
 	padding: 2rem;
-	padding-top: 4rem;
-	border: none;
-	background: #F0F0FF;
-	font-family: monospace;
-	font-size: 1.2rem;
+	padding-top: 2.6rem;
 }
 
 .editor .ql-toolbar {

@@ -1,5 +1,7 @@
 /* global React */
 /* global ReactQuill */
+/* global Prism */
+/* global html_beautify */
 'use strict';
 
 
@@ -97,6 +99,17 @@ var Editor = React.createClass({
 		this.setState({ value:value });
 	},
 
+	tidyHtml: function(source) {
+		return html_beautify(source, {
+			unformatted: [],
+			preserve_newlines: false,
+		});
+	},
+
+	componentDidUpdate: function() {
+		Prism.highlightAll();
+	},
+
 	render: function() {
 		return (
 			React.DOM.div({ className: 'app' },
@@ -109,11 +122,11 @@ var Editor = React.createClass({
 					onChange: this.onEditorChange
 				}),
 				// The preview pane
-				React.DOM.textarea({
-					className: 'preview',
-					value: this.state.value,
-					readOnly: true
-				})
+				React.DOM.pre({ className:'preview' },
+					React.DOM.code({ className:'language-markup'},
+						this.tidyHtml(this.state.value)
+					)
+				)
 			)
 		);
 	}
