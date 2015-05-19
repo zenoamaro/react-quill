@@ -5,9 +5,12 @@ module.exports = {
 
 	entry: './src/index.js',
 
+	debug: true,
+	devtool: 'module-source-map',
+
 	output: {
-		filename: './dist/react-quill.js',
 		pathinfo: true,
+		filename: './dist/react-quill.js',
 		library: 'ReactQuill',
 		libraryTarget: 'umd'
 	},
@@ -31,9 +34,6 @@ module.exports = {
 			'amd': 'quill',
 			'root': 'Quill'
 		}
-	},
-
-	debug: true,
-	devtool: 'inline-source-map'
+	}
 
 };
