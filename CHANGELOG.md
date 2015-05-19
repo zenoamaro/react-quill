@@ -1,6 +1,12 @@
 Changelog
 =========
 
+v0.1.1
+------
+- The pre-compiled distributable is not shipped with the NPM package anymore. Should fix [#2](https://github.com/zenoamaro/react-quill/issues/2).
+- Sourcemaps are now emitted for both distributables, as separate files.
+- Avoiding parsing Quill as it ships with a pre-built main.
+
 v0.1.0
 ------
 - Added support for toolbar separators.
