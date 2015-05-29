@@ -9,8 +9,6 @@ See the [live demo].
 [React]: https://facebook.github.io/react/
 [live demo]: https://zenoamaro.github.io/react-quill/
 
-**Warning**: The project is still in alpha stage. Use with caution.
-
   1. [Quick start](#quick-start)
   2. [API reference](#api-reference)
   3. [Building and testing](#building-and-testing)
@@ -23,6 +21,12 @@ Quick start
 1. Use straight away:
 
     ~~~jsx
+    /*
+    Include `quill.base.css` to give the editor some basic styles it needs.
+    You can find the _base_ theme in the quill distribution or inside
+    `node_modules`.
+    */
+
     var React = require('react');
     var ReactQuill = require('react-quill');
 
@@ -40,6 +44,12 @@ Quick start
 2. Customize a few settings:
 
     ~~~jsx
+    /*
+    Include a theme like `quill.snow.css` and activate it in the
+    configuration like shown below. You can find the _snow_ theme in the
+    quill distribution or inside `node_modules`.
+    */
+
     var MyComponent = React.createClass({
       /* ... */
 
