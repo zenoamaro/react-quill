@@ -76,58 +76,59 @@ var QuillToolbar = React.createClass({
 		};
 	},
 
-	renderSeparator: function(item) {
+	renderSeparator: function(key) {
 		return React.DOM.span({
+			key: key,
 			className:'ql-format-separator'
 		});
 	},
 
-	renderGroup: function(item) {
+	renderGroup: function(item, key) {
 		return React.DOM.span({
-			key: item.label,
+			key: item.label || key,
 			className:'ql-format-group' },
 			item.items.map(this.renderItem)
 		);
 	},
 
-	renderChoiceItem: function(item) {
+	renderChoiceItem: function(item, key) {
 		return React.DOM.option({
-			key: item.label || item.value,
+			key: item.label || item.value || key,
 			value:item.value },
 			item.label
 		);
 	},
 
-	renderChoices: function(item) {
+	renderChoices: function(item, key) {
 		return React.DOM.select({
-			key: item.label,
+			key: item.label || key,
 			className: 'ql-'+item.type },
 			item.items.map(this.renderChoiceItem)
 		);
 	},
 
-	renderAction: function(item) {
+	renderAction: function(item, key) {
 		return React.DOM.span({
-			key: item.label || item.value,
+			key: item.label || item.value || key,
 			className: 'ql-format-button ql-'+item.type,
 			title: item.label }
 		);
 	},
 
-	renderItem: function(item) {
+	renderItem: function(item, key) {
 		switch (item.type) {
 			case 'separator':
-				return this.renderSeparator();
+				return this.renderSeparator(key);
 			case 'group':
-				return this.renderGroup(item);
+				return this.renderGroup(item, key);
 			case 'font':
 			case 'align':
 			case 'size':
 			case 'color':
 			case 'background':
-				return this.renderChoices(item);
+				return this.renderChoices(item, key);
 			default:
-				return this.renderAction(item);
+				return this.renderAction(item, key);
 		}
 	},
 
