@@ -40,7 +40,7 @@ var Editor = React.createClass({
 				),
 				React.DOM.textarea({
 					value: this.state.value,
-					readOnly: true
+					onChange: this.onTextareaChange
 				}),
 				quillComponent
 			)
