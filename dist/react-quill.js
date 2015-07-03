@@ -98,7 +98,9 @@ return /******/ (function(modules) { // webpackBootstrap
 			value:             T.string,
 			defaultValue:      T.string,
 			readOnly:          T.bool,
+			hideToolbar:       T.bool,
 			toolbar:           T.array,
+			placeholder:       T.string,
 			formats:           T.array,
 			styles:            T.object,
 			theme:             T.string,
@@ -120,7 +122,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		or `defaultValue` if you want an un-controlled component.
 		*/
 		getInitialState: function() {
-			return {};
+			return {focused: false};
 		},
 	
 		/*
@@ -142,7 +144,7 @@ return /******/ (function(modules) { // webpackBootstrap
 			this.setState({ editor:editor });
 	
 			if (this.props.onSelectionChange) {
-				editor.on('selection-change', this.props.onSelectionChange);
+				editor.on('selection-change', this.onSelectionChange);
 			}
 		},
 	
@@ -181,7 +183,7 @@ return /******/ (function(modules) { // webpackBootstrap
 			};
 			// Unless we're redefining the toolbar,
 			// attach to the default one as a ref.
-			if (this.props.toolbar && !config.modules.toolbar) {
+			if (!config.modules.toolbar) {
 				// Don't mutate the original modules
 				// because it's shared between components.
 				config.modules = JSON.parse(JSON.stringify(config.modules));
@@ -204,29 +206,47 @@ return /******/ (function(modules) { // webpackBootstrap
 			return ['quill', this.props.className].join(' ');
 		},
 	
-		/*
-		Renders either the specified contents, or a default
-		configuration of toolbar and contents area.
-		*/
-		renderContents: function() {
-			var editor = React.DOM.div({
-				key:'editor',
-				ref:'editor',
-				className: 'quill-contents',
-				dangerouslySetInnerHTML: { __html:this.getEditorContents() }
-			});
+		getEditor: function() {
+		  return this.state.editor;
+		},
 	
-			if (React.Children.count(this.props.children)) {
-				return [this.props.children, editor];
+		isEmpty: function() {
+			var editor = this.getEditor();
+			var length = editor.getLength();
+			var placeholder = this.props.placeholder;
+			if (placeholder) {
+				return editor.getText() === (placeholder + '\n');
 			} else {
-				return [
-					QuillToolbar({
-						key:'toolbar',
-						ref:'toolbar',
-						items: this.props.toolbar
-					}),
-					editor
-				];
+				return length === 1;
+			}
+		},
+	
+		setPlaceholder: function() {
+		  this.getEditor().setText(this.props.placeholder);
+		},
+	
+		removePlaceholder: function() {
+		  this.getEditor().setText('\n');
+		},
+	
+		onSelectionChange: function(range) {
+			if (this.props.placeholder && this.isEmpty()) {
+				if (range) {
+					this.removePlaceholder();
+				} else {
+					this.setPlaceholder();
+				}
+			}
+	
+			this.setState({focused: Boolean(range)});
+	
+			if (this.props.hideToolbar) {
+				this.refs.toolbar.getDOMNode().style.display = this.state.focused ?
+					'block' : 'none';
+			}
+	
+			if (this.props.onSelectionChange) {
+				this.props.onSelectionChange(range);
 			}
 		},
 	
@@ -234,7 +254,19 @@ return /******/ (function(modules) { // webpackBootstrap
 			return React.DOM.div({
 				className: this.getClassName(),
 				onChange: this.preventDefault },
-				this.renderContents()
+				[
+					QuillToolbar({
+						key:'toolbar',
+						ref:'toolbar',
+						items: this.props.toolbar
+					}),
+					React.DOM.div({
+						key:'editor',
+						ref:'editor',
+						className: 'quill-contents',
+						dangerouslySetInnerHTML: { __html:this.getEditorContents() }
+					})
+				]
 			);
 		},
 	
@@ -430,6 +462,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = QuillToolbar;
 	QuillToolbar.defaultItems = defaultItems;
 	QuillToolbar.defaultColors = defaultColors;
+
 
 /***/ },
 /* 4 */
