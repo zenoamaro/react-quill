@@ -18,17 +18,18 @@ var QuillComponent = React.createClass({
 	mixins: [ QuillMixin ],
 
 	propTypes: {
-		id:           T.string,
-		className:    T.string,
-		value:        T.string,
-		defaultValue: T.string,
-		readOnly:     T.bool,
-		toolbar:      T.array,
-		formats:      T.array,
-		styles:       T.object,
-		theme:        T.string,
-		pollInterval: T.number,
-		onChange:     T.func
+		id:                T.string,
+		className:         T.string,
+		value:             T.string,
+		defaultValue:      T.string,
+		readOnly:          T.bool,
+		toolbar:           T.array,
+		formats:           T.array,
+		styles:            T.object,
+		theme:             T.string,
+		pollInterval:      T.number,
+		onChange:          T.func,
+		onSelectionChange: T.func
 	},
 
 	getDefaultProps: function() {
@@ -64,6 +65,10 @@ var QuillComponent = React.createClass({
 			this.getEditorElement(),
 			this.getEditorConfig());
 		this.setState({ editor:editor });
+
+		if (this.props.onSelectionChange) {
+			editor.onSelectionChange(this.props.onSelectionChange);
+		}
 	},
 
 	componentWillUnmount: function() {
