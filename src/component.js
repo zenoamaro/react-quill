@@ -67,7 +67,7 @@ var QuillComponent = React.createClass({
 		this.setState({ editor:editor });
 
 		if (this.props.onSelectionChange) {
-			editor.on('selection-change')(this.props.onSelectionChange);
+			editor.on('selection-change', this.props.onSelectionChange);
 		}
 	},
 

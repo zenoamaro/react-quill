@@ -142,7 +142,7 @@ return /******/ (function(modules) { // webpackBootstrap
 			this.setState({ editor:editor });
 	
 			if (this.props.onSelectionChange) {
-				editor.on('selection-change')(this.props.onSelectionChange);
+				editor.on('selection-change', this.props.onSelectionChange);
 			}
 		},
 	
