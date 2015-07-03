@@ -209,8 +209,15 @@ return /******/ (function(modules) { // webpackBootstrap
 		configuration of toolbar and contents area.
 		*/
 		renderContents: function() {
+			var editor = React.DOM.div({
+				key:'editor',
+				ref:'editor',
+				className: 'quill-contents',
+				dangerouslySetInnerHTML: { __html:this.getEditorContents() }
+			});
+	
 			if (React.Children.count(this.props.children)) {
-				return this.props.children;
+				return [this.props.children, editor];
 			} else {
 				return [
 					QuillToolbar({
@@ -218,12 +225,7 @@ return /******/ (function(modules) { // webpackBootstrap
 						ref:'toolbar',
 						items: this.props.toolbar
 					}),
-					React.DOM.div({
-						key:'editor',
-						ref:'editor',
-						className: 'quill-contents',
-						dangerouslySetInnerHTML: { __html:this.getEditorContents() }
-					})
+					editor
 				];
 			}
 		},

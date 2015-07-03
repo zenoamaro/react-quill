@@ -134,8 +134,15 @@ var QuillComponent = React.createClass({
 	configuration of toolbar and contents area.
 	*/
 	renderContents: function() {
+		var editor = React.DOM.div({
+			key:'editor',
+			ref:'editor',
+			className: 'quill-contents',
+			dangerouslySetInnerHTML: { __html:this.getEditorContents() }
+		});
+
 		if (React.Children.count(this.props.children)) {
-			return this.props.children;
+			return [this.props.children, editor];
 		} else {
 			return [
 				QuillToolbar({
@@ -143,12 +150,7 @@ var QuillComponent = React.createClass({
 					ref:'toolbar',
 					items: this.props.toolbar
 				}),
-				React.DOM.div({
-					key:'editor',
-					ref:'editor',
-					className: 'quill-contents',
-					dangerouslySetInnerHTML: { __html:this.getEditorContents() }
-				})
+				editor
 			];
 		}
 	},
