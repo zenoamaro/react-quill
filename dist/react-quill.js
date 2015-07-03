@@ -214,7 +214,8 @@ return /******/ (function(modules) { // webpackBootstrap
 		  return this.editor;
 		},
 	
-		isEmpty: function(editor) {
+		isEmpty: function() {
+			var editor = this.getEditor();
 			var length = editor.getLength();
 			var placeholder = this.props.placeholder;
 			if (placeholder) {
@@ -234,7 +235,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		},
 	
 		onSelectionChange: function(range) {
-			if (this.props.placeholder && this.isEmpty(this.getEditor())) {
+			if (this.props.placeholder && this.isEmpty()) {
 				if (range) {
 					this.removePlaceholder();
 				} else {
@@ -283,6 +284,9 @@ return /******/ (function(modules) { // webpackBootstrap
 		*/
 		onEditorChange: function(value) {
 			if (value !== this.state.value) {
+				if (this.isEmpty()) {
+					value = '';
+				}
 				if (this.props.onChange) {
 					this.props.onChange(value);
 				}

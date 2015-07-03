@@ -139,7 +139,8 @@ var QuillComponent = React.createClass({
 	  return this.editor;
 	},
 
-	isEmpty: function(editor) {
+	isEmpty: function() {
+		var editor = this.getEditor();
 		var length = editor.getLength();
 		var placeholder = this.props.placeholder;
 		if (placeholder) {
@@ -159,7 +160,7 @@ var QuillComponent = React.createClass({
 	},
 
 	onSelectionChange: function(range) {
-		if (this.props.placeholder && this.isEmpty(this.getEditor())) {
+		if (this.props.placeholder && this.isEmpty()) {
 			if (range) {
 				this.removePlaceholder();
 			} else {
@@ -208,6 +209,9 @@ var QuillComponent = React.createClass({
 	*/
 	onEditorChange: function(value) {
 		if (value !== this.state.value) {
+			if (this.isEmpty()) {
+				value = '';
+			}
 			if (this.props.onChange) {
 				this.props.onChange(value);
 			}
