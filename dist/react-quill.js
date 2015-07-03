@@ -132,7 +132,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		componentWillReceiveProps: function(nextProps) {
 			if ('value' in nextProps) {
 				if (nextProps.value !== this.props.value) {
-					this.setEditorContents(this.state.editor, nextProps.value);
+					this.setEditorContents(this.editor, nextProps.value);
 				}
 			}
 		},
@@ -142,9 +142,13 @@ return /******/ (function(modules) { // webpackBootstrap
 				this.getEditorElement(),
 				this.getEditorConfig());
 			this.setState({ editor:editor });
+			this.editor = editor;
 	
-			if (this.props.onSelectionChange) {
-				editor.on('selection-change', this.onSelectionChange);
+			editor.on('selection-change', this.onSelectionChange);
+	
+			this.toggleToolbar();
+			if (this.props.placeholder && !this.props.value && !this.props.defaultValue) {
+				this.setPlaceholder();
 			}
 		},
 	
@@ -207,15 +211,15 @@ return /******/ (function(modules) { // webpackBootstrap
 		},
 	
 		getEditor: function() {
-		  return this.state.editor;
+		  return this.editor;
 		},
 	
-		isEmpty: function() {
-			var editor = this.getEditor();
+		isEmpty: function(editor) {
 			var length = editor.getLength();
 			var placeholder = this.props.placeholder;
 			if (placeholder) {
-				return editor.getText() === (placeholder + '\n');
+				var text = editor.getText();
+				return text === '\n' || text === (placeholder + '\n');
 			} else {
 				return length === 1;
 			}
@@ -226,11 +230,11 @@ return /******/ (function(modules) { // webpackBootstrap
 		},
 	
 		removePlaceholder: function() {
-		  this.getEditor().setText('\n');
+		  this.getEditor().setText('');
 		},
 	
 		onSelectionChange: function(range) {
-			if (this.props.placeholder && this.isEmpty()) {
+			if (this.props.placeholder && this.isEmpty(this.getEditor())) {
 				if (range) {
 					this.removePlaceholder();
 				} else {
@@ -239,14 +243,17 @@ return /******/ (function(modules) { // webpackBootstrap
 			}
 	
 			this.setState({focused: Boolean(range)});
-	
-			if (this.props.hideToolbar) {
-				this.refs.toolbar.getDOMNode().style.display = this.state.focused ?
-					'block' : 'none';
-			}
+			this.toggleToolbar();
 	
 			if (this.props.onSelectionChange) {
 				this.props.onSelectionChange(range);
+			}
+		},
+	
+		toggleToolbar: function() {
+			if (this.props.hideToolbar) {
+				this.refs.toolbar.getDOMNode().style.display = this.state.focused ?
+					'block' : 'none';
 			}
 		},
 	
