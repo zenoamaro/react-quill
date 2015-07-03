@@ -67,7 +67,7 @@ var QuillComponent = React.createClass({
 		this.setState({ editor:editor });
 
 		if (this.props.onSelectionChange) {
-			editor.onSelectionChange(this.props.onSelectionChange);
+			editor.on('selection-change')(this.props.onSelectionChange);
 		}
 	},
 
@@ -106,7 +106,7 @@ var QuillComponent = React.createClass({
 		};
 		// Unless we're redefining the toolbar,
 		// attach to the default one as a ref.
-		if (!config.modules.toolbar) {
+		if (this.props.toolbar && !config.modules.toolbar) {
 			// Don't mutate the original modules
 			// because it's shared between components.
 			config.modules = JSON.parse(JSON.stringify(config.modules));
