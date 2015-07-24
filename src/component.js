@@ -160,10 +160,10 @@ var QuillComponent = React.createClass({
 	Updates the local state with the new contents,
 	executes the change handler passed as props.
 	*/
-	onEditorChange: function(value) {
+	onEditorChange: function(value, delta, source) {
 		if (value !== this.state.value) {
 			if (this.props.onChange) {
-				this.props.onChange(value);
+				this.props.onChange(value, delta, source);
 			}
 		}
 	},
