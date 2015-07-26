@@ -127,7 +127,7 @@ API reference
 : Classes to be applied to the DOM element.
 
 `value`
-: Value for the editor as a controlled component.
+: Value for the editor as a controlled component. Note that due to limitations in Quill, this is actually a _semi-controlled_ mode, meaning that the edit is not prevented, but changing `value` will still replace the contents.
 
 `defaultValue`
 : Initial value for the editor as an uncontrolled component.
@@ -178,6 +178,7 @@ Changelog
 #### next
 - Fix React warnings about unique `key` props in toolbar (@Janekk).
 - Sending `delta` and `source` from editor change events. Fixes #17.
+- Rewritten uncontrolled and semi-controlled operation. Should fix #9, #10 and #14.
 
 #### v0.1.1
 - The pre-compiled distributable is not shipped with the NPM package anymore. Should fix [#2](https://github.com/zenoamaro/react-quill/issues/2).

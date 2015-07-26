@@ -40,20 +40,31 @@ var QuillComponent = React.createClass({
 	},
 
 	/*
-	Retrieve the initial value from either `value` (preferred)
-	or `defaultValue` if you want an un-controlled component.
+	We consider the component to be controlled if
+	whenever `value` is bein sent in props.
 	*/
-	getInitialState: function() {
-		return {};
+	isControlled: function() {
+		return 'value' in this.props;
 	},
 
-	/*
-	Update only if we've been passed a new `value`.
-	This leaves components using `defaultValue` alone.
-	*/
+	getInitialState: function() {
+		return {
+			value: this.isControlled()
+				? this.props.value
+				: this.props.defaultValue
+		};
+	},
+
 	componentWillReceiveProps: function(nextProps) {
+		// Update only if we've been passed a new `value`.
+		// This leaves components using `defaultValue` alone.
 		if ('value' in nextProps) {
-			if (nextProps.value !== this.props.value) {
+			// NOTE: Seeing that Quill is missing a way to prevent
+			//       edits, we have to settle for a hybrid between
+			//       controlled and uncontrolled mode. We can't prevent
+			//       the change, but we'll still override content
+			//       whenever `value` differs from current state.
+			if (nextProps.value !== this.getEditorContents()) {
 				this.setEditorContents(this.state.editor, nextProps.value);
 			}
 		}
@@ -117,7 +128,7 @@ var QuillComponent = React.createClass({
 	},
 
 	getEditorContents: function() {
-		return this.props.value || this.props.defaultValue || '';
+		return this.state.value;
 	},
 
 	getClassName: function() {
@@ -156,12 +167,9 @@ var QuillComponent = React.createClass({
 		);
 	},
 
-	/*
-	Updates the local state with the new contents,
-	executes the change handler passed as props.
-	*/
 	onEditorChange: function(value, delta, source) {
-		if (value !== this.state.value) {
+		if (value !== this.getEditorContents()) {
+			this.setState({ value: value });
 			if (this.props.onChange) {
 				this.props.onChange(value, delta, source);
 			}

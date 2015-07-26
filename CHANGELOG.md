@@ -5,6 +5,7 @@ next
 ----
 - Fix React warnings about unique `key` props in toolbar (@Janekk).
 - Sending `delta` and `source` from editor change events. Fixes #17.
+- Rewritten uncontrolled and semi-controlled operation. Should fix #9, #10 and #14.
 
 v0.1.1
 ------

@@ -44,7 +44,17 @@ var QuillMixin = {
 	setEditorContents: function(editor, value) {
 		var sel = editor.getSelection();
 		editor.setHTML(value);
-		editor.setSelection(sel);
+		if (sel) this.setEditorSelection(editor, sel);
+	},
+
+	setEditorSelection: function(editor, range) {
+		if (range) {
+			// Validate bounds before applying.
+			var length = editor.getLength();
+			range.start = Math.max(0, Math.min(range.start, length-1));
+			range.end = Math.max(range.start, Math.min(range.end, length-1));
+		}
+		editor.setSelection(range);
 	}
 
 };
