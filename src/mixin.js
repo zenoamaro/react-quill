@@ -15,21 +15,11 @@ var QuillMixin = {
 	},
 
 	hookEditor: function(editor) {
-		var self = this;
 		editor.on('text-change', function(delta, source) {
-			if (self.onEditorChange) {
-				self.onEditorChange(editor.getHTML(), delta, source);
+			if (this.onEditorChange) {
+				this.onEditorChange(editor.getHTML(), delta, source);
 			}
-		});
-	},
-
-	updateEditor: function(editor, config) {
-		// NOTE: This tears the editor down, and reinitializes
-		//       it with the new config. Ugly but necessary
-		//       as there is no api for updating it.
-		this.destroyEditor(editor);
-		this.createEditor(config);
-		return editor;
+		}.bind(this));
 	},
 
 	destroyEditor: function(editor) {
