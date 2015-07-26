@@ -150,8 +150,11 @@ API reference
 `pollInterval`
 : Interval in ms between checks for local changes in editor contents.
 
-`onChange(value)`
+`onChange(value, delta, source)`
 : Called back with the new contents of the editor after change.
+
+`onChangeSelection(range, source)`
+: Called back with the new selected range, or null when unfocused.
 
 
 Building and testing
@@ -180,6 +183,7 @@ Changelog
 - Sending `delta` and `source` from editor change events. Fixes #17.
 - Rewritten uncontrolled and semi-controlled operation. Should fix #9, #10 and #14.
 - Editor props can now be changed after mounting.
+- Added callback for selection change event. Closes #12.
 
 #### v0.1.1
 - The pre-compiled distributable is not shipped with the NPM package anymore. Should fix [#2](https://github.com/zenoamaro/react-quill/issues/2).

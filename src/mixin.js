@@ -20,6 +20,12 @@ var QuillMixin = {
 				this.onEditorChange(editor.getHTML(), delta, source);
 			}
 		}.bind(this));
+
+		editor.on('selection-change', function(range, source) {
+			if (this.onEditorChangeSelection) {
+				this.onEditorChangeSelection(range, source);
+			}
+		}.bind(this));
 	},
 
 	destroyEditor: function(editor) {

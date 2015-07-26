@@ -28,7 +28,8 @@ var QuillComponent = React.createClass({
 		styles:       T.object,
 		theme:        T.string,
 		pollInterval: T.number,
-		onChange:     T.func
+		onChange:     T.func,
+		onChangeSelection: T.func
 	},
 
 	/*
@@ -41,7 +42,7 @@ var QuillComponent = React.createClass({
 		'formats',
 		'styles',
 		'theme',
-		'pollInterval',
+		'pollInterval'
 	],
 
 	getDefaultProps: function() {
@@ -158,6 +159,10 @@ var QuillComponent = React.createClass({
 		return this.state.value;
 	},
 
+	getEditorSelection: function() {
+		return this.state.selection;
+	},
+
 	getClassName: function() {
 		return ['quill', this.props.className].join(' ');
 	},
@@ -201,6 +206,17 @@ var QuillComponent = React.createClass({
 			this.setState({ value: value });
 			if (this.props.onChange) {
 				this.props.onChange(value, delta, source);
+			}
+		}
+	},
+
+	onEditorChangeSelection: function(range, source) {
+		var s = this.getEditorSelection() || {};
+		var r = range || {};
+		if (r.start !== s.start || r.end !== s.end) {
+			this.setState({ selection: range });
+			if (this.props.onChangeSelection) {
+				this.props.onChangeSelection(range, source);
 			}
 		}
 	},

@@ -7,6 +7,7 @@ next
 - Sending `delta` and `source` from editor change events. Fixes #17.
 - Rewritten uncontrolled and semi-controlled operation. Should fix #9, #10 and #14.
 - Editor props can now be changed after mounting.
+- Added callback for selection change event. Closes #12.
 
 v0.1.1
 ------
