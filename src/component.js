@@ -31,6 +31,20 @@ var QuillComponent = React.createClass({
 		onChange:     T.func
 	},
 
+	/*
+	Changing one of these props should cause a re-render.
+	*/
+	dirtyProps: [
+		'id',
+		'className',
+		'readOnly',
+		'toolbar',
+		'formats',
+		'styles',
+		'theme',
+		'pollInterval',
+	],
+
 	getDefaultProps: function() {
 		return {
 			className: '',
@@ -84,7 +98,14 @@ var QuillComponent = React.createClass({
 	},
 
 	shouldComponentUpdate: function(nextProps, nextState) {
-		// Never re-render or we lose the element.
+		// Check if one of the changes should trigger a re-render.
+		for (var i=0; i<this.dirtyProps.length; i++) {
+			var prop = this.dirtyProps[i];
+			if (nextProps[prop] !== this.props[prop]) {
+				return true;
+			}
+		}
+		// Never re-render otherwise.
 		return false;
 	},
 
@@ -144,14 +165,16 @@ var QuillComponent = React.createClass({
 			return this.props.children;
 		} else {
 			return [
+				// Quill modifies these elements in-place,
+				// so we need to re-render them every time.
 				QuillToolbar({
-					key:'toolbar',
-					ref:'toolbar',
+					key: 'toolbar-' + Math.random(),
+					ref: 'toolbar',
 					items: this.props.toolbar
 				}),
 				React.DOM.div({
-					key:'editor',
-					ref:'editor',
+					key: 'editor-' + Math.random(),
+					ref: 'editor',
 					className: 'quill-contents',
 					dangerouslySetInnerHTML: { __html:this.getEditorContents() }
 				})

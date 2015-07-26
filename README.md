@@ -179,6 +179,7 @@ Changelog
 - Fix React warnings about unique `key` props in toolbar (@Janekk).
 - Sending `delta` and `source` from editor change events. Fixes #17.
 - Rewritten uncontrolled and semi-controlled operation. Should fix #9, #10 and #14.
+- Editor props can now be changed after mounting.
 
 #### v0.1.1
 - The pre-compiled distributable is not shipped with the NPM package anymore. Should fix [#2](https://github.com/zenoamaro/react-quill/issues/2).
