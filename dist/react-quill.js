@@ -58,7 +58,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
-	React-Quill v0.1.1
+	React-Quill v0.2.0
 	https://github.com/zenoamaro/react-quill
 	*/
 	module.exports = __webpack_require__(/*! ./component */ 1);
@@ -93,18 +93,33 @@ return /******/ (function(modules) { // webpackBootstrap
 		mixins: [ QuillMixin ],
 	
 		propTypes: {
-			id:           T.string,
-			className:    T.string,
-			value:        T.string,
+			id: T.string,
+			className: T.string,
+			style: T.object,
+			value: T.string,
 			defaultValue: T.string,
-			readOnly:     T.bool,
-			toolbar:      T.array,
-			formats:      T.array,
-			styles:       T.object,
-			theme:        T.string,
+			readOnly: T.bool,
+			toolbar: T.array,
+			formats: T.array,
+			styles: T.object,
+			theme: T.string,
 			pollInterval: T.number,
-			onChange:     T.func
+			onChange: T.func,
+			onChangeSelection: T.func
 		},
+	
+		/*
+		Changing one of these props should cause a re-render.
+		*/
+		dirtyProps: [
+			'id',
+			'className',
+			'toolbar',
+			'formats',
+			'styles',
+			'theme',
+			'pollInterval'
+		],
 	
 		getDefaultProps: function() {
 			return {
@@ -115,21 +130,39 @@ return /******/ (function(modules) { // webpackBootstrap
 		},
 	
 		/*
-		Retrieve the initial value from either `value` (preferred)
-		or `defaultValue` if you want an un-controlled component.
+		We consider the component to be controlled if
+		whenever `value` is bein sent in props.
 		*/
-		getInitialState: function() {
-			return {};
+		isControlled: function() {
+			return 'value' in this.props;
 		},
 	
-		/*
-		Update only if we've been passed a new `value`.
-		This leaves components using `defaultValue` alone.
-		*/
+		getInitialState: function() {
+			return {
+				value: this.isControlled()
+					? this.props.value
+					: this.props.defaultValue
+			};
+		},
+	
 		componentWillReceiveProps: function(nextProps) {
+			var editor = this.state.editor;
+			// Update only if we've been passed a new `value`.
+			// This leaves components using `defaultValue` alone.
 			if ('value' in nextProps) {
-				if (nextProps.value !== this.props.value) {
-					this.setEditorContents(this.state.editor, nextProps.value);
+				// NOTE: Seeing that Quill is missing a way to prevent
+				//       edits, we have to settle for a hybrid between
+				//       controlled and uncontrolled mode. We can't prevent
+				//       the change, but we'll still override content
+				//       whenever `value` differs from current state.
+				if (nextProps.value !== this.getEditorContents()) {
+					this.setEditorContents(editor, nextProps.value);
+				}
+			}
+			// We can update readOnly state in-place.
+			if ('readOnly' in nextProps) {
+				if (nextProps.readOnly !== this.props.readOnly) {
+					this.setEditorReadOnly(editor, nextProps.readOnly);
 				}
 			}
 		},
@@ -148,7 +181,14 @@ return /******/ (function(modules) { // webpackBootstrap
 		},
 	
 		shouldComponentUpdate: function(nextProps, nextState) {
-			// Never re-render or we lose the element.
+			// Check if one of the changes should trigger a re-render.
+			for (var i=0; i<this.dirtyProps.length; i++) {
+				var prop = this.dirtyProps[i];
+				if (nextProps[prop] !== this.props[prop]) {
+					return true;
+				}
+			}
+			// Never re-render otherwise.
 			return false;
 		},
 	
@@ -192,11 +232,11 @@ return /******/ (function(modules) { // webpackBootstrap
 		},
 	
 		getEditorContents: function() {
-			return this.props.value || this.props.defaultValue || '';
+			return this.state.value;
 		},
 	
-		getClassName: function() {
-			return ['quill', this.props.className].join(' ');
+		getEditorSelection: function() {
+			return this.state.selection;
 		},
 	
 		/*
@@ -208,14 +248,16 @@ return /******/ (function(modules) { // webpackBootstrap
 				return this.props.children;
 			} else {
 				return [
+					// Quill modifies these elements in-place,
+					// so we need to re-render them every time.
 					QuillToolbar({
-						key:'toolbar',
-						ref:'toolbar',
+						key: 'toolbar-' + Math.random(),
+						ref: 'toolbar',
 						items: this.props.toolbar
 					}),
 					React.DOM.div({
-						key:'editor',
-						ref:'editor',
+						key: 'editor-' + Math.random(),
+						ref: 'editor',
 						className: 'quill-contents',
 						dangerouslySetInnerHTML: { __html:this.getEditorContents() }
 					})
@@ -225,20 +267,30 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 		render: function() {
 			return React.DOM.div({
-				className: this.getClassName(),
+				id: this.props.id,
+				style: this.props.style,
+				className: 'quill ' + this.props.className,
 				onChange: this.preventDefault },
 				this.renderContents()
 			);
 		},
 	
-		/*
-		Updates the local state with the new contents,
-		executes the change handler passed as props.
-		*/
-		onEditorChange: function(value) {
-			if (value !== this.state.value) {
+		onEditorChange: function(value, delta, source) {
+			if (value !== this.getEditorContents()) {
+				this.setState({ value: value });
 				if (this.props.onChange) {
-					this.props.onChange(value);
+					this.props.onChange(value, delta, source);
+				}
+			}
+		},
+	
+		onEditorChangeSelection: function(range, source) {
+			var s = this.getEditorSelection() || {};
+			var r = range || {};
+			if (r.start !== s.start || r.end !== s.end) {
+				this.setState({ selection: range });
+				if (this.props.onChangeSelection) {
+					this.props.onChangeSelection(range, source);
 				}
 			}
 		},
@@ -351,58 +403,59 @@ return /******/ (function(modules) { // webpackBootstrap
 			};
 		},
 	
-		renderSeparator: function(item) {
+		renderSeparator: function(key) {
 			return React.DOM.span({
+				key: key,
 				className:'ql-format-separator'
 			});
 		},
 	
-		renderGroup: function(item) {
+		renderGroup: function(item, key) {
 			return React.DOM.span({
-				key: item.label,
+				key: item.label || key,
 				className:'ql-format-group' },
 				item.items.map(this.renderItem)
 			);
 		},
 	
-		renderChoiceItem: function(item) {
+		renderChoiceItem: function(item, key) {
 			return React.DOM.option({
-				key: item.label || item.value,
+				key: item.label || item.value || key,
 				value:item.value },
 				item.label
 			);
 		},
 	
-		renderChoices: function(item) {
+		renderChoices: function(item, key) {
 			return React.DOM.select({
-				key: item.label,
+				key: item.label || key,
 				className: 'ql-'+item.type },
 				item.items.map(this.renderChoiceItem)
 			);
 		},
 	
-		renderAction: function(item) {
+		renderAction: function(item, key) {
 			return React.DOM.span({
-				key: item.label || item.value,
+				key: item.label || item.value || key,
 				className: 'ql-format-button ql-'+item.type,
 				title: item.label }
 			);
 		},
 	
-		renderItem: function(item) {
+		renderItem: function(item, key) {
 			switch (item.type) {
 				case 'separator':
-					return this.renderSeparator();
+					return this.renderSeparator(key);
 				case 'group':
-					return this.renderGroup(item);
+					return this.renderGroup(item, key);
 				case 'font':
 				case 'align':
 				case 'size':
 				case 'color':
 				case 'background':
-					return this.renderChoices(item);
+					return this.renderChoices(item, key);
 				default:
-					return this.renderAction(item);
+					return this.renderAction(item, key);
 			}
 		},
 	
@@ -447,25 +500,26 @@ return /******/ (function(modules) { // webpackBootstrap
 		},
 	
 		hookEditor: function(editor) {
-			var self = this;
 			editor.on('text-change', function(delta, source) {
-				if (self.onEditorChange) {
-					self.onEditorChange(editor.getHTML(), delta, source);
+				if (this.onEditorChange) {
+					this.onEditorChange(editor.getHTML(), delta, source);
 				}
-			});
-		},
+			}.bind(this));
 	
-		updateEditor: function(editor, config) {
-			// NOTE: This tears the editor down, and reinitializes
-			//       it with the new config. Ugly but necessary
-			//       as there is no api for updating it.
-			this.destroyEditor(editor);
-			this.createEditor(config);
-			return editor;
+			editor.on('selection-change', function(range, source) {
+				if (this.onEditorChangeSelection) {
+					this.onEditorChangeSelection(range, source);
+				}
+			}.bind(this));
 		},
 	
 		destroyEditor: function(editor) {
 			editor.destroy();
+		},
+	
+		setEditorReadOnly: function(editor, value) {
+			value? editor.editor.disable()
+			     : editor.editor.enable();
 		},
 	
 		/*
@@ -476,7 +530,17 @@ return /******/ (function(modules) { // webpackBootstrap
 		setEditorContents: function(editor, value) {
 			var sel = editor.getSelection();
 			editor.setHTML(value);
-			editor.setSelection(sel);
+			if (sel) this.setEditorSelection(editor, sel);
+		},
+	
+		setEditorSelection: function(editor, range) {
+			if (range) {
+				// Validate bounds before applying.
+				var length = editor.getLength();
+				range.start = Math.max(0, Math.min(range.start, length-1));
+				range.end = Math.max(range.start, Math.min(range.end, length-1));
+			}
+			editor.setSelection(range);
 		}
 	
 	};

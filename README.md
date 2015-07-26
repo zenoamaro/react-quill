@@ -178,7 +178,7 @@ More tasks are available on the [Makefile](Makefile):
 
 Changelog
 ---------
-#### next
+#### v0.2.0
 - Fix React warnings about unique `key` props in toolbar (@Janekk).
 - Sending `delta` and `source` from editor change events. Fixes #17.
 - Rewritten uncontrolled and semi-controlled operation. Should fix #9, #10 and #14.
