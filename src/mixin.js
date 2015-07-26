@@ -26,6 +26,11 @@ var QuillMixin = {
 		editor.destroy();
 	},
 
+	setEditorReadOnly: function(editor, value) {
+		value? editor.editor.disable()
+		     : editor.editor.enable();
+	},
+
 	/*
 	Replace the contents of the editor, but keep
 	the previous selection hanging around so that

@@ -37,7 +37,6 @@ var QuillComponent = React.createClass({
 	dirtyProps: [
 		'id',
 		'className',
-		'readOnly',
 		'toolbar',
 		'formats',
 		'styles',
@@ -70,6 +69,7 @@ var QuillComponent = React.createClass({
 	},
 
 	componentWillReceiveProps: function(nextProps) {
+		var editor = this.state.editor;
 		// Update only if we've been passed a new `value`.
 		// This leaves components using `defaultValue` alone.
 		if ('value' in nextProps) {
@@ -79,7 +79,13 @@ var QuillComponent = React.createClass({
 			//       the change, but we'll still override content
 			//       whenever `value` differs from current state.
 			if (nextProps.value !== this.getEditorContents()) {
-				this.setEditorContents(this.state.editor, nextProps.value);
+				this.setEditorContents(editor, nextProps.value);
+			}
+		}
+		// We can update readOnly state in-place.
+		if ('readOnly' in nextProps) {
+			if (nextProps.readOnly !== this.props.readOnly) {
+				this.setEditorReadOnly(editor, nextProps.readOnly);
 			}
 		}
 	},
