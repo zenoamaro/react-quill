@@ -20,6 +20,7 @@ var QuillComponent = React.createClass({
 	propTypes: {
 		id: T.string,
 		className: T.string,
+		style: T.object,
 		value: T.string,
 		defaultValue: T.string,
 		readOnly: T.bool,
@@ -163,10 +164,6 @@ var QuillComponent = React.createClass({
 		return this.state.selection;
 	},
 
-	getClassName: function() {
-		return ['quill', this.props.className].join(' ');
-	},
-
 	/*
 	Renders either the specified contents, or a default
 	configuration of toolbar and contents area.
@@ -195,7 +192,9 @@ var QuillComponent = React.createClass({
 
 	render: function() {
 		return React.DOM.div({
-			className: this.getClassName(),
+			id: this.props.id,
+			style: this.props.style,
+			className: 'quill ' + this.props.className,
 			onChange: this.preventDefault },
 			this.renderContents()
 		);
