@@ -18,17 +18,17 @@ var QuillComponent = React.createClass({
 	mixins: [ QuillMixin ],
 
 	propTypes: {
-		id:           T.string,
-		className:    T.string,
-		value:        T.string,
+		id: T.string,
+		className: T.string,
+		value: T.string,
 		defaultValue: T.string,
-		readOnly:     T.bool,
-		toolbar:      T.array,
-		formats:      T.array,
-		styles:       T.object,
-		theme:        T.string,
+		readOnly: T.bool,
+		toolbar: T.array,
+		formats: T.array,
+		styles: T.object,
+		theme: T.string,
 		pollInterval: T.number,
-		onChange:     T.func,
+		onChange: T.func,
 		onChangeSelection: T.func
 	},
 

@@ -201,10 +201,8 @@ Changelog
 
 Roadmap
 -------
-- [ ] Support updates in editor life-cycle
 - [ ] First-class support for modules
 - [ ] Better API for custom controls?
-- [ ] Delta updates
 
 
 License
