@@ -1,6 +1,10 @@
 Changelog
 =========
 
+next
+----
+- Link toolbar button and module are now enabled by default. Fixes #19.
+
 v0.2.0
 ------
 - Fix React warnings about unique `key` props in toolbar (@Janekk).
