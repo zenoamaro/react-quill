@@ -1,6 +1,10 @@
 Changelog
 =========
 
+next
+----
+- Added missing `modules` propType and documentation.
+
 v0.2.1
 ------
 - Link toolbar button and module are now enabled by default. Fixes #19.

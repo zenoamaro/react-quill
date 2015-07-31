@@ -135,6 +135,9 @@ API reference
 `readOnly`
 : If true, the editor won't allow changing its contents.
 
+`modules`
+: An object specifying what modules are enabled, and their configuration. See the [modules section](http://quilljs.com/docs/modules/) over the Quill documentation for more information on what modules are available.
+
 `toolbar`
 : A list of toolbar items to use as custom configuration for the toolbar. Defaults (that also double as reference) are available as [`ReactQuill.Toolbar.defaultItems`](src/toolbar.js#L21) and [`ReactQuill.Toolbar.defaultColors`](src/toolbar.js#L6). See also the [Toolbar module](http://quilljs.com/docs/modules/toolbar/) over the Quill documentation for more information on the inner workings.
 
@@ -178,6 +181,9 @@ More tasks are available on the [Makefile](Makefile):
 
 Changelog
 ---------
+#### next
+- Added missing `modules` propType and documentation.
+
 #### v0.2.1
 - Link toolbar button and module are now enabled by default. Fixes #19.
 

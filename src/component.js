@@ -24,6 +24,7 @@ var QuillComponent = React.createClass({
 		value: T.string,
 		defaultValue: T.string,
 		readOnly: T.bool,
+		modules: T.object,
 		toolbar: T.array,
 		formats: T.array,
 		styles: T.object,
@@ -39,6 +40,7 @@ var QuillComponent = React.createClass({
 	dirtyProps: [
 		'id',
 		'className',
+		'modules',
 		'toolbar',
 		'formats',
 		'styles',
