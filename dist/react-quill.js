@@ -58,7 +58,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
-	React-Quill v0.2.0
+	React-Quill v0.2.1
 	https://github.com/zenoamaro/react-quill
 	*/
 	module.exports = __webpack_require__(/*! ./component */ 1);
@@ -125,7 +125,9 @@ return /******/ (function(modules) { // webpackBootstrap
 			return {
 				className: '',
 				theme: 'base',
-				modules: {}
+				modules: {
+					'link-tooltip': true
+				}
 			};
 		},
 	
@@ -377,6 +379,8 @@ return /******/ (function(modules) { // webpackBootstrap
 			{ type:'separator' },
 			{ type:'color', label:'Color', items:defaultColors },
 			{ type:'background', label:'Background color', items:defaultColors },
+			{ type:'separator' },
+			{ type:'link', label:'Link' }
 		]},
 	
 		{ label:'Blocks', type:'group', items: [

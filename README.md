@@ -178,7 +178,7 @@ More tasks are available on the [Makefile](Makefile):
 
 Changelog
 ---------
-#### next
+#### v0.2.1
 - Link toolbar button and module are now enabled by default. Fixes #19.
 
 #### v0.2.0
