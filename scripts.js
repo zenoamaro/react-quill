@@ -61,7 +61,9 @@ var toolbarItems = [
 		{ type:'underline', label:'Underline' },
 		{ type:'separator' },
 		{ type:'color', label:'Color', items:defaultColors },
-		{ type:'background', label:'Background color', items:defaultColors }
+		{ type:'background', label:'Background color', items:defaultColors },
+		{ type:'separator' },
+		{ type:'link', label:'Link' }
 	]},
 
 	{ label:'Blocks', type:'group', items: [

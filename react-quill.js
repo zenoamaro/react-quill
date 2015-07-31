@@ -58,7 +58,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
-	React-Quill v0.2.0
+	React-Quill v0.2.1
 	https://github.com/zenoamaro/react-quill
 	*/
 	module.exports = __webpack_require__(/*! ./component */ 1);
@@ -74,24 +74,24 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-
+	
 	var React = __webpack_require__(/*! react */ 2),
 		QuillToolbar = __webpack_require__(/*! ./toolbar */ 3),
 		QuillMixin = __webpack_require__(/*! ./mixin */ 4),
 		T = React.PropTypes;
-
+	
 	// Support React 0.11 and 0.12
 	// FIXME: Remove with React 0.13
 	if (React.createFactory) {
 		QuillToolbar = React.createFactory(QuillToolbar);
 	}
-
+	
 	var QuillComponent = React.createClass({
-
+	
 		displayName: 'Quill',
-
+	
 		mixins: [ QuillMixin ],
-
+	
 		propTypes: {
 			id: T.string,
 			className: T.string,
@@ -107,7 +107,7 @@ return /******/ (function(modules) { // webpackBootstrap
 			onChange: T.func,
 			onChangeSelection: T.func
 		},
-
+	
 		/*
 		Changing one of these props should cause a re-render.
 		*/
@@ -120,15 +120,17 @@ return /******/ (function(modules) { // webpackBootstrap
 			'theme',
 			'pollInterval'
 		],
-
+	
 		getDefaultProps: function() {
 			return {
 				className: '',
 				theme: 'base',
-				modules: {}
+				modules: {
+					'link-tooltip': true
+				}
 			};
 		},
-
+	
 		/*
 		We consider the component to be controlled if
 		whenever `value` is bein sent in props.
@@ -136,7 +138,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		isControlled: function() {
 			return 'value' in this.props;
 		},
-
+	
 		getInitialState: function() {
 			return {
 				value: this.isControlled()
@@ -144,7 +146,7 @@ return /******/ (function(modules) { // webpackBootstrap
 					: this.props.defaultValue
 			};
 		},
-
+	
 		componentWillReceiveProps: function(nextProps) {
 			var editor = this.state.editor;
 			// Update only if we've been passed a new `value`.
@@ -166,20 +168,20 @@ return /******/ (function(modules) { // webpackBootstrap
 				}
 			}
 		},
-
+	
 		componentDidMount: function() {
 			var editor = this.createEditor(
 				this.getEditorElement(),
 				this.getEditorConfig());
 			this.setState({ editor:editor });
 		},
-
+	
 		componentWillUnmount: function() {
 			this.destroyEditor(this.state.editor);
 			// NOTE: Don't set the state to null here
 			//       as it would generate a loop.
 		},
-
+	
 		shouldComponentUpdate: function(nextProps, nextState) {
 			// Check if one of the changes should trigger a re-render.
 			for (var i=0; i<this.dirtyProps.length; i++) {
@@ -191,7 +193,7 @@ return /******/ (function(modules) { // webpackBootstrap
 			// Never re-render otherwise.
 			return false;
 		},
-
+	
 		/*
 		If for whatever reason we are rendering again,
 		we should tear down the editor and bring it up
@@ -200,11 +202,11 @@ return /******/ (function(modules) { // webpackBootstrap
 		componentWillUpdate: function() {
 			this.componentWillUnmount();
 		},
-
+	
 		componentDidUpdate: function() {
 			this.componentDidMount();
 		},
-
+	
 		getEditorConfig: function() {
 			var config = {
 				readOnly:     this.props.readOnly,
@@ -226,19 +228,19 @@ return /******/ (function(modules) { // webpackBootstrap
 			}
 			return config;
 		},
-
+	
 		getEditorElement: function() {
 			return this.refs.editor.getDOMNode();
 		},
-
+	
 		getEditorContents: function() {
 			return this.state.value;
 		},
-
+	
 		getEditorSelection: function() {
 			return this.state.selection;
 		},
-
+	
 		/*
 		Renders either the specified contents, or a default
 		configuration of toolbar and contents area.
@@ -264,7 +266,7 @@ return /******/ (function(modules) { // webpackBootstrap
 				];
 			}
 		},
-
+	
 		render: function() {
 			return React.DOM.div({
 				id: this.props.id,
@@ -274,7 +276,7 @@ return /******/ (function(modules) { // webpackBootstrap
 				this.renderContents()
 			);
 		},
-
+	
 		onEditorChange: function(value, delta, source) {
 			if (value !== this.getEditorContents()) {
 				this.setState({ value: value });
@@ -283,7 +285,7 @@ return /******/ (function(modules) { // webpackBootstrap
 				}
 			}
 		},
-
+	
 		onEditorChangeSelection: function(range, source) {
 			var s = this.getEditorSelection() || {};
 			var r = range || {};
@@ -294,7 +296,7 @@ return /******/ (function(modules) { // webpackBootstrap
 				}
 			}
 		},
-
+	
 		/*
 		Stop change events from the toolbar from
 		bubbling up outside.
@@ -303,9 +305,9 @@ return /******/ (function(modules) { // webpackBootstrap
 			event.preventDefault();
 			event.stopPropagation();
 		}
-
+	
 	});
-
+	
 	module.exports = QuillComponent;
 
 
@@ -326,10 +328,10 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-
+	
 	var React = __webpack_require__(/*! react */ 2),
 		T = React.PropTypes;
-
+	
 	var defaultColors = [
 		'rgb(  0,   0,   0)', 'rgb(230,   0,   0)', 'rgb(255, 153,   0)',
 		'rgb(255, 255,   0)', 'rgb(  0, 138,   0)', 'rgb(  0, 102, 204)',
@@ -344,9 +346,9 @@ return /******/ (function(modules) { // webpackBootstrap
 		'rgb(102,  61,   0)', 'rgb(102, 102,   0)', 'rgb(  0,  55,   0)',
 		'rgb(  0,  41, 102)', 'rgb( 61,  20,  10)',
 	].map(function(color){ return { value: color } });
-
+	
 	var defaultItems = [
-
+	
 		{ label:'Formats', type:'group', items: [
 			{ label:'Font', type:'font', items: [
 				{ label:'Sans Serif',  value:'sans-serif' },
@@ -368,7 +370,7 @@ return /******/ (function(modules) { // webpackBootstrap
 				{ label:'', value:'justify' }
 			]}
 		]},
-
+	
 		{ label:'Text', type:'group', items: [
 			{ type:'bold', label:'Bold' },
 			{ type:'italic', label:'Italic' },
@@ -377,39 +379,41 @@ return /******/ (function(modules) { // webpackBootstrap
 			{ type:'separator' },
 			{ type:'color', label:'Color', items:defaultColors },
 			{ type:'background', label:'Background color', items:defaultColors },
+			{ type:'separator' },
+			{ type:'link', label:'Link' }
 		]},
-
+	
 		{ label:'Blocks', type:'group', items: [
 			{ type:'bullet', label:'Bullet' },
 			{ type:'separator' },
 			{ type:'list', label:'List' }
 		]}
-
+	
 	];
-
+	
 	var QuillToolbar = React.createClass({
-
+	
 		displayName: 'Quill Toolbar',
-
+	
 		propTypes: {
 			id:        T.string,
 			className: T.string,
 			items:     T.array
 		},
-
+	
 		getDefaultProps: function(){
 			return {
 				items: defaultItems
 			};
 		},
-
+	
 		renderSeparator: function(key) {
 			return React.DOM.span({
 				key: key,
 				className:'ql-format-separator'
 			});
 		},
-
+	
 		renderGroup: function(item, key) {
 			return React.DOM.span({
 				key: item.label || key,
@@ -417,7 +421,7 @@ return /******/ (function(modules) { // webpackBootstrap
 				item.items.map(this.renderItem)
 			);
 		},
-
+	
 		renderChoiceItem: function(item, key) {
 			return React.DOM.option({
 				key: item.label || item.value || key,
@@ -425,7 +429,7 @@ return /******/ (function(modules) { // webpackBootstrap
 				item.label
 			);
 		},
-
+	
 		renderChoices: function(item, key) {
 			return React.DOM.select({
 				key: item.label || key,
@@ -433,7 +437,7 @@ return /******/ (function(modules) { // webpackBootstrap
 				item.items.map(this.renderChoiceItem)
 			);
 		},
-
+	
 		renderAction: function(item, key) {
 			return React.DOM.span({
 				key: item.label || item.value || key,
@@ -441,7 +445,7 @@ return /******/ (function(modules) { // webpackBootstrap
 				title: item.label }
 			);
 		},
-
+	
 		renderItem: function(item, key) {
 			switch (item.type) {
 				case 'separator':
@@ -458,20 +462,20 @@ return /******/ (function(modules) { // webpackBootstrap
 					return this.renderAction(item, key);
 			}
 		},
-
+	
 		getClassName: function() {
 			return 'quill-toolbar ' + (this.props.className||'');
 		},
-
+	
 		render: function() {
 			return React.DOM.div({
 				className: this.getClassName() },
 				this.props.items.map(this.renderItem)
 			);
 		}
-
+	
 	});
-
+	
 	module.exports = QuillToolbar;
 	QuillToolbar.defaultItems = defaultItems;
 	QuillToolbar.defaultColors = defaultColors;
@@ -484,11 +488,11 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-
+	
 	var Quill = __webpack_require__(/*! quill */ 5);
-
+	
 	var QuillMixin = {
-
+	
 		/**
 		Creates an editor on the given element. The editor will
 		be passed the configuration, have its events bound,
@@ -498,30 +502,30 @@ return /******/ (function(modules) { // webpackBootstrap
 			this.hookEditor(editor);
 			return editor;
 		},
-
+	
 		hookEditor: function(editor) {
 			editor.on('text-change', function(delta, source) {
 				if (this.onEditorChange) {
 					this.onEditorChange(editor.getHTML(), delta, source);
 				}
 			}.bind(this));
-
+	
 			editor.on('selection-change', function(range, source) {
 				if (this.onEditorChangeSelection) {
 					this.onEditorChangeSelection(range, source);
 				}
 			}.bind(this));
 		},
-
+	
 		destroyEditor: function(editor) {
 			editor.destroy();
 		},
-
+	
 		setEditorReadOnly: function(editor, value) {
 			value? editor.editor.disable()
 			     : editor.editor.enable();
 		},
-
+	
 		/*
 		Replace the contents of the editor, but keep
 		the previous selection hanging around so that
@@ -532,7 +536,7 @@ return /******/ (function(modules) { // webpackBootstrap
 			editor.setHTML(value);
 			if (sel) this.setEditorSelection(editor, sel);
 		},
-
+	
 		setEditorSelection: function(editor, range) {
 			if (range) {
 				// Validate bounds before applying.
@@ -542,9 +546,9 @@ return /******/ (function(modules) { // webpackBootstrap
 			}
 			editor.setSelection(range);
 		}
-
+	
 	};
-
+	
 	module.exports = QuillMixin;
 
 /***/ },
