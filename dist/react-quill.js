@@ -58,7 +58,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
-	React-Quill v0.2.1
+	React-Quill v0.2.2
 	https://github.com/zenoamaro/react-quill
 	*/
 	module.exports = __webpack_require__(/*! ./component */ 1);
@@ -86,6 +86,16 @@ return /******/ (function(modules) { // webpackBootstrap
 		QuillToolbar = React.createFactory(QuillToolbar);
 	}
 	
+	// Support React 0.12 and 0.13+
+	// FIXME: Remove with React 0.13
+	if (React.cloneElement) {
+		var cloneElement = React.cloneElement;
+	} else if (React.addons && React.addons.cloneWithProps) {
+		var cloneElement = React.addons.cloneWithProps;
+	} else {
+		throw new Error('React addons are required when using React 0.12 or less.');
+	}
+	
 	var QuillComponent = React.createClass({
 	
 		displayName: 'Quill',
@@ -99,6 +109,7 @@ return /******/ (function(modules) { // webpackBootstrap
 			value: T.string,
 			defaultValue: T.string,
 			readOnly: T.bool,
+			modules: T.object,
 			toolbar: T.array,
 			formats: T.array,
 			styles: T.object,
@@ -114,6 +125,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		dirtyProps: [
 			'id',
 			'className',
+			'modules',
 			'toolbar',
 			'formats',
 			'styles',
@@ -247,7 +259,11 @@ return /******/ (function(modules) { // webpackBootstrap
 		*/
 		renderContents: function() {
 			if (React.Children.count(this.props.children)) {
-				return this.props.children;
+				// Clone children to own their refs.
+				return React.Children.map(
+					this.props.children,
+					function(c) { return cloneElement(c, { ref: c.ref }) }
+				);
 			} else {
 				return [
 					// Quill modifies these elements in-place,

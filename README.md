@@ -181,7 +181,7 @@ More tasks are available on the [Makefile](Makefile):
 
 Changelog
 ---------
-#### next
+#### v0.2.2
 - Added missing `modules` propType and documentation.
 - Children are now cloned so ReactQuill can own their refs. Fixes #20.
 
@@ -194,11 +194,6 @@ Changelog
 - Rewritten uncontrolled and semi-controlled operation. Should fix #9, #10 and #14.
 - Editor props can now be changed after mounting.
 - Added callback for selection change event. Closes #12.
-
-#### v0.1.1
-- The pre-compiled distributable is not shipped with the NPM package anymore. Should fix [#2](https://github.com/zenoamaro/react-quill/issues/2).
-- Sourcemaps are now emitted for both distributables, as separate files.
-- Avoiding parsing Quill as it ships with a pre-built main.
 
 [Full changelog](CHANGELOG.md)
 
