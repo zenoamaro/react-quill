@@ -4,6 +4,7 @@ Changelog
 next
 ----
 - Added missing `modules` propType and documentation.
+- Children are now cloned so ReactQuill can own their refs. Fixes #20.
 
 v0.2.1
 ------

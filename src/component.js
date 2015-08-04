@@ -11,6 +11,16 @@ if (React.createFactory) {
 	QuillToolbar = React.createFactory(QuillToolbar);
 }
 
+// Support React 0.12 and 0.13+
+// FIXME: Remove with React 0.13
+if (React.cloneElement) {
+	var cloneElement = React.cloneElement;
+} else if (React.addons && React.addons.cloneWithProps) {
+	var cloneElement = React.addons.cloneWithProps;
+} else {
+	throw new Error('React addons are required when using React 0.12 or less.');
+}
+
 var QuillComponent = React.createClass({
 
 	displayName: 'Quill',
@@ -174,7 +184,11 @@ var QuillComponent = React.createClass({
 	*/
 	renderContents: function() {
 		if (React.Children.count(this.props.children)) {
-			return this.props.children;
+			// Clone children to own their refs.
+			return React.Children.map(
+				this.props.children,
+				function(c) { return cloneElement(c, { ref: c.ref }) }
+			);
 		} else {
 			return [
 				// Quill modifies these elements in-place,
