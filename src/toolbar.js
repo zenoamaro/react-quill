@@ -139,10 +139,12 @@ var QuillToolbar = React.createClass({
 	},
 
 	render: function() {
+		var children = this.props.items.map(this.renderItem);
+		var html = children.map(React.renderToStaticMarkup).join('');
 		return React.DOM.div({
-			className: this.getClassName() },
-			this.props.items.map(this.renderItem)
-		);
+			className: this.getClassName(),
+			dangerouslySetInnerHTML: { __html:html }
+		});
 	}
 
 });
