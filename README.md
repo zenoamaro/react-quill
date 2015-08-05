@@ -159,6 +159,17 @@ API reference
 `onChangeSelection(range, source)`
 : Called back with the new selected range, or null when unfocused.
 
+`onKeyPress(event)`
+: Called after a key has been pressed and released. 
+: Note that, like its native counterpart, this won't be called for special keys such as <kbd>shift</kbd> or <kbd>enter</kbd>. If you need those, hook onto `onKeyDown` or `onKeyUp`.
+
+`onKeyDown(event)`
+: Called after a key has been pressed, but before it is released.
+: Note that, due to how Quill works, it's possible that you won't receive events for keys such as <kbd>enter</kbd>, <kbd>backspace</kbd> or <kbd>delete</kbd>. If that's the case, try hooking onto `onKeyUp` instead.
+
+`onKeyUp(event)`
+: Called after a key has been released.
+
 
 Building and testing
 --------------------

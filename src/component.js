@@ -40,6 +40,9 @@ var QuillComponent = React.createClass({
 		styles: T.object,
 		theme: T.string,
 		pollInterval: T.number,
+		onKeyPress: T.func,
+		onKeyDown: T.func,
+		onKeyUp: T.func,
 		onChange: T.func,
 		onChangeSelection: T.func
 	},
@@ -213,6 +216,9 @@ var QuillComponent = React.createClass({
 			id: this.props.id,
 			style: this.props.style,
 			className: 'quill ' + this.props.className,
+			onKeyPress: this.props.onKeyPress,
+			onKeyDown: this.props.onKeyDown,
+			onKeyUp: this.props.onKeyUp,
 			onChange: this.preventDefault },
 			this.renderContents()
 		);
