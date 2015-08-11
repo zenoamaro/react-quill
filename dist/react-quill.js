@@ -115,6 +115,9 @@ return /******/ (function(modules) { // webpackBootstrap
 			styles: T.object,
 			theme: T.string,
 			pollInterval: T.number,
+			onKeyPress: T.func,
+			onKeyDown: T.func,
+			onKeyUp: T.func,
 			onChange: T.func,
 			onChangeSelection: T.func
 		},
@@ -185,7 +188,15 @@ return /******/ (function(modules) { // webpackBootstrap
 			var editor = this.createEditor(
 				this.getEditorElement(),
 				this.getEditorConfig());
-			this.setState({ editor:editor });
+	
+			this.setCustomFormats(editor);
+	
+			// NOTE: Custom formats will be stripped when creating
+			//       the editor, since they are not present there yet.
+			//       Therefore, we re-set the contents from the props
+			this.setState({ editor:editor }, function () {
+				this.setEditorContents(editor, this.props.value);
+			}.bind(this));
 		},
 	
 		componentWillUnmount: function() {
@@ -219,11 +230,23 @@ return /******/ (function(modules) { // webpackBootstrap
 			this.componentDidMount();
 		},
 	
+		setCustomFormats: function (editor) {
+			if (!this.props.formats) {
+				return;
+			}
+	
+			for (var i = 0; i < this.props.formats.length; i++) {
+				var format = this.props.formats[i];
+				editor.addFormat(format.name || format, format);
+			}
+		},
+	
 		getEditorConfig: function() {
 			var config = {
 				readOnly:     this.props.readOnly,
 				theme:        this.props.theme,
-				formats:      this.props.formats,
+				// Let Quill set the defaults, if no formats supplied
+				formats:      this.props.formats ? [] : undefined,
 				styles:       this.props.styles,
 				modules:      this.props.modules,
 				pollInterval: this.props.pollInterval
@@ -288,6 +311,9 @@ return /******/ (function(modules) { // webpackBootstrap
 				id: this.props.id,
 				style: this.props.style,
 				className: 'quill ' + this.props.className,
+				onKeyPress: this.props.onKeyPress,
+				onKeyDown: this.props.onKeyDown,
+				onKeyUp: this.props.onKeyUp,
 				onChange: this.preventDefault },
 				this.renderContents()
 			);
@@ -332,7 +358,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /*!**************************************************************************************!*\
   !*** external {"commonjs":"react","commonjs2":"react","amd":"react","root":"React"} ***!
   \**************************************************************************************/
-/***/ function(module, exports, __webpack_require__) {
+/***/ function(module, exports) {
 
 	module.exports = __WEBPACK_EXTERNAL_MODULE_2__;
 
@@ -484,10 +510,12 @@ return /******/ (function(modules) { // webpackBootstrap
 		},
 	
 		render: function() {
+			var children = this.props.items.map(this.renderItem);
+			var html = children.map(React.renderToStaticMarkup).join('');
 			return React.DOM.div({
-				className: this.getClassName() },
-				this.props.items.map(this.renderItem)
-			);
+				className: this.getClassName(),
+				dangerouslySetInnerHTML: { __html:html }
+			});
 		}
 	
 	});
@@ -572,7 +600,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /*!**************************************************************************************!*\
   !*** external {"commonjs":"quill","commonjs2":"quill","amd":"quill","root":"Quill"} ***!
   \**************************************************************************************/
-/***/ function(module, exports, __webpack_require__) {
+/***/ function(module, exports) {
 
 	module.exports = __WEBPACK_EXTERNAL_MODULE_5__;
 

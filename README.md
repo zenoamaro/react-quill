@@ -142,7 +142,18 @@ API reference
 : A list of toolbar items to use as custom configuration for the toolbar. Defaults (that also double as reference) are available as [`ReactQuill.Toolbar.defaultItems`](src/toolbar.js#L21) and [`ReactQuill.Toolbar.defaultColors`](src/toolbar.js#L6). See also the [Toolbar module](http://quilljs.com/docs/modules/toolbar/) over the Quill documentation for more information on the inner workings.
 
 `formats`
-: An array of formats to be enabled during editing. All implemented formats are enabled by default. See [Formats](http://quilljs.com/docs/formats/) for a list.
+: An array of formats to be enabled during editing. All implemented formats are enabled by default. See [Formats](http://quilljs.com/docs/formats/) for a list. Also accepts definitions of custom formats:
+```javascript
+[
+  "list",
+  "bullet",
+  "bold",
+  "italic",
+  { name: "h1", tag: "H1", prepare: "heading", type: "line" },
+  { name: "h2", tag: "H2", prepare: "heading", type: "line" },
+  { name: "h3", tag: "H3", prepare: "heading", type: "line" }
+];
+```
 
 `styles`
 : An object with custom CSS styles to be added to the editor. See [configuration](http://quilljs.com/docs/configuration/) for details.

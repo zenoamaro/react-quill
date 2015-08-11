@@ -113,7 +113,15 @@ var QuillComponent = React.createClass({
 		var editor = this.createEditor(
 			this.getEditorElement(),
 			this.getEditorConfig());
-		this.setState({ editor:editor });
+
+		this.setCustomFormats(editor);
+
+		// NOTE: Custom formats will be stripped when creating
+		//       the editor, since they are not present there yet.
+		//       Therefore, we re-set the contents from the props
+		this.setState({ editor:editor }, function () {
+			this.setEditorContents(editor, this.props.value);
+		}.bind(this));
 	},
 
 	componentWillUnmount: function() {
@@ -147,11 +155,23 @@ var QuillComponent = React.createClass({
 		this.componentDidMount();
 	},
 
+	setCustomFormats: function (editor) {
+		if (!this.props.formats) {
+			return;
+		}
+
+		for (var i = 0; i < this.props.formats.length; i++) {
+			var format = this.props.formats[i];
+			editor.addFormat(format.name || format, format);
+		}
+	},
+
 	getEditorConfig: function() {
 		var config = {
 			readOnly:     this.props.readOnly,
 			theme:        this.props.theme,
-			formats:      this.props.formats,
+			// Let Quill set the defaults, if no formats supplied
+			formats:      this.props.formats ? [] : undefined,
 			styles:       this.props.styles,
 			modules:      this.props.modules,
 			pollInterval: this.props.pollInterval
