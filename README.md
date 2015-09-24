@@ -10,10 +10,11 @@ See the [live demo].
 [live demo]: https://zenoamaro.github.io/react-quill/
 
   1. [Quick start](#quick-start)
-  2. [API reference](#api-reference)
-  3. [Building and testing](#building-and-testing)
-  4. [Changelog](#changelog)
-  5. [License](#license)
+  2. [Bundling with Webpack](#bundling-with-webpack)
+  3. [API reference](#api-reference)
+  4. [Building and testing](#building-and-testing)
+  5. [Changelog](#changelog)
+  6. [License](#license)
 
 
 Quick start
@@ -114,6 +115,30 @@ Quick start
     ~~~
 
     See [component.js](src/component.js) for a fully fleshed-out example.
+
+
+Bundling with Webpack
+---------------------
+Quill ships only a pre-built javascript file, so Webpack will complain:
+  
+~~~
+Error: ./~/react-quill/~/quill/dist/quill.js
+Critical dependencies:
+6:478-485 This seems to be a pre-built javascript file. Though this is possible, it's not recommended. Try to require the original source to get better results.
+@ ./~/react-quill/~/quill/dist/quill.js 6:478-485
+~~~
+
+The warning is harmless, but if you want to silence it you can avoid parsing Quill by adding this to your Webpack configuration:
+
+~~~js
+module: {
+  // Shut off warnings about using pre-built javascript files
+  // as Quill.js unfortunately ships one as its `main`.
+  noParse: /node_modules\/quill\/dist/
+}
+~~~
+
+See [#7](https://github.com/zenoamaro/react-quill/issues/7) for more details.
 
 
 API reference
