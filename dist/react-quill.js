@@ -105,7 +105,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		propTypes: {
 			id: T.string,
 			className: T.string,
-			style: T.object,
+			style: T.oneOfType([T.object, T.bool]),
 			value: T.string,
 			defaultValue: T.string,
 			readOnly: T.bool,
