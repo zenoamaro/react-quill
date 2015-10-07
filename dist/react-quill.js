@@ -550,7 +550,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		hookEditor: function(editor) {
 			editor.on('text-change', function(delta, source) {
 				if (this.onEditorChange) {
-					this.onEditorChange(editor.getHTML(), editor.getText(), delta, source);
+					this.onEditorChange(editor, delta, source);
 				}
 			}.bind(this));
 
