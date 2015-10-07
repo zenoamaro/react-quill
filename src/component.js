@@ -98,7 +98,13 @@ var QuillComponent = React.createClass({
 			//       the change, but we'll still override content
 			//       whenever `value` differs from current state.
 			if (nextProps.value !== this.getEditorContents()) {
-				this.setEditorContents(editor, nextProps.value);
+				// If the component is unmounted and mounted too quickly
+				// an error is thrown in setEditorContents since editor is
+				// still undefined. Must check if editor is undefined
+				// before performing this call.
+				if (editor) {
+					this.setEditorContents(editor, nextProps.value);
+				}
 			}
 		}
 		// We can update readOnly state in-place.
