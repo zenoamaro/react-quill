@@ -113,7 +113,8 @@ var QuillToolbar = React.createClass({
 		return React.DOM.span({
 			key: item.label || item.value || key,
 			className: 'ql-format-button ql-'+item.type,
-			title: item.label }
+			title: item.label },
+			item.children
 		);
 	},
 
