@@ -339,6 +339,14 @@ return /******/ (function(modules) { // webpackBootstrap
 			}
 		},
 	
+		focus: function() {
+			this.state.editor.focus();
+		},
+	
+		blur: function() {
+			this.setEditorSelection(this.state.editor, null);
+		},
+	
 		/*
 		Stop change events from the toolbar from
 		bubbling up outside.
@@ -358,7 +366,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /*!**************************************************************************************!*\
   !*** external {"commonjs":"react","commonjs2":"react","amd":"react","root":"React"} ***!
   \**************************************************************************************/
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
 	module.exports = __WEBPACK_EXTERNAL_MODULE_2__;
 
@@ -484,7 +492,8 @@ return /******/ (function(modules) { // webpackBootstrap
 			return React.DOM.span({
 				key: item.label || item.value || key,
 				className: 'ql-format-button ql-'+item.type,
-				title: item.label }
+				title: item.label },
+				item.children
 			);
 		},
 	
@@ -600,7 +609,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /*!**************************************************************************************!*\
   !*** external {"commonjs":"quill","commonjs2":"quill","amd":"quill","root":"Quill"} ***!
   \**************************************************************************************/
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
 	module.exports = __WEBPACK_EXTERNAL_MODULE_5__;
 
