@@ -264,6 +264,14 @@ var QuillComponent = React.createClass({
 		}
 	},
 
+	focus: function() {
+		this.state.editor.focus();
+	},
+
+	blur: function() {
+		this.setEditorSelection(this.state.editor, null);
+	},
+
 	/*
 	Stop change events from the toolbar from
 	bubbling up outside.

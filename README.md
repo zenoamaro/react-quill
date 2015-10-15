@@ -143,7 +143,8 @@ See [#7](https://github.com/zenoamaro/react-quill/issues/7) for more details.
 
 API reference
 -------------
-`ReactQuill` accepts a few props:
+
+### Props
 
 `id`
 : ID to be applied to the DOM element.
@@ -196,7 +197,7 @@ API reference
 : Called back with the new selected range, or null when unfocused.
 
 `onKeyPress(event)`
-: Called after a key has been pressed and released. 
+: Called after a key has been pressed and released.
 : Note that, like its native counterpart, this won't be called for special keys such as <kbd>shift</kbd> or <kbd>enter</kbd>. If you need those, hook onto `onKeyDown` or `onKeyUp`.
 
 `onKeyDown(event)`
@@ -205,6 +206,17 @@ API reference
 
 `onKeyUp(event)`
 : Called after a key has been released.
+
+
+### Methods
+
+If you have [a ref to a ReactQuill node](https://facebook.github.io/react/docs/more-about-refs.html), you will be able to invoke the following methods:
+
+`focus()`
+: Focuses the editor.
+
+`blur()`
+: Removes focus from the editor.
 
 
 Building and testing
