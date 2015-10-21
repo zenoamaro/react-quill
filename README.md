@@ -120,7 +120,7 @@ Quick start
 Bundling with Webpack
 ---------------------
 Quill ships only a pre-built javascript file, so Webpack will complain:
-  
+
 ~~~
 Error: ./~/react-quill/~/quill/dist/quill.js
 Critical dependencies:
@@ -181,8 +181,11 @@ API reference
 ];
 ```
 
+`style`
+: An object with custom CSS rules to apply on the editor's container. Rules should be in React's "camelCased" naming style.
+
 `styles`
-: An object with custom CSS styles to be added to the editor. See [configuration](http://quilljs.com/docs/configuration/) for details.
+: An object with custom CSS selectors and rules to add to the editor. Neither should be in "camelCased" style. Pass `false` to prevent Quill from injecting any default style. See [configuration](http://quilljs.com/docs/configuration/) for details.
 
 `theme`
 : The name of the theme to apply to the editor. Defaults to `base`.
