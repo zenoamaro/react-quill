@@ -30,7 +30,7 @@ var QuillComponent = React.createClass({
 	propTypes: {
 		id: T.string,
 		className: T.string,
-		style: T.oneOfType([T.object, T.bool]),
+		style: T.oneOfType([ T.object, T.oneOf([false]) ]),
 		value: T.string,
 		defaultValue: T.string,
 		readOnly: T.bool,
