@@ -44,7 +44,7 @@ var QuillMixin = {
 	*/
 	setEditorContents: function(editor, value) {
 		var sel = editor.getSelection();
-		editor.setHTML(value);
+		editor.setHTML(value || '');
 		if (sel) this.setEditorSelection(editor, sel);
 	},
 
