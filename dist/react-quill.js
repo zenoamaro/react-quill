@@ -199,9 +199,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 			// NOTE: Custom formats will be stripped when creating
 			//       the editor, since they are not present there yet.
-			//       Therefore, we re-set the contents from the props
-			this.setState({ editor:editor }, function () {
-				this.setEditorContents(editor, this.props.value);
+			//       Therefore, we re-set the contents from state.
+			this.setState({ editor:editor }, function() {
+				this.setEditorContents(editor, this.state.value);
 			}.bind(this));
 		},
 	
@@ -592,7 +592,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		*/
 		setEditorContents: function(editor, value) {
 			var sel = editor.getSelection();
-			editor.setHTML(value);
+			editor.setHTML(value || '');
 			if (sel) this.setEditorSelection(editor, sel);
 		},
 	
@@ -609,6 +609,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 	
 	module.exports = QuillMixin;
+
 
 /***/ },
 /* 5 */
