@@ -124,9 +124,9 @@ var QuillComponent = React.createClass({
 
 		// NOTE: Custom formats will be stripped when creating
 		//       the editor, since they are not present there yet.
-		//       Therefore, we re-set the contents from the props
-		this.setState({ editor:editor }, function () {
-			this.setEditorContents(editor, this.props.value);
+		//       Therefore, we re-set the contents from state.
+		this.setState({ editor:editor }, function() {
+			this.setEditorContents(editor, this.state.value);
 		}.bind(this));
 	},
 
