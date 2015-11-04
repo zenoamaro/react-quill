@@ -104,6 +104,7 @@ var QuillToolbar = React.createClass({
 	renderChoices: function(item, key) {
 		return React.DOM.select({
 			key: item.label || key,
+			title: item.label,
 			className: 'ql-'+item.type },
 			item.items.map(this.renderChoiceItem)
 		);
