@@ -195,6 +195,10 @@ var QuillComponent = React.createClass({
 		return config;
 	},
 
+	getEditor: function() {
+		return this.state.editor;
+	},
+
 	getEditorElement: function() {
 		return this.refs.editor.getDOMNode();
 	},

@@ -270,6 +270,10 @@ return /******/ (function(modules) { // webpackBootstrap
 			return config;
 		},
 	
+		getEditor: function() {
+			return this.state.editor;
+		},
+	
 		getEditorElement: function() {
 			return this.refs.editor.getDOMNode();
 		},

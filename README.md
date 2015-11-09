@@ -221,6 +221,9 @@ If you have [a ref to a ReactQuill node](https://facebook.github.io/react/docs/m
 `blur()`
 : Removes focus from the editor.
 
+`getEditor()`
+: Returns the Quill instance that backs the editor. While you can freely use this to access methods such as `getText()`, please avoid from imperatively manipulating the instance.
+
 
 Building and testing
 --------------------
