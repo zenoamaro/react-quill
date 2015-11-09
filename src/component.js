@@ -35,7 +35,7 @@ var QuillComponent = React.createClass({
 		defaultValue: T.string,
 		readOnly: T.bool,
 		modules: T.object,
-		toolbar: T.array,
+		toolbar: T.oneOfType([ T.array, T.oneOf([false]), ]),
 		formats: T.array,
 		styles: T.oneOfType([ T.object, T.oneOf([false]) ]),
 		theme: T.string,
@@ -182,9 +182,9 @@ var QuillComponent = React.createClass({
 			modules:      this.props.modules,
 			pollInterval: this.props.pollInterval
 		};
-		// Unless we're redefining the toolbar,
-		// attach to the default one as a ref.
-		if (!config.modules.toolbar) {
+		// Unless we're redefining the toolbar, or it has been explicitly
+		// disabled, attach to the default one as a ref.
+		if (this.props.toolbar !== false && !config.modules.toolbar) {
 			// Don't mutate the original modules
 			// because it's shared between components.
 			config.modules = JSON.parse(JSON.stringify(config.modules));
@@ -222,11 +222,14 @@ var QuillComponent = React.createClass({
 			return [
 				// Quill modifies these elements in-place,
 				// so we need to re-render them every time.
-				QuillToolbar({
+
+				// Render the toolbar unless explicitly disabled.
+				this.props.toolbar !== false? QuillToolbar({
 					key: 'toolbar-' + Math.random(),
 					ref: 'toolbar',
 					items: this.props.toolbar
-				}),
+				}) : false,
+
 				React.DOM.div({
 					key: 'editor-' + Math.random(),
 					ref: 'editor',

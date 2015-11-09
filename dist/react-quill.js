@@ -110,7 +110,7 @@ return /******/ (function(modules) { // webpackBootstrap
 			defaultValue: T.string,
 			readOnly: T.bool,
 			modules: T.object,
-			toolbar: T.array,
+			toolbar: T.oneOfType([ T.array, T.oneOf([false]), ]),
 			formats: T.array,
 			styles: T.oneOfType([ T.object, T.oneOf([false]) ]),
 			theme: T.string,
@@ -257,9 +257,9 @@ return /******/ (function(modules) { // webpackBootstrap
 				modules:      this.props.modules,
 				pollInterval: this.props.pollInterval
 			};
-			// Unless we're redefining the toolbar,
-			// attach to the default one as a ref.
-			if (!config.modules.toolbar) {
+			// Unless we're redefining the toolbar, or it has been explicitly
+			// disabled, attach to the default one as a ref.
+			if (this.props.toolbar !== false && !config.modules.toolbar) {
 				// Don't mutate the original modules
 				// because it's shared between components.
 				config.modules = JSON.parse(JSON.stringify(config.modules));
@@ -297,11 +297,14 @@ return /******/ (function(modules) { // webpackBootstrap
 				return [
 					// Quill modifies these elements in-place,
 					// so we need to re-render them every time.
-					QuillToolbar({
+	
+					// Render the toolbar unless explicitly disabled.
+					this.props.toolbar !== false? QuillToolbar({
 						key: 'toolbar-' + Math.random(),
 						ref: 'toolbar',
 						items: this.props.toolbar
-					}),
+					}) : false,
+	
 					React.DOM.div({
 						key: 'editor-' + Math.random(),
 						ref: 'editor',
@@ -489,6 +492,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		renderChoices: function(item, key) {
 			return React.DOM.select({
 				key: item.label || key,
+				title: item.label,
 				className: 'ql-'+item.type },
 				item.items.map(this.renderChoiceItem)
 			);
