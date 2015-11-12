@@ -1,6 +1,23 @@
 Changelog
 =========
 
+v0.3.0
+------
+- Bumped Quill.js to v0.2.0
+- Exposed `focus` and `blur` public methods from component.
+- Exposed `getEditor` public method to retrieve the backing Quill instance from the component.
+- Added callbacks for listening to keyboard events.
+- Added tooltips for toolbar choice controls (@bird512).
+- Added support for child nodes in toolbar items (@1000hz).
+- Added support for custom formats in the configuration (@csk157).
+- Added an option to disable the toolbar entirely by passing `false` to `toolbar`.
+- Added an option to disable styles entirely by passing `false` to `style` (@kkerr1).
+- Fixed an issue where the Quill would duplicate React IDs inside the toolbar leading to errors. Fixes #15.
+- Fixes an issue where the editor could be used while null (@brucedlukens).
+- Fixes an issue where null would be set on the editor. Fixes #48.
+- Fixes an issue where the editor would be instantiated with the wrong value. Fixes #50.
+- Avoiding parsing Quill's `dist` directory with webpack.
+
 v0.2.2
 ------
 - Added missing `modules` propType and documentation.

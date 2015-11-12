@@ -246,6 +246,22 @@ More tasks are available on the [Makefile](Makefile):
 
 Changelog
 ---------
+#### v0.3.0
+- Bumped Quill.js to v0.2.0
+- Exposed `focus` and `blur` public methods from component.
+- Exposed `getEditor` public method to retrieve the backing Quill instance from the component.
+- Added callbacks for listening to keyboard events.
+- Added tooltips for toolbar choice controls (@bird512).
+- Added support for child nodes in toolbar items (@1000hz).
+- Added support for custom formats in the configuration (@csk157).
+- Added an option to disable the toolbar entirely by passing `false` to `toolbar`.
+- Added an option to disable styles entirely by passing `false` to `style` (@kkerr1).
+- Fixed an issue where the Quill would duplicate React IDs inside the toolbar leading to errors. Fixes #15.
+- Fixes an issue where the editor could be used while null (@brucedlukens).
+- Fixes an issue where null would be set on the editor. Fixes #48.
+- Fixes an issue where the editor would be instantiated with the wrong value. Fixes #50.
+- Avoiding parsing Quill's `dist` directory with webpack.
+
 #### v0.2.2
 - Added missing `modules` propType and documentation.
 - Children are now cloned so ReactQuill can own their refs. Fixes #20.
@@ -253,20 +269,16 @@ Changelog
 #### v0.2.1
 - Link toolbar button and module are now enabled by default. Fixes #19.
 
-#### v0.2.0
-- Fix React warnings about unique `key` props in toolbar (@Janekk).
-- Sending `delta` and `source` from editor change events. Fixes #17.
-- Rewritten uncontrolled and semi-controlled operation. Should fix #9, #10 and #14.
-- Editor props can now be changed after mounting.
-- Added callback for selection change event. Closes #12.
-
 [Full changelog](CHANGELOG.md)
 
 
 Roadmap
 -------
+- [ ] ES6 rewrite
+- [ ] React 0.14 support
 - [ ] First-class support for modules
-- [ ] Better API for custom controls?
+- [ ] Better API for custom controls
+- [ ] Tests!
 
 
 License
