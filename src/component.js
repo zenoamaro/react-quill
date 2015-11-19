@@ -1,25 +1,12 @@
 'use strict';
 
 var React = require('react'),
-	QuillToolbar = require('./toolbar'),
+	ReactDOM = require('react-dom'),
+	cloneElement = require('react-addons-clone-with-props'),
+	QuillToolbar = React.createFactory(require('./toolbar')),
 	QuillMixin = require('./mixin'),
 	T = React.PropTypes;
 
-// Support React 0.11 and 0.12
-// FIXME: Remove with React 0.13
-if (React.createFactory) {
-	QuillToolbar = React.createFactory(QuillToolbar);
-}
-
-// Support React 0.12 and 0.13+
-// FIXME: Remove with React 0.13
-if (React.cloneElement) {
-	var cloneElement = React.cloneElement;
-} else if (React.addons && React.addons.cloneWithProps) {
-	var cloneElement = React.addons.cloneWithProps;
-} else {
-	throw new Error('React addons are required when using React 0.12 or less.');
-}
 
 var QuillComponent = React.createClass({
 
@@ -189,7 +176,7 @@ var QuillComponent = React.createClass({
 			// because it's shared between components.
 			config.modules = JSON.parse(JSON.stringify(config.modules));
 			config.modules.toolbar = {
-				container: this.refs.toolbar.getDOMNode()
+				container: this.refs.toolbar.refs.toolbarNode
 			};
 		}
 		return config;
@@ -200,7 +187,7 @@ var QuillComponent = React.createClass({
 	},
 
 	getEditorElement: function() {
-		return this.refs.editor.getDOMNode();
+		return this.refs.editor//.getDOMNode();
 	},
 
 	getEditorContents: function() {
