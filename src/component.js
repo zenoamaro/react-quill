@@ -66,7 +66,8 @@ var QuillComponent = React.createClass({
 			className: '',
 			theme: 'base',
 			modules: {
-				'link-tooltip': true
+				'link-tooltip': true,
+				'image-tooltip': true
 			}
 		};
 	},
