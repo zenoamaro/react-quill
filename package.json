@@ -1,6 +1,6 @@
 {
   "name": "react-quill",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "The Quill rich-text editor as a React component.",
   "author": "zenoamaro <zenoamaro@gmail.com>",
   "homepage": "https://github.com/zenoamaro/react-quill",
@@ -36,10 +36,10 @@
     "LICENSE"
   ],
   "dependencies": {
-    "quill": "^0.20.0"
-  },
-  "peerDependencies": {
-    "react": ">=0.11.0"
+    "quill": "^0.20.0",
+    "react": "^0.14.3",
+    "react-addons-clone-with-props": "^0.14.3",
+    "react-dom": "^0.14.3"
   },
   "devDependencies": {
     "blanket": "^1.1.6",
@@ -47,7 +47,6 @@
     "jshint": "^2.5.10",
     "mocha": "^2.0.1",
     "mocha-text-cov": "^0.1.0",
-    "react": "^0.12.0",
     "should": "^4.3.0",
     "sinon": "^1.12.1",
     "travis-cov": "^0.2.5",
