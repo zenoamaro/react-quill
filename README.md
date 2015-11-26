@@ -144,6 +144,18 @@ See [#7](https://github.com/zenoamaro/react-quill/issues/7) for more details.
 API reference
 -------------
 
+### Exports
+
+`ReactQuill.Mixin`
+: Provides the bridge between React and Quill. `ReactQuill` implements this mixin; in the same way you can use it to build your own component, or replace it to implement a new core for the default component.
+
+`ReactQuill.Toolbar`
+: The component that renders the basic ReactQuill toolbar. The default collection of items and color swatches is available as `ReactQuill.Toolbar.defaultItems` and `ReactQuill.Toolbar.defaultColors` respectively.
+
+`ReactQuill.Quill`
+: The `Quill` namespace on which you can call `registerModule` and such.
+
+
 ### Props
 
 `id`
