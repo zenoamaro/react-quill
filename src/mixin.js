@@ -29,7 +29,8 @@ var QuillMixin = {
 	},
 
 	destroyEditor: function(editor) {
-		editor.destroy();
+		if(editor)
+			editor.destroy();
 	},
 
 	setEditorReadOnly: function(editor, value) {
