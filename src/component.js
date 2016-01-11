@@ -248,7 +248,7 @@ var QuillComponent = React.createClass({
 		return React.DOM.div({
 			id: this.props.id,
 			style: this.props.style,
-			className: 'quill ' + this.props.className,
+			className: ['quill'].concat(this.props.className).join(' '),
 			onKeyPress: this.props.onKeyPress,
 			onKeyDown: this.props.onKeyDown,
 			onKeyUp: this.props.onKeyUp,
