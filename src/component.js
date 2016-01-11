@@ -1,6 +1,7 @@
 'use strict';
 
 var React = require('react'),
+  ReactDOM = require('react-dom'),
 	QuillToolbar = require('./toolbar'),
 	QuillMixin = require('./mixin'),
 	T = React.PropTypes;
@@ -189,7 +190,7 @@ var QuillComponent = React.createClass({
 			// because it's shared between components.
 			config.modules = JSON.parse(JSON.stringify(config.modules));
 			config.modules.toolbar = {
-				container: this.refs.toolbar.getDOMNode()
+				container: ReactDOM.findDOMNode(this.refs.toolbar)
 			};
 		}
 		return config;
@@ -200,7 +201,7 @@ var QuillComponent = React.createClass({
 	},
 
 	getEditorElement: function() {
-		return this.refs.editor.getDOMNode();
+		return ReactDOM.findDOMNode(this.refs.editor);
 	},
 
 	getEditorContents: function() {
