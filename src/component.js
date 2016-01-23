@@ -58,6 +58,7 @@ var QuillComponent = React.createClass({
 		'toolbar',
 		'formats',
 		'styles',
+		'style',
 		'theme',
 		'pollInterval'
 	],
