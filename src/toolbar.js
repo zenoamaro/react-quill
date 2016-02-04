@@ -1,7 +1,7 @@
 'use strict';
 
 var React = require('react'),
-  ReactDOMServer = require('react-dom/server'),
+	ReactDOMServer = require('react-dom/server'),
 	T = React.PropTypes;
 
 var defaultColors = [

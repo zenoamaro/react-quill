@@ -1,26 +1,13 @@
 'use strict';
 
 var React = require('react'),
-  ReactDOM = require('react-dom'),
+	ReactDOM = require('react-dom'),
 	QuillToolbar = require('./toolbar'),
 	QuillMixin = require('./mixin'),
 	T = React.PropTypes;
 
-// Support React 0.11 and 0.12
-// FIXME: Remove with React 0.13
-if (React.createFactory) {
-	QuillToolbar = React.createFactory(QuillToolbar);
-}
-
-// Support React 0.12 and 0.13+
-// FIXME: Remove with React 0.13
-if (React.cloneElement) {
-	var cloneElement = React.cloneElement;
-} else if (React.addons && React.addons.cloneWithProps) {
-	var cloneElement = React.addons.cloneWithProps;
-} else {
-	throw new Error('React addons are required when using React 0.12 or less.');
-}
+// FIXME: Remove with the switch to JSX
+QuillToolbar = React.createFactory(QuillToolbar);
 
 var QuillComponent = React.createClass({
 
@@ -222,7 +209,7 @@ var QuillComponent = React.createClass({
 			// Clone children to own their refs.
 			return React.Children.map(
 				this.props.children,
-				function(c) { return cloneElement(c, { ref: c.ref }) }
+				function(c) { return React.cloneElement(c, { ref: c.ref }) }
 			);
 		} else {
 			return [
