@@ -1,4 +1,5 @@
 /* global React */
+/* global ReactDOM */
 /* global ReactQuill */
 /* global Prism */
 /* global html_beautify */
@@ -34,21 +35,21 @@ var toolbarItems = [
 
 	{ label:'Formats', type:'group', items: [
 		{ label:'Font', type:'font', items: [
-			{ label:'Sans Serif',  value:'sans-serif' },
+			{ label:'Sans Serif',  value:'sans-serif', selected:true },
 			{ label:'Serif',       value:'serif' },
 			{ label:'Monospace',   value:'monospace' }
 		]},
 		{ type:'separator' },
 		{ label:'Size', type:'size', items: [
-			{ label:'Normal',  value:'10px' },
-			{ label:'Smaller', value:'13px' },
-			{ label:'Larger',  value:'18px' },
-			{ label:'Huge',    value:'32px' }
+			{ label:'Small',  value:'10px' },
+			{ label:'Normal', value:'13px', selected:true },
+			{ label:'Large',  value:'18px' },
+			{ label:'Huge',   value:'32px' }
 		]},
 		{ type:'separator' },
 		{ label:'Alignment', type:'align', items: [
+			{ label:'', value:'left', selected:true },
 			{ label:'', value:'center' },
-			{ label:'', value:'left' },
 			{ label:'', value:'right' },
 			{ label:'', value:'justify' }
 		]}
@@ -126,17 +127,11 @@ var Editor = React.createClass({
 });
 
 
-// Support React 0.11 and 0.12
-// FIXME: Remove with React 0.13
-if (React.createFactory) {
-	Editor = React.createFactory(Editor);
-	ReactQuill = React.createFactory(ReactQuill);
-}
+// FIXME: Remove with the switch to JSX
+Editor = React.createFactory(Editor);
+ReactQuill = React.createFactory(ReactQuill);
 
-
-// Support React 0.11 and 0.12
-// FIXME: Remove with React 0.13
-(React.render||React.renderComponent)(
+ReactDOM.render(
 	Editor(),
 	document.body
 );

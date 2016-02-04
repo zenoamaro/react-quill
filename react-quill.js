@@ -1,13 +1,13 @@
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
-		module.exports = factory(require("react"), require("quill"));
+		module.exports = factory(require("react"), require("react-dom"), require("react-dom/server"), require("quill"));
 	else if(typeof define === 'function' && define.amd)
-		define(["react", "quill"], factory);
+		define(["react", "react-dom", "react-dom/server", "quill"], factory);
 	else if(typeof exports === 'object')
-		exports["ReactQuill"] = factory(require("react"), require("quill"));
+		exports["ReactQuill"] = factory(require("react"), require("react-dom"), require("react-dom/server"), require("quill"));
 	else
-		root["ReactQuill"] = factory(root["React"], root["Quill"]);
-})(this, function(__WEBPACK_EXTERNAL_MODULE_2__, __WEBPACK_EXTERNAL_MODULE_5__) {
+		root["ReactQuill"] = factory(root["React"], root["ReactDOM"], root["ReactDOMServer"], root["Quill"]);
+})(this, function(__WEBPACK_EXTERNAL_MODULE_2__, __WEBPACK_EXTERNAL_MODULE_3__, __WEBPACK_EXTERNAL_MODULE_5__, __WEBPACK_EXTERNAL_MODULE_7__) {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -58,12 +58,13 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
-	React-Quill v0.2.1
+	React-Quill v0.4.0
 	https://github.com/zenoamaro/react-quill
 	*/
 	module.exports = __webpack_require__(/*! ./component */ 1);
-	module.exports.Mixin = __webpack_require__(/*! ./mixin */ 4);
-	module.exports.Toolbar = __webpack_require__(/*! ./toolbar */ 3);
+	module.exports.Mixin = __webpack_require__(/*! ./mixin */ 6);
+	module.exports.Toolbar = __webpack_require__(/*! ./toolbar */ 4);
+	module.exports.Quill = __webpack_require__(/*! quill */ 7);
 
 
 /***/ },
@@ -76,15 +77,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	'use strict';
 	
 	var React = __webpack_require__(/*! react */ 2),
-		QuillToolbar = __webpack_require__(/*! ./toolbar */ 3),
-		QuillMixin = __webpack_require__(/*! ./mixin */ 4),
+		ReactDOM = __webpack_require__(/*! react-dom */ 3),
+		QuillToolbar = __webpack_require__(/*! ./toolbar */ 4),
+		QuillMixin = __webpack_require__(/*! ./mixin */ 6),
 		T = React.PropTypes;
 	
-	// Support React 0.11 and 0.12
-	// FIXME: Remove with React 0.13
-	if (React.createFactory) {
-		QuillToolbar = React.createFactory(QuillToolbar);
-	}
+	// FIXME: Remove with the switch to JSX
+	QuillToolbar = React.createFactory(QuillToolbar);
 	
 	var QuillComponent = React.createClass({
 	
@@ -99,11 +98,15 @@ return /******/ (function(modules) { // webpackBootstrap
 			value: T.string,
 			defaultValue: T.string,
 			readOnly: T.bool,
-			toolbar: T.array,
+			modules: T.object,
+			toolbar: T.oneOfType([ T.array, T.oneOf([false]), ]),
 			formats: T.array,
-			styles: T.object,
+			styles: T.oneOfType([ T.object, T.oneOf([false]) ]),
 			theme: T.string,
 			pollInterval: T.number,
+			onKeyPress: T.func,
+			onKeyDown: T.func,
+			onKeyUp: T.func,
 			onChange: T.func,
 			onChangeSelection: T.func
 		},
@@ -114,6 +117,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		dirtyProps: [
 			'id',
 			'className',
+			'modules',
 			'toolbar',
 			'formats',
 			'styles',
@@ -126,7 +130,8 @@ return /******/ (function(modules) { // webpackBootstrap
 				className: '',
 				theme: 'base',
 				modules: {
-					'link-tooltip': true
+					'link-tooltip': true,
+					'image-tooltip': true
 				}
 			};
 		},
@@ -149,22 +154,28 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 		componentWillReceiveProps: function(nextProps) {
 			var editor = this.state.editor;
-			// Update only if we've been passed a new `value`.
-			// This leaves components using `defaultValue` alone.
-			if ('value' in nextProps) {
-				// NOTE: Seeing that Quill is missing a way to prevent
-				//       edits, we have to settle for a hybrid between
-				//       controlled and uncontrolled mode. We can't prevent
-				//       the change, but we'll still override content
-				//       whenever `value` differs from current state.
-				if (nextProps.value !== this.getEditorContents()) {
-					this.setEditorContents(editor, nextProps.value);
+			// If the component is unmounted and mounted too quickly
+			// an error is thrown in setEditorContents since editor is
+			// still undefined. Must check if editor is undefined
+			// before performing this call.
+			if (editor) {
+				// Update only if we've been passed a new `value`.
+				// This leaves components using `defaultValue` alone.
+				if ('value' in nextProps) {
+					// NOTE: Seeing that Quill is missing a way to prevent
+					//       edits, we have to settle for a hybrid between
+					//       controlled and uncontrolled mode. We can't prevent
+					//       the change, but we'll still override content
+					//       whenever `value` differs from current state.
+					if (nextProps.value !== this.getEditorContents()) {
+						this.setEditorContents(editor, nextProps.value);
+					}
 				}
-			}
-			// We can update readOnly state in-place.
-			if ('readOnly' in nextProps) {
-				if (nextProps.readOnly !== this.props.readOnly) {
-					this.setEditorReadOnly(editor, nextProps.readOnly);
+				// We can update readOnly state in-place.
+				if ('readOnly' in nextProps) {
+					if (nextProps.readOnly !== this.props.readOnly) {
+						this.setEditorReadOnly(editor, nextProps.readOnly);
+					}
 				}
 			}
 		},
@@ -173,7 +184,15 @@ return /******/ (function(modules) { // webpackBootstrap
 			var editor = this.createEditor(
 				this.getEditorElement(),
 				this.getEditorConfig());
-			this.setState({ editor:editor });
+	
+			this.setCustomFormats(editor);
+	
+			// NOTE: Custom formats will be stripped when creating
+			//       the editor, since they are not present there yet.
+			//       Therefore, we re-set the contents from state.
+			this.setState({ editor:editor }, function() {
+				this.setEditorContents(editor, this.state.value);
+			}.bind(this));
 		},
 	
 		componentWillUnmount: function() {
@@ -207,30 +226,46 @@ return /******/ (function(modules) { // webpackBootstrap
 			this.componentDidMount();
 		},
 	
+		setCustomFormats: function (editor) {
+			if (!this.props.formats) {
+				return;
+			}
+	
+			for (var i = 0; i < this.props.formats.length; i++) {
+				var format = this.props.formats[i];
+				editor.addFormat(format.name || format, format);
+			}
+		},
+	
 		getEditorConfig: function() {
 			var config = {
 				readOnly:     this.props.readOnly,
 				theme:        this.props.theme,
-				formats:      this.props.formats,
+				// Let Quill set the defaults, if no formats supplied
+				formats:      this.props.formats ? [] : undefined,
 				styles:       this.props.styles,
 				modules:      this.props.modules,
 				pollInterval: this.props.pollInterval
 			};
-			// Unless we're redefining the toolbar,
-			// attach to the default one as a ref.
-			if (!config.modules.toolbar) {
+			// Unless we're redefining the toolbar, or it has been explicitly
+			// disabled, attach to the default one as a ref.
+			if (this.props.toolbar !== false && !config.modules.toolbar) {
 				// Don't mutate the original modules
 				// because it's shared between components.
 				config.modules = JSON.parse(JSON.stringify(config.modules));
 				config.modules.toolbar = {
-					container: this.refs.toolbar.getDOMNode()
+					container: ReactDOM.findDOMNode(this.refs.toolbar)
 				};
 			}
 			return config;
 		},
 	
+		getEditor: function() {
+			return this.state.editor;
+		},
+	
 		getEditorElement: function() {
-			return this.refs.editor.getDOMNode();
+			return ReactDOM.findDOMNode(this.refs.editor);
 		},
 	
 		getEditorContents: function() {
@@ -247,16 +282,23 @@ return /******/ (function(modules) { // webpackBootstrap
 		*/
 		renderContents: function() {
 			if (React.Children.count(this.props.children)) {
-				return this.props.children;
+				// Clone children to own their refs.
+				return React.Children.map(
+					this.props.children,
+					function(c) { return React.cloneElement(c, { ref: c.ref }) }
+				);
 			} else {
 				return [
 					// Quill modifies these elements in-place,
 					// so we need to re-render them every time.
-					QuillToolbar({
+	
+					// Render the toolbar unless explicitly disabled.
+					this.props.toolbar !== false? QuillToolbar({
 						key: 'toolbar-' + Math.random(),
 						ref: 'toolbar',
 						items: this.props.toolbar
-					}),
+					}) : false,
+	
 					React.DOM.div({
 						key: 'editor-' + Math.random(),
 						ref: 'editor',
@@ -271,30 +313,41 @@ return /******/ (function(modules) { // webpackBootstrap
 			return React.DOM.div({
 				id: this.props.id,
 				style: this.props.style,
-				className: 'quill ' + this.props.className,
+				className: ['quill'].concat(this.props.className).join(' '),
+				onKeyPress: this.props.onKeyPress,
+				onKeyDown: this.props.onKeyDown,
+				onKeyUp: this.props.onKeyUp,
 				onChange: this.preventDefault },
 				this.renderContents()
 			);
 		},
 	
-		onEditorChange: function(value, delta, source) {
+		onEditorChange: function(value, delta, source, editor) {
 			if (value !== this.getEditorContents()) {
 				this.setState({ value: value });
 				if (this.props.onChange) {
-					this.props.onChange(value, delta, source);
+					this.props.onChange(value, delta, source, editor);
 				}
 			}
 		},
 	
-		onEditorChangeSelection: function(range, source) {
+		onEditorChangeSelection: function(range, source, editor) {
 			var s = this.getEditorSelection() || {};
 			var r = range || {};
 			if (r.start !== s.start || r.end !== s.end) {
 				this.setState({ selection: range });
 				if (this.props.onChangeSelection) {
-					this.props.onChangeSelection(range, source);
+					this.props.onChangeSelection(range, source, editor);
 				}
 			}
+		},
+	
+		focus: function() {
+			this.state.editor.focus();
+		},
+	
+		blur: function() {
+			this.setEditorSelection(this.state.editor, null);
 		},
 	
 		/*
@@ -322,6 +375,15 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ },
 /* 3 */
+/*!*****************************************************************************************************!*\
+  !*** external {"commonjs":"react-dom","commonjs2":"react-dom","amd":"react-dom","root":"ReactDOM"} ***!
+  \*****************************************************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = __WEBPACK_EXTERNAL_MODULE_3__;
+
+/***/ },
+/* 4 */
 /*!************************!*\
   !*** ./src/toolbar.js ***!
   \************************/
@@ -330,6 +392,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	'use strict';
 	
 	var React = __webpack_require__(/*! react */ 2),
+		ReactDOMServer = __webpack_require__(/*! react-dom/server */ 5),
 		T = React.PropTypes;
 	
 	var defaultColors = [
@@ -351,21 +414,21 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 		{ label:'Formats', type:'group', items: [
 			{ label:'Font', type:'font', items: [
-				{ label:'Sans Serif',  value:'sans-serif' },
+				{ label:'Sans Serif',  value:'sans-serif', selected:true },
 				{ label:'Serif',       value:'serif' },
 				{ label:'Monospace',   value:'monospace' }
 			]},
 			{ type:'separator' },
 			{ label:'Size', type:'size', items: [
-				{ label:'Normal',  value:'10px' },
-				{ label:'Smaller', value:'13px' },
-				{ label:'Larger',  value:'18px' },
-				{ label:'Huge',    value:'32px' }
+				{ label:'Small',  value:'10px' },
+				{ label:'Normal', value:'13px', selected:true },
+				{ label:'Large',  value:'18px' },
+				{ label:'Huge',   value:'32px' }
 			]},
 			{ type:'separator' },
 			{ label:'Alignment', type:'align', items: [
+				{ label:'', value:'left', selected:true },
 				{ label:'', value:'center' },
-				{ label:'', value:'left' },
 				{ label:'', value:'right' },
 				{ label:'', value:'justify' }
 			]}
@@ -425,7 +488,8 @@ return /******/ (function(modules) { // webpackBootstrap
 		renderChoiceItem: function(item, key) {
 			return React.DOM.option({
 				key: item.label || item.value || key,
-				value:item.value },
+				value:item.value,
+				selected:item.selected },
 				item.label
 			);
 		},
@@ -433,6 +497,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		renderChoices: function(item, key) {
 			return React.DOM.select({
 				key: item.label || key,
+				title: item.label,
 				className: 'ql-'+item.type },
 				item.items.map(this.renderChoiceItem)
 			);
@@ -442,7 +507,8 @@ return /******/ (function(modules) { // webpackBootstrap
 			return React.DOM.span({
 				key: item.label || item.value || key,
 				className: 'ql-format-button ql-'+item.type,
-				title: item.label }
+				title: item.label },
+				item.children
 			);
 		},
 	
@@ -468,10 +534,12 @@ return /******/ (function(modules) { // webpackBootstrap
 		},
 	
 		render: function() {
+			var children = this.props.items.map(this.renderItem);
+			var html = children.map(ReactDOMServer.renderToStaticMarkup).join('');
 			return React.DOM.div({
-				className: this.getClassName() },
-				this.props.items.map(this.renderItem)
-			);
+				className: this.getClassName(),
+				dangerouslySetInnerHTML: { __html:html }
+			});
 		}
 	
 	});
@@ -480,8 +548,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	QuillToolbar.defaultItems = defaultItems;
 	QuillToolbar.defaultColors = defaultColors;
 
+
 /***/ },
-/* 4 */
+/* 5 */
+/*!********************************************************************************************************************************!*\
+  !*** external {"commonjs":"react-dom/server","commonjs2":"react-dom/server","amd":"react-dom/server","root":"ReactDOMServer"} ***!
+  \********************************************************************************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = __WEBPACK_EXTERNAL_MODULE_5__;
+
+/***/ },
+/* 6 */
 /*!**********************!*\
   !*** ./src/mixin.js ***!
   \**********************/
@@ -489,7 +567,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	'use strict';
 	
-	var Quill = __webpack_require__(/*! quill */ 5);
+	var Quill = __webpack_require__(/*! quill */ 7);
 	
 	var QuillMixin = {
 	
@@ -504,15 +582,26 @@ return /******/ (function(modules) { // webpackBootstrap
 		},
 	
 		hookEditor: function(editor) {
+			// Expose the editor on change events via a weaker,
+			// unprivileged proxy object that does not allow
+			// accidentally modifying editor state.
+			var unprivilegedEditor = this.makeUnprivilegedEditor(editor);
+	
 			editor.on('text-change', function(delta, source) {
 				if (this.onEditorChange) {
-					this.onEditorChange(editor.getHTML(), delta, source);
+					this.onEditorChange(
+						editor.getHTML(), delta, source,
+						unprivilegedEditor
+					);
 				}
 			}.bind(this));
 	
 			editor.on('selection-change', function(range, source) {
 				if (this.onEditorChangeSelection) {
-					this.onEditorChangeSelection(range, source);
+					this.onEditorChangeSelection(
+						range, source,
+						unprivilegedEditor
+					);
 				}
 			}.bind(this));
 		},
@@ -533,7 +622,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		*/
 		setEditorContents: function(editor, value) {
 			var sel = editor.getSelection();
-			editor.setHTML(value);
+			editor.setHTML(value || '');
 			if (sel) this.setEditorSelection(editor, sel);
 		},
 	
@@ -545,20 +634,38 @@ return /******/ (function(modules) { // webpackBootstrap
 				range.end = Math.max(range.start, Math.min(range.end, length-1));
 			}
 			editor.setSelection(range);
+		},
+	
+		/*
+		Returns an weaker, unprivileged proxy object that only
+		exposes read-only accessors found on the editor instance,
+		without any state-modificating methods.
+		*/
+		makeUnprivilegedEditor: function(editor) {
+			var e = editor;
+			return {
+				getLength:    function(){ e.getLength.apply(e, arguments); },
+				getText:      function(){ e.getText.apply(e, arguments); },
+				getHTML:      function(){ e.getHTML.apply(e, arguments); },
+				getContents:  function(){ e.getContents.apply(e, arguments); },
+				getSelection: function(){ e.getSelection.apply(e, arguments); },
+				getBounds:    function(){ e.getBounds.apply(e, arguments); },
+			};
 		}
 	
 	};
 	
 	module.exports = QuillMixin;
 
+
 /***/ },
-/* 5 */
+/* 7 */
 /*!**************************************************************************************!*\
   !*** external {"commonjs":"quill","commonjs2":"quill","amd":"quill","root":"Quill"} ***!
   \**************************************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __WEBPACK_EXTERNAL_MODULE_5__;
+	module.exports = __WEBPACK_EXTERNAL_MODULE_7__;
 
 /***/ }
 /******/ ])
