@@ -246,22 +246,22 @@ var QuillComponent = React.createClass({
 		);
 	},
 
-	onEditorChange: function(value, delta, source) {
+	onEditorChange: function(value, delta, source, editor) {
 		if (value !== this.getEditorContents()) {
 			this.setState({ value: value });
 			if (this.props.onChange) {
-				this.props.onChange(value, delta, source);
+				this.props.onChange(value, delta, source, editor);
 			}
 		}
 	},
 
-	onEditorChangeSelection: function(range, source) {
+	onEditorChangeSelection: function(range, source, editor) {
 		var s = this.getEditorSelection() || {};
 		var r = range || {};
 		if (r.start !== s.start || r.end !== s.end) {
 			this.setState({ selection: range });
 			if (this.props.onChangeSelection) {
-				this.props.onChangeSelection(range, source);
+				this.props.onChangeSelection(range, source, editor);
 			}
 		}
 	},

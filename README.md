@@ -205,11 +205,11 @@ API reference
 `pollInterval`
 : Interval in ms between checks for local changes in editor contents.
 
-`onChange(value, delta, source)`
-: Called back with the new contents of the editor after change.
+`onChange(content, delta, source, editor)`
+: Called back with the new contents of the editor after change. It will be passed the HTML contents of the editor, a delta object expressing the change-set itself, the source of the change, and finally a read-only proxy to editor accessors such as `getText()`.
 
-`onChangeSelection(range, source)`
-: Called back with the new selected range, or null when unfocused.
+`onChangeSelection(range, source, editor)`
+: Called back with the new selected range, or null when unfocused. It will be passed the selection range, the source of the change, and finally a read-only proxy to editor accessors such as `getBounds()`.
 
 `onKeyPress(event)`
 : Called after a key has been pressed and released.

@@ -15,15 +15,26 @@ var QuillMixin = {
 	},
 
 	hookEditor: function(editor) {
+		// Expose the editor on change events via a weaker,
+		// unprivileged proxy object that does not allow
+		// accidentally modifying editor state.
+		var unprivilegedEditor = this.makeUnprivilegedEditor(editor);
+
 		editor.on('text-change', function(delta, source) {
 			if (this.onEditorChange) {
-				this.onEditorChange(editor.getHTML(), delta, source);
+				this.onEditorChange(
+					editor.getHTML(), delta, source,
+					unprivilegedEditor
+				);
 			}
 		}.bind(this));
 
 		editor.on('selection-change', function(range, source) {
 			if (this.onEditorChangeSelection) {
-				this.onEditorChangeSelection(range, source);
+				this.onEditorChangeSelection(
+					range, source,
+					unprivilegedEditor
+				);
 			}
 		}.bind(this));
 	},
@@ -56,6 +67,23 @@ var QuillMixin = {
 			range.end = Math.max(range.start, Math.min(range.end, length-1));
 		}
 		editor.setSelection(range);
+	},
+
+	/*
+	Returns an weaker, unprivileged proxy object that only
+	exposes read-only accessors found on the editor instance,
+	without any state-modificating methods.
+	*/
+	makeUnprivilegedEditor: function(editor) {
+		var e = editor;
+		return {
+			getLength:    function(){ e.getLength.apply(e, arguments); },
+			getText:      function(){ e.getText.apply(e, arguments); },
+			getHTML:      function(){ e.getHTML.apply(e, arguments); },
+			getContents:  function(){ e.getContents.apply(e, arguments); },
+			getSelection: function(){ e.getSelection.apply(e, arguments); },
+			getBounds:    function(){ e.getBounds.apply(e, arguments); },
+		};
 	}
 
 };
