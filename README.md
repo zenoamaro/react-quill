@@ -10,11 +10,12 @@ See the [live demo].
 [live demo]: https://zenoamaro.github.io/react-quill/
 
   1. [Quick start](#quick-start)
-  2. [Bundling with Webpack](#bundling-with-webpack)
-  3. [API reference](#api-reference)
-  4. [Building and testing](#building-and-testing)
-  5. [Changelog](#changelog)
-  6. [License](#license)
+  2. [Styles and themes](#styles-and-themes)
+  3. [Bundling with Webpack](#bundling-with-webpack)
+  4. [API reference](#api-reference)
+  5. [Building and testing](#building-and-testing)
+  6. [Changelog](#changelog)
+  7. [License](#license)
 
 
 Quick start
@@ -22,12 +23,6 @@ Quick start
 1. Use straight away:
 
     ~~~jsx
-    /*
-    Include `quill.base.css` to give the editor some basic styles it needs.
-    You can find the _base_ theme in the quill distribution or inside
-    `node_modules`.
-    */
-
     var React = require('react');
     var ReactQuill = require('react-quill');
 
@@ -42,13 +37,14 @@ Quick start
     });
     ~~~
 
-2. Customize a few settings:
+2. Bind to the `onChange` event and customize a few settings:
 
     ~~~jsx
     /*
-    Include a theme like `quill.snow.css` and activate it in the
-    configuration like shown below. You can find the _snow_ theme in the
-    quill distribution or inside `node_modules`.
+    Include `quill.snow.css` to use the editor's standard theme. For example,
+    depending on the structure of your app, you could do something like this:
+
+    <link rel="stylesheet" href="../node_modules/react-quill/dist/quill.snow.css">
     */
 
     var MyComponent = React.createClass({
@@ -115,6 +111,29 @@ Quick start
     ~~~
 
     See [component.js](src/component.js) for a fully fleshed-out example.
+
+
+Styles and themes
+-----------------
+The Quill editor supports themes.
+
+It includes a full-fledged theme, called _snow_, that is Quill's standard appearance, and a _base_ theme containing only the bare essentials to allow modules like toolbars or tooltips to work.
+
+These stylesheets can be found in the Quill distribution, but for convenience they are also linked among React Quill's `dist`s. In a common case you would activate a theme like this:
+
+    <ReactQuill theme='snow' />
+
+And then link the appropriate stylesheet:
+
+    <link rel="stylesheet" href="../node_modules/react-quill/dist/quill.snow.css">
+
+This may vary depending how application is structured, directories or otherwise. For example, if you use a CSS pre-processor like SASS, you may want to import that stylesheet inside your own.
+
+Quill will include a set of basic styles upon instantiation, so that including `quill.base.css` is not needed. If you would instead like to avoid this style injection, so to include `quill.base.css` manually or use your own styles, pass `false` (not just a _falsy_ value) as `styles`:
+
+    <ReactQuill styles={false}>
+
+Otherwise, you can set this to an object containing selectors and rules, that will be injected inside the document by Quill.
 
 
 Bundling with Webpack
