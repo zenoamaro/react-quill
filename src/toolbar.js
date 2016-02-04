@@ -59,6 +59,10 @@ var defaultItems = [
 		{ type:'bullet', label:'Bullet' },
 		{ type:'separator' },
 		{ type:'list', label:'List' }
+	]},
+
+	{ label:'Blocks', type:'group', items: [
+		{ type:'image', label:'Image' }
 	]}
 
 ];
