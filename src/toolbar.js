@@ -23,21 +23,21 @@ var defaultItems = [
 
 	{ label:'Formats', type:'group', items: [
 		{ label:'Font', type:'font', items: [
-			{ label:'Sans Serif',  value:'sans-serif' },
+			{ label:'Sans Serif',  value:'sans-serif', selected:true },
 			{ label:'Serif',       value:'serif' },
 			{ label:'Monospace',   value:'monospace' }
 		]},
 		{ type:'separator' },
 		{ label:'Size', type:'size', items: [
-			{ label:'Normal',  value:'10px' },
-			{ label:'Smaller', value:'13px' },
-			{ label:'Larger',  value:'18px' },
-			{ label:'Huge',    value:'32px' }
+			{ label:'Small',  value:'10px' },
+			{ label:'Normal', value:'13px', selected:true },
+			{ label:'Large',  value:'18px' },
+			{ label:'Huge',   value:'32px' }
 		]},
 		{ type:'separator' },
 		{ label:'Alignment', type:'align', items: [
+			{ label:'', value:'left', selected:true },
 			{ label:'', value:'center' },
-			{ label:'', value:'left' },
 			{ label:'', value:'right' },
 			{ label:'', value:'justify' }
 		]}
@@ -97,7 +97,8 @@ var QuillToolbar = React.createClass({
 	renderChoiceItem: function(item, key) {
 		return React.DOM.option({
 			key: item.label || item.value || key,
-			value:item.value },
+			value:item.value,
+			selected:item.selected },
 			item.label
 		);
 	},
