@@ -277,8 +277,23 @@ More tasks are available on the [Makefile](Makefile):
 
 Changelog
 ---------
+#### v0.4.0
+This release finally adds support for React 0.14. ⚠️ Shims to support older versions of React have been removed.
+
+- React 0.14 support (@jacktrades, #49)
+- Removed shims for React 0.12 and 0.13
+- Bumped Quill.js to v0.20.1
+- _Normal_ and _smaller_ sizes are not swapped anymore. (#63)
+- Various toolbar choice items are now correctly ordered.
+- Added image tooltips to the default set of modules (@kairxa, #54)
+- Fixed extra white-space in classnames (@asiniy, #67)
+- Published the Quill namespace on ReactQuill (@Sajam, #60)
+- Quill stylesheets are now linked to `dist/` for convenience. (#70)
+- Exposed editor accessor methods in change events. (#33)
+
+
 #### v0.3.0
-- Bumped Quill.js to v0.2.0
+- Bumped Quill.js to v0.20.0
 - Exposed `focus` and `blur` public methods from component.
 - Exposed `getEditor` public method to retrieve the backing Quill instance from the component.
 - Added callbacks for listening to keyboard events.
@@ -293,12 +308,6 @@ Changelog
 - Fixes an issue where the editor would be instantiated with the wrong value. Fixes #50.
 - Avoiding parsing Quill's `dist` directory with webpack.
 
-#### v0.2.2
-- Added missing `modules` propType and documentation.
-- Children are now cloned so ReactQuill can own their refs. Fixes #20.
-
-#### v0.2.1
-- Link toolbar button and module are now enabled by default. Fixes #19.
 
 [Full changelog](CHANGELOG.md)
 
@@ -316,7 +325,7 @@ License
 -------
 The MIT License (MIT)
 
-Copyright (c) 2015, zenoamaro <zenoamaro@gmail.com>
+Copyright (c) 2016, zenoamaro <zenoamaro@gmail.com>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 

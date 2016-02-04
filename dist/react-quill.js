@@ -58,13 +58,14 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
-	React-Quill v0.3.0
+	React-Quill v0.4.0
 	https://github.com/zenoamaro/react-quill
 	*/
 	module.exports = __webpack_require__(/*! ./component */ 1);
 	module.exports.Mixin = __webpack_require__(/*! ./mixin */ 6);
 	module.exports.Toolbar = __webpack_require__(/*! ./toolbar */ 4);
 	module.exports.Quill = __webpack_require__(/*! quill */ 7);
+
 
 /***/ },
 /* 1 */

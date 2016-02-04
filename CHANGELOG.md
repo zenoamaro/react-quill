@@ -1,6 +1,21 @@
 Changelog
 =========
 
+v0.4.0
+------
+This release finally adds support for React 0.14. ⚠️ Shims to support older versions of React have been removed.
+
+- React 0.14 support (@jacktrades, #49)
+- Removed shims for React 0.12 and 0.13
+- Bumped Quill.js to v0.20.1
+- _Normal_ and _smaller_ sizes are not swapped anymore. (#63)
+- Various toolbar choice items are now correctly ordered.
+- Added image tooltips to the default set of modules (@kairxa, #54)
+- Fixed extra white-space in classnames (@asiniy, #67)
+- Published the Quill namespace on ReactQuill (@Sajam, #60)
+- Quill stylesheets are now linked to `dist/` for convenience. (#70)
+- Exposed editor accessor methods in change events. (#33)
+
 v0.3.0
 ------
 - Bumped Quill.js to v0.2.0
