@@ -38,3 +38,7 @@ body,
 .editor .ql-editor {
 	padding: 1rem;
 }
+
+.editor .ql-tooltip.ql-image-tooltip {
+	float: none;
+}
