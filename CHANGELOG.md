@@ -1,6 +1,10 @@
 Changelog
 =========
 
+v0.4.1
+------
+- Added contents of `dist` to NPM package.
+
 v0.4.0
 ------
 This release finally adds support for React 0.14. ⚠️ Shims to support older versions of React have been removed.

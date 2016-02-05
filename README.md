@@ -277,6 +277,9 @@ More tasks are available on the [Makefile](Makefile):
 
 Changelog
 ---------
+#### v0.4.1
+- Added contents of `dist` to NPM package.
+
 #### v0.4.0
 This release finally adds support for React 0.14. ⚠️ Shims to support older versions of React have been removed.
 
@@ -290,7 +293,6 @@ This release finally adds support for React 0.14. ⚠️ Shims to support older 
 - Published the Quill namespace on ReactQuill (@Sajam, #60)
 - Quill stylesheets are now linked to `dist/` for convenience. (#70)
 - Exposed editor accessor methods in change events. (#33)
-
 
 #### v0.3.0
 - Bumped Quill.js to v0.20.0
@@ -307,7 +309,6 @@ This release finally adds support for React 0.14. ⚠️ Shims to support older 
 - Fixes an issue where null would be set on the editor. Fixes #48.
 - Fixes an issue where the editor would be instantiated with the wrong value. Fixes #50.
 - Avoiding parsing Quill's `dist` directory with webpack.
-
 
 [Full changelog](CHANGELOG.md)
 
