@@ -101,17 +101,23 @@ var QuillToolbar = React.createClass({
 	renderChoiceItem: function(item, key) {
 		return React.DOM.option({
 			key: item.label || item.value || key,
-			value:item.value,
-			selected:item.selected },
+			value:item.value },
 			item.label
 		);
 	},
 
 	renderChoices: function(item, key) {
-		return React.DOM.select({
+		var attrs = {
 			key: item.label || key,
 			title: item.label,
-			className: 'ql-'+item.type },
+			className: 'ql-'+item.type
+		};
+		item.items.map(function(item) {
+			if (item.selected) {
+				attrs.defaultValue = item.value;
+			}
+		})
+		return React.DOM.select(attrs,
 			item.items.map(this.renderChoiceItem)
 		);
 	},
