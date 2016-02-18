@@ -153,7 +153,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		},
 	
 		componentWillReceiveProps: function(nextProps) {
-			var editor = this.state.editor;
+			var editor = this.editor;
 			// If the component is unmounted and mounted too quickly
 			// an error is thrown in setEditorContents since editor is
 			// still undefined. Must check if editor is undefined
@@ -185,6 +185,8 @@ return /******/ (function(modules) { // webpackBootstrap
 				this.getEditorElement(),
 				this.getEditorConfig());
 	
+	    this.editor = editor;
+	
 			this.setCustomFormats(editor);
 	
 			// NOTE: Custom formats will be stripped when creating
@@ -196,7 +198,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		},
 	
 		componentWillUnmount: function() {
-			this.destroyEditor(this.state.editor);
+			this.destroyEditor(this.editor);
 			// NOTE: Don't set the state to null here
 			//       as it would generate a loop.
 		},
@@ -261,7 +263,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		},
 	
 		getEditor: function() {
-			return this.state.editor;
+			return this.editor;
 		},
 	
 		getEditorElement: function() {
@@ -343,11 +345,11 @@ return /******/ (function(modules) { // webpackBootstrap
 		},
 	
 		focus: function() {
-			this.state.editor.focus();
+			this.editor.focus();
 		},
 	
 		blur: function() {
-			this.setEditorSelection(this.state.editor, null);
+			this.setEditorSelection(this.editor, null);
 		},
 	
 		/*
@@ -369,7 +371,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /*!**************************************************************************************!*\
   !*** external {"commonjs":"react","commonjs2":"react","amd":"react","root":"React"} ***!
   \**************************************************************************************/
-/***/ function(module, exports, __webpack_require__) {
+/***/ function(module, exports) {
 
 	module.exports = __WEBPACK_EXTERNAL_MODULE_2__;
 
@@ -378,7 +380,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /*!*****************************************************************************************************!*\
   !*** external {"commonjs":"react-dom","commonjs2":"react-dom","amd":"react-dom","root":"ReactDOM"} ***!
   \*****************************************************************************************************/
-/***/ function(module, exports, __webpack_require__) {
+/***/ function(module, exports) {
 
 	module.exports = __WEBPACK_EXTERNAL_MODULE_3__;
 
@@ -492,19 +494,25 @@ return /******/ (function(modules) { // webpackBootstrap
 		renderChoiceItem: function(item, key) {
 			return React.DOM.option({
 				key: item.label || item.value || key,
-				value:item.value,
-				selected:item.selected },
+				value:item.value },
 				item.label
 			);
 		},
 	
 		renderChoices: function(item, key) {
-			return React.DOM.select({
+			var attrs = {
 				key: item.label || key,
 				title: item.label,
-				className: 'ql-'+item.type },
-				item.items.map(this.renderChoiceItem)
-			);
+				className: 'ql-'+item.type
+			};
+			var self = this;
+			var choiceItems = item.items.map(function(item, key) {
+				if (item.selected) {
+					attrs.defaultValue = item.value;
+				}
+				return self.renderChoiceItem(item, key);
+			})
+			return React.DOM.select(attrs, choiceItems);
 		},
 	
 		renderAction: function(item, key) {
@@ -558,7 +566,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /*!********************************************************************************************************************************!*\
   !*** external {"commonjs":"react-dom/server","commonjs2":"react-dom/server","amd":"react-dom/server","root":"ReactDOMServer"} ***!
   \********************************************************************************************************************************/
-/***/ function(module, exports, __webpack_require__) {
+/***/ function(module, exports) {
 
 	module.exports = __WEBPACK_EXTERNAL_MODULE_5__;
 
@@ -667,7 +675,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /*!**************************************************************************************!*\
   !*** external {"commonjs":"quill","commonjs2":"quill","amd":"quill","root":"Quill"} ***!
   \**************************************************************************************/
-/***/ function(module, exports, __webpack_require__) {
+/***/ function(module, exports) {
 
 	module.exports = __WEBPACK_EXTERNAL_MODULE_7__;
 
