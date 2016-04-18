@@ -316,7 +316,7 @@ This release finally adds support for React 0.14. ⚠️ Shims to support older 
 Roadmap
 -------
 - [ ] ES6 rewrite
-- [ ] React 0.14 support
+- [x] React 0.14 support
 - [ ] First-class support for modules
 - [ ] Better API for custom controls
 - [ ] Tests!
