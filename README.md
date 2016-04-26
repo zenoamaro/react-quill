@@ -17,6 +17,13 @@ See the [live demo].
   6. [Changelog](#changelog)
   7. [License](#license)
 
+#Installation
+
+This module is distributed using [npm](https://npmjs.com) which comes bundled with [node](https://nodejs.org):
+
+```console
+npm install react-quill
+```
 
 Quick start
 -----------
