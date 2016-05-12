@@ -23,7 +23,7 @@ var QuillMixin = {
 		editor.on('text-change', function(delta, source) {
 			if (this.onEditorChange) {
 				this.onEditorChange(
-					editor.getHTML(), delta, source,
+					editor.root.innerHTML, delta, source,
 					unprivilegedEditor
 				);
 			}
@@ -55,7 +55,7 @@ var QuillMixin = {
 	*/
 	setEditorContents: function(editor, value) {
 		var sel = editor.getSelection();
-		editor.setHTML(value || '');
+		editor.pasteHTML(value || '');
 		if (sel) this.setEditorSelection(editor, sel);
 	},
 
@@ -79,7 +79,7 @@ var QuillMixin = {
 		return {
 			getLength:    function(){ e.getLength.apply(e, arguments); },
 			getText:      function(){ e.getText.apply(e, arguments); },
-			getHTML:      function(){ e.getHTML.apply(e, arguments); },
+			// getHTML:      function(){ e.getHTML.apply(e, arguments); },
 			getContents:  function(){ e.getContents.apply(e, arguments); },
 			getSelection: function(){ e.getSelection.apply(e, arguments); },
 			getBounds:    function(){ e.getBounds.apply(e, arguments); },

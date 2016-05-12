@@ -27,20 +27,18 @@ var defaultItems = [
 			{ label:'Serif',       value:'serif' },
 			{ label:'Monospace',   value:'monospace' }
 		]},
-		{ type:'separator' },
 		{ label:'Size', type:'size', items: [
 			{ label:'Small',  value:'10px' },
 			{ label:'Normal', value:'13px', selected:true },
 			{ label:'Large',  value:'18px' },
 			{ label:'Huge',   value:'32px' }
 		]},
-		{ type:'separator' },
-		{ label:'Alignment', type:'align', items: [
-			{ label:'', value:'left', selected:true },
-			{ label:'', value:'center' },
-			{ label:'', value:'right' },
-			{ label:'', value:'justify' }
-		]}
+		// { label:'Alignment', type:'align', items: [
+		// 	{ label:'', value:'left', selected:true },
+		// 	{ label:'', value:'center' },
+		// 	{ label:'', value:'right' },
+		// 	{ label:'', value:'justify' }
+		// ]}
 	]},
 
 	{ label:'Text', type:'group', items: [
@@ -48,22 +46,19 @@ var defaultItems = [
 		{ type:'italic', label:'Italic' },
 		{ type:'strike', label:'Strike' },
 		{ type:'underline', label:'Underline' },
-		{ type:'separator' },
 		{ type:'color', label:'Color', items:defaultColors },
 		{ type:'background', label:'Background color', items:defaultColors },
-		{ type:'separator' },
 		{ type:'link', label:'Link' }
 	]},
 
-	{ label:'Blocks', type:'group', items: [
-		{ type:'bullet', label:'Bullet' },
-		{ type:'separator' },
-		{ type:'list', label:'List' }
-	]},
-
-	{ label:'Blocks', type:'group', items: [
-		{ type:'image', label:'Image' }
-	]}
+	// { label:'Blocks', type:'group', items: [
+	// 	{ type:'bullet', label:'Bullet' },
+	// 	{ type:'list', label:'List' }
+	// ]},
+	//
+	// { label:'Blocks', type:'group', items: [
+	// 	{ type:'image', label:'Image' }
+	// ]}
 
 ];
 
@@ -83,17 +78,10 @@ var QuillToolbar = React.createClass({
 		};
 	},
 
-	renderSeparator: function(key) {
-		return React.DOM.span({
-			key: key,
-			className:'ql-format-separator'
-		});
-	},
-
 	renderGroup: function(item, key) {
 		return React.DOM.span({
 			key: item.label || key,
-			className:'ql-format-group' },
+			className:'ql-formats' },
 			item.items.map(this.renderItem)
 		);
 	},
@@ -125,7 +113,7 @@ var QuillToolbar = React.createClass({
 	renderAction: function(item, key) {
 		return React.DOM.span({
 			key: item.label || item.value || key,
-			className: 'ql-format-button ql-'+item.type,
+			className: 'ql-'+item.type,
 			title: item.label },
 			item.children
 		);
@@ -133,8 +121,6 @@ var QuillToolbar = React.createClass({
 
 	renderItem: function(item, key) {
 		switch (item.type) {
-			case 'separator':
-				return this.renderSeparator(key);
 			case 'group':
 				return this.renderGroup(item, key);
 			case 'font':

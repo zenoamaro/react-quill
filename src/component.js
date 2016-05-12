@@ -52,7 +52,7 @@ var QuillComponent = React.createClass({
 	getDefaultProps: function() {
 		return {
 			className: '',
-			theme: 'base',
+			theme: 'snow',
 			modules: {
 				'link-tooltip': true,
 				'image-tooltip': true
@@ -177,9 +177,7 @@ var QuillComponent = React.createClass({
 			// Don't mutate the original modules
 			// because it's shared between components.
 			config.modules = JSON.parse(JSON.stringify(config.modules));
-			config.modules.toolbar = {
-				container: ReactDOM.findDOMNode(this.refs.toolbar)
-			};
+			config.modules.toolbar = '.quill-toolbar';
 		}
 		return config;
 	},

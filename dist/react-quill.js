@@ -128,7 +128,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		getDefaultProps: function() {
 			return {
 				className: '',
-				theme: 'base',
+				theme: 'snow',
 				modules: {
 					'link-tooltip': true,
 					'image-tooltip': true
@@ -253,9 +253,7 @@ return /******/ (function(modules) { // webpackBootstrap
 				// Don't mutate the original modules
 				// because it's shared between components.
 				config.modules = JSON.parse(JSON.stringify(config.modules));
-				config.modules.toolbar = {
-					container: ReactDOM.findDOMNode(this.refs.toolbar)
-				};
+				config.modules.toolbar = '.quill-toolbar';
 			}
 			return config;
 		},
@@ -369,7 +367,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /*!**************************************************************************************!*\
   !*** external {"commonjs":"react","commonjs2":"react","amd":"react","root":"React"} ***!
   \**************************************************************************************/
-/***/ function(module, exports, __webpack_require__) {
+/***/ function(module, exports) {
 
 	module.exports = __WEBPACK_EXTERNAL_MODULE_2__;
 
@@ -378,7 +376,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /*!*****************************************************************************************************!*\
   !*** external {"commonjs":"react-dom","commonjs2":"react-dom","amd":"react-dom","root":"ReactDOM"} ***!
   \*****************************************************************************************************/
-/***/ function(module, exports, __webpack_require__) {
+/***/ function(module, exports) {
 
 	module.exports = __WEBPACK_EXTERNAL_MODULE_3__;
 
@@ -418,20 +416,18 @@ return /******/ (function(modules) { // webpackBootstrap
 				{ label:'Serif',       value:'serif' },
 				{ label:'Monospace',   value:'monospace' }
 			]},
-			{ type:'separator' },
 			{ label:'Size', type:'size', items: [
 				{ label:'Small',  value:'10px' },
 				{ label:'Normal', value:'13px', selected:true },
 				{ label:'Large',  value:'18px' },
 				{ label:'Huge',   value:'32px' }
 			]},
-			{ type:'separator' },
-			{ label:'Alignment', type:'align', items: [
-				{ label:'', value:'left', selected:true },
-				{ label:'', value:'center' },
-				{ label:'', value:'right' },
-				{ label:'', value:'justify' }
-			]}
+			// { label:'Alignment', type:'align', items: [
+			// 	{ label:'', value:'left', selected:true },
+			// 	{ label:'', value:'center' },
+			// 	{ label:'', value:'right' },
+			// 	{ label:'', value:'justify' }
+			// ]}
 		]},
 	
 		{ label:'Text', type:'group', items: [
@@ -439,22 +435,19 @@ return /******/ (function(modules) { // webpackBootstrap
 			{ type:'italic', label:'Italic' },
 			{ type:'strike', label:'Strike' },
 			{ type:'underline', label:'Underline' },
-			{ type:'separator' },
 			{ type:'color', label:'Color', items:defaultColors },
 			{ type:'background', label:'Background color', items:defaultColors },
-			{ type:'separator' },
 			{ type:'link', label:'Link' }
 		]},
 	
-		{ label:'Blocks', type:'group', items: [
-			{ type:'bullet', label:'Bullet' },
-			{ type:'separator' },
-			{ type:'list', label:'List' }
-		]},
-	
-		{ label:'Blocks', type:'group', items: [
-			{ type:'image', label:'Image' }
-		]}
+		// { label:'Blocks', type:'group', items: [
+		// 	{ type:'bullet', label:'Bullet' },
+		// 	{ type:'list', label:'List' }
+		// ]},
+		//
+		// { label:'Blocks', type:'group', items: [
+		// 	{ type:'image', label:'Image' }
+		// ]}
 	
 	];
 	
@@ -474,17 +467,10 @@ return /******/ (function(modules) { // webpackBootstrap
 			};
 		},
 	
-		renderSeparator: function(key) {
-			return React.DOM.span({
-				key: key,
-				className:'ql-format-separator'
-			});
-		},
-	
 		renderGroup: function(item, key) {
 			return React.DOM.span({
 				key: item.label || key,
-				className:'ql-format-group' },
+				className:'ql-formats' },
 				item.items.map(this.renderItem)
 			);
 		},
@@ -492,25 +478,31 @@ return /******/ (function(modules) { // webpackBootstrap
 		renderChoiceItem: function(item, key) {
 			return React.DOM.option({
 				key: item.label || item.value || key,
-				value:item.value,
-				selected:item.selected },
+				value:item.value },
 				item.label
 			);
 		},
 	
 		renderChoices: function(item, key) {
-			return React.DOM.select({
+			var attrs = {
 				key: item.label || key,
 				title: item.label,
-				className: 'ql-'+item.type },
-				item.items.map(this.renderChoiceItem)
-			);
+				className: 'ql-'+item.type
+			};
+			var self = this;
+			var choiceItems = item.items.map(function(item, key) {
+				if (item.selected) {
+					attrs.defaultValue = item.value;
+				}
+				return self.renderChoiceItem(item, key);
+			})
+			return React.DOM.select(attrs, choiceItems);
 		},
 	
 		renderAction: function(item, key) {
 			return React.DOM.span({
 				key: item.label || item.value || key,
-				className: 'ql-format-button ql-'+item.type,
+				className: 'ql-'+item.type,
 				title: item.label },
 				item.children
 			);
@@ -518,8 +510,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 		renderItem: function(item, key) {
 			switch (item.type) {
-				case 'separator':
-					return this.renderSeparator(key);
 				case 'group':
 					return this.renderGroup(item, key);
 				case 'font':
@@ -542,6 +532,7 @@ return /******/ (function(modules) { // webpackBootstrap
 			var html = children.map(ReactDOMServer.renderToStaticMarkup).join('');
 			return React.DOM.div({
 				className: this.getClassName(),
+				style: this.props.style || {},
 				dangerouslySetInnerHTML: { __html:html }
 			});
 		}
@@ -558,7 +549,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /*!********************************************************************************************************************************!*\
   !*** external {"commonjs":"react-dom/server","commonjs2":"react-dom/server","amd":"react-dom/server","root":"ReactDOMServer"} ***!
   \********************************************************************************************************************************/
-/***/ function(module, exports, __webpack_require__) {
+/***/ function(module, exports) {
 
 	module.exports = __WEBPACK_EXTERNAL_MODULE_5__;
 
@@ -594,7 +585,7 @@ return /******/ (function(modules) { // webpackBootstrap
 			editor.on('text-change', function(delta, source) {
 				if (this.onEditorChange) {
 					this.onEditorChange(
-						editor.getHTML(), delta, source,
+						editor.root.innerHTML, delta, source,
 						unprivilegedEditor
 					);
 				}
@@ -626,7 +617,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		*/
 		setEditorContents: function(editor, value) {
 			var sel = editor.getSelection();
-			editor.setHTML(value || '');
+			editor.pasteHTML(value || '');
 			if (sel) this.setEditorSelection(editor, sel);
 		},
 	
@@ -650,7 +641,7 @@ return /******/ (function(modules) { // webpackBootstrap
 			return {
 				getLength:    function(){ e.getLength.apply(e, arguments); },
 				getText:      function(){ e.getText.apply(e, arguments); },
-				getHTML:      function(){ e.getHTML.apply(e, arguments); },
+				// getHTML:      function(){ e.getHTML.apply(e, arguments); },
 				getContents:  function(){ e.getContents.apply(e, arguments); },
 				getSelection: function(){ e.getSelection.apply(e, arguments); },
 				getBounds:    function(){ e.getBounds.apply(e, arguments); },
@@ -667,7 +658,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /*!**************************************************************************************!*\
   !*** external {"commonjs":"quill","commonjs2":"quill","amd":"quill","root":"Quill"} ***!
   \**************************************************************************************/
-/***/ function(module, exports, __webpack_require__) {
+/***/ function(module, exports) {
 
 	module.exports = __WEBPACK_EXTERNAL_MODULE_7__;
 
