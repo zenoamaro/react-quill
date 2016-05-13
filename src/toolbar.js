@@ -33,12 +33,12 @@ var defaultItems = [
 			{ label:'Large',  value:'18px' },
 			{ label:'Huge',   value:'32px' }
 		]},
-		// { label:'Alignment', type:'align', items: [
-		// 	{ label:'', value:'left', selected:true },
-		// 	{ label:'', value:'center' },
-		// 	{ label:'', value:'right' },
-		// 	{ label:'', value:'justify' }
-		// ]}
+		{ label:'Alignment', type:'align', items: [
+			{ label:'', value:'', selected:true },
+			{ label:'', value:'center' },
+			{ label:'', value:'right' },
+			{ label:'', value:'justify' }
+		]}
 	]},
 
 	{ label:'Text', type:'group', items: [
