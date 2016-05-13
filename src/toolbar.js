@@ -56,9 +56,9 @@ var defaultItems = [
 		{ type:'list', value:'ordered' }
 	]},
 
-	// { label:'Blocks', type:'group', items: [
-	// 	{ type:'image', label:'Image' }
-	// ]}
+	{ label:'Blocks', type:'group', items: [
+		{ type:'image', label:'Image' }
+	]}
 
 ];
 
@@ -145,6 +145,7 @@ var QuillToolbar = React.createClass({
 			case 'strike':
 			case 'link':
 			case 'list':
+			case 'image':
 				return this.renderButton(item, key);
 			default:
 				return this.renderAction(item, key);
