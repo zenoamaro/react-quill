@@ -110,6 +110,15 @@ var QuillToolbar = React.createClass({
 		return React.DOM.select(attrs, choiceItems);
 	},
 
+	renderButton: function(item, key) {
+		return React.DOM.button({
+			key: item.label || item.value || key,
+			className: 'ql-'+item.type,
+			title: item.label },
+			item.children
+		);
+	},
+
 	renderAction: function(item, key) {
 		return React.DOM.span({
 			key: item.label || item.value || key,
@@ -129,6 +138,12 @@ var QuillToolbar = React.createClass({
 			case 'color':
 			case 'background':
 				return this.renderChoices(item, key);
+			case 'bold':
+			case 'italic':
+			case 'underline':
+			case 'strikethrough':
+			case 'link':
+				return this.renderButton(item, key);
 			default:
 				return this.renderAction(item, key);
 		}

@@ -9,7 +9,7 @@ var Editor = React.createClass({
 			theme: 'snow',
 			enabled: true,
 			readOnly: false,
-			value: '<h1>It works!</h1>',
+			value: '',
 			events: []
 		};
 	},

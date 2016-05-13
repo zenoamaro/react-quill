@@ -53,10 +53,7 @@ var QuillComponent = React.createClass({
 		return {
 			className: '',
 			theme: 'snow',
-			modules: {
-				'link-tooltip': true,
-				'image-tooltip': true
-			}
+			modules: {}
 		};
 	},
 
