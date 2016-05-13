@@ -51,11 +51,11 @@ var defaultItems = [
 		{ type:'link', label:'Link' }
 	]},
 
-	// { label:'Blocks', type:'group', items: [
-	// 	{ type:'bullet', label:'Bullet' },
-	// 	{ type:'list', label:'List' }
-	// ]},
-	//
+	{ label:'Blocks', type:'group', items: [
+		{ type:'list', value:'bullet' },
+		{ type:'list', value:'ordered' }
+	]},
+
 	// { label:'Blocks', type:'group', items: [
 	// 	{ type:'image', label:'Image' }
 	// ]}
@@ -113,6 +113,7 @@ var QuillToolbar = React.createClass({
 	renderButton: function(item, key) {
 		return React.DOM.button({
 			key: item.label || item.value || key,
+			value: item.value,
 			className: 'ql-'+item.type,
 			title: item.label },
 			item.children
@@ -143,6 +144,7 @@ var QuillToolbar = React.createClass({
 			case 'underline':
 			case 'strike':
 			case 'link':
+			case 'list':
 				return this.renderButton(item, key);
 			default:
 				return this.renderAction(item, key);
