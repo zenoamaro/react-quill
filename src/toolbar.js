@@ -141,7 +141,7 @@ var QuillToolbar = React.createClass({
 			case 'bold':
 			case 'italic':
 			case 'underline':
-			case 'strikethrough':
+			case 'strike':
 			case 'link':
 				return this.renderButton(item, key);
 			default:
