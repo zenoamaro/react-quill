@@ -28,10 +28,10 @@ var defaultItems = [
 			{ label:'Monospace',   value:'monospace' }
 		]},
 		{ label:'Size', type:'size', items: [
-			{ label:'Small',  value:'10px' },
-			{ label:'Normal', value:'13px', selected:true },
-			{ label:'Large',  value:'18px' },
-			{ label:'Huge',   value:'32px' }
+			{ label:'10px',  value:'10px' },
+			{ label:'13px', value:'13px', selected:true },
+			{ label:'18px',  value:'18px' },
+			{ label:'32px',   value:'32px' }
 		]},
 		{ label:'Alignment', type:'align', items: [
 			{ label:'', value:'', selected:true },
