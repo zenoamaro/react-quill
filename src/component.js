@@ -107,6 +107,10 @@ var QuillComponent = React.createClass({
 			this.getEditorConfig());
 
 		this.setCustomFormats(editor);
+		var fontOptions = document.querySelectorAll('.quill-toolbar .ql-font.ql-picker .ql-picker-item');
+		for (var i=0; i<fontOptions.length; ++i) {
+			fontOptions[i].style.fontFamily = fontOptions[i].dataset.value;
+		}
 
 		// NOTE: Custom formats will be stripped when creating
 		//       the editor, since they are not present there yet.

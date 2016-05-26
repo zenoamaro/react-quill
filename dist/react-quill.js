@@ -64,7 +64,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports.Component = __webpack_require__(/*! ./component */ 1);
 	module.exports.Mixin = __webpack_require__(/*! ./mixin */ 6);
 	module.exports.Toolbar = __webpack_require__(/*! ./toolbar */ 4);
-	module.exports.Quill = __webpack_require__(/*! quill */ 7);
+	var quill = __webpack_require__(/*! quill */ 7)
+	var Parchment = quill.import('parchment');
+	var FontStyle = new Parchment.Attributor.Style('size', 'font-size', { scope: Parchment.Scope.INLINE });
+	var FontFamilyStyle = new Parchment.Attributor.Style('font', 'font-family', { scope: Parchment.Scope.INLINE });
+	quill.register(FontStyle, true);
+	quill.register(FontFamilyStyle, true);
+	module.exports.Quill = quill;
 
 
 /***/ },
@@ -183,6 +189,10 @@ return /******/ (function(modules) { // webpackBootstrap
 				this.getEditorConfig());
 	
 			this.setCustomFormats(editor);
+			var fontOptions = document.querySelectorAll('.quill-toolbar .ql-font.ql-picker .ql-picker-item');
+			for (var i=0; i<fontOptions.length; ++i) {
+				fontOptions[i].style.fontFamily = fontOptions[i].dataset.value;
+			}
 	
 			// NOTE: Custom formats will be stripped when creating
 			//       the editor, since they are not present there yet.
@@ -411,13 +421,15 @@ return /******/ (function(modules) { // webpackBootstrap
 			{ label:'Font', type:'font', items: [
 				{ label:'Sans Serif',  value:'sans-serif', selected:true },
 				{ label:'Serif',       value:'serif' },
-				{ label:'Monospace',   value:'monospace' }
+				{ label:'Monospace',   value:'monospace' },
+				{ label:'Impact',      value:'Impact, Charcoal, sans-serif' },
+				{ label:'Comic Sans',  value:'Comic Sans MS, cursive, sans-serif' }
 			]},
 			{ label:'Size', type:'size', items: [
-				{ label:'Small',  value:'10px' },
-				{ label:'Normal', value:'13px', selected:true },
-				{ label:'Large',  value:'18px' },
-				{ label:'Huge',   value:'32px' }
+				{ label:'10px',  value:'10px' },
+				{ label:'13px', value:'13px', selected:true },
+				{ label:'18px',  value:'18px' },
+				{ label:'32px',   value:'32px' }
 			]},
 			{ label:'Alignment', type:'align', items: [
 				{ label:'', value:'', selected:true },
@@ -442,9 +454,9 @@ return /******/ (function(modules) { // webpackBootstrap
 			{ type:'list', value:'ordered' }
 		]},
 	
-		// { label:'Blocks', type:'group', items: [
-		// 	{ type:'image', label:'Image' }
-		// ]}
+		{ label:'Blocks', type:'group', items: [
+			{ type:'image', label:'Image' }
+		]}
 	
 	];
 	
@@ -531,6 +543,7 @@ return /******/ (function(modules) { // webpackBootstrap
 				case 'strike':
 				case 'link':
 				case 'list':
+				case 'image':
 					return this.renderButton(item, key);
 				default:
 					return this.renderAction(item, key);
@@ -675,6 +688,12 @@ return /******/ (function(modules) { // webpackBootstrap
   \*******************************/
 /***/ function(module, exports) {
 
+	/*!
+	 * Quill Editor v1.0.0-beta.3
+	 * https://quilljs.com/
+	 * Copyright (c) 2014, Jason Chen
+	 * Copyright (c) 2013, salesforce.com
+	 */
 	(function webpackUniversalModuleDefinition(root, factory) {
 		if(typeof exports === 'object' && typeof module === 'object')
 			module.exports = factory();
@@ -682,50 +701,47 @@ return /******/ (function(modules) { // webpackBootstrap
 			define([], factory);
 		else if(typeof exports === 'object')
 			exports["Quill"] = factory();
-		else {
+		else
 			root["Quill"] = factory();
-			console.log(root);
-			console.log(root["Quill"]);
-		}
 	})(this, function() {
 	return /******/ (function(modules) { // webpackBootstrap
 	/******/ 	// The module cache
 	/******/ 	var installedModules = {};
-	/******/
+	
 	/******/ 	// The require function
 	/******/ 	function __webpack_require__(moduleId) {
-	/******/
+	
 	/******/ 		// Check if module is in cache
 	/******/ 		if(installedModules[moduleId])
 	/******/ 			return installedModules[moduleId].exports;
-	/******/
+	
 	/******/ 		// Create a new module (and put it into the cache)
 	/******/ 		var module = installedModules[moduleId] = {
 	/******/ 			exports: {},
 	/******/ 			id: moduleId,
 	/******/ 			loaded: false
 	/******/ 		};
-	/******/
+	
 	/******/ 		// Execute the module function
 	/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
-	/******/
+	
 	/******/ 		// Flag the module as loaded
 	/******/ 		module.loaded = true;
-	/******/
+	
 	/******/ 		// Return the exports of the module
 	/******/ 		return module.exports;
 	/******/ 	}
-	/******/
-	/******/
+	
+	
 	/******/ 	// expose the modules object (__webpack_modules__)
 	/******/ 	__webpack_require__.m = modules;
-	/******/
+	
 	/******/ 	// expose the module cache
 	/******/ 	__webpack_require__.c = installedModules;
-	/******/
+	
 	/******/ 	// __webpack_public_path__
 	/******/ 	__webpack_require__.p = "";
-	/******/
+	
 	/******/ 	// Load entry module and return exports
 	/******/ 	return __webpack_require__(0);
 	/******/ })
@@ -747,31 +763,31 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 		var _core2 = _interopRequireDefault(_core);
 	
-		var _align = __webpack_require__(47);
+		var _align = __webpack_require__(45);
 	
 		var _direction = __webpack_require__(48);
 	
-		var _indent = __webpack_require__(49);
+		var _indent = __webpack_require__(53);
 	
-		var _blockquote = __webpack_require__(50);
+		var _blockquote = __webpack_require__(54);
 	
 		var _blockquote2 = _interopRequireDefault(_blockquote);
 	
-		var _header = __webpack_require__(51);
+		var _header = __webpack_require__(55);
 	
 		var _header2 = _interopRequireDefault(_header);
 	
-		var _list = __webpack_require__(52);
+		var _list = __webpack_require__(56);
 	
 		var _list2 = _interopRequireDefault(_list);
 	
-		var _background = __webpack_require__(53);
+		var _background = __webpack_require__(46);
 	
-		var _color = __webpack_require__(54);
+		var _color = __webpack_require__(47);
 	
-		var _font = __webpack_require__(55);
+		var _font = __webpack_require__(49);
 	
-		var _size = __webpack_require__(56);
+		var _size = __webpack_require__(50);
 	
 		var _bold = __webpack_require__(57);
 	
@@ -797,19 +813,21 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 		var _underline2 = _interopRequireDefault(_underline);
 	
-		var _formula = __webpack_require__(63);
-	
-		var _formula2 = _interopRequireDefault(_formula);
-	
-		var _image = __webpack_require__(64);
+		var _image = __webpack_require__(63);
 	
 		var _image2 = _interopRequireDefault(_image);
 	
-		var _video = __webpack_require__(65);
+		var _video = __webpack_require__(64);
 	
 		var _video2 = _interopRequireDefault(_video);
 	
-		var _code = __webpack_require__(66);
+		var _code = __webpack_require__(65);
+	
+		var _code2 = _interopRequireDefault(_code);
+	
+		var _formula = __webpack_require__(66);
+	
+		var _formula2 = _interopRequireDefault(_formula);
 	
 		var _imageTooltip = __webpack_require__(67);
 	
@@ -819,13 +837,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 		var _linkTooltip2 = _interopRequireDefault(_linkTooltip);
 	
-		var _toolbar = __webpack_require__(70);
+		var _syntax = __webpack_require__(70);
+	
+		var _syntax2 = _interopRequireDefault(_syntax);
+	
+		var _toolbar = __webpack_require__(71);
 	
 		var _toolbar2 = _interopRequireDefault(_toolbar);
-	
-		var _codeHighlighter = __webpack_require__(71);
-	
-		var _codeHighlighter2 = _interopRequireDefault(_codeHighlighter);
 	
 		var _icons = __webpack_require__(72);
 	
@@ -868,7 +886,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		  'formats/size': _size.SizeClass,
 	
 		  'formats/blockquote': _blockquote2.default,
-		  'formats/code-block': _codeHighlighter.CodeBlock,
+		  'formats/code-block': _code2.default,
 		  'formats/header': _header2.default,
 		  'formats/list': _list2.default,
 	
@@ -880,16 +898,13 @@ return /******/ (function(modules) { // webpackBootstrap
 		  'formats/strike': _strike2.default,
 		  'formats/underline': _underline2.default,
 	
-		  'formats/formula': _formula2.default,
 		  'formats/image': _image2.default,
 		  'formats/video': _video2.default,
 	
-		  'formats/code-block/token': _codeHighlighter.CodeToken,
 		  'formats/list/item': _list.ListItem,
 	
-		  'modules/code-highlighter': _codeHighlighter2.default,
-		  'modules/image-tooltip': _imageTooltip2.default,
-		  'modules/link-tooltip': _linkTooltip2.default,
+		  'modules/formula': _formula2.default,
+		  'modules/syntax': _syntax2.default,
 		  'modules/toolbar': _toolbar2.default,
 	
 		  'themes/bubble': _bubble2.default,
@@ -899,7 +914,9 @@ return /******/ (function(modules) { // webpackBootstrap
 		  'ui/picker': _picker2.default,
 		  'ui/icon-picker': _iconPicker2.default,
 		  'ui/color-picker': _colorPicker2.default,
-		  'ui/tooltip': _tooltip2.default
+		  'ui/tooltip': _tooltip2.default,
+		  'ui/image-tooltip': _imageTooltip2.default,
+		  'ui/link-tooltip': _linkTooltip2.default
 		});
 	
 		module.exports = _core2.default;
@@ -958,11 +975,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 		var _clipboard2 = _interopRequireDefault(_clipboard);
 	
-		var _history = __webpack_require__(45);
+		var _history = __webpack_require__(51);
 	
 		var _history2 = _interopRequireDefault(_history);
 	
-		var _keyboard = __webpack_require__(46);
+		var _keyboard = __webpack_require__(52);
 	
 		var _keyboard2 = _interopRequireDefault(_keyboard);
 	
@@ -1789,6 +1806,8 @@ return /******/ (function(modules) { // webpackBootstrap
 		        });
 		    };
 		    Attributor.prototype.add = function (node, value) {
+		        if (!this.canAdd(node, value))
+		            return false;
 		        node.setAttribute(this.keyName, value);
 		        return true;
 		    };
@@ -1829,7 +1848,12 @@ return /******/ (function(modules) { // webpackBootstrap
 		    AttributorStore.prototype.attribute = function (attribute, value) {
 		        if (value) {
 		            if (attribute.add(this.domNode, value)) {
-		                this.attributes[attribute.attrName] = attribute;
+		                if (attribute.value(this.domNode) != null) {
+		                    this.attributes[attribute.attrName] = attribute;
+		                }
+		                else {
+		                    delete this.attributes[attribute.attrName];
+		                }
 		            }
 		        }
 		        else {
@@ -2112,17 +2136,22 @@ return /******/ (function(modules) { // webpackBootstrap
 		            }
 		            remaining.forEach(function (mutation) {
 		                var blot = Registry.find(mutation.target, true);
-		                if (blot != null && blot.domNode === mutation.target && mutation.type === 'childList') {
-		                    mark(Registry.find(mutation.previousSibling, false));
-		                    [].forEach.call(mutation.addedNodes, function (node) {
-		                        var child = Registry.find(node, false);
-		                        mark(child);
-		                        if (child instanceof container_1.default) {
-		                            child.children.forEach(mark);
-		                        }
-		                    });
+		                if (blot != null && blot.domNode === mutation.target) {
+		                    if (mutation.type === 'childList') {
+		                        mark(Registry.find(mutation.previousSibling, false));
+		                        [].forEach.call(mutation.addedNodes, function (node) {
+		                            var child = Registry.find(node, false);
+		                            mark(child);
+		                            if (child instanceof container_1.default) {
+		                                child.children.forEach(mark);
+		                            }
+		                        });
+		                    }
+		                    else if (mutation.type === 'attributes') {
+		                        mark(blot.prev);
+		                    }
+		                    mark(blot);
 		                }
-		                mark(blot);
 		            });
 		            this.children.forEach(optimize);
 		            remaining = this.observer.takeRecords();
@@ -2198,8 +2227,15 @@ return /******/ (function(modules) { // webpackBootstrap
 		        return _super.formats.call(this, domNode);
 		    };
 		    InlineBlot.prototype.format = function (name, value) {
+		        var _this = this;
 		        if (name === this.statics.blotName && !value) {
-		            this.replaceWith(InlineBlot.blotName);
+		            this.children.forEach(function (child) {
+		                if (!(child instanceof format_1.default)) {
+		                    child = child.wrap(InlineBlot.blotName, true);
+		                }
+		                _this.attributes.copy(child);
+		            });
+		            this.unwrap();
 		        }
 		        else {
 		            _super.prototype.format.call(this, name, value);
@@ -2513,7 +2549,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		          debug.warn('Overwriting ' + path + ' with', target);
 		        }
 		        this.imports[path] = target;
-		        if (path.startsWith('formats/')) {
+		        if ((path.startsWith('blots/') || path.startsWith('formats/')) && target.blotName !== 'abstract') {
 		          _parchment2.default.register(target);
 		        }
 		      }
@@ -2551,6 +2587,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		    this.keyboard = this.theme.addModule('keyboard');
 		    this.clipboard = this.theme.addModule('clipboard');
 		    this.history = this.theme.addModule('history');
+		    this.theme.init();
 		    // Setting would truncate a newline at the end
 		    this.pasteHTML(0, '<div class=\'ql-editor\' style="white-space: normal;">' + html + '</div>');
 		    this.history.clear();
@@ -2563,11 +2600,10 @@ return /******/ (function(modules) { // webpackBootstrap
 		    if (options.debug) {
 		      Quill.debug(options.debug);
 		    }
-		    this.root.classList.toggle('ql-empty', this.getLength() <= 1);
+		    this.root.classList.toggle('ql-blank', this.editor.isBlank());
 		    this.emitter.on(_emitter2.default.events.TEXT_CHANGE, function (delta) {
-		      _this2.root.classList.toggle('ql-empty', _this2.getLength() <= 1);
+		      _this2.root.classList.toggle('ql-blank', _this2.editor.isBlank());
 		    });
-		    this.emitter.emit(_emitter2.default.events.READY);
 		  }
 	
 		  _createClass(Quill, [{
@@ -2585,9 +2621,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		    }
 		  }, {
 		    key: 'deleteText',
-		    value: function deleteText(index, length) {
-		      var source = arguments.length <= 2 || arguments[2] === undefined ? _emitter2.default.sources.API : arguments[2];
-	
+		    value: function deleteText(index, length, source) {
 		      var _overload = overload(index, length, source);
 	
 		      var _overload2 = _slicedToArray(_overload, 4);
@@ -2614,6 +2648,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		    key: 'focus',
 		    value: function focus() {
 		      this.selection.focus();
+		      this.selection.scrollIntoView();
 		    }
 		  }, {
 		    key: 'format',
@@ -2827,6 +2862,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		      source = _overload16[3];
 	
 		      this.selection.setRange(new _selection.Range(index, length), source);
+		      this.selection.scrollIntoView();
 		    }
 		  }, {
 		    key: 'setText',
@@ -2869,7 +2905,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		};
 		Quill.events = _emitter2.default.events;
 		Quill.sources = _emitter2.default.sources;
-		Quill.version = ("1.0.0-beta.1");
+		Quill.version = ("1.0.0-beta.3");
 	
 		Quill.imports = {
 		  'delta': _delta2.default,
@@ -4393,11 +4429,33 @@ return /******/ (function(modules) { // webpackBootstrap
 		      this.formatText(index, text.length, formats, source);
 		    }
 		  }, {
+		    key: 'isBlank',
+		    value: function isBlank() {
+		      if (this.scroll.children.length == 0) return true;
+		      if (this.scroll.children.length > 1) return false;
+		      var child = this.scroll.children.head;
+		      return child.length() <= 1 && Object.keys(child.formats()).length == 0;
+		    }
+		  }, {
 		    key: 'removeFormat',
 		    value: function removeFormat(index, length) {
-		      var contents = this.getContents(index, length);
 		      var text = this.getText(index, length);
-		      var diff = contents.diff(new _delta2.default().insert(text));
+	
+		      var _scroll$line3 = this.scroll.line(index + length);
+	
+		      var _scroll$line4 = _slicedToArray(_scroll$line3, 2);
+	
+		      var line = _scroll$line4[0];
+		      var offset = _scroll$line4[1];
+	
+		      var suffixLength = 0,
+		          suffix = new _delta2.default();
+		      if (line != null) {
+		        suffixLength = line.length() - offset;
+		        suffix = line.delta().slice(offset, offset + suffixLength - 1).insert('\n');
+		      }
+		      var contents = this.getContents(index, length + suffixLength);
+		      var diff = contents.diff(new _delta2.default().insert(text).concat(suffix));
 		      var delta = new _delta2.default().retain(index).concat(diff);
 		      this.applyDelta(delta);
 		    }
@@ -5474,7 +5532,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		Object.defineProperty(exports, "__esModule", {
 		  value: true
 		});
-		exports.default = exports.Range = exports.findLeaf = undefined;
+		exports.default = exports.Range = undefined;
 	
 		var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
 	
@@ -5483,6 +5541,10 @@ return /******/ (function(modules) { // webpackBootstrap
 		var _parchment = __webpack_require__(3);
 	
 		var _parchment2 = _interopRequireDefault(_parchment);
+	
+		var _clone = __webpack_require__(37);
+	
+		var _clone2 = _interopRequireDefault(_clone);
 	
 		var _deepEqual = __webpack_require__(23);
 	
@@ -5529,16 +5591,16 @@ return /******/ (function(modules) { // webpackBootstrap
 		    this.cursor = _parchment2.default.create('cursor', this);
 		    // savedRange is last non-null range
 		    this.lastRange = this.savedRange = new Range(0, 0);
-		    ['keyup', 'mouseup', 'touchend', 'touchleave'].forEach(function (eventName) {
+		    ['keyup', 'mouseup', 'touchend', 'touchleave', 'focus', 'blur'].forEach(function (eventName) {
 		      _this.root.addEventListener(eventName, function () {
 		        // When range used to be a selection and user click within the selection,
 		        // the range now being a cursor has not updated yet without setTimeout
-		        setTimeout(_this.update.bind(_this, _emitter2.default.sources.USER), 1);
+		        setTimeout(_this.update.bind(_this, _emitter2.default.sources.USER), 100);
 		      });
 		    });
 		    this.emitter.on(_emitter2.default.events.TEXT_CHANGE, function (delta) {
 		      if (delta.length() > 0) {
-		        _this.update(_emitter2.default.sources.SILENT);
+		        setTimeout(_this.update.bind(_this, _emitter2.default.sources.SILENT), 1);
 		      }
 		    });
 		    this.emitter.on(_emitter2.default.events.SCROLL_BEFORE_UPDATE, function () {
@@ -5591,12 +5653,12 @@ return /******/ (function(modules) { // webpackBootstrap
 		    value: function getBounds(index) {
 		      var length = arguments.length <= 1 || arguments[1] === undefined ? 0 : arguments[1];
 		      var bounds = void 0;var node = void 0;
-		      var _findLeaf = findLeaf(this.scroll, index);
+		      var _scroll$leaf = this.scroll.leaf(index);
 	
-		      var _findLeaf2 = _slicedToArray(_findLeaf, 2);
+		      var _scroll$leaf2 = _slicedToArray(_scroll$leaf, 2);
 	
-		      var leaf = _findLeaf2[0];
-		      var offset = _findLeaf2[1];
+		      var leaf = _scroll$leaf2[0];
+		      var offset = _scroll$leaf2[1];
 	
 		      if (leaf == null) return null;
 	
@@ -5611,12 +5673,12 @@ return /******/ (function(modules) { // webpackBootstrap
 		      if (length > 0) {
 		        range.setStart(node, offset);
 	
-		        var _findLeaf3 = findLeaf(this.scroll, index + length);
+		        var _scroll$leaf3 = this.scroll.leaf(index + length);
 	
-		        var _findLeaf4 = _slicedToArray(_findLeaf3, 2);
+		        var _scroll$leaf4 = _slicedToArray(_scroll$leaf3, 2);
 	
-		        leaf = _findLeaf4[0];
-		        offset = _findLeaf4[1];
+		        leaf = _scroll$leaf4[0];
+		        offset = _scroll$leaf4[1];
 	
 		        if (leaf == null) return null;
 	
@@ -5690,13 +5752,14 @@ return /******/ (function(modules) { // webpackBootstrap
 		            offset = 0;
 		          } else if (node.childNodes.length === offset) {
 		            node = node.lastChild;
-		            offset = node instanceof Text ? node.data.length : node.childNodes.length;
+		            offset = node instanceof Text ? node.data.length : node.childNodes.length + 1;
 		          } else {
 		            break;
 		          }
 		        }
 		        position.node = node, position.offset = offset;
 		      });
+		      debug.info('getNativeRange', range);
 		      return range;
 		    }
 		  }, {
@@ -5800,14 +5863,16 @@ return /******/ (function(modules) { // webpackBootstrap
 		        (function () {
 		          var indexes = range.collapsed ? [range.index] : [range.index, range.index + range.length];
 		          var args = [];
+		          var scrollLength = _this3.scroll.length();
 		          indexes.forEach(function (index, i) {
+		            index = Math.min(scrollLength - 1, index);
 		            var node = void 0;
-		            var _findLeaf5 = findLeaf(_this3.scroll, index);
+		            var _scroll$leaf5 = _this3.scroll.leaf(index);
 	
-		            var _findLeaf6 = _slicedToArray(_findLeaf5, 2);
+		            var _scroll$leaf6 = _slicedToArray(_scroll$leaf5, 2);
 	
-		            var leaf = _findLeaf6[0];
-		            var offset = _findLeaf6[1];
+		            var leaf = _scroll$leaf6[0];
+		            var offset = _scroll$leaf6[1];
 	
 		            var _leaf$position5 = leaf.position(offset, i !== 0);
 	
@@ -5844,11 +5909,11 @@ return /******/ (function(modules) { // webpackBootstrap
 		        this.savedRange = this.lastRange;
 		      }
 		      if (!(0, _deepEqual2.default)(oldRange, this.lastRange)) {
-		        if (nativeRange != null && nativeRange.native.collapsed && nativeRange.start.node !== this.cursor.textNode) {
+		        if (!this.composing && nativeRange != null && nativeRange.native.collapsed && nativeRange.start.node !== this.cursor.textNode) {
 		          this.cursor.restore();
 		        }
 		        if (source === _emitter2.default.sources.SILENT) return;
-		        this.emitter.emit(_emitter2.default.events.SELECTION_CHANGE, this.lastRange, source);
+		        this.emitter.emit(_emitter2.default.events.SELECTION_CHANGE, (0, _clone2.default)(this.lastRange), source);
 		      }
 		    }
 		  }]);
@@ -5871,16 +5936,6 @@ return /******/ (function(modules) { // webpackBootstrap
 		  return parent.contains(descendant);
 		}
 	
-		function findLeaf(blot, index) {
-		  var path = blot.path(index);
-		  if (path.length > 0) {
-		    return path.pop();
-		  } else {
-		    return [null, -1];
-		  }
-		}
-	
-		exports.findLeaf = findLeaf;
 		exports.Range = Range;
 		exports.default = Selection;
 	
@@ -5931,7 +5986,6 @@ return /******/ (function(modules) { // webpackBootstrap
 		      return modules;
 		    }, {});
 		    this.modules = {};
-		    this.quill.once(_emitter2.default.events.READY, this.init.bind(this));
 		  }
 	
 		  _createClass(Theme, [{
@@ -6065,6 +6119,13 @@ return /******/ (function(modules) { // webpackBootstrap
 		    _this.textNode = document.createTextNode(Cursor.CONTENTS);
 		    _this.domNode.appendChild(_this.textNode);
 		    _this._length = 0;
+		    _this.composing = false;
+		    _this.selection.root.addEventListener('compositionstart', function () {
+		      _this.composing = true;
+		    });
+		    _this.selection.root.addEventListener('compositionend', function () {
+		      _this.composing = false;
+		    });
 		    return _this;
 		  }
 	
@@ -6100,7 +6161,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		  }, {
 		    key: 'position',
 		    value: function position(index) {
-		      return [this.textNode, 1];
+		      return [this.textNode, this.textNode.data.length];
 		    }
 		  }, {
 		    key: 'remove',
@@ -6111,6 +6172,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		  }, {
 		    key: 'restore',
 		    value: function restore() {
+		      if (this.composing) return;
 		      if (this.parent == null) return;
 		      var textNode = this.textNode;
 		      var range = this.selection.getNativeRange();
@@ -6277,12 +6339,17 @@ return /******/ (function(modules) { // webpackBootstrap
 		  }, {
 		    key: 'insertBefore',
 		    value: function insertBefore(blot, ref) {
-		      if (blot.scope === _parchment2.default.Scope.INLINE_BLOT) {
+		      if (blot.statics.scope === _parchment2.default.Scope.INLINE_BLOT) {
 		        var wrapper = _parchment2.default.create(this.statics.defaultChild);
 		        wrapper.appendChild(blot);
 		        blot = wrapper;
 		      }
 		      _get(Object.getPrototypeOf(Scroll.prototype), 'insertBefore', this).call(this, blot, ref);
+		    }
+		  }, {
+		    key: 'leaf',
+		    value: function leaf(index) {
+		      return this.path(index).pop() || [null, -1];
 		    }
 		  }, {
 		    key: 'line',
@@ -6377,6 +6444,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 		var _block = __webpack_require__(32);
 	
+		var _align = __webpack_require__(45);
+	
+		var _background = __webpack_require__(46);
+	
+		var _color = __webpack_require__(47);
+	
+		var _direction = __webpack_require__(48);
+	
+		var _font = __webpack_require__(49);
+	
+		var _size = __webpack_require__(50);
+	
 		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 		function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
@@ -6391,11 +6470,20 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 		var debug = (0, _logger2.default)('quill:clipboard');
 	
+		var STYLE_ATTRIBUTORS = [_align.AlignStyle, _background.BackgroundStyle, _color.ColorStyle, _direction.DirectionStyle, _font.FontStyle, _size.SizeStyle].reduce(function (memo, attr) {
+		  memo[attr.keyName] = attr;
+		  return memo;
+		}, {});
+	
 		var Clipboard = function (_Module) {
 		  _inherits(Clipboard, _Module);
 	
 		  function Clipboard(quill, options) {
 		    _classCallCheck(this, Clipboard);
+	
+		    if (options.matchers !== Clipboard.DEFAULTS.matchers) {
+		      options.matchers = Clipboard.DEFAULTS.matchers.concat(options.matchers);
+		    }
 	
 		    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Clipboard).call(this, quill, options));
 	
@@ -6418,6 +6506,23 @@ return /******/ (function(modules) { // webpackBootstrap
 		      this.matchers.push([selector, matcher]);
 		    }
 		  }, {
+		    key: 'clean',
+		    value: function clean() {
+		      var treeWalker = document.createTreeWalker(this.container, NodeFilter.SHOW_COMMENT, { acceptNode: function acceptNode(node) {
+		          return NodeFilter.FILTER_ACCEPT;
+		        } }, false);
+		      var comments = [];
+		      while (treeWalker.nextNode()) {
+		        comments.push(treeWalker.currentNode);
+		      }
+		      comments.forEach(function (node) {
+		        if (node != null && node.parentNode != null) {
+		          node.parentNode.removeChild(node);
+		        }
+		      });
+		      this.container.normalize();
+		    }
+		  }, {
 		    key: 'convert',
 		    value: function convert(html) {
 		      var _this2 = this;
@@ -6426,6 +6531,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		      if (typeof html === 'string') {
 		        this.container.innerHTML = html;
 		      }
+		      this.clean();
 		      this.matchers.forEach(function (pair) {
 		        var _pair = _slicedToArray(pair, 2);
 	
@@ -6535,7 +6641,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		}(_module2.default);
 	
 		Clipboard.DEFAULTS = {
-		  matchers: [[Node.TEXT_NODE, matchText], [Node.ELEMENT_NODE, matchNewline], [Node.ELEMENT_NODE, matchBlot], [Node.ELEMENT_NODE, matchSpacing], [Node.ELEMENT_NODE, matchAttributor], ['b', matchAlias.bind(matchAlias, 'bold')], ['i', matchAlias.bind(matchAlias, 'italic')]]
+		  matchers: [[Node.TEXT_NODE, matchText], [Node.ELEMENT_NODE, matchNewline], [Node.ELEMENT_NODE, matchBlot], [Node.ELEMENT_NODE, matchSpacing], [Node.ELEMENT_NODE, matchAttributor], [Node.ELEMENT_NODE, matchStyles], ['b', matchAlias.bind(matchAlias, 'bold')], ['i', matchAlias.bind(matchAlias, 'italic')]]
 		};
 	
 		function computeStyle(node) {
@@ -6570,7 +6676,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		  var styles = _parchment2.default.Attributor.Style.keys(node);
 		  var formats = {};
 		  attributes.concat(classes).concat(styles).forEach(function (name) {
-		    var attr = _parchment2.default.query(name, _parchment2.default.Scope.ATTRIBUTE);
+		    var attr = _parchment2.default.query(name, _parchment2.default.Scope.ATTRIBUTE) || STYLE_ATTRIBUTORS[name];
 		    if (attr != null) {
 		      formats[attr.attrName] = attr.value(node);
 		    }
@@ -6611,25 +6717,45 @@ return /******/ (function(modules) { // webpackBootstrap
 		}
 	
 		function matchSpacing(node, delta) {
-		  if (node.nextElementSibling != null && node.nextElementSibling.offsetTop > node.offsetTop + node.offsetHeight * 1.4 && !deltaEndsWith(delta, '\n\n')) {
+		  if (isLine(node) && node.nextElementSibling != null && node.nextElementSibling.offsetTop > node.offsetTop + node.offsetHeight * 1.25 && !deltaEndsWith(delta, '\n\n')) {
 		    delta.insert('\n');
+		  }
+		  return delta;
+		}
+	
+		function matchStyles(node, delta) {
+		  var formats = {};
+		  if (node.style.fontWeight && computeStyle(node).fontWeight === 'bold') {
+		    formats.bold = true;
+		  }
+		  if (Object.keys(formats).length > 0) {
+		    delta = delta.compose(new _delta2.default().retain(delta.length(), formats));
+		  }
+		  if (parseFloat(node.style.textIndent || 0) > 0) {
+		    // Could be 0.5in
+		    delta = new _delta2.default().insert('\t').concat(delta);
 		  }
 		  return delta;
 		}
 	
 		function matchText(node, delta) {
 		  var text = node.data;
+		  // Word represents empty line with <o:p>&nbsp;</o:p>
+		  if (node.parentNode.tagName === 'O:P') {
+		    return delta.insert(text.trim());
+		  }
 		  if (!computeStyle(node.parentNode).whiteSpace.startsWith('pre')) {
 		    var replacer = function replacer(collapse, match) {
 		      match = match.replace(/[^\u00a0]/g, ''); // \u00a0 is nbsp;
 		      return match.length < 1 && collapse ? ' ' : match;
 		    };
 	
-		    text = text.replace(/\s\s+/g, replacer.bind(replacer, true));
-		    if (node.previousSibling == null || isLine(node.previousSibling)) {
+		    text = text.replace(/\r\n/g, ' ').replace(/\n/g, ' ');
+		    text = text.replace(/\s\s+/g, replacer.bind(replacer, true)); // collapse whitespace
+		    if (node.previousSibling == null && isLine(node.parentNode) || node.previousSibling != null && isLine(node.previousSibling)) {
 		      text = text.replace(/^\s+/, replacer.bind(replacer, false));
 		    }
-		    if (node.nextSibling == null || isLine(node.nextSibling)) {
+		    if (node.nextSibling == null && isLine(node.parentNode) || node.nextSibling != null && isLine(node.nextSibling)) {
 		      text = text.replace(/\s+$/, replacer.bind(replacer, false));
 		    }
 		  }
@@ -6645,6 +6771,210 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	/***/ },
 	/* 45 */
+	/***/ function(module, exports, __webpack_require__) {
+	
+		'use strict';
+	
+		Object.defineProperty(exports, "__esModule", {
+		  value: true
+		});
+		exports.AlignStyle = exports.AlignClass = undefined;
+	
+		var _parchment = __webpack_require__(3);
+	
+		var _parchment2 = _interopRequireDefault(_parchment);
+	
+		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+		var config = {
+		  scope: _parchment2.default.Scope.BLOCK,
+		  whitelist: ['right', 'center', 'justify']
+		};
+	
+		var AlignClass = new _parchment2.default.Attributor.Class('align', 'ql-align', config);
+		var AlignStyle = new _parchment2.default.Attributor.Style('align', 'text-align', config);
+	
+		exports.AlignClass = AlignClass;
+		exports.AlignStyle = AlignStyle;
+	
+	/***/ },
+	/* 46 */
+	/***/ function(module, exports, __webpack_require__) {
+	
+		'use strict';
+	
+		Object.defineProperty(exports, "__esModule", {
+		  value: true
+		});
+		exports.BackgroundStyle = exports.BackgroundClass = undefined;
+	
+		var _parchment = __webpack_require__(3);
+	
+		var _parchment2 = _interopRequireDefault(_parchment);
+	
+		var _color = __webpack_require__(47);
+	
+		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+		var BackgroundClass = new _parchment2.default.Attributor.Class('background', 'ql-bg', {
+		  scope: _parchment2.default.Scope.INLINE
+		});
+		var BackgroundStyle = new _color.ColorAttributor('background', 'background-color', {
+		  scope: _parchment2.default.Scope.INLINE
+		});
+	
+		exports.BackgroundClass = BackgroundClass;
+		exports.BackgroundStyle = BackgroundStyle;
+	
+	/***/ },
+	/* 47 */
+	/***/ function(module, exports, __webpack_require__) {
+	
+		'use strict';
+	
+		Object.defineProperty(exports, "__esModule", {
+		  value: true
+		});
+		exports.ColorStyle = exports.ColorClass = exports.ColorAttributor = undefined;
+	
+		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+		var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
+	
+		var _parchment = __webpack_require__(3);
+	
+		var _parchment2 = _interopRequireDefault(_parchment);
+	
+		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+		function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+		function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+		function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+		var ColorAttributor = function (_Parchment$Attributor) {
+		  _inherits(ColorAttributor, _Parchment$Attributor);
+	
+		  function ColorAttributor() {
+		    _classCallCheck(this, ColorAttributor);
+	
+		    return _possibleConstructorReturn(this, Object.getPrototypeOf(ColorAttributor).apply(this, arguments));
+		  }
+	
+		  _createClass(ColorAttributor, [{
+		    key: 'value',
+		    value: function value(domNode) {
+		      var value = _get(Object.getPrototypeOf(ColorAttributor.prototype), 'value', this).call(this, domNode);
+		      if (!value.startsWith('rgb(')) return value;
+		      value = value.replace(/^[^\d]+/, '').replace(/[^\d]+$/, '');
+		      return '#' + value.split(',').map(function (component) {
+		        return ('00' + parseInt(component).toString(16)).slice(-2);
+		      }).join('');
+		    }
+		  }]);
+	
+		  return ColorAttributor;
+		}(_parchment2.default.Attributor.Style);
+	
+		var ColorClass = new _parchment2.default.Attributor.Class('color', 'ql-color', {
+		  scope: _parchment2.default.Scope.INLINE
+		});
+		var ColorStyle = new ColorAttributor('color', 'color', {
+		  scope: _parchment2.default.Scope.INLINE
+		});
+	
+		exports.ColorAttributor = ColorAttributor;
+		exports.ColorClass = ColorClass;
+		exports.ColorStyle = ColorStyle;
+	
+	/***/ },
+	/* 48 */
+	/***/ function(module, exports, __webpack_require__) {
+	
+		'use strict';
+	
+		Object.defineProperty(exports, "__esModule", {
+		  value: true
+		});
+		exports.DirectionStyle = exports.DirectionClass = undefined;
+	
+		var _parchment = __webpack_require__(3);
+	
+		var _parchment2 = _interopRequireDefault(_parchment);
+	
+		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+		var config = {
+		  scope: _parchment2.default.Scope.BLOCK,
+		  whitelist: ['rtl']
+		};
+	
+		var DirectionClass = new _parchment2.default.Attributor.Class('direction', 'ql-direction', config);
+		var DirectionStyle = new _parchment2.default.Attributor.Style('direction', 'direction', config);
+	
+		exports.DirectionClass = DirectionClass;
+		exports.DirectionStyle = DirectionStyle;
+	
+	/***/ },
+	/* 49 */
+	/***/ function(module, exports, __webpack_require__) {
+	
+		'use strict';
+	
+		Object.defineProperty(exports, "__esModule", {
+		  value: true
+		});
+		exports.FontClass = exports.FontStyle = undefined;
+	
+		var _parchment = __webpack_require__(3);
+	
+		var _parchment2 = _interopRequireDefault(_parchment);
+	
+		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+		var config = {
+		  scope: _parchment2.default.Scope.INLINE,
+		  whitelist: ['serif', 'monospace']
+		};
+	
+		var FontClass = new _parchment2.default.Attributor.Class('font', 'ql-font', config);
+		var FontStyle = new _parchment2.default.Attributor.Style('font', 'font-family', config);
+	
+		exports.FontStyle = FontStyle;
+		exports.FontClass = FontClass;
+	
+	/***/ },
+	/* 50 */
+	/***/ function(module, exports, __webpack_require__) {
+	
+		'use strict';
+	
+		Object.defineProperty(exports, "__esModule", {
+		  value: true
+		});
+		exports.SizeStyle = exports.SizeClass = undefined;
+	
+		var _parchment = __webpack_require__(3);
+	
+		var _parchment2 = _interopRequireDefault(_parchment);
+	
+		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+		var SizeClass = new _parchment2.default.Attributor.Class('size', 'ql-size', {
+		  scope: _parchment2.default.Scope.INLINE,
+		  whitelist: ['small', 'large', 'huge']
+		});
+		var SizeStyle = new _parchment2.default.Attributor.Style('size', 'font-size', {
+		  scope: _parchment2.default.Scope.INLINE,
+		  whitelist: ['10px', '18px', '32px']
+		});
+	
+		exports.SizeClass = SizeClass;
+		exports.SizeStyle = SizeStyle;
+	
+	/***/ },
+	/* 51 */
 	/***/ function(module, exports, __webpack_require__) {
 	
 		'use strict';
@@ -6695,8 +7025,8 @@ return /******/ (function(modules) { // webpackBootstrap
 		        _this.transform(delta);
 		      }
 		    });
-		    _this.quill.keyboard.addBinding({ key: 'Z', metaKey: true }, _this.undo.bind(_this));
-		    _this.quill.keyboard.addBinding({ key: 'Z', metaKey: true, shiftKey: true }, _this.redo.bind(_this));
+		    _this.quill.keyboard.addBinding({ key: 'Z', shortKey: true }, _this.undo.bind(_this));
+		    _this.quill.keyboard.addBinding({ key: 'Z', shortKey: true, shiftKey: true }, _this.redo.bind(_this));
 		    return _this;
 		  }
 	
@@ -6804,7 +7134,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		exports.getLastChangeIndex = getLastChangeIndex;
 	
 	/***/ },
-	/* 46 */
+	/* 52 */
 	/***/ function(module, exports, __webpack_require__) {
 	
 		'use strict';
@@ -6859,8 +7189,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-		function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-	
 		function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
 		function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -6869,6 +7197,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 		var debug = (0, _logger2.default)('quill:keyboard');
 	
+		var SHORTKEY = /Mac/i.test(navigator.platform) ? 'metaKey' : 'ctrlKey';
+	
 		var Keyboard = function (_Module) {
 		  _inherits(Keyboard, _Module);
 	
@@ -6876,10 +7206,12 @@ return /******/ (function(modules) { // webpackBootstrap
 		    key: 'match',
 		    value: function match(evt, binding) {
 		      binding = normalize(binding);
-		      var metaKey = /Mac/i.test(navigator.platform) ? evt.metaKey : evt.metaKey || evt.ctrlKey;
-		      if (!!binding.metaKey !== metaKey && binding.metaKey !== null) return false;
-		      if (!!binding.shiftKey !== evt.shiftKey && binding.shiftKey !== null) return false;
-		      if (!!binding.altKey !== evt.altKey && binding.altKey !== null) return false;
+		      if (!!binding.shortKey !== evt[SHORTKEY] && binding.shortKey !== null) return false;
+		      if (['altKey', 'ctrlKey', 'metaKey', 'shiftKey'].some(function (key) {
+		        return key != SHORTKEY && !!binding[key] !== evt[key] && binding[key] !== null;
+		      })) {
+		        return false;
+		      }
 		      return binding.key === (evt.which || evt.keyCode);
 		    }
 		  }]);
@@ -6892,17 +7224,31 @@ return /******/ (function(modules) { // webpackBootstrap
 		    _this.options.bindings = (0, _extend2.default)({}, Keyboard.DEFAULTS.bindings, options.bindings);
 		    _this.bindings = {};
 		    Object.keys(_this.options.bindings).forEach(function (name) {
-		      var _this$options$binding = _slicedToArray(_this.options.bindings[name], 3);
+		      if (_this.options.bindings[name]) {
+		        var _this$options$binding = _slicedToArray(_this.options.bindings[name], 3);
 	
-		      var key = _this$options$binding[0];
-		      var context = _this$options$binding[1];
-		      var handler = _this$options$binding[2];
+		        var key = _this$options$binding[0];
+		        var context = _this$options$binding[1];
+		        var handler = _this$options$binding[2];
 	
-		      _this.addBinding(key, context, handler);
+		        _this.addBinding(key, context, handler);
+		      }
 		    });
 		    _this.addBinding({ key: Keyboard.keys.ENTER, shiftKey: null }, handleEnter);
-		    _this.addBinding({ key: Keyboard.keys.BACKSPACE }, makeDeleteHanlder(true));
-		    _this.addBinding({ key: Keyboard.keys.DELETE }, makeDeleteHanlder(false));
+		    _this.addBinding({ key: Keyboard.keys.ENTER, metaKey: null, ctrlKey: null, altKey: null }, function () {});
+		    _this.addBinding({ key: Keyboard.keys.BACKSPACE }, { collapsed: true, prefix: /^$/ }, function (range) {
+		      if (range.index === 0) return;
+		      this.quill.deleteText(range.index - 1, 1, _quill2.default.sources.USER);
+		      this.quill.setSelection(range.index - 1, _quill2.default.sources.SILENT);
+		      this.quill.selection.scrollIntoView();
+		    });
+		    _this.addBinding({ key: Keyboard.keys.DELETE }, { collapsed: true, suffix: /^$/ }, function (range) {
+		      if (range.index >= this.quill.getLength() - 1) return;
+		      this.quill.deleteText(range.index, 1, _quill2.default.sources.USER);
+		      this.quill.setSelection(range.index, _quill2.default.sources.SILENT);
+		    });
+		    _this.addBinding({ key: Keyboard.keys.BACKSPACE }, { collapsed: false }, handleDelete);
+		    _this.addBinding({ key: Keyboard.keys.DELETE }, { collapsed: false }, handleDelete);
 		    _this.listen();
 		    return _this;
 		  }
@@ -6935,7 +7281,38 @@ return /******/ (function(modules) { // webpackBootstrap
 		        if (bindings.length === 0) return;
 		        var range = _this2.quill.getSelection();
 		        if (range == null) return; // implies we do not have focus
-		        var format = null;
+	
+		        var _quill$scroll$line = _this2.quill.scroll.line(range.index);
+	
+		        var _quill$scroll$line2 = _slicedToArray(_quill$scroll$line, 2);
+	
+		        var line = _quill$scroll$line2[0];
+		        var offset = _quill$scroll$line2[1];
+	
+		        var _quill$scroll$leaf = _this2.quill.scroll.leaf(range.index);
+	
+		        var _quill$scroll$leaf2 = _slicedToArray(_quill$scroll$leaf, 2);
+	
+		        var leafStart = _quill$scroll$leaf2[0];
+		        var offsetStart = _quill$scroll$leaf2[1];
+	
+		        var _ref = range.length === 0 ? [leafStart, offsetStart] : _this2.quill.scroll.leaf(range.index + range.length);
+	
+		        var _ref2 = _slicedToArray(_ref, 2);
+	
+		        var leafEnd = _ref2[0];
+		        var offsetEnd = _ref2[1];
+	
+		        var prefixText = leafStart instanceof _parchment2.default.Text ? leafStart.value().slice(0, offsetStart) : '';
+		        var suffixText = leafEnd instanceof _parchment2.default.Text ? leafEnd.value().slice(offsetEnd) : '';
+		        var curContext = {
+		          collapsed: range.length === 0,
+		          empty: range.length === 0 && line.length() <= 1,
+		          format: _this2.quill.getFormat(range),
+		          offset: offset,
+		          prefix: prefixText,
+		          suffix: suffixText
+		        };
 		        var prevented = bindings.some(function (tuple) {
 		          var _tuple = _slicedToArray(tuple, 3);
 	
@@ -6943,16 +7320,29 @@ return /******/ (function(modules) { // webpackBootstrap
 		          var context = _tuple[1];
 		          var handler = _tuple[2];
 	
-		          if (context.collapsed === true && range.length > 0) return false;
-		          if (context.collapsed === false && range.length === 0) return false;
-		          if (context.format) {
-		            format = format || _this2.quill.getFormat(range);
-		            var formatsMatch = Object.keys(context.format).every(function (name) {
-		              return context.format[name] === true && format[name] != null || context.format[name] === false && format[name] == null || (0, _deepEqual2.default)(context.format[name], format[name]);
-		            });
-		            if (!formatsMatch) return false;
+		          if (context.collapsed != null && context.collapsed !== curContext.collapsed) return false;
+		          if (context.empty != null && context.empty !== curContext.empty) return false;
+		          if (context.offset != null && context.offset !== curContext.offset) return false;
+		          if (Array.isArray(context.format)) {
+		            // any format is present
+		            if (context.format.every(function (name) {
+		              return curContext.format[name] == null;
+		            })) {
+		              return false;
+		            }
+		          } else if (_typeof(context.format) === 'object') {
+		            // all formats must match
+		            if (!Object.keys(context.format).every(function (name) {
+		              if (context.format[name] === true) return curContext.format[name] != null;
+		              if (context.format[name] === false) return curContext.format[name] == null;
+		              return (0, _deepEqual2.default)(context.format[name], curContext.format[name]);
+		            })) {
+		              return false;
+		            }
 		          }
-		          return handler.call(_this2, range) !== true;
+		          if (context.prefix != null && !context.prefix.test(curContext.prefix)) return false;
+		          if (context.suffix != null && !context.suffix.test(curContext.suffix)) return false;
+		          return handler.call(_this2, range, curContext) !== true;
 		        });
 		        if (prevented) {
 		          evt.preventDefault();
@@ -6978,101 +7368,131 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 		Keyboard.DEFAULTS = {
 		  bindings: {
-		    'add bold': makeFormatHandler('bold', true),
-		    'add italic': makeFormatHandler('italic', true),
-		    'add underline': makeFormatHandler('underline', true),
-		    'remove bold': makeFormatHandler('bold', false),
-		    'remove italic': makeFormatHandler('italic', false),
-		    'remove underline': makeFormatHandler('underline', false),
-		    'indent': makeIndentHanlder(true),
-		    'outdent': makeIndentHanlder(false),
-		    'tab': [{ key: Keyboard.keys.TAB, shiftKey: null }, { collapsed: true }, function (range) {
+		    'bold': makeFormatHandler('bold'),
+		    'italic': makeFormatHandler('italic'),
+		    'underline': makeFormatHandler('underline'),
+		    'indent': [
+		    // highlight tab or tab at beginning of list, indent or blockquote
+		    { key: Keyboard.keys.TAB }, { format: ['blockquote', 'indent', 'list'] }, function (range, context) {
+		      if (context.collapsed && context.offset !== 0) return true;
+		      this.quill.format('indent', '+1', _quill2.default.sources.USER);
+		    }],
+		    'outdent': [{ key: Keyboard.keys.TAB, shiftKey: true }, { format: ['blockquote', 'indent', 'list'] },
+		    // highlight tab or tab at beginning of list, indent or blockquote
+		    function (range, context) {
+		      if (context.collapsed && context.offset !== 0) return true;
+		      this.quill.format('indent', '-1', _quill2.default.sources.USER);
+		    }],
+		    'outdent backspace': [{ key: Keyboard.keys.BACKSPACE }, { collapsed: true, format: ['blockquote', 'indent', 'list'], offset: 0 }, function (range, context) {
+		      if (context.format.indent != null) {
+		        this.quill.format('indent', '-1', _quill2.default.sources.USER);
+		      } else if (context.format.blockquote != null) {
+		        this.quill.format('blockquote', false, _quill2.default.sources.USER);
+		      } else if (context.format.list != null) {
+		        this.quill.format('list', false, _quill2.default.sources.USER);
+		      }
+		    }],
+		    'indent code-block': makeCodeBlockHandler(true),
+		    'outdent code-block': makeCodeBlockHandler(false),
+		    'tab': [{ key: Keyboard.keys.TAB, shiftKey: null }, {}, function (range, context) {
+		      if (!context.collapsed) {
+		        this.quill.scroll.deleteAt(range.index, range.length);
+		      }
 		      this.quill.insertText(range.index, '\t', _quill2.default.sources.USER);
 		      this.quill.setSelection(range.index + 1, _quill2.default.sources.SILENT);
-		      return false;
+		    }],
+		    'list empty enter': [{ key: Keyboard.keys.ENTER }, { collapsed: true, format: ['list'], empty: true }, function (range) {
+		      this.quill.format('list', false);
+		    }],
+		    'header enter': [{ key: Keyboard.keys.ENTER }, { collapsed: true, format: ['header'], suffix: /^$/ }, function (range) {
+		      this.quill.scroll.insertAt(range.index, '\n');
+		      this.quill.formatText(range.index + 1, 1, 'header', false, _quill2.default.sources.USER);
+		      this.quill.setSelection(range.index + 1, _quill2.default.sources.SILENT);
+		      this.quill.selection.scrollIntoView();
+		    }],
+		    'list autofill': [{ key: ' ' }, { collapsed: true, format: { list: false }, prefix: /^(1\.|-)$/ }, function (range, context) {
+		      var length = context.prefix.length;
+		      this.quill.scroll.deleteAt(range.index - length, length);
+		      this.quill.formatLine(range.index - length, 1, 'list', length === 1 ? 'bullet' : 'ordered', _quill2.default.sources.USER);
+		      this.quill.setSelection(range.index - length, _quill2.default.sources.SILENT);
 		    }]
 		  }
 		};
 	
-		function handleEnter(range) {
+		function handleDelete(range) {
+		  this.quill.deleteText(range, _quill2.default.sources.USER);
+		  this.quill.setSelection(range.index, _quill2.default.sources.SILENT);
+		  this.quill.selection.scrollIntoView();
+		}
+	
+		function handleEnter(range, context) {
 		  var _this3 = this;
 	
-		  var formats = this.quill.getFormat(range);
-		  var lineFormats = Object.keys(formats).reduce(function (lineFormats, format) {
-		    if (_parchment2.default.query(format, _parchment2.default.Scope.BLOCK)) {
-		      lineFormats[format] = formats[format];
+		  if (range.length > 0) {
+		    this.quill.scroll.deleteAt(range.index, range.length); // So we do not trigger text-change
+		  }
+		  var lineFormats = Object.keys(context.format).reduce(function (lineFormats, format) {
+		    if (_parchment2.default.query(format, _parchment2.default.Scope.BLOCK) && !Array.isArray(context.format[format])) {
+		      lineFormats[format] = context.format[format];
 		    }
 		    return lineFormats;
 		  }, {});
-		  var added = 1;
-		  var delta = new _delta2.default().retain(range.index).insert('\n', lineFormats);
-		  delta.delete(range.length);
-		  this.quill.updateContents(delta, _quill2.default.sources.USER);
-		  this.quill.setSelection(range.index + added, _quill2.default.sources.SILENT);
-		  Object.keys(formats).forEach(function (name) {
-		    if (lineFormats[name] == null) {
-		      _this3.quill.format(name, formats[name]);
+		  this.quill.insertText(range.index, '\n', lineFormats, _quill2.default.sources.USER);
+		  this.quill.setSelection(range.index + 1, _quill2.default.sources.SILENT);
+		  this.quill.selection.scrollIntoView();
+		  Object.keys(context.format).forEach(function (name) {
+		    if (lineFormats[name] == null && !Array.isArray(context.format[name])) {
+		      _this3.quill.format(name, context.format[name], _quill2.default.sources.USER);
 		    }
 		  });
-		  this.quill.selection.scrollIntoView();
-		  return false;
 		}
 	
-		function makeDeleteHanlder(isBackspace) {
-		  return function (range) {
-		    if (range.length > 0) {
-		      this.quill.deleteText(range, _quill2.default.sources.USER);
-		    } else if (!isBackspace) {
-		      this.quill.deleteText(range.index, 1, _quill2.default.sources.USER);
+		function makeCodeBlockHandler(indent) {
+		  var handler = function handler(range) {
+		    var tab = _parchment2.default.query('code-block').TAB;
+		    var index = range.index,
+		        length = range.length;
+		    var lines = [];
+		    if (range.length === 0) {
+		      var _quill$scroll$line3 = this.quill.scroll.line(range.index);
+	
+		      var _quill$scroll$line4 = _slicedToArray(_quill$scroll$line3, 1);
+	
+		      var line = _quill$scroll$line4[0];
+	
+		      lines.push(line);
 		    } else {
-		      var _quill$scroll$descend = this.quill.scroll.descendant(_block2.default, range.index);
-	
-		      var _quill$scroll$descend2 = _slicedToArray(_quill$scroll$descend, 2);
-	
-		      var line = _quill$scroll$descend2[0];
-		      var offset = _quill$scroll$descend2[1];
-	
-		      var formats = this.quill.getFormat(range);
-		      if (line != null && offset === 0 && (formats['indent'] || formats['list'])) {
-		        if (formats['indent'] != null) {
-		          line.format('indent', parseInt(formats['indent']) - 1, _quill2.default.sources.USER);
-		        } else {
-		          line.format('list', false);
-		        }
-		      } else {
-		        this.quill.deleteText(range.index - 1, 1, _quill2.default.sources.USER);
-		        range = new _selection.Range(Math.max(0, range.index - 1));
-		      }
+		      lines = this.quill.scroll.lines(range.index, range.length);
 		    }
-		    this.quill.setSelection(range.index, _quill2.default.sources.SILENT);
-		  };
-		}
-	
-		function makeFormatHandler(format, value) {
-		  var key = { key: format[0].toUpperCase(), metaKey: true };
-		  var context = {
-		    format: _defineProperty({}, format, !value)
-		  };
-		  var handler = function handler(range) {
-		    this.quill.format(format, value, _quill2.default.sources.USER);
-		    return false;
-		  };
-		  return [key, context, handler];
-		}
-	
-		function makeIndentHanlder(indent) {
-		  var handler = function handler(range) {
-		    var modifier = indent ? 1 : -1;
-		    this.quill.scroll.descendants(_block2.default, range.index, range.length).forEach(function (line) {
-		      var format = line.formats();
-		      var level = parseInt(format['indent'] || 0);
-		      line.format('indent', Math.max(0, level + modifier));
+		    lines.forEach(function (line, i) {
+		      if (indent) {
+		        line.insertAt(0, tab);
+		        if (i === 0) {
+		          index += tab.length;
+		        } else {
+		          length += tab.length;
+		        }
+		      } else if (line.domNode.textContent.startsWith(tab)) {
+		        line.deleteAt(0, tab.length);
+		        if (i === 0) {
+		          index -= tab.length;
+		        } else {
+		          length -= tab.length;
+		        }
+		      }
 		    });
 		    this.quill.update(_quill2.default.sources.USER);
-		    this.quill.setSelection(range, _quill2.default.sources.SILENT);
-		    return false;
+		    this.quill.setSelection(index, length, _quill2.default.sources.SILENT);
 		  };
-		  return [{ key: Keyboard.keys.TAB, shiftKey: !indent }, { collapsed: false }, handler];
+		  return [{ key: Keyboard.keys.TAB, shiftKey: !indent }, { format: { 'code-block': true } }, handler];
+		}
+	
+		function makeFormatHandler(format) {
+		  var key = { key: format[0].toUpperCase(), shortKey: true };
+		  var handler = function handler(range, context) {
+		    this.quill.format(format, !context.format[format], _quill2.default.sources.USER);
+		  };
+		  return [key, {}, handler];
 		}
 	
 		function normalize(binding) {
@@ -7104,63 +7524,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		exports.default = Keyboard;
 	
 	/***/ },
-	/* 47 */
-	/***/ function(module, exports, __webpack_require__) {
-	
-		'use strict';
-	
-		Object.defineProperty(exports, "__esModule", {
-		  value: true
-		});
-		exports.AlignStyle = exports.AlignClass = undefined;
-	
-		var _parchment = __webpack_require__(3);
-	
-		var _parchment2 = _interopRequireDefault(_parchment);
-	
-		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-		var config = {
-		  scope: _parchment2.default.Scope.BLOCK,
-		  whitelist: ['right', 'center', 'justify']
-		};
-	
-		var AlignClass = new _parchment2.default.Attributor.Class('align', 'ql-align', config);
-		var AlignStyle = new _parchment2.default.Attributor.Style('align', 'text-align', config);
-	
-		exports.AlignClass = AlignClass;
-		exports.AlignStyle = AlignStyle;
-	
-	/***/ },
-	/* 48 */
-	/***/ function(module, exports, __webpack_require__) {
-	
-		'use strict';
-	
-		Object.defineProperty(exports, "__esModule", {
-		  value: true
-		});
-		exports.DirectionStyle = exports.DirectionClass = undefined;
-	
-		var _parchment = __webpack_require__(3);
-	
-		var _parchment2 = _interopRequireDefault(_parchment);
-	
-		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-		var config = {
-		  scope: _parchment2.default.Scope.BLOCK,
-		  whitelist: ['rtl']
-		};
-	
-		var DirectionClass = new _parchment2.default.Attributor.Class('direction', 'ql-direction', config);
-		var DirectionStyle = new _parchment2.default.Attributor.Style('direction', 'direction', config);
-	
-		exports.DirectionClass = DirectionClass;
-		exports.DirectionStyle = DirectionStyle;
-	
-	/***/ },
-	/* 49 */
+	/* 53 */
 	/***/ function(module, exports, __webpack_require__) {
 	
 		'use strict';
@@ -7170,13 +7534,56 @@ return /******/ (function(modules) { // webpackBootstrap
 		});
 		exports.IndentClass = undefined;
 	
+		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+		var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
+	
 		var _parchment = __webpack_require__(3);
 	
 		var _parchment2 = _interopRequireDefault(_parchment);
 	
 		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-		var IndentClass = new _parchment2.default.Attributor.Class('indent', 'ql-indent', {
+		function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+		function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+		function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+		var IdentAttributor = function (_Parchment$Attributor) {
+		  _inherits(IdentAttributor, _Parchment$Attributor);
+	
+		  function IdentAttributor() {
+		    _classCallCheck(this, IdentAttributor);
+	
+		    return _possibleConstructorReturn(this, Object.getPrototypeOf(IdentAttributor).apply(this, arguments));
+		  }
+	
+		  _createClass(IdentAttributor, [{
+		    key: 'add',
+		    value: function add(node, value) {
+		      if (value === '+1' || value === '-1') {
+		        var indent = this.value(node) || 0;
+		        value = value === '+1' ? indent + 1 : indent - 1;
+		      }
+		      if (value === 0) {
+		        this.remove(node);
+		        return true;
+		      } else {
+		        return _get(Object.getPrototypeOf(IdentAttributor.prototype), 'add', this).call(this, node, value);
+		      }
+		    }
+		  }, {
+		    key: 'value',
+		    value: function value(node) {
+		      return parseInt(_get(Object.getPrototypeOf(IdentAttributor.prototype), 'value', this).call(this, node)) || undefined; // Don't return NaN
+		    }
+		  }]);
+	
+		  return IdentAttributor;
+		}(_parchment2.default.Attributor.Class);
+	
+		var IndentClass = new IdentAttributor('indent', 'ql-indent', {
 		  scope: _parchment2.default.Scope.BLOCK,
 		  whitelist: [1, 2, 3, 4, 5, 6, 7, 8]
 		});
@@ -7184,7 +7591,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		exports.IndentClass = IndentClass;
 	
 	/***/ },
-	/* 50 */
+	/* 54 */
 	/***/ function(module, exports, __webpack_require__) {
 	
 		'use strict';
@@ -7223,7 +7630,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		exports.default = Blockquote;
 	
 	/***/ },
-	/* 51 */
+	/* 55 */
 	/***/ function(module, exports, __webpack_require__) {
 	
 		'use strict';
@@ -7287,7 +7694,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		exports.default = Header;
 	
 	/***/ },
-	/* 52 */
+	/* 56 */
 	/***/ function(module, exports, __webpack_require__) {
 	
 		'use strict';
@@ -7446,154 +7853,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 		exports.ListItem = ListItem;
 		exports.default = List;
-	
-	/***/ },
-	/* 53 */
-	/***/ function(module, exports, __webpack_require__) {
-	
-		'use strict';
-	
-		Object.defineProperty(exports, "__esModule", {
-		  value: true
-		});
-		exports.BackgroundStyle = exports.BackgroundClass = undefined;
-	
-		var _parchment = __webpack_require__(3);
-	
-		var _parchment2 = _interopRequireDefault(_parchment);
-	
-		var _color = __webpack_require__(54);
-	
-		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-		var BackgroundClass = new _parchment2.default.Attributor.Class('background', 'ql-bg', {
-		  scope: _parchment2.default.Scope.INLINE
-		});
-		var BackgroundStyle = new _color.ColorAttributor('background', 'background-color', {
-		  scope: _parchment2.default.Scope.INLINE
-		});
-	
-		exports.BackgroundClass = BackgroundClass;
-		exports.BackgroundStyle = BackgroundStyle;
-	
-	/***/ },
-	/* 54 */
-	/***/ function(module, exports, __webpack_require__) {
-	
-		'use strict';
-	
-		Object.defineProperty(exports, "__esModule", {
-		  value: true
-		});
-		exports.ColorStyle = exports.ColorClass = exports.ColorAttributor = undefined;
-	
-		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-		var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
-	
-		var _parchment = __webpack_require__(3);
-	
-		var _parchment2 = _interopRequireDefault(_parchment);
-	
-		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-		function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-		function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-		function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-		var ColorAttributor = function (_Parchment$Attributor) {
-		  _inherits(ColorAttributor, _Parchment$Attributor);
-	
-		  function ColorAttributor() {
-		    _classCallCheck(this, ColorAttributor);
-	
-		    return _possibleConstructorReturn(this, Object.getPrototypeOf(ColorAttributor).apply(this, arguments));
-		  }
-	
-		  _createClass(ColorAttributor, [{
-		    key: 'value',
-		    value: function value(domNode) {
-		      var value = _get(Object.getPrototypeOf(ColorAttributor.prototype), 'value', this).call(this, domNode);
-		      if (!value.startsWith('rgb(')) return value;
-		      value = value.replace(/^[^\d]+/, '').replace(/[^\d]+$/, '');
-		      return '#' + value.split(',').map(function (component) {
-		        return ('00' + parseInt(component).toString(16)).slice(-2);
-		      }).join('');
-		    }
-		  }]);
-	
-		  return ColorAttributor;
-		}(_parchment2.default.Attributor.Style);
-	
-		var ColorClass = new _parchment2.default.Attributor.Class('color', 'ql-color', {
-		  scope: _parchment2.default.Scope.INLINE
-		});
-		var ColorStyle = new ColorAttributor('color', 'color', {
-		  scope: _parchment2.default.Scope.INLINE
-		});
-	
-		exports.ColorAttributor = ColorAttributor;
-		exports.ColorClass = ColorClass;
-		exports.ColorStyle = ColorStyle;
-	
-	/***/ },
-	/* 55 */
-	/***/ function(module, exports, __webpack_require__) {
-	
-		'use strict';
-	
-		Object.defineProperty(exports, "__esModule", {
-		  value: true
-		});
-		exports.FontClass = exports.FontStyle = undefined;
-	
-		var _parchment = __webpack_require__(3);
-	
-		var _parchment2 = _interopRequireDefault(_parchment);
-	
-		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-		var config = {
-		  scope: _parchment2.default.Scope.INLINE,
-		  whitelist: ['serif', 'monospace']
-		};
-	
-		var FontClass = new _parchment2.default.Attributor.Class('font', 'ql-font', config);
-		var FontStyle = new _parchment2.default.Attributor.Style('font', 'font-family', config);
-	
-		exports.FontStyle = FontStyle;
-		exports.FontClass = FontClass;
-	
-	/***/ },
-	/* 56 */
-	/***/ function(module, exports, __webpack_require__) {
-	
-		'use strict';
-	
-		Object.defineProperty(exports, "__esModule", {
-		  value: true
-		});
-		exports.SizeStyle = exports.SizeClass = undefined;
-	
-		var _parchment = __webpack_require__(3);
-	
-		var _parchment2 = _interopRequireDefault(_parchment);
-	
-		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-		var SizeClass = new _parchment2.default.Attributor.Class('size', 'ql-size', {
-		  scope: _parchment2.default.Scope.INLINE,
-		  whitelist: ['small', 'large', 'huge']
-		});
-		var SizeStyle = new _parchment2.default.Attributor.Style('size', 'font-size', {
-		  scope: _parchment2.default.Scope.INLINE,
-		  whitelist: ['10px', '18px', '32px']
-		});
-	
-		exports.SizeClass = SizeClass;
-		exports.SizeStyle = SizeStyle;
 	
 	/***/ },
 	/* 57 */
@@ -7911,68 +8170,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 		var _embed2 = _interopRequireDefault(_embed);
 	
-		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-		function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-		function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-		function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-		var Formula = function (_Embed) {
-		  _inherits(Formula, _Embed);
-	
-		  function Formula() {
-		    _classCallCheck(this, Formula);
-	
-		    return _possibleConstructorReturn(this, Object.getPrototypeOf(Formula).apply(this, arguments));
-		  }
-	
-		  _createClass(Formula, null, [{
-		    key: 'create',
-		    value: function create(value) {
-		      var node = _get(Object.getPrototypeOf(Formula), 'create', this).call(this, value);
-		      if (typeof value === 'string') {
-		        katex.render(value, node);
-		        node.dataset.value = value;
-		      }
-		      node.setAttribute('contenteditable', false);
-		      return node;
-		    }
-		  }, {
-		    key: 'value',
-		    value: function value(domNode) {
-		      return domNode.dataset.value;
-		    }
-		  }]);
-	
-		  return Formula;
-		}(_embed2.default);
-	
-		Formula.blotName = 'formula';
-		Formula.className = 'ql-formula';
-		Formula.tagName = 'SPAN';
-	
-		exports.default = Formula;
-	
-	/***/ },
-	/* 64 */
-	/***/ function(module, exports, __webpack_require__) {
-	
-		'use strict';
-	
-		Object.defineProperty(exports, "__esModule", {
-		  value: true
-		});
-	
-		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-		var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
-	
-		var _embed = __webpack_require__(34);
-	
-		var _embed2 = _interopRequireDefault(_embed);
-	
 		var _link = __webpack_require__(59);
 	
 		var _link2 = _interopRequireDefault(_link);
@@ -8030,7 +8227,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		exports.default = Image;
 	
 	/***/ },
-	/* 65 */
+	/* 64 */
 	/***/ function(module, exports, __webpack_require__) {
 	
 		'use strict';
@@ -8060,12 +8257,32 @@ return /******/ (function(modules) { // webpackBootstrap
 		var Video = function (_BlockEmbed) {
 		  _inherits(Video, _BlockEmbed);
 	
-		  _createClass(Video, null, [{
+		  function Video() {
+		    _classCallCheck(this, Video);
+	
+		    return _possibleConstructorReturn(this, Object.getPrototypeOf(Video).apply(this, arguments));
+		  }
+	
+		  _createClass(Video, [{
+		    key: 'format',
+		    value: function format(name, value) {
+		      if (name === 'height' || name === 'width') {
+		        if (value) {
+		          this.domNode.setAttribute(name, value);
+		        } else {
+		          this.domNode.removeAttribute(name);
+		        }
+		      } else {
+		        _get(Object.getPrototypeOf(Video.prototype), 'format', this).call(this, name, value);
+		      }
+		    }
+		  }], [{
 		    key: 'create',
 		    value: function create(value) {
 		      var node = _get(Object.getPrototypeOf(Video), 'create', this).call(this, value);
+		      node.setAttribute('frameborder', '0');
+		      node.setAttribute('allowfullscreen', true);
 		      node.setAttribute('src', this.sanitize(value));
-		      node.setAttribute('controls', true);
 		      return node;
 		    }
 		  }, {
@@ -8088,45 +8305,17 @@ return /******/ (function(modules) { // webpackBootstrap
 		    }
 		  }]);
 	
-		  function Video(domNode) {
-		    _classCallCheck(this, Video);
-	
-		    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Video).call(this, domNode));
-	
-		    _this.domNode.addEventListener('mouseenter', function () {
-		      _this.domNode.setAttribute('controls', true);
-		    });
-		    _this.domNode.addEventListener('mouseleave', function () {
-		      _this.domNode.removeAttribute('controls');
-		    });
-		    return _this;
-		  }
-	
-		  _createClass(Video, [{
-		    key: 'format',
-		    value: function format(name, value) {
-		      if (name === 'height' || name === 'width') {
-		        if (value) {
-		          this.domNode.setAttribute(name, value);
-		        } else {
-		          this.domNode.removeAttribute(name);
-		        }
-		      } else {
-		        _get(Object.getPrototypeOf(Video.prototype), 'format', this).call(this, name, value);
-		      }
-		    }
-		  }]);
-	
 		  return Video;
 		}(_block.BlockEmbed);
 	
 		Video.blotName = 'video';
-		Video.tagName = 'VIDEO';
+		Video.className = 'ql-video';
+		Video.tagName = 'IFRAME';
 	
 		exports.default = Video;
 	
 	/***/ },
-	/* 66 */
+	/* 65 */
 	/***/ function(module, exports, __webpack_require__) {
 	
 		'use strict';
@@ -8218,6 +8407,13 @@ return /******/ (function(modules) { // webpackBootstrap
 		      });
 		    }
 		  }], [{
+		    key: 'create',
+		    value: function create(value) {
+		      var domNode = _get(Object.getPrototypeOf(CodeBlock), 'create', this).call(this, value);
+		      domNode.setAttribute('spellcheck', false);
+		      return domNode;
+		    }
+		  }, {
 		    key: 'formats',
 		    value: function formats(domNode) {
 		      return true;
@@ -8229,9 +8425,85 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 		CodeBlock.blotName = 'code-block';
 		CodeBlock.tagName = 'PRE';
+		CodeBlock.TAB = '  ';
 	
 		exports.Code = Code;
 		exports.default = CodeBlock;
+	
+	/***/ },
+	/* 66 */
+	/***/ function(module, exports, __webpack_require__) {
+	
+		'use strict';
+	
+		Object.defineProperty(exports, "__esModule", {
+		  value: true
+		});
+		exports.default = exports.FormulaBlot = undefined;
+	
+		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+		var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
+	
+		var _embed = __webpack_require__(34);
+	
+		var _embed2 = _interopRequireDefault(_embed);
+	
+		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+		function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+		function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+		function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+		var FormulaBlot = function (_Embed) {
+		  _inherits(FormulaBlot, _Embed);
+	
+		  function FormulaBlot() {
+		    _classCallCheck(this, FormulaBlot);
+	
+		    return _possibleConstructorReturn(this, Object.getPrototypeOf(FormulaBlot).apply(this, arguments));
+		  }
+	
+		  _createClass(FormulaBlot, [{
+		    key: 'index',
+		    value: function index(node, offset) {
+		      return 1;
+		    }
+		  }], [{
+		    key: 'create',
+		    value: function create(value) {
+		      var node = _get(Object.getPrototypeOf(FormulaBlot), 'create', this).call(this, value);
+		      if (typeof value === 'string') {
+		        katex.render(value, node);
+		        node.dataset.value = value;
+		      }
+		      return node;
+		    }
+		  }, {
+		    key: 'value',
+		    value: function value(domNode) {
+		      return domNode.dataset.value;
+		    }
+		  }]);
+	
+		  return FormulaBlot;
+		}(_embed2.default);
+	
+		FormulaBlot.blotName = 'formula';
+		FormulaBlot.className = 'ql-formula';
+		FormulaBlot.tagName = 'SPAN';
+	
+		function Formula() {
+		  if (window.katex == null) {
+		    throw new Error('Formula module requires KaTeX.');
+		  }
+		  Quill.register(FormulaBlot);
+		}
+	
+		exports.FormulaBlot = FormulaBlot;
+		exports.default = Formula;
 	
 	/***/ },
 	/* 67 */
@@ -8253,11 +8525,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 		var _module2 = _interopRequireDefault(_module);
 	
-		var _image = __webpack_require__(64);
+		var _image = __webpack_require__(63);
 	
 		var _image2 = _interopRequireDefault(_image);
 	
-		var _keyboard = __webpack_require__(46);
+		var _keyboard = __webpack_require__(52);
 	
 		var _keyboard2 = _interopRequireDefault(_keyboard);
 	
@@ -8283,15 +8555,25 @@ return /******/ (function(modules) { // webpackBootstrap
 		    _this.container.innerHTML = options.template;
 		    _this.preview = _this.container.querySelector('.ql-preview');
 		    _this.textbox = _this.container.querySelector('input[type=text]');
-		    _this.textbox.addEventListener('keydown', function (evt) {
-		      if (_keyboard2.default.match(evt, 'enter')) {
+		    _this.textbox.addEventListener('keydown', function (event) {
+		      if (_keyboard2.default.match(event, 'enter')) {
 		        _this.save();
-		      } else if (_keyboard2.default.match(evt, 'escape')) {
+		        event.preventDefault();
+		      } else if (_keyboard2.default.match(event, 'escape')) {
 		        _this.hide();
+		        event.preventDefault();
 		      }
 		    });
-		    _this.container.querySelector('a.ql-action').addEventListener('click', _this.save.bind(_this));
-		    _this.container.querySelector('a.ql-cancel').addEventListener('click', _this.hide.bind(_this));
+		    ['mousedown', 'touchstart'].forEach(function (name) {
+		      _this.container.querySelector('a.ql-action').addEventListener(name, function (event) {
+		        _this.save();
+		        event.preventDefault();
+		      });
+		      _this.container.querySelector('a.ql-cancel').addEventListener(name, function (event) {
+		        _this.hide();
+		        event.preventDefault();
+		      });
+		    });
 		    _this.textbox.addEventListener('input', _this.update.bind(_this));
 		    return _this;
 		  }
@@ -8319,6 +8601,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		      var index = range.index + range.length;
 		      this.quill.insertEmbed(index, _image2.default.blotName, this.textbox.value, _quill2.default.sources.USER);
 		      this.quill.setSelection(index + 1, _quill2.default.sources.SILENT);
+		      this.textbox.value = '';
 		      this.hide();
 		    }
 		  }, {
@@ -8382,7 +8665,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 		var _link2 = _interopRequireDefault(_link);
 	
-		var _keyboard = __webpack_require__(46);
+		var _keyboard = __webpack_require__(52);
 	
 		var _keyboard2 = _interopRequireDefault(_keyboard);
 	
@@ -8410,29 +8693,39 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 		    _this.container = _this.quill.addContainer('ql-link-tooltip');
 		    _this.container.innerHTML = _this.options.template;
-		    _this.tooltip = new _tooltip2.default(_this.container, quill.theme.options.bounds);
+		    _this.tooltip = new _tooltip2.default(_this.container, {
+		      bounds: quill.theme.options.bounds,
+		      scroll: quill.root
+		    });
 		    _this.hide();
 		    _this.preview = _this.container.querySelector('a.ql-preview');
 		    _this.textbox = _this.container.querySelector('input[type=text]');
-		    _this.textbox.addEventListener('keydown', function (evt) {
-		      if (_keyboard2.default.match(evt, 'enter')) {
+		    _this.textbox.addEventListener('keydown', function (event) {
+		      if (_keyboard2.default.match(event, 'enter')) {
 		        _this.save();
-		        evt.preventDefault();
-		      } else if (_keyboard2.default.match(evt, 'escape')) {
+		        event.preventDefault();
+		      } else if (_keyboard2.default.match(event, 'escape')) {
 		        _this.hide();
-		        evt.preventDefault();
+		        event.preventDefault();
 		      }
 		    });
-		    _this.container.querySelector('a.ql-action').addEventListener('click', function () {
-		      if (_this.container.classList.contains('ql-editing')) {
-		        _this.save();
-		      } else {
-		        _this.edit();
-		      }
+		    ['mousedown', 'touchstart'].forEach(function (name) {
+		      _this.container.querySelector('a.ql-action').addEventListener(name, function (event) {
+		        if (_this.container.classList.contains('ql-editing')) {
+		          _this.save();
+		          event.preventDefault();
+		        } else {
+		          _this.edit();
+		          event.preventDefault();
+		        }
+		      });
+		      _this.container.querySelector('a.ql-remove').addEventListener(name, function (event) {
+		        _this.remove();
+		        event.preventDefault();
+		      });
 		    });
-		    _this.container.querySelector('a.ql-remove').addEventListener('click', _this.remove.bind(_this));
-		    // quill.keyboard.addBinding({ key: 'K', metaKey: true }, this.show.bind(this));
 		    quill.on(_quill2.default.events.SELECTION_CHANGE, function (range) {
+		      if (range == null && document.activeElement == _this.textbox) return;
 		      if (range != null && range.length === 0) {
 		        var offset = void 0;
 	
@@ -8484,8 +8777,10 @@ return /******/ (function(modules) { // webpackBootstrap
 		    key: 'save',
 		    value: function save() {
 		      var url = this.textbox.value;
+		      var scrollTop = this.quill.root.scrollTop;
 		      this.quill.formatText(this.range, 'link', url, _quill2.default.sources.USER);
 		      this.quill.setSelection(this.range, _quill2.default.sources.SILENT);
+		      this.quill.root.scrollTop = scrollTop;
 		      this.hide();
 		    }
 		  }, {
@@ -8500,6 +8795,9 @@ return /******/ (function(modules) { // webpackBootstrap
 		        preview = this.link.formats()['link'];
 		      } else {
 		        preview = this.quill.getText(range);
+		        if (/^\S+@\S+\.\S+$/.test(preview)) {
+		          preview = 'mailto:' + preview;
+		        }
 		      }
 		      this.preview.textContent = this.textbox.value = preview;
 		      this.preview.setAttribute('href', preview);
@@ -8532,25 +8830,38 @@ return /******/ (function(modules) { // webpackBootstrap
 		function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
 		var Tooltip = function () {
-		  function Tooltip(root, container) {
+		  function Tooltip(root) {
+		    var _this = this;
+	
+		    var containers = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
+	
 		    _classCallCheck(this, Tooltip);
 	
-		    this.container = container;
+		    this.containers = containers;
 		    this.root = root;
 		    this.root.classList.add('ql-tooltip');
+		    if (this.containers.scroll instanceof HTMLElement) {
+		      (function () {
+		        var offset = parseInt(window.getComputedStyle(_this.root).marginTop);
+		        _this.containers.scroll.addEventListener('scroll', function () {
+		          _this.root.style.marginTop = -1 * _this.containers.scroll.scrollTop + offset + 'px';
+		        });
+		      })();
+		    }
 		  }
 	
 		  _createClass(Tooltip, [{
 		    key: 'position',
 		    value: function position(reference) {
-		      var offset = arguments.length <= 1 || arguments[1] === undefined ? 10 : arguments[1];
-	
 		      var left = reference.left + reference.width / 2 - this.root.offsetWidth / 2;
-		      var top = reference.bottom + offset;
+		      var top = reference.bottom;
+		      if (this.containers.scroll instanceof HTMLElement) {
+		        top += this.containers.scroll.scrollTop;
+		      }
 		      this.root.style.left = left + 'px';
 		      this.root.style.top = top + 'px';
-		      if (!(this.container instanceof HTMLElement)) return;
-		      var containerBounds = this.container.getBoundingClientRect();
+		      if (!(this.containers.bounds instanceof HTMLElement)) return;
+		      var containerBounds = this.containers.bounds.getBoundingClientRect();
 		      var rootBounds = this.root.getBoundingClientRect();
 		      var shift = 0;
 		      if (rootBounds.right > containerBounds.right) {
@@ -8587,6 +8898,156 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	/***/ },
 	/* 70 */
+	/***/ function(module, exports, __webpack_require__) {
+	
+		'use strict';
+	
+		Object.defineProperty(exports, "__esModule", {
+		  value: true
+		});
+		exports.default = exports.CodeToken = exports.CodeBlock = undefined;
+	
+		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+		var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
+	
+		var _parchment = __webpack_require__(3);
+	
+		var _parchment2 = _interopRequireDefault(_parchment);
+	
+		var _quill = __webpack_require__(19);
+	
+		var _quill2 = _interopRequireDefault(_quill);
+	
+		var _module = __webpack_require__(38);
+	
+		var _module2 = _interopRequireDefault(_module);
+	
+		var _code = __webpack_require__(65);
+	
+		var _code2 = _interopRequireDefault(_code);
+	
+		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+		function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+		function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+		function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+		var SyntaxCodeBlock = function (_CodeBlock) {
+		  _inherits(SyntaxCodeBlock, _CodeBlock);
+	
+		  function SyntaxCodeBlock() {
+		    _classCallCheck(this, SyntaxCodeBlock);
+	
+		    return _possibleConstructorReturn(this, Object.getPrototypeOf(SyntaxCodeBlock).apply(this, arguments));
+		  }
+	
+		  _createClass(SyntaxCodeBlock, [{
+		    key: 'format',
+		    value: function format(name, value) {
+		      if (name === this.statics.blotName && !value) {
+		        this.domNode.textContent = this.domNode.textContent;
+		        this.attach();
+		      }
+		      _get(Object.getPrototypeOf(SyntaxCodeBlock.prototype), 'format', this).call(this, name, value);
+		    }
+		  }, {
+		    key: 'highlight',
+		    value: function highlight(_highlight) {
+		      if (this.cachedHTML !== this.domNode.innerHTML) {
+		        var text = this.domNode.textContent;
+		        if (text.trim().length > 0 || this.cachedHTML == null) {
+		          this.domNode.textContent = text;
+		          _highlight(this.domNode);
+		          this.attach();
+		        }
+		        this.cachedHTML = this.domNode.innerHTML;
+		      }
+		    }
+		  }], [{
+		    key: 'create',
+		    value: function create(value) {
+		      var domNode = _get(Object.getPrototypeOf(SyntaxCodeBlock), 'create', this).call(this, value);
+		      if (typeof value === 'string') {
+		        domNode.dataset.language = value;
+		      } else {
+		        domNode.dataset.language = SyntaxCodeBlock.DEFAULT_LANGUAGE;
+		      }
+		      domNode.classList.add(domNode.dataset.language);
+		      return domNode;
+		    }
+		  }, {
+		    key: 'formats',
+		    value: function formats(domNode) {
+		      return domNode.dataset.language || SyntaxCodeBlock.DEFAULT_LANGUAGE;
+		    }
+		  }]);
+	
+		  return SyntaxCodeBlock;
+		}(_code2.default);
+	
+		SyntaxCodeBlock.DEFAULT_LANGUAGE = 'javascript';
+	
+		var CodeToken = new _parchment2.default.Attributor.Class('token', 'hljs', {
+		  scope: _parchment2.default.Scope.INLINE
+		});
+	
+		var Syntax = function (_Module) {
+		  _inherits(Syntax, _Module);
+	
+		  function Syntax(quill, options) {
+		    _classCallCheck(this, Syntax);
+	
+		    var _this2 = _possibleConstructorReturn(this, Object.getPrototypeOf(Syntax).call(this, quill, options));
+	
+		    if (typeof _this2.options.highlight !== 'function') {
+		      throw new Error('Syntax module requires highlight.js. Please include the library on the page.');
+		    }
+		    _quill2.default.register(CodeToken);
+		    _quill2.default.register(SyntaxCodeBlock, true);
+		    var timer = null;
+		    _this2.quill.on(_quill2.default.events.SCROLL_OPTIMIZE, function () {
+		      if (timer != null) return;
+		      timer = setTimeout(function () {
+		        _this2.highlight();
+		        timer = null;
+		      }, 100);
+		    });
+		    _this2.highlight();
+		    return _this2;
+		  }
+	
+		  _createClass(Syntax, [{
+		    key: 'highlight',
+		    value: function highlight() {
+		      var _this3 = this;
+	
+		      var range = this.quill.getSelection();
+		      this.quill.scroll.descendants(SyntaxCodeBlock).forEach(function (code) {
+		        code.highlight(_this3.options.highlight);
+		      });
+		      this.quill.update(_quill2.default.sources.SILENT);
+		      if (range != null) {
+		        this.quill.setSelection(range, _quill2.default.sources.SILENT);
+		      }
+		    }
+		  }]);
+	
+		  return Syntax;
+		}(_module2.default);
+	
+		Syntax.DEFAULTS = {
+		  highlight: window.hljs != null ? window.hljs.highlightBlock : null
+		};
+	
+		exports.CodeBlock = SyntaxCodeBlock;
+		exports.CodeToken = CodeToken;
+		exports.default = Syntax;
+	
+	/***/ },
+	/* 71 */
 	/***/ function(module, exports, __webpack_require__) {
 	
 		'use strict';
@@ -8667,13 +9128,15 @@ return /******/ (function(modules) { // webpackBootstrap
 		    });
 		    _this.quill.on(_quill2.default.events.SELECTION_CHANGE, _this.update, _this);
 		    _this.quill.on(_quill2.default.events.SCROLL_OPTIMIZE, function () {
-		      var _this$quill$selection = _this.quill.selection.getRange();
+		      setTimeout(function () {
+		        var _this$quill$selection = _this.quill.selection.getRange();
 	
-		      var _this$quill$selection2 = _slicedToArray(_this$quill$selection, 1);
+		        var _this$quill$selection2 = _slicedToArray(_this$quill$selection, 1);
 	
-		      var range = _this$quill$selection2[0]; // quill.getSelection triggers update
+		        var range = _this$quill$selection2[0]; // quill.getSelection triggers update
 	
-		      _this.update(range);
+		        _this.update(range);
+		      }, 1);
 		    });
 		    return _this;
 		  }
@@ -8703,26 +9166,29 @@ return /******/ (function(modules) { // webpackBootstrap
 		          return;
 		        }
 		      }
-		      var eventName = input.tagName === 'SELECT' ? 'change' : 'click';
-		      input.addEventListener(eventName, function () {
-		        _this2.quill.focus();
-		        var value = void 0;
-		        if (input.tagName === 'SELECT') {
-		          if (input.selectedIndex < 0) return;
-		          var selected = input.options[input.selectedIndex];
-		          if (selected.hasAttribute('selected')) {
-		            value = false;
+		      var eventNames = input.tagName === 'SELECT' ? ['change'] : ['mousedown', 'touchstart'];
+		      eventNames.forEach(function (eventName) {
+		        input.addEventListener(eventName, function (e) {
+		          _this2.quill.focus();
+		          var value = void 0;
+		          if (input.tagName === 'SELECT') {
+		            if (input.selectedIndex < 0) return;
+		            var selected = input.options[input.selectedIndex];
+		            if (selected.hasAttribute('selected')) {
+		              value = false;
+		            } else {
+		              value = selected.value || false;
+		            }
 		          } else {
-		            value = selected.value || false;
+		            value = input.classList.contains('ql-active') ? false : input.value || true;
+		            e.preventDefault();
 		          }
-		        } else {
-		          value = input.classList.contains('ql-active') ? false : input.value || true;
-		        }
-		        if (_this2.handlers[format] != null) {
-		          _this2.handlers[format].call(_this2, value);
-		        } else {
-		          _this2.quill.format(format, value, _quill2.default.sources.USER);
-		        }
+		          if (_this2.handlers[format] != null) {
+		            _this2.handlers[format].call(_this2, value);
+		          } else {
+		            _this2.quill.format(format, value, _quill2.default.sources.USER);
+		          }
+		        });
 		      });
 		      // TODO use weakmap
 		      this.controls.push([format, input]);
@@ -8752,10 +9218,11 @@ return /******/ (function(modules) { // webpackBootstrap
 		            option.selected = true;
 		          }
 		        }if (input.value) {
-		          input.classList.toggle('ql-active', input.value == formats[format]); // Intentional ==
+		          var active = input.value === formats[format] || formats[format] != null && input.value === formats[format].toString();
+		          input.classList.toggle('ql-active', active);
 		        } else {
-		            input.classList.toggle('ql-active', formats[format] || false);
-		          }
+		          input.classList.toggle('ql-active', formats[format] || false);
+		        }
 		      });
 		    }
 		  }]);
@@ -8767,6 +9234,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 		function addButton(container, format, value) {
 		  var input = document.createElement('button');
+		  input.setAttribute('type', 'button');
 		  input.classList.add('ql-' + format);
 		  if (value != null) {
 		    input.value = value;
@@ -8817,32 +9285,42 @@ return /******/ (function(modules) { // webpackBootstrap
 		  container: null,
 		  handlers: {
 		    clean: function clean(value) {
+		      var _this3 = this;
+	
 		      var range = this.quill.getSelection();
-		      if (range != null) {
+		      if (range == null) return;
+		      if (range.length == 0) {
+		        var formats = this.quill.getFormat();
+		        Object.keys(formats).forEach(function (name) {
+		          if (_parchment2.default.query(name, _parchment2.default.Scope.INLINE) != null) {
+		            _this3.quill.format(name, false);
+		          }
+		        });
+		      } else {
 		        var startLength = this.quill.getLength();
-		        this.quill.removeFormat(range);
+		        this.quill.removeFormat(range, _quill2.default.sources.USER);
 		        var endLength = this.quill.getLength();
 		        // account for embed removals
-		        this.quill.setSelection(range.index, range.length - (startLength - endLength));
+		        this.quill.setSelection(range.index, range.length - (startLength - endLength), _quill2.default.sources.SILENT);
 		      }
 		    },
 		    direction: function direction(value) {
 		      var align = this.quill.getFormat()['align'];
 		      if (value === 'rtl' && align == null) {
-		        this.quill.format('align', 'right');
+		        this.quill.format('align', 'right', _quill2.default.sources.USER);
 		      } else if (!value && align === 'right') {
-		        this.quill.format('align', false);
+		        this.quill.format('align', false, _quill2.default.sources.USER);
 		      }
-		      this.quill.format('direction', value);
+		      this.quill.format('direction', value, _quill2.default.sources.USER);
 		    },
 		    indent: function indent(value) {
 		      var range = this.quill.getSelection();
 		      var formats = this.quill.getFormat(range);
 		      var indent = parseInt(formats.indent || 0);
 		      if (value === '+1') {
-		        this.quill.format('indent', indent + 1);
+		        this.quill.format('indent', indent + 1, _quill2.default.sources.USER);
 		      } else if (value === '-1') {
-		        this.quill.format('indent', indent - 1);
+		        this.quill.format('indent', indent - 1, _quill2.default.sources.USER);
 		      }
 		    }
 		  }
@@ -8850,136 +9328,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 		exports.default = Toolbar;
 		exports.addControls = addControls;
-	
-	/***/ },
-	/* 71 */
-	/***/ function(module, exports, __webpack_require__) {
-	
-		'use strict';
-	
-		Object.defineProperty(exports, "__esModule", {
-		  value: true
-		});
-		exports.default = exports.CodeToken = exports.CodeBlock = undefined;
-	
-		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-		var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
-	
-		var _parchment = __webpack_require__(3);
-	
-		var _parchment2 = _interopRequireDefault(_parchment);
-	
-		var _quill = __webpack_require__(19);
-	
-		var _quill2 = _interopRequireDefault(_quill);
-	
-		var _module = __webpack_require__(38);
-	
-		var _module2 = _interopRequireDefault(_module);
-	
-		var _code = __webpack_require__(66);
-	
-		var _code2 = _interopRequireDefault(_code);
-	
-		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-		function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-		function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-		function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-		var HighlightCodeBlock = function (_CodeBlock) {
-		  _inherits(HighlightCodeBlock, _CodeBlock);
-	
-		  function HighlightCodeBlock() {
-		    _classCallCheck(this, HighlightCodeBlock);
-	
-		    return _possibleConstructorReturn(this, Object.getPrototypeOf(HighlightCodeBlock).apply(this, arguments));
-		  }
-	
-		  _createClass(HighlightCodeBlock, [{
-		    key: 'highlight',
-		    value: function highlight() {
-		      if (this.cachedHTML !== this.domNode.innerHTML) {
-		        var text = this.domNode.textContent;
-		        if (text.trim().length > 0 || this.cachedHTML == null) {
-		          this.domNode.textContent = this.domNode.textContent;
-		          hljs.highlightBlock(this.domNode);
-		          this.attach();
-		        }
-		        this.cachedHTML = this.domNode.innerHTML;
-		      }
-		    }
-		  }], [{
-		    key: 'create',
-		    value: function create(value) {
-		      var domNode = _get(Object.getPrototypeOf(HighlightCodeBlock), 'create', this).call(this, value);
-		      if (typeof value === 'string') {
-		        domNode.dataset.language = value;
-		      } else {
-		        domNode.dataset.language = HighlightCodeBlock.DEFAULT_LANGUAGE;
-		      }
-		      domNode.classList.add(domNode.dataset.language);
-		      return domNode;
-		    }
-		  }, {
-		    key: 'formats',
-		    value: function formats(domNode) {
-		      return domNode.dataset.language || HighlightCodeBlock.DEFAULT_LANGUAGE;
-		    }
-		  }]);
-	
-		  return HighlightCodeBlock;
-		}(_code2.default);
-	
-		HighlightCodeBlock.DEFAULT_LANGUAGE = 'javascript';
-	
-		var CodeToken = new _parchment2.default.Attributor.Class('token', 'hljs', {
-		  scope: _parchment2.default.Scope.INLINE
-		});
-	
-		var CodeHighlighter = function (_Module) {
-		  _inherits(CodeHighlighter, _Module);
-	
-		  function CodeHighlighter(quill, options) {
-		    _classCallCheck(this, CodeHighlighter);
-	
-		    var _this2 = _possibleConstructorReturn(this, Object.getPrototypeOf(CodeHighlighter).call(this, quill, options));
-	
-		    var timer = null;
-		    _this2.quill.on(_quill2.default.events.SCROLL_OPTIMIZE, function () {
-		      if (timer != null) return;
-		      timer = setTimeout(function () {
-		        _this2.highlight();
-		        timer = null;
-		      }, 100);
-		    });
-		    _this2.highlight();
-		    return _this2;
-		  }
-	
-		  _createClass(CodeHighlighter, [{
-		    key: 'highlight',
-		    value: function highlight() {
-		      var range = this.quill.getSelection();
-		      this.quill.scroll.descendants(HighlightCodeBlock).forEach(function (code) {
-		        code.highlight();
-		      });
-		      this.quill.update(_quill2.default.sources.SILENT);
-		      if (range != null) {
-		        this.quill.setSelection(range, _quill2.default.sources.SILENT);
-		      }
-		    }
-		  }]);
-	
-		  return CodeHighlighter;
-		}(_module2.default);
-	
-		exports.CodeBlock = HighlightCodeBlock;
-		exports.CodeToken = CodeToken;
-		exports.default = CodeHighlighter;
 	
 	/***/ },
 	/* 72 */
@@ -9224,8 +9572,11 @@ return /******/ (function(modules) { // webpackBootstrap
 		    this.buildPicker();
 		    this.select.style.display = 'none';
 		    this.select.parentNode.insertBefore(this.container, this.select);
-		    this.label.addEventListener('click', function () {
-		      _this.container.classList.toggle('ql-expanded');
+		    ['mousedown', 'touchstart'].forEach(function (name) {
+		      _this.label.addEventListener(name, function (event) {
+		        _this.container.classList.toggle('ql-expanded');
+		        event.preventDefault(); // prevent focus loss
+		      });
 		    });
 		    this.select.addEventListener('change', this.update.bind(this));
 		  }
@@ -9233,12 +9584,22 @@ return /******/ (function(modules) { // webpackBootstrap
 		  _createClass(Picker, [{
 		    key: 'buildItem',
 		    value: function buildItem(option) {
+		      var _this2 = this;
+	
 		      var item = document.createElement('span');
 		      item.classList.add('ql-picker-item');
 		      if (option.hasAttribute('value')) {
 		        item.dataset.value = option.getAttribute('value');
 		      }
-		      item.addEventListener('click', this.selectItem.bind(this, item, true));
+		      if (option.textContent) {
+		        item.dataset.label = option.textContent;
+		      }
+		      ['mousedown', 'touchstart'].forEach(function (name) {
+		        item.addEventListener(name, function (event) {
+		          _this2.selectItem(item, true);
+		          event.preventDefault();
+		        });
+		      });
 		      return item;
 		    }
 		  }, {
@@ -9253,15 +9614,15 @@ return /******/ (function(modules) { // webpackBootstrap
 		  }, {
 		    key: 'buildOptions',
 		    value: function buildOptions() {
-		      var _this2 = this;
+		      var _this3 = this;
 	
 		      var options = document.createElement('span');
 		      options.classList.add('ql-picker-options');
 		      [].slice.call(this.select.options).forEach(function (option) {
-		        var item = _this2.buildItem(option);
+		        var item = _this3.buildItem(option);
 		        options.appendChild(item);
 		        if (option.hasAttribute('selected')) {
-		          _this2.selectItem(item);
+		          _this3.selectItem(item);
 		        }
 		      });
 		      this.container.appendChild(options);
@@ -9269,10 +9630,10 @@ return /******/ (function(modules) { // webpackBootstrap
 		  }, {
 		    key: 'buildPicker',
 		    value: function buildPicker() {
-		      var _this3 = this;
+		      var _this4 = this;
 	
 		      [].slice.call(this.select.attributes).forEach(function (item) {
-		        _this3.container.setAttribute(item.name, item.value);
+		        _this4.container.setAttribute(item.name, item.value);
 		      });
 		      this.container.classList.add('ql-picker');
 		      this.label = this.buildLabel();
@@ -9293,10 +9654,18 @@ return /******/ (function(modules) { // webpackBootstrap
 		        selected.classList.remove('ql-selected');
 		      }
 		      if (item != null) {
-		        var value = item.dataset.value;
 		        item.classList.add('ql-selected');
 		        this.select.selectedIndex = [].indexOf.call(item.parentNode.children, item);
-		        this.label.dataset.value = value || '';
+		        if (item.dataset.value) {
+		          this.label.dataset.value = item.dataset.value;
+		        } else if (this.label.dataset.value) {
+		          delete this.label.dataset.value;
+		        }
+		        if (item.dataset.label) {
+		          this.label.dataset.label = item.dataset.label;
+		        } else if (this.label.dataset.label) {
+		          delete this.label.dataset.label;
+		        }
 		        if (trigger) {
 		          if (typeof Event === 'function') {
 		            this.select.dispatchEvent(new Event('change'));
@@ -9308,7 +9677,8 @@ return /******/ (function(modules) { // webpackBootstrap
 		          }
 		        }
 		      } else {
-		        delete this.label.dataset.value;
+		        if (this.label.dataset.value) delete this.label.dataset.value;
+		        if (this.label.dataset.label) delete this.label.dataset.label;
 		      }
 		      this.close();
 		    }
@@ -9480,7 +9850,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 		var _emitter2 = _interopRequireDefault(_emitter);
 	
-		var _keyboard = __webpack_require__(46);
+		var _keyboard = __webpack_require__(52);
 	
 		var _keyboard2 = _interopRequireDefault(_keyboard);
 	
@@ -9545,24 +9915,37 @@ return /******/ (function(modules) { // webpackBootstrap
 		          _this2.tooltip.hide();
 		        }
 		      });
-		      toolbar.handlers['link'] = function (value) {
-		        if (!value) return false;
-		        _this2.tooltip.root.classList.add('ql-editing');
-		        input.focus();
-		      };
-		      close.addEventListener('click', function () {
-		        _this2.tooltip.root.classList.remove('ql-editing');
+		      this.quill.on(_emitter2.default.events.SCROLL_OPTIMIZE, function () {
+		        if (_this2.tooltip.root.classList.contains('ql-hidden')) return;
+		        var range = _this2.quill.getSelection();
+		        _this2.tooltip.position(_this2.quill.getBounds(range));
 		      });
-		      input.addEventListener('keydown', function (evt) {
-		        if (_keyboard2.default.match(evt, 'enter')) {
+		      toolbar.handlers['link'] = function (value) {
+		        if (!value) {
+		          _this2.quill.format('link', false);
+		        } else {
+		          _this2.tooltip.root.classList.add('ql-editing');
+		          input.focus();
+		        }
+		      };
+		      ['mousedown', 'touchstart'].forEach(function (name) {
+		        close.addEventListener(name, function (event) {
+		          _this2.tooltip.root.classList.remove('ql-editing');
+		          event.preventDefault();
+		        });
+		      });
+		      input.addEventListener('keydown', function (event) {
+		        if (_keyboard2.default.match(event, 'enter')) {
+		          var scrollTop = _this2.quill.root.scrollTop;
 		          _this2.quill.focus();
+		          _this2.quill.root.scrollTop = scrollTop;
 		          _this2.quill.format('link', input.value);
 		          _this2.tooltip.hide();
 		          input.value = '';
-		          evt.preventDefault();
-		        } else if (_keyboard2.default.match(evt, 'escape')) {
+		          event.preventDefault();
+		        } else if (_keyboard2.default.match(event, 'escape')) {
 		          _this2.tooltip.classList.remove('ql-editing');
-		          evt.preventDefault();
+		          event.preventDefault();
 		        }
 		      });
 		    }
@@ -9570,7 +9953,10 @@ return /******/ (function(modules) { // webpackBootstrap
 		    key: 'extendToolbar',
 		    value: function extendToolbar(toolbar) {
 		      var container = this.quill.addContainer('ql-tooltip', this.quill.root);
-		      this.tooltip = new _tooltip2.default(container, this.options.bounds);
+		      this.tooltip = new _tooltip2.default(container, {
+		        bounds: this.options.bounds,
+		        scroll: this.quill.root
+		      });
 		      this.buildLinkEditor(toolbar);
 		      container.appendChild(toolbar.container);
 		      this.buildButtons([].slice.call(toolbar.container.querySelectorAll('button')));
@@ -9711,9 +10097,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 		var _iconPicker2 = _interopRequireDefault(_iconPicker);
 	
+		var _imageTooltip = __webpack_require__(107);
+	
+		var _imageTooltip2 = _interopRequireDefault(_imageTooltip);
+	
 		var _icons = __webpack_require__(72);
 	
 		var _icons2 = _interopRequireDefault(_icons);
+	
+		var _linkTooltip = __webpack_require__(108);
+	
+		var _linkTooltip2 = _interopRequireDefault(_linkTooltip);
 	
 		var _picker = __webpack_require__(100);
 	
@@ -9727,7 +10121,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 		function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
+		var ALIGNS = [false, 'center', 'right', 'justify'];
+	
 		var COLORS = ["#000000", "#e60000", "#ff9900", "#ffff00", "#008A00", "#0066cc", "#9933ff", "#ffffff", "#facccc", "#ffebcc", "#ffffcc", "#cce8cc", "#cce0f5", "#ebd6ff", "#bbbbbb", "#f06666", "#ffc266", "#ffff66", "#66b966", "#66a3e0", "#c285ff", "#888888", "#a10000", "#b26b00", "#b2b200", "#006100", "#0047b2", "#6b24b2", "#444444", "#5c0000", "#663d00", "#666600", "#003700", "#002966", "#3d1466"];
+	
+		var FONTS = [false, 'serif', 'monospace'];
+	
+		var HEADERS = ['1', '2', '3', false];
+	
+		var SIZES = ['small', false, 'large', 'huge'];
 	
 		var SnowTheme = function (_BaseTheme) {
 		  _inherits(SnowTheme, _BaseTheme);
@@ -9747,30 +10149,28 @@ return /******/ (function(modules) { // webpackBootstrap
 		      var pickers = selects.map(function (select) {
 		        var picker = void 0;
 		        if (select.classList.contains('ql-align')) {
+		          if (select.querySelector('option') == null) {
+		            fillSelect(select, ALIGNS);
+		          }
 		          picker = new _iconPicker2.default(select, _icons2.default.align);
 		        } else if (select.classList.contains('ql-background') || select.classList.contains('ql-color')) {
 		          var format = select.classList.contains('ql-background') ? 'background' : 'color';
 		          if (select.querySelector('option') == null) {
-		            (function () {
-		              var defaultColor = format === 'background' ? '#ffffff' : '#000000';
-		              COLORS.forEach(function (color) {
-		                var option = document.createElement('option');
-		                if (color === defaultColor) {
-		                  option.setAttribute('selected', 'selected');
-		                } else {
-		                  option.setAttribute('value', color);
-		                }
-		                select.appendChild(option);
-		              });
-		            })();
+		            fillSelect(select, COLORS, format === 'background' ? '#ffffff' : '#000000');
 		          }
 		          picker = new _colorPicker2.default(select, _icons2.default[format]);
 		        } else {
+		          if (select.querySelector('option') == null) {
+		            if (select.classList.contains('ql-font')) {
+		              fillSelect(select, FONTS);
+		            } else if (select.classList.contains('ql-header')) {
+		              fillSelect(select, HEADERS);
+		            } else if (select.classList.contains('ql-size')) {
+		              fillSelect(select, SIZES);
+		            }
+		          }
 		          picker = new _picker2.default(select);
 		        }
-		        picker.label.addEventListener('click', function () {
-		          quill.focus();
-		        });
 		        return picker;
 		      });
 		      var update = function update() {
@@ -9793,8 +10193,15 @@ return /******/ (function(modules) { // webpackBootstrap
 		      toolbar.container.classList.add('ql-snow');
 		      this.buildButtons([].slice.call(toolbar.container.querySelectorAll('button')));
 		      this.buildPickers([].slice.call(toolbar.container.querySelectorAll('select')));
-		      this.imageTooltip = this.addModule('image-tooltip');
-		      this.linkTooltip = this.addModule('link-tooltip');
+		      if (toolbar.container.querySelector('.ql-image')) {
+		        this.imageTooltip = new _imageTooltip2.default(this.quill);
+		      }
+		      if (toolbar.container.querySelector('.ql-link')) {
+		        this.linkTooltip = new _linkTooltip2.default(this.quill);
+		        this.quill.keyboard.addBinding({ key: 'K', shortKey: true }, function (range, context) {
+		          toolbar.handlers['link'].call(toolbar, !context.format.link);
+		        });
+		      }
 		    }
 		  }]);
 	
@@ -9804,7 +10211,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		SnowTheme.DEFAULTS = {
 		  modules: {
 		    'toolbar': {
-		      container: [[{ header: ['1', '2', '3', false] }], ['bold', 'italic', 'underline', 'link'], [{ list: 'ordered' }, { list: 'bullet' }], ['clean']],
+		      container: [[{ header: HEADERS }], ['bold', 'italic', 'underline', 'link'], [{ list: 'ordered' }, { list: 'bullet' }], ['clean']],
 		      handlers: {
 		        'image': function image() {
 		          this.quill.theme.imageTooltip.show();
@@ -9822,13 +10229,309 @@ return /******/ (function(modules) { // webpackBootstrap
 		  }
 		};
 	
+		function fillSelect(select, values) {
+		  var defaultValue = arguments.length <= 2 || arguments[2] === undefined ? false : arguments[2];
+	
+		  values.forEach(function (value) {
+		    var option = document.createElement('option');
+		    if (value === defaultValue) {
+		      option.setAttribute('selected', 'selected');
+		    } else {
+		      option.setAttribute('value', value);
+		    }
+		    select.appendChild(option);
+		  });
+		}
+	
 		exports.default = SnowTheme;
+	
+	/***/ },
+	/* 107 */
+	/***/ function(module, exports, __webpack_require__) {
+	
+		'use strict';
+	
+		Object.defineProperty(exports, "__esModule", {
+		  value: true
+		});
+	
+		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+		var _quill = __webpack_require__(19);
+	
+		var _quill2 = _interopRequireDefault(_quill);
+	
+		var _image = __webpack_require__(63);
+	
+		var _image2 = _interopRequireDefault(_image);
+	
+		var _keyboard = __webpack_require__(52);
+	
+		var _keyboard2 = _interopRequireDefault(_keyboard);
+	
+		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+		function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+		var ImageTooltip = function () {
+		  function ImageTooltip(quill) {
+		    var _this = this;
+	
+		    _classCallCheck(this, ImageTooltip);
+	
+		    this.quill = quill;
+		    this.container = this.quill.addContainer('ql-image-tooltip');
+		    this.container.classList.add('ql-hidden');
+		    this.container.classList.add('ql-tooltip');
+		    this.container.innerHTML = this.constructor.TEMPLATE;
+		    this.preview = this.container.querySelector('.ql-preview');
+		    this.textbox = this.container.querySelector('input[type=text]');
+		    this.textbox.addEventListener('keydown', function (event) {
+		      if (_keyboard2.default.match(event, 'enter')) {
+		        _this.save();
+		        event.preventDefault();
+		      } else if (_keyboard2.default.match(event, 'escape')) {
+		        _this.hide();
+		        event.preventDefault();
+		      }
+		    });
+		    ['mousedown', 'touchstart'].forEach(function (name) {
+		      _this.container.querySelector('a.ql-action').addEventListener(name, function (event) {
+		        _this.save();
+		        event.preventDefault();
+		      });
+		      _this.container.querySelector('a.ql-cancel').addEventListener(name, function (event) {
+		        _this.hide();
+		        event.preventDefault();
+		      });
+		    });
+		    this.textbox.addEventListener('input', this.update.bind(this));
+		  }
+	
+		  _createClass(ImageTooltip, [{
+		    key: 'center',
+		    value: function center() {
+		      this.container.style.left = this.quill.container.offsetWidth / 2 - this.container.offsetWidth / 2 + 'px';
+		      this.container.style.top = this.quill.container.offsetHeight / 2 - this.container.offsetHeight / 2 + 'px';
+		    }
+		  }, {
+		    key: 'hide',
+		    value: function hide() {
+		      this.container.classList.add('ql-hidden');
+		      if (this.preview.firstChild != null) {
+		        this.preview.removeChild(this.preview.firstChild);
+		        this.preview.classList.add('ql-empty');
+		      }
+		      this.quill.focus();
+		    }
+		  }, {
+		    key: 'save',
+		    value: function save() {
+		      var range = this.quill.getSelection(true);
+		      var index = range.index + range.length;
+		      this.quill.insertEmbed(index, _image2.default.blotName, this.textbox.value, _quill2.default.sources.USER);
+		      this.quill.setSelection(index + 1, _quill2.default.sources.SILENT);
+		      this.textbox.value = '';
+		      this.hide();
+		    }
+		  }, {
+		    key: 'show',
+		    value: function show() {
+		      this.container.classList.remove('ql-hidden');
+		      this.center();
+		      this.textbox.focus();
+		      return true;
+		    }
+		  }, {
+		    key: 'update',
+		    value: function update() {
+		      if (!_image2.default.match(this.textbox.value)) return;
+		      var url = _image2.default.sanitize(this.textbox.value);
+		      if (this.preview.firstChild != null) {
+		        this.preview.firstChild.setAttribute('src', url);
+		      } else {
+		        var img = document.createElement('img');
+		        img.setAttribute('src', url);
+		        this.preview.appendChild(img);
+		        this.preview.classList.remove('ql-empty');
+		      }
+		    }
+		  }]);
+	
+		  return ImageTooltip;
+		}();
+	
+		ImageTooltip.TEMPLATE = ['<input class="input" type="text">', '<div class="ql-empty ql-preview"></div>', '<a class="ql-cancel"></a>', '<a class="ql-action"></a>'].join('');
+	
+		exports.default = ImageTooltip;
+	
+	/***/ },
+	/* 108 */
+	/***/ function(module, exports, __webpack_require__) {
+	
+		'use strict';
+	
+		Object.defineProperty(exports, "__esModule", {
+		  value: true
+		});
+	
+		var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
+	
+		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+		var _quill = __webpack_require__(19);
+	
+		var _quill2 = _interopRequireDefault(_quill);
+	
+		var _selection = __webpack_require__(39);
+	
+		var _keyboard = __webpack_require__(52);
+	
+		var _keyboard2 = _interopRequireDefault(_keyboard);
+	
+		var _link = __webpack_require__(59);
+	
+		var _link2 = _interopRequireDefault(_link);
+	
+		var _tooltip = __webpack_require__(69);
+	
+		var _tooltip2 = _interopRequireDefault(_tooltip);
+	
+		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+		function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+		var LinkTooltip = function () {
+		  function LinkTooltip(quill) {
+		    var _this = this;
+	
+		    _classCallCheck(this, LinkTooltip);
+	
+		    this.quill = quill;
+		    this.container = this.quill.addContainer('ql-link-tooltip');
+		    this.container.innerHTML = this.constructor.TEMPLATE;
+		    this.tooltip = new _tooltip2.default(this.container, {
+		      bounds: quill.theme.options.bounds,
+		      scroll: quill.root
+		    });
+		    this.hide();
+		    this.preview = this.container.querySelector('a.ql-preview');
+		    this.textbox = this.container.querySelector('input[type=text]');
+		    this.textbox.addEventListener('keydown', function (event) {
+		      if (_keyboard2.default.match(event, 'enter')) {
+		        _this.save();
+		        event.preventDefault();
+		      } else if (_keyboard2.default.match(event, 'escape')) {
+		        _this.hide();
+		        event.preventDefault();
+		      }
+		    });
+		    ['mousedown', 'touchstart'].forEach(function (name) {
+		      _this.container.querySelector('a.ql-action').addEventListener(name, function (event) {
+		        if (_this.container.classList.contains('ql-editing')) {
+		          _this.save();
+		          event.preventDefault();
+		        } else {
+		          _this.edit();
+		          event.preventDefault();
+		        }
+		      });
+		      _this.container.querySelector('a.ql-remove').addEventListener(name, function (event) {
+		        _this.remove();
+		        event.preventDefault();
+		      });
+		    });
+		    quill.on(_quill2.default.events.SELECTION_CHANGE, function (range) {
+		      if (range == null && document.activeElement == _this.textbox) return;
+		      if (range != null && range.length === 0) {
+		        var offset = void 0;
+	
+		        var _quill$scroll$descend = _this.quill.scroll.descendant(_link2.default, range.index);
+	
+		        var _quill$scroll$descend2 = _slicedToArray(_quill$scroll$descend, 2);
+	
+		        _this.link = _quill$scroll$descend2[0];
+		        offset = _quill$scroll$descend2[1];
+	
+		        if (_this.link != null) {
+		          _this.range = new _selection.Range(range.index - offset, _this.link.length());
+		          return _this.show();
+		        }
+		      }
+		      _this.hide();
+		    });
+		  }
+	
+		  _createClass(LinkTooltip, [{
+		    key: 'edit',
+		    value: function edit() {
+		      this.container.classList.add('ql-editing');
+		      this.textbox.focus();
+		      this.textbox.setSelectionRange(0, this.textbox.value.length);
+		    }
+		  }, {
+		    key: 'open',
+		    value: function open() {
+		      this.range = new _selection.Range(this.quill.selection.savedRange.index, this.quill.selection.savedRange.length);
+		      this.show();
+		      this.edit();
+		    }
+		  }, {
+		    key: 'hide',
+		    value: function hide() {
+		      this.range = this.link = null;
+		      this.tooltip.hide();
+		    }
+		  }, {
+		    key: 'remove',
+		    value: function remove() {
+		      this.quill.formatText(this.range, 'link', false, _quill2.default.sources.USER);
+		      this.quill.setSelection(this.range, _quill2.default.sources.SILENT);
+		      this.hide();
+		    }
+		  }, {
+		    key: 'save',
+		    value: function save() {
+		      var url = this.textbox.value;
+		      var scrollTop = this.quill.root.scrollTop;
+		      this.quill.formatText(this.range, 'link', url, _quill2.default.sources.USER);
+		      this.quill.setSelection(this.range, _quill2.default.sources.SILENT);
+		      this.quill.root.scrollTop = scrollTop;
+		      this.hide();
+		    }
+		  }, {
+		    key: 'show',
+		    value: function show() {
+		      this.container.classList.remove('ql-editing');
+		      this.tooltip.show();
+		      var preview = void 0,
+		          bounds = void 0;
+		      var range = this.quill.selection.savedRange;
+		      if (this.link != null) {
+		        preview = this.link.formats()['link'];
+		      } else {
+		        preview = this.quill.getText(range);
+		        if (/^\S+@\S+\.\S+$/.test(preview)) {
+		          preview = 'mailto:' + preview;
+		        }
+		      }
+		      this.preview.textContent = this.textbox.value = preview;
+		      this.preview.setAttribute('href', preview);
+		      this.tooltip.position(this.quill.getBounds(this.range));
+		    }
+		  }]);
+	
+		  return LinkTooltip;
+		}();
+	
+		LinkTooltip.TEMPLATE = ['<a class="ql-preview" target="_blank" href="about:blank"></a>', '<input type="text">', '<a class="ql-action"></a>', '<a class="ql-remove"></a>'].join('');
+	
+		exports.default = LinkTooltip;
 	
 	/***/ }
 	/******/ ])
 	});
 	;
-
 
 /***/ }
 /******/ ])
