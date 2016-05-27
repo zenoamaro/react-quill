@@ -27,7 +27,8 @@ var defaultItems = [
 			{ label:'Serif',       value:'serif' },
 			{ label:'Monospace',   value:'monospace' },
 			{ label:'Impact',      value:'Impact, Charcoal, sans-serif' },
-			{ label:'Comic Sans',  value:'Comic Sans MS, cursive, sans-serif' }
+			{ label:'Comic Sans',  value:'\'Comic Sans MS\', sans-serif' },
+			{ label:'Verdana',     value:'Verdana, Geneva, sans-serif' }
 		]},
 		{ label:'Size', type:'size', items: [
 			{ label:'10px',  value:'10px' },
