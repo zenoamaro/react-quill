@@ -61,7 +61,7 @@ var Editor = React.createClass({
 				this.renderToolbar(),
 				React.DOM.hr(),
 				this.renderSidebar(),
-				this.state.enabled && ReactQuill.Component({
+				this.state.enabled && ReactQuill({
 					theme: this.state.theme,
 					value: this.state.value,
 					readOnly: this.state.readOnly,
@@ -115,7 +115,7 @@ var Editor = React.createClass({
 });
 
 Editor = React.createFactory(Editor);
-ReactQuill.Component = React.createFactory(ReactQuill.Component);
+ReactQuill = React.createFactory(ReactQuill);
 
 ReactDOM.render(
 	Editor(),
