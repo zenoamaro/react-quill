@@ -57,17 +57,20 @@ var Editor = React.createClass({
 
 	render: function() {
 		return (
-			React.DOM.div({},
+			React.DOM.div({ style: {'position': 'relative'}},
 				this.renderToolbar(),
 				React.DOM.hr(),
 				this.renderSidebar(),
-				this.state.enabled && ReactQuill({
+				React.DOM.div({
+                    style: { 'width': '70%','height': '558px'}
+                }, this.state.enabled && ReactQuill({
 					theme: this.state.theme,
 					value: this.state.value,
 					readOnly: this.state.readOnly,
 					onChange: this.onEditorChange,
 					onChangeSelection: this.onEditorChangeSelection
-				})
+                    })
+				)
 			)
 		);
 	},
@@ -98,14 +101,15 @@ var Editor = React.createClass({
 	renderSidebar: function() {
 		return (
 			React.DOM.div({
-				style: { overflow:'hidden', float:'right' }},
+                 style: {'position': 'absolute', 'right': '0', 'width': '30%'}
+            },
 				React.DOM.textarea({
-					style: { display:'block', width:300, height:300 },
+					style: { display:'block', width: '100%', height:300 },
 					value: this.state.value,
 					onChange: this.onTextareaChange
 				}),
 				React.DOM.textarea({
-					style: { display:'block', width:300, height:300 },
+					style: { display:'block', width: '100%', height:300 },
 					value: this.state.events.join('\n')
 				})
 			)
