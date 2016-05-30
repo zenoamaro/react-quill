@@ -23,7 +23,7 @@ var QuillComponent = React.createClass({
 		defaultValue: T.string,
 		readOnly: T.bool,
 		modules: T.object,
-		toolbar: T.oneOfType([ T.array, T.oneOf([false]), ]),
+		toolbar: T.oneOfType([ T.array, T.bool ]),
 		formats: T.array,
 		styles: T.oneOfType([ T.object, T.oneOf([false]) ]),
 		theme: T.string,
@@ -216,11 +216,12 @@ var QuillComponent = React.createClass({
 				// Quill modifies these elements in-place,
 				// so we need to re-render them every time.
 
-				// Render the toolbar unless explicitly disabled.
+				// Render the toolbar unless explicitly disabled and default items if
+				// not specified.
 				this.props.toolbar !== false? QuillToolbar({
 					key: 'toolbar-' + Math.random(),
 					ref: 'toolbar',
-					items: this.props.toolbar
+					items: this.props.toolbar !== true ? this.props.toolbar : undefined
 				}) : false,
 
 				React.DOM.div({
