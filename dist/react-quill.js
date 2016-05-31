@@ -203,7 +203,6 @@ return /******/ (function(modules) { // webpackBootstrap
 		},
 	
 		componentWillUnmount: function() {
-			this.destroyEditor(this.state.editor);
 			// NOTE: Don't set the state to null here
 			//       as it would generate a loop.
 		},
@@ -601,7 +600,6 @@ return /******/ (function(modules) { // webpackBootstrap
 		createEditor: function($el, config) {
 			var editor = new Quill($el, config);
 			this.hookEditor(editor);
-			window.quill = editor;
 			return editor;
 		},
 	
@@ -628,10 +626,6 @@ return /******/ (function(modules) { // webpackBootstrap
 					);
 				}
 			}.bind(this));
-		},
-	
-		destroyEditor: function(editor) {
-			editor.destroy();
 		},
 	
 		setEditorReadOnly: function(editor, value) {

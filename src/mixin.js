@@ -11,7 +11,6 @@ var QuillMixin = {
 	createEditor: function($el, config) {
 		var editor = new Quill($el, config);
 		this.hookEditor(editor);
-		window.quill = editor;
 		return editor;
 	},
 
@@ -38,10 +37,6 @@ var QuillMixin = {
 				);
 			}
 		}.bind(this));
-	},
-
-	destroyEditor: function(editor) {
-		editor.destroy();
 	},
 
 	setEditorReadOnly: function(editor, value) {
