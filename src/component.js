@@ -256,7 +256,7 @@ var QuillComponent = React.createClass({
 	onEditorChangeSelection: function(range, source, editor) {
 		var s = this.getEditorSelection() || {};
 		var r = range || {};
-		if (r.start !== s.start || r.end !== s.end) {
+		if (r.length !== s.length || r.index !== s.index) {
 			this.setState({ selection: range });
 			if (this.props.onChangeSelection) {
 				this.props.onChangeSelection(range, source, editor);

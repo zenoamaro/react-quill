@@ -59,8 +59,8 @@ var QuillMixin = {
 		if (range) {
 			// Validate bounds before applying.
 			var length = editor.getLength();
-			range.start = Math.max(0, Math.min(range.start, length-1));
-			range.end = Math.max(range.start, Math.min(range.end, length-1));
+			range.index = Math.max(0, Math.min(range.index, range.length-1));
+			range.length = length;
 		}
 		editor.setSelection(range);
 	},

@@ -338,7 +338,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		onEditorChangeSelection: function(range, source, editor) {
 			var s = this.getEditorSelection() || {};
 			var r = range || {};
-			if (r.start !== s.start || r.end !== s.end) {
+			if (r.length !== s.length || r.index !== s.index) {
 				this.setState({ selection: range });
 				if (this.props.onChangeSelection) {
 					this.props.onChangeSelection(range, source, editor);
@@ -648,8 +648,8 @@ return /******/ (function(modules) { // webpackBootstrap
 			if (range) {
 				// Validate bounds before applying.
 				var length = editor.getLength();
-				range.start = Math.max(0, Math.min(range.start, length-1));
-				range.end = Math.max(range.start, Math.min(range.end, length-1));
+				range.index = Math.max(0, Math.min(range.index, range.length-1));
+				range.length = length;
 			}
 			editor.setSelection(range);
 		},
