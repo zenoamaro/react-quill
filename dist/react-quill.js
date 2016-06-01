@@ -259,7 +259,9 @@ return /******/ (function(modules) { // webpackBootstrap
 				// Don't mutate the original modules
 				// because it's shared between components.
 				config.modules = JSON.parse(JSON.stringify(config.modules));
-				config.modules.toolbar = '.quill-toolbar';
+				config.modules.toolbar = {
+					container: ReactDOM.findDOMNode(this.refs.toolbar)
+				}
 			}
 			return config;
 		},
