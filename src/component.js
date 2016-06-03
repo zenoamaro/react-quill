@@ -77,7 +77,7 @@ var QuillComponent = React.createClass({
 	},
 
 	componentWillReceiveProps: function(nextProps) {
-		var editor = this.state.editor;
+		var editor = this.editor;
 		// If the component is unmounted and mounted too quickly
 		// an error is thrown in setEditorContents since editor is
 		// still undefined. Must check if editor is undefined
@@ -109,6 +109,8 @@ var QuillComponent = React.createClass({
 			this.getEditorElement(),
 			this.getEditorConfig());
 
+    this.editor = editor;
+
 		this.setCustomFormats(editor);
 
 		// NOTE: Custom formats will be stripped when creating
@@ -120,7 +122,7 @@ var QuillComponent = React.createClass({
 	},
 
 	componentWillUnmount: function() {
-		this.destroyEditor(this.state.editor);
+		this.destroyEditor(this.editor);
 		// NOTE: Don't set the state to null here
 		//       as it would generate a loop.
 	},
@@ -185,7 +187,7 @@ var QuillComponent = React.createClass({
 	},
 
 	getEditor: function() {
-		return this.state.editor;
+		return this.editor;
 	},
 
 	getEditorElement: function() {
@@ -267,11 +269,11 @@ var QuillComponent = React.createClass({
 	},
 
 	focus: function() {
-		this.state.editor.focus();
+		this.editor.focus();
 	},
 
 	blur: function() {
-		this.setEditorSelection(this.state.editor, null);
+		this.setEditorSelection(this.editor, null);
 	},
 
 	/*
