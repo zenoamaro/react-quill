@@ -52,11 +52,8 @@ var QuillComponent = React.createClass({
 	getDefaultProps: function() {
 		return {
 			className: '',
-			theme: 'base',
-			modules: {
-				'link-tooltip': true,
-				'image-tooltip': true
-			}
+			theme: 'snow',
+			modules: {}
 		};
 	},
 
@@ -110,6 +107,10 @@ var QuillComponent = React.createClass({
 			this.getEditorConfig());
 
 		this.setCustomFormats(editor);
+		var fontOptions = document.querySelectorAll('.quill-toolbar .ql-font.ql-picker .ql-picker-item');
+		for (var i=0; i<fontOptions.length; ++i) {
+			fontOptions[i].style.fontFamily = fontOptions[i].dataset.value;
+		}
 
 		// NOTE: Custom formats will be stripped when creating
 		//       the editor, since they are not present there yet.
@@ -120,7 +121,6 @@ var QuillComponent = React.createClass({
 	},
 
 	componentWillUnmount: function() {
-		this.destroyEditor(this.state.editor);
 		// NOTE: Don't set the state to null here
 		//       as it would generate a loop.
 	},
@@ -179,7 +179,7 @@ var QuillComponent = React.createClass({
 			config.modules = JSON.parse(JSON.stringify(config.modules));
 			config.modules.toolbar = {
 				container: ReactDOM.findDOMNode(this.refs.toolbar)
-			};
+			}
 		}
 		return config;
 	},
@@ -258,7 +258,7 @@ var QuillComponent = React.createClass({
 	onEditorChangeSelection: function(range, source, editor) {
 		var s = this.getEditorSelection() || {};
 		var r = range || {};
-		if (r.start !== s.start || r.end !== s.end) {
+		if (r.length !== s.length || r.index !== s.index) {
 			this.setState({ selection: range });
 			if (this.props.onChangeSelection) {
 				this.props.onChangeSelection(range, source, editor);
