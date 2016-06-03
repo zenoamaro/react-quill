@@ -422,16 +422,13 @@ return /******/ (function(modules) { // webpackBootstrap
 			{ label:'Font', type:'font', items: [
 				{ label:'Sans Serif',  value:'sans-serif', selected:true },
 				{ label:'Serif',       value:'serif' },
-				{ label:'Monospace',   value:'monospace' },
-				{ label:'Impact',      value:'Impact, Charcoal, sans-serif' },
-				{ label:'Comic Sans',  value:'\'Comic Sans MS\', sans-serif' },
-				{ label:'Verdana',     value:'Verdana, Geneva, sans-serif' }
+				{ label:'Monospace',   value:'monospace' }
 			]},
 			{ label:'Size', type:'size', items: [
-				{ label:'10px',  value:'10px' },
-				{ label:'13px', value:'13px', selected:true },
-				{ label:'18px',  value:'18px' },
-				{ label:'32px',   value:'32px' }
+				{ label:'Small',  value:'10px' },
+				{ label:'Normal', value:'13px', selected:true },
+				{ label:'Large',  value:'18px' },
+				{ label:'Huge',   value:'32px' }
 			]},
 			{ label:'Alignment', type:'align', items: [
 				{ label:'', value:'', selected:true },
@@ -512,6 +509,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 		renderButton: function(item, key) {
 			return React.DOM.button({
+				type: 'button',
 				key: item.label || item.value || key,
 				value: item.value,
 				className: 'ql-'+item.type,
@@ -666,7 +664,6 @@ return /******/ (function(modules) { // webpackBootstrap
 			return {
 				getLength:    function(){ e.getLength.apply(e, arguments); },
 				getText:      function(){ e.getText.apply(e, arguments); },
-				// getHTML:      function(){ e.getHTML.apply(e, arguments); },
 				getContents:  function(){ e.getContents.apply(e, arguments); },
 				getSelection: function(){ e.getSelection.apply(e, arguments); },
 				getBounds:    function(){ e.getBounds.apply(e, arguments); },
