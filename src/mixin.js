@@ -75,7 +75,6 @@ var QuillMixin = {
 		return {
 			getLength:    function(){ e.getLength.apply(e, arguments); },
 			getText:      function(){ e.getText.apply(e, arguments); },
-			// getHTML:      function(){ e.getHTML.apply(e, arguments); },
 			getContents:  function(){ e.getContents.apply(e, arguments); },
 			getSelection: function(){ e.getSelection.apply(e, arguments); },
 			getBounds:    function(){ e.getBounds.apply(e, arguments); },
