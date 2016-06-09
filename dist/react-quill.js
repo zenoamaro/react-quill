@@ -92,6 +92,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	QuillToolbar = React.createFactory(QuillToolbar);
 	
 	var find = function(arr, predicate) {
+		if (!arr) {
+			return;
+		}
 		for (var i=0; i<arr.length; ++i) {
 			if (predicate(arr[i])) return arr[i];
 		}
@@ -289,13 +292,8 @@ return /******/ (function(modules) { // webpackBootstrap
 		*/
 		renderContents: function() {
 			var contents = [];
-			var children = this.props.children;
-	
-			if (!this.props.children instanceof Array) {
-				children = [this.props.children]
-			}
-			children = React.Children.map(
-				children,
+			var children = React.Children.map(
+				this.props.children,
 				function(c) { return React.cloneElement(c, {ref: c.ref}); }
 			);
 	
