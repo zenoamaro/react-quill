@@ -9,6 +9,12 @@ var React = require('react'),
 // FIXME: Remove with the switch to JSX
 QuillToolbar = React.createFactory(QuillToolbar);
 
+var find = function(arr, predicate) {
+	for (var i=0; i<arr.length; ++i) {
+		if (predicate(arr[i])) return arr[i];
+	}
+}
+
 var QuillComponent = React.createClass({
 
 	displayName: 'Quill',
@@ -112,12 +118,7 @@ var QuillComponent = React.createClass({
 			fontOptions[i].style.fontFamily = fontOptions[i].dataset.value;
 		}
 
-		// NOTE: Custom formats will be stripped when creating
-		//       the editor, since they are not present there yet.
-		//       Therefore, we re-set the contents from state.
-		this.setState({ editor:editor }, function() {
-			this.setEditorContents(editor, this.state.value);
-		}.bind(this));
+		this.setState({ editor:editor });
 	},
 
 	componentWillUnmount: function() {
@@ -205,32 +206,39 @@ var QuillComponent = React.createClass({
 	configuration of toolbar and contents area.
 	*/
 	renderContents: function() {
-		if (React.Children.count(this.props.children)) {
-			// Clone children to own their refs.
-			return React.Children.map(
-				this.props.children,
-				function(c) { return React.cloneElement(c, { ref: c.ref }) }
-			);
-		} else {
-			return [
-				// Quill modifies these elements in-place,
-				// so we need to re-render them every time.
+		var contents = [];
+		var children = this.props.children;
 
-				// Render the toolbar unless explicitly disabled.
-				this.props.toolbar !== false? QuillToolbar({
-					key: 'toolbar-' + Math.random(),
-					ref: 'toolbar',
-					items: this.props.toolbar
-				}) : false,
-
-				React.DOM.div({
-					key: 'editor-' + Math.random(),
-					ref: 'editor',
-					className: 'quill-contents',
-					dangerouslySetInnerHTML: { __html:this.getEditorContents() }
-				})
-			];
+		if (!this.props.children instanceof Array) {
+			children = [this.props.children]
 		}
+		children = React.Children.map(
+			children,
+			function(c) { return React.cloneElement(c, {ref: c.ref}); }
+		);
+
+		if (this.props.toolbar !== false) {
+			var toolbar = find(children, function(child) {
+				return child.ref === 'toolbar';
+			})
+			contents.push(toolbar ? toolbar : QuillToolbar({
+				key: 'toolbar-' + Math.random(),
+				ref: 'toolbar',
+				items: this.props.toolbar
+			}))
+		}
+
+		var editor = find(children, function(child) {
+			return child.ref === 'editor';
+		})
+		contents.push(editor ? editor : React.DOM.div({
+			key: 'editor-' + Math.random(),
+			ref: 'editor',
+			className: 'quill-contents',
+			dangerouslySetInnerHTML: { __html:this.getEditorContents() }
+		}))
+
+		return contents;
 	},
 
 	render: function() {
