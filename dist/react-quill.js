@@ -689,7 +689,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports) {
 
 	/*!
-	 * Quill Editor v1.0.0-beta.4
+	 * Quill Editor v1.0.0-beta.6.zenreach
 	 * https://quilljs.com/
 	 * Copyright (c) 2014, Jason Chen
 	 * Copyright (c) 2013, salesforce.com
@@ -1200,9 +1200,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		        return position;
 		    };
 		    ContainerBlot.prototype.replace = function (target) {
-		        if (target instanceof ContainerBlot) {
-		            target.moveChildren(this);
-		        }
+		        target.moveChildren(this);
 		        _super.prototype.replace.call(this, target);
 		    };
 		    ContainerBlot.prototype.split = function (index, force) {
@@ -1819,8 +1817,6 @@ return /******/ (function(modules) { // webpackBootstrap
 		        });
 		    };
 		    Attributor.prototype.add = function (node, value) {
-		        if (!this.canAdd(node, value))
-		            return false;
 		        node.setAttribute(this.keyName, value);
 		        return true;
 		    };
@@ -1861,12 +1857,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		    AttributorStore.prototype.attribute = function (attribute, value) {
 		        if (value) {
 		            if (attribute.add(this.domNode, value)) {
-		                if (attribute.value(this.domNode) != null) {
-		                    this.attributes[attribute.attrName] = attribute;
-		                }
-		                else {
-		                    delete this.attributes[attribute.attrName];
-		                }
+		                this.attributes[attribute.attrName] = attribute;
 		            }
 		        }
 		        else {
@@ -2149,22 +2140,17 @@ return /******/ (function(modules) { // webpackBootstrap
 		            }
 		            remaining.forEach(function (mutation) {
 		                var blot = Registry.find(mutation.target, true);
-		                if (blot != null && blot.domNode === mutation.target) {
-		                    if (mutation.type === 'childList') {
-		                        mark(Registry.find(mutation.previousSibling, false));
-		                        [].forEach.call(mutation.addedNodes, function (node) {
-		                            var child = Registry.find(node, false);
-		                            mark(child);
-		                            if (child instanceof container_1.default) {
-		                                child.children.forEach(mark);
-		                            }
-		                        });
-		                    }
-		                    else if (mutation.type === 'attributes') {
-		                        mark(blot.prev);
-		                    }
-		                    mark(blot);
+		                if (blot != null && blot.domNode === mutation.target && mutation.type === 'childList') {
+		                    mark(Registry.find(mutation.previousSibling, false));
+		                    [].forEach.call(mutation.addedNodes, function (node) {
+		                        var child = Registry.find(node, false);
+		                        mark(child);
+		                        if (child instanceof container_1.default) {
+		                            child.children.forEach(mark);
+		                        }
+		                    });
 		                }
+		                mark(blot);
 		            });
 		            this.children.forEach(optimize);
 		            remaining = this.observer.takeRecords();
@@ -2240,15 +2226,8 @@ return /******/ (function(modules) { // webpackBootstrap
 		        return _super.formats.call(this, domNode);
 		    };
 		    InlineBlot.prototype.format = function (name, value) {
-		        var _this = this;
 		        if (name === this.statics.blotName && !value) {
-		            this.children.forEach(function (child) {
-		                if (!(child instanceof format_1.default)) {
-		                    child = child.wrap(InlineBlot.blotName, true);
-		                }
-		                _this.attributes.copy(child);
-		            });
-		            this.unwrap();
+		            this.replaceWith(InlineBlot.blotName);
 		        }
 		        else {
 		            _super.prototype.format.call(this, name, value);
@@ -2633,6 +2612,11 @@ return /******/ (function(modules) { // webpackBootstrap
 		      return container;
 		    }
 		  }, {
+		    key: 'blur',
+		    value: function blur() {
+		      this.selection.setRange(null);
+		    }
+		  }, {
 		    key: 'deleteText',
 		    value: function deleteText(index, length, source) {
 		      var _overload = overload(index, length, source);
@@ -2826,11 +2810,13 @@ return /******/ (function(modules) { // webpackBootstrap
 		  }, {
 		    key: 'pasteHTML',
 		    value: function pasteHTML(index, html) {
+		      var source = arguments.length <= 2 || arguments[2] === undefined ? _emitter2.default.sources.API : arguments[2];
+	
 		      if (typeof index === 'string') {
-		        this.setContents(this.clipboard.convert(index));
+		        this.setContents(this.clipboard.convert(index), html);
 		      } else {
 		        var paste = this.clipboard.convert(html);
-		        this.updateContents(new _delta2.default().retain(index).concat(paste));
+		        this.updateContents(new _delta2.default().retain(index).concat(paste), source);
 		      }
 		    }
 		  }, {
@@ -2858,7 +2844,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		        delta.insert('\n');
 		      }
 		      delta.delete(this.getLength());
-		      this.editor.applyDelta(delta);
+		      this.editor.applyDelta(delta, source);
 		    }
 		  }, {
 		    key: 'setSelection',
@@ -2919,7 +2905,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		};
 		Quill.events = _emitter2.default.events;
 		Quill.sources = _emitter2.default.sources;
-		Quill.version = ("1.0.0-beta.4");
+		Quill.version = ("1.0.0-beta.6.zenreach");
 	
 		Quill.imports = {
 		  'delta': _delta2.default,
@@ -3021,6 +3007,11 @@ return /******/ (function(modules) { // webpackBootstrap
 		    return undefined;
 		  };
 		}
+	
+		// Disable resizing in Firefox
+		document.addEventListener("DOMContentLoaded", function () {
+		  document.execCommand("enableObjectResizing", false, false);
+		});
 	
 	/***/ },
 	/* 21 */
@@ -4450,7 +4441,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		    }
 		  }, {
 		    key: 'removeFormat',
-		    value: function removeFormat(index, length) {
+		    value: function removeFormat(index, length, source) {
 		      var text = this.getText(index, length);
 	
 		      var _scroll$line3 = this.scroll.line(index + length);
@@ -4469,7 +4460,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		      var contents = this.getContents(index, length + suffixLength);
 		      var diff = contents.diff(new _delta2.default().insert(text).concat(suffix));
 		      var delta = new _delta2.default().retain(index).concat(diff);
-		      this.applyDelta(delta);
+		      this.applyDelta(delta, source);
 		    }
 		  }, {
 		    key: 'update',
@@ -4574,7 +4565,6 @@ return /******/ (function(modules) { // webpackBootstrap
 		}(_eventemitter2.default);
 	
 		Emitter.events = {
-		  READY: 'ready',
 		  SCROLL_OPTIMIZE: 'scroll-optimize',
 		  SCROLL_BEFORE_UPDATE: 'scroll-before-update',
 		  SCROLL_UPDATE: 'scroll-update',
@@ -5661,6 +5651,10 @@ return /******/ (function(modules) { // webpackBootstrap
 		    key: 'getBounds',
 		    value: function getBounds(index) {
 		      var length = arguments.length <= 1 || arguments[1] === undefined ? 0 : arguments[1];
+	
+		      var scrollLength = this.scroll.length();
+		      index = Math.min(index, scrollLength - 1);
+		      length = Math.min(index + length, scrollLength - 1) - index;
 		      var bounds = void 0;var node = void 0;
 		      var _scroll$leaf = this.scroll.leaf(index);
 	
@@ -5815,6 +5809,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 		      if (range == null) return;
 		      var bounds = this.getBounds(range.index, range.length);
+		      if (bounds == null) return;
 		      if (this.root.offsetHeight < bounds.bottom) {
 		        var _scroll$line = this.scroll.line(range.index + range.length);
 	
@@ -6106,6 +6101,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 		var _embed2 = _interopRequireDefault(_embed);
 	
+		var _emitter = __webpack_require__(29);
+	
+		var _emitter2 = _interopRequireDefault(_emitter);
+	
 		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 		function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -6211,9 +6210,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		      }
 		      this.remove();
 		      if (range != null && range.start.node === textNode && range.end.node === textNode) {
-		        (function () {
-		          // optimize() might move the cursor after our restore
-	
+		        this.selection.emitter.once(_emitter2.default.events.SCROLL_OPTIMIZE, function () {
 		          var _map = [range.start.offset, range.end.offset].map(function (offset) {
 		            return Math.max(0, Math.min(textNode.data.length, offset - 1));
 		          });
@@ -6223,11 +6220,8 @@ return /******/ (function(modules) { // webpackBootstrap
 		          var start = _map2[0];
 		          var end = _map2[1];
 	
-		          setTimeout(function () {
-		            // optimize() might move selection after us
-		            _this2.selection.setNativeRange(textNode, start, textNode, end);
-		          }, 1);
-		        })();
+		          _this2.selection.setNativeRange(textNode, start, textNode, end);
+		        });
 		      }
 		    }
 		  }, {
@@ -6346,7 +6340,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 		      _get(Object.getPrototypeOf(Scroll.prototype), 'deleteAt', this).call(this, index, length);
 		      if (last != null && first !== last && firstOffset > 0 && !(first instanceof _block.BlockEmbed) && !(last instanceof _block.BlockEmbed)) {
-		        var lastChild = first.children.tail;
 		        last.moveChildren(first);
 		        last.remove();
 		      }
@@ -6625,11 +6618,11 @@ return /******/ (function(modules) { // webpackBootstrap
 		      if (range == null || range.length === 0 || e.defaultPrevented) return;
 		      var clipboard = e.clipboardData || window.clipboardData;
 		      clipboard.setData('text', this.quill.getText(range));
+		      // Only Chrome allows this shortcut, IE11 errors for trying
 		      if (e.clipboardData) {
-		        // IE11 does not let us set non-text data
 		        clipboard.setData('application/json', JSON.stringify(this.quill.getContents(range)));
 		      }
-		      e.preventDefault();
+		      // e.preventDefault();
 		    }
 		  }, {
 		    key: 'onCut',
@@ -6683,7 +6676,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		}(_module2.default);
 	
 		Clipboard.DEFAULTS = {
-		  matchers: [[Node.TEXT_NODE, matchText], [Node.ELEMENT_NODE, matchNewline], [Node.ELEMENT_NODE, matchBlot], [Node.ELEMENT_NODE, matchSpacing], [Node.ELEMENT_NODE, matchAttributor], [Node.ELEMENT_NODE, matchStyles], ['b', matchAlias.bind(matchAlias, 'bold')], ['i', matchAlias.bind(matchAlias, 'italic')]]
+		  matchers: [[Node.TEXT_NODE, matchText], ['br', matchBreak], [Node.ELEMENT_NODE, matchNewline], [Node.ELEMENT_NODE, matchBlot], [Node.ELEMENT_NODE, matchSpacing], [Node.ELEMENT_NODE, matchAttributor], [Node.ELEMENT_NODE, matchStyles], ['b', matchAlias.bind(matchAlias, 'bold')], ['i', matchAlias.bind(matchAlias, 'italic')]]
 		};
 	
 		function computeStyle(node) {
@@ -6738,14 +6731,17 @@ return /******/ (function(modules) { // webpackBootstrap
 		    if (value != null) {
 		      embed[match.blotName] = value;
 		      delta.insert(embed, match.formats(node));
-		      if (match.prototype instanceof _block.BlockEmbed) {
-		        var newlineDelta = matchAttributor(node, new _delta2.default().insert('\n'));
-		        delta = delta.concat(newlineDelta);
-		      }
 		    }
 		  } else if (typeof match.formats === 'function') {
 		    var formats = _defineProperty({}, match.blotName, match.formats(node));
 		    delta = delta.compose(new _delta2.default().retain(delta.length(), formats));
+		  }
+		  return delta;
+		}
+	
+		function matchBreak(node, delta) {
+		  if (!deltaEndsWith(delta, '\n')) {
+		    delta.insert('\n');
 		  }
 		  return delta;
 		}
@@ -6759,7 +6755,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		}
 	
 		function matchSpacing(node, delta) {
-		  if (isLine(node) && node.nextElementSibling != null && node.nextElementSibling.offsetTop > node.offsetTop + node.offsetHeight * 1.25 && !deltaEndsWith(delta, '\n\n')) {
+		  if (isLine(node) && node.nextElementSibling != null && node.nextElementSibling.offsetTop > node.offsetTop + node.offsetHeight * 1.5 && !deltaEndsWith(delta, '\n\n')) {
 		    delta.insert('\n');
 		  }
 		  return delta;
@@ -7447,9 +7443,9 @@ return /******/ (function(modules) { // webpackBootstrap
 		      this.quill.setSelection(range.index + 1, _quill2.default.sources.SILENT);
 		    }],
 		    'list empty enter': [{ key: Keyboard.keys.ENTER }, { collapsed: true, format: ['list'], empty: true }, function (range, context) {
-		      this.quill.format('list', false);
+		      this.quill.format('list', false, _quill2.default.sources.USER);
 		      if (context.format.indent) {
-		        this.quill.format('indent', false);
+		        this.quill.format('indent', false, _quill2.default.sources.USER);
 		      }
 		    }],
 		    'header enter': [{ key: Keyboard.keys.ENTER }, { collapsed: true, format: ['header'], suffix: /^$/ }, function (range) {
@@ -7787,6 +7783,15 @@ return /******/ (function(modules) { // webpackBootstrap
 		        this.replaceWith(_parchment2.default.create(this.statics.scope));
 		      } else {
 		        _get(Object.getPrototypeOf(ListItem.prototype), 'format', this).call(this, name, value);
+		      }
+		    }
+		  }, {
+		    key: 'remove',
+		    value: function remove() {
+		      if (this.prev == null && this.next == null) {
+		        this.parent.remove();
+		      } else {
+		        _get(Object.getPrototypeOf(ListItem.prototype), 'remove', this).call(this);
 		      }
 		    }
 		  }, {
@@ -8514,6 +8519,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		        katex.render(value, node);
 		        node.dataset.value = value;
 		      }
+		      node.setAttribute('contenteditable', false);
 		      return node;
 		    }
 		  }, {
@@ -9186,6 +9192,9 @@ return /******/ (function(modules) { // webpackBootstrap
 		      });
 		      if (!format) return;
 		      format = format.slice('ql-'.length);
+		      if (input.tagName === 'BUTTON') {
+		        input.setAttribute('type', 'button');
+		      }
 		      if (this.handlers[format] == null) {
 		        if (this.quill.scroll.whitelist != null && this.quill.scroll.whitelist[format] == null) {
 		          debug.warn('ignoring attaching to disabled format', format, input);
@@ -9218,6 +9227,14 @@ return /******/ (function(modules) { // webpackBootstrap
 		          } else {
 		            _this2.quill.format(format, value, _quill2.default.sources.USER);
 		          }
+	
+		          var _quill$selection$getR = _this2.quill.selection.getRange();
+	
+		          var _quill$selection$getR2 = _slicedToArray(_quill$selection$getR, 1);
+	
+		          var range = _quill$selection$getR2[0];
+	
+		          _this2.update(range);
 		        });
 		      });
 		      // TODO use weakmap
@@ -9239,7 +9256,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		          if (formats[format] == null) {
 		            option = input.querySelector('option[selected]');
 		          } else if (!Array.isArray(formats[format])) {
-		            option = input.querySelector('option[value="' + formats[format] + '"]');
+		            option = input.querySelector('option[value="' + formats[format].replace(/\"/g, "\'") + '"]');
 		          }
 		          if (option == null) {
 		            input.value = ''; // TODO make configurable?
@@ -9680,6 +9697,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		      var trigger = arguments.length <= 1 || arguments[1] === undefined ? false : arguments[1];
 	
 		      var selected = this.container.querySelector('.ql-selected');
+		      if (item === selected) return this.close();
 		      if (selected != null) {
 		        selected.classList.remove('ql-selected');
 		      }
@@ -9952,14 +9970,19 @@ return /******/ (function(modules) { // webpackBootstrap
 		            var bounds = _this2.quill.getBounds(new _selection.Range(index, length));
 		            _this2.tooltip.position(bounds);
 		          }
-		        } else if (document.activeElement !== input) {
+		        } else if (document.activeElement !== input && !!_this2.quill.hasFocus()) {
 		          _this2.tooltip.hide();
 		        }
 		      });
 		      this.quill.on(_emitter2.default.events.SCROLL_OPTIMIZE, function () {
-		        if (_this2.tooltip.root.classList.contains('ql-hidden')) return;
-		        var range = _this2.quill.getSelection();
-		        _this2.tooltip.position(_this2.quill.getBounds(range));
+		        // Let selection be restored by toolbar handlers before repositioning
+		        setTimeout(function () {
+		          if (_this2.tooltip.root.classList.contains('ql-hidden')) return;
+		          var range = _this2.quill.getSelection();
+		          if (range != null) {
+		            _this2.tooltip.position(_this2.quill.getBounds(range));
+		          }
+		        }, 1);
 		      });
 		      toolbar.handlers['link'] = function (value) {
 		        if (!value) {
@@ -10001,6 +10024,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		      this.buildLinkEditor(toolbar);
 		      container.appendChild(toolbar.container);
 		      this.buildButtons([].slice.call(toolbar.container.querySelectorAll('button')));
+		      this.buildPickers([].slice.call(toolbar.container.querySelectorAll('select')));
 		      this.tooltip.hide();
 		    }
 		  }]);
@@ -10040,6 +10064,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 		var _theme2 = _interopRequireDefault(_theme);
 	
+		var _colorPicker = __webpack_require__(102);
+	
+		var _colorPicker2 = _interopRequireDefault(_colorPicker);
+	
+		var _iconPicker = __webpack_require__(103);
+	
+		var _iconPicker2 = _interopRequireDefault(_iconPicker);
+	
 		var _picker = __webpack_require__(100);
 	
 		var _picker2 = _interopRequireDefault(_picker);
@@ -10055,6 +10087,16 @@ return /******/ (function(modules) { // webpackBootstrap
 		function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 	
 		function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+		var ALIGNS = [false, 'center', 'right', 'justify'];
+	
+		var COLORS = ["#000000", "#e60000", "#ff9900", "#ffff00", "#008A00", "#0066cc", "#9933ff", "#ffffff", "#facccc", "#ffebcc", "#ffffcc", "#cce8cc", "#cce0f5", "#ebd6ff", "#bbbbbb", "#f06666", "#ffc266", "#ffff66", "#66b966", "#66a3e0", "#c285ff", "#888888", "#a10000", "#b26b00", "#b2b200", "#006100", "#0047b2", "#6b24b2", "#444444", "#5c0000", "#663d00", "#666600", "#003700", "#002966", "#3d1466"];
+	
+		var FONTS = [false, 'serif', 'monospace'];
+	
+		var HEADERS = ['1', '2', '3', false];
+	
+		var SIZES = ['small', false, 'large', 'huge'];
 	
 		var BaseTheme = function (_Theme) {
 		  _inherits(BaseTheme, _Theme);
@@ -10101,90 +10143,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		        });
 		      });
 		    }
-		  }]);
-	
-		  return BaseTheme;
-		}(_theme2.default);
-	
-		BaseTheme.DEFAULTS = {};
-	
-		exports.default = BaseTheme;
-	
-	/***/ },
-	/* 106 */
-	/***/ function(module, exports, __webpack_require__) {
-	
-		'use strict';
-	
-		Object.defineProperty(exports, "__esModule", {
-		  value: true
-		});
-	
-		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-		var _emitter = __webpack_require__(29);
-	
-		var _emitter2 = _interopRequireDefault(_emitter);
-	
-		var _base = __webpack_require__(105);
-	
-		var _base2 = _interopRequireDefault(_base);
-	
-		var _colorPicker = __webpack_require__(102);
-	
-		var _colorPicker2 = _interopRequireDefault(_colorPicker);
-	
-		var _iconPicker = __webpack_require__(103);
-	
-		var _iconPicker2 = _interopRequireDefault(_iconPicker);
-	
-		var _imageTooltip = __webpack_require__(107);
-	
-		var _imageTooltip2 = _interopRequireDefault(_imageTooltip);
-	
-		var _icons = __webpack_require__(72);
-	
-		var _icons2 = _interopRequireDefault(_icons);
-	
-		var _linkTooltip = __webpack_require__(108);
-	
-		var _linkTooltip2 = _interopRequireDefault(_linkTooltip);
-	
-		var _picker = __webpack_require__(100);
-	
-		var _picker2 = _interopRequireDefault(_picker);
-	
-		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-		function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-		function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-		function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-		var ALIGNS = [false, 'center', 'right', 'justify'];
-	
-		var COLORS = ["#000000", "#e60000", "#ff9900", "#ffff00", "#008A00", "#0066cc", "#9933ff", "#ffffff", "#facccc", "#ffebcc", "#ffffcc", "#cce8cc", "#cce0f5", "#ebd6ff", "#bbbbbb", "#f06666", "#ffc266", "#ffff66", "#66b966", "#66a3e0", "#c285ff", "#888888", "#a10000", "#b26b00", "#b2b200", "#006100", "#0047b2", "#6b24b2", "#444444", "#5c0000", "#663d00", "#666600", "#003700", "#002966", "#3d1466"];
-	
-		var FONTS = [false, 'serif', 'monospace'];
-	
-		var HEADERS = ['1', '2', '3', false];
-	
-		var SIZES = ['small', false, 'large', 'huge'];
-	
-		var SnowTheme = function (_BaseTheme) {
-		  _inherits(SnowTheme, _BaseTheme);
-	
-		  function SnowTheme(quill, options) {
-		    _classCallCheck(this, SnowTheme);
-	
-		    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(SnowTheme).call(this, quill, options));
-	
-		    _this.quill.container.classList.add('ql-snow');
-		    return _this;
-		  }
-	
-		  _createClass(SnowTheme, [{
+		  }, {
 		    key: 'buildPickers',
 		    value: function buildPickers(selects) {
 		      var pickers = selects.map(function (select) {
@@ -10228,7 +10187,82 @@ return /******/ (function(modules) { // webpackBootstrap
 		        });
 		      });
 		    }
-		  }, {
+		  }]);
+	
+		  return BaseTheme;
+		}(_theme2.default);
+	
+		BaseTheme.DEFAULTS = {};
+	
+		function fillSelect(select, values) {
+		  var defaultValue = arguments.length <= 2 || arguments[2] === undefined ? false : arguments[2];
+	
+		  values.forEach(function (value) {
+		    var option = document.createElement('option');
+		    if (value === defaultValue) {
+		      option.setAttribute('selected', 'selected');
+		    } else {
+		      option.setAttribute('value', value);
+		    }
+		    select.appendChild(option);
+		  });
+		}
+	
+		exports.default = BaseTheme;
+	
+	/***/ },
+	/* 106 */
+	/***/ function(module, exports, __webpack_require__) {
+	
+		'use strict';
+	
+		Object.defineProperty(exports, "__esModule", {
+		  value: true
+		});
+	
+		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+		var _emitter = __webpack_require__(29);
+	
+		var _emitter2 = _interopRequireDefault(_emitter);
+	
+		var _base = __webpack_require__(105);
+	
+		var _base2 = _interopRequireDefault(_base);
+	
+		var _imageTooltip = __webpack_require__(107);
+	
+		var _imageTooltip2 = _interopRequireDefault(_imageTooltip);
+	
+		var _linkTooltip = __webpack_require__(108);
+	
+		var _linkTooltip2 = _interopRequireDefault(_linkTooltip);
+	
+		var _picker = __webpack_require__(100);
+	
+		var _picker2 = _interopRequireDefault(_picker);
+	
+		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+		function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+		function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+		function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+		var SnowTheme = function (_BaseTheme) {
+		  _inherits(SnowTheme, _BaseTheme);
+	
+		  function SnowTheme(quill, options) {
+		    _classCallCheck(this, SnowTheme);
+	
+		    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(SnowTheme).call(this, quill, options));
+	
+		    _this.quill.container.classList.add('ql-snow');
+		    return _this;
+		  }
+	
+		  _createClass(SnowTheme, [{
 		    key: 'extendToolbar',
 		    value: function extendToolbar(toolbar) {
 		      toolbar.container.classList.add('ql-snow');
@@ -10252,7 +10286,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		SnowTheme.DEFAULTS = {
 		  modules: {
 		    'toolbar': {
-		      container: [[{ header: HEADERS }], ['bold', 'italic', 'underline', 'link'], [{ list: 'ordered' }, { list: 'bullet' }], ['clean']],
+		      container: [[{ header: ['1', '2', '3', false] }], ['bold', 'italic', 'underline', 'link'], [{ list: 'ordered' }, { list: 'bullet' }], ['clean']],
 		      handlers: {
 		        'image': function image() {
 		          this.quill.theme.imageTooltip.show();
@@ -10269,20 +10303,6 @@ return /******/ (function(modules) { // webpackBootstrap
 		    }
 		  }
 		};
-	
-		function fillSelect(select, values) {
-		  var defaultValue = arguments.length <= 2 || arguments[2] === undefined ? false : arguments[2];
-	
-		  values.forEach(function (value) {
-		    var option = document.createElement('option');
-		    if (value === defaultValue) {
-		      option.setAttribute('selected', 'selected');
-		    } else {
-		      option.setAttribute('value', value);
-		    }
-		    select.appendChild(option);
-		  });
-		}
 	
 		exports.default = SnowTheme;
 	
