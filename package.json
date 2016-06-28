@@ -37,7 +37,7 @@
     "LICENSE"
   ],
   "dependencies": {
-    "quill": "git+git@github.com/Wifast/quill.git#zenreach-1.0.6.1"
+    "quill": "git+https://github.com/Wifast/quill.git#zenreach-1.0.6.1"
   },
   "peerDependencies": {
     "react": ">=0.14.0"
