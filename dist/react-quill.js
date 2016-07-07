@@ -763,65 +763,65 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 		var _core2 = _interopRequireDefault(_core);
 	
-		var _align = __webpack_require__(45);
+		var _align = __webpack_require__(46);
 	
-		var _direction = __webpack_require__(48);
+		var _direction = __webpack_require__(49);
 	
-		var _indent = __webpack_require__(53);
+		var _indent = __webpack_require__(54);
 	
-		var _blockquote = __webpack_require__(54);
+		var _blockquote = __webpack_require__(55);
 	
 		var _blockquote2 = _interopRequireDefault(_blockquote);
 	
-		var _header = __webpack_require__(55);
+		var _header = __webpack_require__(56);
 	
 		var _header2 = _interopRequireDefault(_header);
 	
-		var _list = __webpack_require__(56);
+		var _list = __webpack_require__(57);
 	
 		var _list2 = _interopRequireDefault(_list);
 	
-		var _background = __webpack_require__(46);
+		var _background = __webpack_require__(47);
 	
-		var _color = __webpack_require__(47);
+		var _color = __webpack_require__(48);
 	
-		var _font = __webpack_require__(49);
+		var _font = __webpack_require__(50);
 	
-		var _size = __webpack_require__(50);
+		var _size = __webpack_require__(51);
 	
-		var _bold = __webpack_require__(57);
+		var _bold = __webpack_require__(58);
 	
 		var _bold2 = _interopRequireDefault(_bold);
 	
-		var _italic = __webpack_require__(58);
+		var _italic = __webpack_require__(59);
 	
 		var _italic2 = _interopRequireDefault(_italic);
 	
-		var _link = __webpack_require__(59);
+		var _link = __webpack_require__(60);
 	
 		var _link2 = _interopRequireDefault(_link);
 	
-		var _script = __webpack_require__(60);
+		var _script = __webpack_require__(61);
 	
 		var _script2 = _interopRequireDefault(_script);
 	
-		var _strike = __webpack_require__(61);
+		var _strike = __webpack_require__(62);
 	
 		var _strike2 = _interopRequireDefault(_strike);
 	
-		var _underline = __webpack_require__(62);
+		var _underline = __webpack_require__(63);
 	
 		var _underline2 = _interopRequireDefault(_underline);
 	
-		var _image = __webpack_require__(63);
+		var _image = __webpack_require__(64);
 	
 		var _image2 = _interopRequireDefault(_image);
 	
-		var _video = __webpack_require__(64);
+		var _video = __webpack_require__(65);
 	
 		var _video2 = _interopRequireDefault(_video);
 	
-		var _code = __webpack_require__(65);
+		var _code = __webpack_require__(32);
 	
 		var _code2 = _interopRequireDefault(_code);
 	
@@ -829,47 +829,43 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 		var _formula2 = _interopRequireDefault(_formula);
 	
-		var _imageTooltip = __webpack_require__(67);
-	
-		var _imageTooltip2 = _interopRequireDefault(_imageTooltip);
-	
-		var _linkTooltip = __webpack_require__(68);
-	
-		var _linkTooltip2 = _interopRequireDefault(_linkTooltip);
-	
-		var _syntax = __webpack_require__(70);
+		var _syntax = __webpack_require__(67);
 	
 		var _syntax2 = _interopRequireDefault(_syntax);
 	
-		var _toolbar = __webpack_require__(71);
+		var _toolbar = __webpack_require__(68);
 	
 		var _toolbar2 = _interopRequireDefault(_toolbar);
 	
-		var _icons = __webpack_require__(72);
+		var _icons = __webpack_require__(69);
 	
 		var _icons2 = _interopRequireDefault(_icons);
 	
-		var _picker = __webpack_require__(100);
+		var _picker = __webpack_require__(101);
 	
 		var _picker2 = _interopRequireDefault(_picker);
 	
-		var _colorPicker = __webpack_require__(102);
+		var _colorPicker = __webpack_require__(103);
 	
 		var _colorPicker2 = _interopRequireDefault(_colorPicker);
 	
-		var _iconPicker = __webpack_require__(103);
+		var _iconPicker = __webpack_require__(104);
 	
 		var _iconPicker2 = _interopRequireDefault(_iconPicker);
 	
-		var _tooltip = __webpack_require__(69);
+		var _tooltip = __webpack_require__(105);
 	
 		var _tooltip2 = _interopRequireDefault(_tooltip);
 	
-		var _bubble = __webpack_require__(104);
+		var _linkTooltip = __webpack_require__(106);
+	
+		var _linkTooltip2 = _interopRequireDefault(_linkTooltip);
+	
+		var _bubble = __webpack_require__(107);
 	
 		var _bubble2 = _interopRequireDefault(_bubble);
 	
-		var _snow = __webpack_require__(106);
+		var _snow = __webpack_require__(109);
 	
 		var _snow2 = _interopRequireDefault(_snow);
 	
@@ -926,7 +922,6 @@ return /******/ (function(modules) { // webpackBootstrap
 		  'ui/icon-picker': _iconPicker2.default,
 		  'ui/color-picker': _colorPicker2.default,
 		  'ui/tooltip': _tooltip2.default,
-		  'ui/image-tooltip': _imageTooltip2.default,
 		  'ui/link-tooltip': _linkTooltip2.default
 		}, true);
 	
@@ -950,47 +945,47 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 		var _quill2 = _interopRequireDefault(_quill);
 	
-		var _block = __webpack_require__(32);
+		var _block = __webpack_require__(33);
 	
 		var _block2 = _interopRequireDefault(_block);
 	
-		var _break = __webpack_require__(33);
+		var _break = __webpack_require__(34);
 	
 		var _break2 = _interopRequireDefault(_break);
 	
-		var _container = __webpack_require__(41);
+		var _container = __webpack_require__(42);
 	
 		var _container2 = _interopRequireDefault(_container);
 	
-		var _cursor = __webpack_require__(42);
+		var _cursor = __webpack_require__(43);
 	
 		var _cursor2 = _interopRequireDefault(_cursor);
 	
-		var _embed = __webpack_require__(34);
+		var _embed = __webpack_require__(35);
 	
 		var _embed2 = _interopRequireDefault(_embed);
 	
-		var _inline = __webpack_require__(35);
+		var _inline = __webpack_require__(36);
 	
 		var _inline2 = _interopRequireDefault(_inline);
 	
-		var _scroll = __webpack_require__(43);
+		var _scroll = __webpack_require__(44);
 	
 		var _scroll2 = _interopRequireDefault(_scroll);
 	
-		var _text = __webpack_require__(36);
+		var _text = __webpack_require__(37);
 	
 		var _text2 = _interopRequireDefault(_text);
 	
-		var _clipboard = __webpack_require__(44);
+		var _clipboard = __webpack_require__(45);
 	
 		var _clipboard2 = _interopRequireDefault(_clipboard);
 	
-		var _history = __webpack_require__(51);
+		var _history = __webpack_require__(52);
 	
 		var _history2 = _interopRequireDefault(_history);
 	
-		var _keyboard = __webpack_require__(52);
+		var _keyboard = __webpack_require__(53);
 	
 		var _keyboard2 = _interopRequireDefault(_keyboard);
 	
@@ -2506,7 +2501,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 		var _emitter2 = _interopRequireDefault(_emitter);
 	
-		var _module = __webpack_require__(38);
+		var _module = __webpack_require__(39);
 	
 		var _module2 = _interopRequireDefault(_module);
 	
@@ -2514,7 +2509,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 		var _parchment2 = _interopRequireDefault(_parchment);
 	
-		var _selection = __webpack_require__(39);
+		var _selection = __webpack_require__(40);
 	
 		var _selection2 = _interopRequireDefault(_selection);
 	
@@ -2526,7 +2521,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 		var _logger2 = _interopRequireDefault(_logger);
 	
-		var _theme = __webpack_require__(40);
+		var _theme = __webpack_require__(41);
 	
 		var _theme2 = _interopRequireDefault(_theme);
 	
@@ -2595,6 +2590,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		      themeClass = Quill.import('themes/' + options.theme);
 		    }
 		    options = (0, _extend2.default)(true, {}, Quill.DEFAULTS, themeClass.DEFAULTS, options);
+		    options.bounds = typeof options.bounds === 'string' ? document.querySelector(options.bounds) : options.bounds;
 		    var html = this.container.innerHTML.trim();
 		    this.container.classList.add('ql-container');
 		    this.container.innerHTML = '';
@@ -2908,7 +2904,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		    value: function update() {
 		      var source = arguments.length <= 0 || arguments[0] === undefined ? _emitter2.default.sources.USER : arguments[0];
 	
-		      this.scroll.update(); // Will update selection before selection.update() does if text changes
+		      this.scroll.update(source); // Will update selection before selection.update() does if text changes
 		      this.selection.update(source);
 		    }
 		  }, {
@@ -3017,26 +3013,28 @@ return /******/ (function(modules) { // webpackBootstrap
 		}
 	
 		if (!Array.prototype.find) {
-		  Array.prototype.find = function (predicate) {
-		    if (this === null) {
-		      throw new TypeError('Array.prototype.find called on null or undefined');
-		    }
-		    if (typeof predicate !== 'function') {
-		      throw new TypeError('predicate must be a function');
-		    }
-		    var list = Object(this);
-		    var length = list.length >>> 0;
-		    var thisArg = arguments[1];
-		    var value;
-	
-		    for (var i = 0; i < length; i++) {
-		      value = list[i];
-		      if (predicate.call(thisArg, value, i, list)) {
-		        return value;
+		  Object.defineProperty(Array.prototype, "find", {
+		    value: function value(predicate) {
+		      if (this === null) {
+		        throw new TypeError('Array.prototype.find called on null or undefined');
 		      }
+		      if (typeof predicate !== 'function') {
+		        throw new TypeError('predicate must be a function');
+		      }
+		      var list = Object(this);
+		      var length = list.length >>> 0;
+		      var thisArg = arguments[1];
+		      var value;
+	
+		      for (var i = 0; i < length; i++) {
+		        value = list[i];
+		        if (predicate.call(thisArg, value, i, list)) {
+		          return value;
+		        }
+		      }
+		      return undefined;
 		    }
-		    return undefined;
-		  };
+		  });
 		}
 	
 		// Disable resizing in Firefox
@@ -4240,27 +4238,37 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 		var _op2 = _interopRequireDefault(_op);
 	
-		var _emitter = __webpack_require__(29);
+		var _emitter3 = __webpack_require__(29);
 	
-		var _emitter2 = _interopRequireDefault(_emitter);
+		var _emitter4 = _interopRequireDefault(_emitter3);
 	
 		var _parchment = __webpack_require__(3);
 	
 		var _parchment2 = _interopRequireDefault(_parchment);
 	
-		var _block = __webpack_require__(32);
+		var _code = __webpack_require__(32);
+	
+		var _code2 = _interopRequireDefault(_code);
+	
+		var _block = __webpack_require__(33);
 	
 		var _block2 = _interopRequireDefault(_block);
 	
-		var _clone = __webpack_require__(37);
+		var _clone = __webpack_require__(38);
 	
 		var _clone2 = _interopRequireDefault(_clone);
+	
+		var _deepEqual = __webpack_require__(23);
+	
+		var _deepEqual2 = _interopRequireDefault(_deepEqual);
 	
 		var _extend = __webpack_require__(26);
 	
 		var _extend2 = _interopRequireDefault(_extend);
 	
 		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+		function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 	
 		function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
@@ -4270,7 +4278,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 		    this.scroll = scroll;
 		    this.emitter = emitter;
-		    this.emitter.on(_emitter2.default.events.SCROLL_UPDATE, this.update, this);
+		    this.emitter.on(_emitter4.default.events.SCROLL_UPDATE, this.update.bind(this, null));
 		    this.delta = this.getDelta();
 		    this.enable();
 		  }
@@ -4280,8 +4288,9 @@ return /******/ (function(modules) { // webpackBootstrap
 		    value: function applyDelta(delta) {
 		      var _this = this;
 	
-		      var source = arguments.length <= 1 || arguments[1] === undefined ? _emitter2.default.sources.API : arguments[1];
+		      var source = arguments.length <= 1 || arguments[1] === undefined ? _emitter4.default.sources.API : arguments[1];
 	
+		      this.updating = true;
 		      var consumeNextNewline = false;
 		      delta.ops.reduce(function (index, op) {
 		        if (typeof op.delete === 'number') {
@@ -4289,7 +4298,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		          return index;
 		        }
 		        var length = op.retain || op.insert.length || 1;
-		        var attributes = op.attributes || {};
+		        var attributes = handleOldList(op.attributes || {});
 		        if (op.insert != null) {
 		          var _handleOldEmbed = handleOldEmbed(op, attributes);
 	
@@ -4342,15 +4351,16 @@ return /******/ (function(modules) { // webpackBootstrap
 		        });
 		        return index + length;
 		      }, 0);
-		      this.update(source);
+		      this.updating = false;
+		      this.update(delta, source);
 		    }
 		  }, {
 		    key: 'deleteText',
 		    value: function deleteText(index, length) {
-		      var source = arguments.length <= 2 || arguments[2] === undefined ? _emitter2.default.sources.API : arguments[2];
+		      var source = arguments.length <= 2 || arguments[2] === undefined ? _emitter4.default.sources.API : arguments[2];
 	
 		      this.scroll.deleteAt(index, length);
-		      this.update(source);
+		      this.update(new _delta2.default().retain(index).delete(length), source);
 		    }
 		  }, {
 		    key: 'enable',
@@ -4365,16 +4375,23 @@ return /******/ (function(modules) { // webpackBootstrap
 		      var _this2 = this;
 	
 		      var formats = arguments.length <= 2 || arguments[2] === undefined ? {} : arguments[2];
-		      var source = arguments.length <= 3 || arguments[3] === undefined ? _emitter2.default.sources.API : arguments[3];
+		      var source = arguments.length <= 3 || arguments[3] === undefined ? _emitter4.default.sources.API : arguments[3];
 	
 		      this.scroll.update();
 		      Object.keys(formats).forEach(function (format) {
-		        _this2.scroll.lines(index, Math.max(length, 1)).forEach(function (line) {
-		          line.format(format, formats[format]);
+		        var lines = _this2.scroll.lines(index, Math.max(length, 1));
+		        lines.forEach(function (line, i) {
+		          if (!(line instanceof _code2.default)) {
+		            line.format(format, formats[format]);
+		          } else {
+		            var codeIndex = index - line.offset(_this2.scroll);
+		            var codeLength = line.newlineIndex(codeIndex) - index + 1;
+		            line.formatAt(codeIndex, codeLength, format, formats[format]);
+		          }
 		        });
 		      });
 		      this.scroll.optimize();
-		      this.update(source);
+		      this.update(new _delta2.default().retain(index).retain(length, (0, _clone2.default)(formats)), source);
 		    }
 		  }, {
 		    key: 'formatText',
@@ -4382,12 +4399,12 @@ return /******/ (function(modules) { // webpackBootstrap
 		      var _this3 = this;
 	
 		      var formats = arguments.length <= 2 || arguments[2] === undefined ? {} : arguments[2];
-		      var source = arguments.length <= 3 || arguments[3] === undefined ? _emitter2.default.sources.API : arguments[3];
+		      var source = arguments.length <= 3 || arguments[3] === undefined ? _emitter4.default.sources.API : arguments[3];
 	
 		      Object.keys(formats).forEach(function (format) {
 		        _this3.scroll.formatAt(index, length, format, formats[format]);
 		      });
-		      this.update(source);
+		      this.update(new _delta2.default().retain(index).retain(length, (0, _clone2.default)(formats)), source);
 		    }
 		  }, {
 		    key: 'getContents',
@@ -4447,20 +4464,25 @@ return /******/ (function(modules) { // webpackBootstrap
 		  }, {
 		    key: 'insertEmbed',
 		    value: function insertEmbed(index, embed, value) {
-		      var source = arguments.length <= 3 || arguments[3] === undefined ? _emitter2.default.sources.API : arguments[3];
+		      var source = arguments.length <= 3 || arguments[3] === undefined ? _emitter4.default.sources.API : arguments[3];
 	
 		      this.scroll.insertAt(index, embed, value);
-		      this.update(source);
+		      this.update(new _delta2.default().retain(index).insert(_defineProperty({}, embed, value)), source);
 		    }
 		  }, {
 		    key: 'insertText',
 		    value: function insertText(index, text) {
+		      var _this4 = this;
+	
 		      var formats = arguments.length <= 2 || arguments[2] === undefined ? {} : arguments[2];
-		      var source = arguments.length <= 3 || arguments[3] === undefined ? _emitter2.default.sources.API : arguments[3];
+		      var source = arguments.length <= 3 || arguments[3] === undefined ? _emitter4.default.sources.API : arguments[3];
 	
 		      text = text.replace(/\r\n/g, '\n').replace(/\r/g, '\n');
 		      this.scroll.insertAt(index, text);
-		      this.formatText(index, text.length, formats, source);
+		      Object.keys(formats).forEach(function (format) {
+		        _this4.scroll.formatAt(index, text.length, format, formats[format]);
+		      });
+		      this.update(new _delta2.default().retain(index).insert(text, (0, _clone2.default)(formats)), source);
 		    }
 		  }, {
 		    key: 'isBlank',
@@ -4495,14 +4517,25 @@ return /******/ (function(modules) { // webpackBootstrap
 		    }
 		  }, {
 		    key: 'update',
-		    value: function update() {
-		      var source = arguments.length <= 0 || arguments[0] === undefined ? _emitter2.default.sources.USER : arguments[0];
+		    value: function update(change) {
+		      var source = arguments.length <= 1 || arguments[1] === undefined ? _emitter4.default.sources.USER : arguments[1];
 	
+		      if (this.updating) return;
 		      var oldDelta = this.delta;
 		      this.delta = this.getDelta();
-		      var change = oldDelta.diff(this.delta);
+		      if (!change || !(0, _deepEqual2.default)(oldDelta.compose(change), this.delta)) {
+		        change = oldDelta.diff(this.delta);
+		      }
 		      if (change.length() > 0) {
-		        this.emitter.emit(_emitter2.default.events.TEXT_CHANGE, change, oldDelta, source);
+		        var _emitter;
+	
+		        var args = [_emitter4.default.events.TEXT_CHANGE, change, oldDelta, source];
+		        (_emitter = this.emitter).emit.apply(_emitter, [_emitter4.default.events.EDITOR_CHANGE].concat(args));
+		        if (source !== _emitter4.default.sources.SILENT) {
+		          var _emitter2;
+	
+		          (_emitter2 = this.emitter).emit.apply(_emitter2, args);
+		        }
 		      }
 		    }
 		  }]);
@@ -4536,6 +4569,17 @@ return /******/ (function(modules) { // webpackBootstrap
 		    delete attributes['image'];
 		  }
 		  return [op, attributes];
+		}
+	
+		function handleOldList(attributes) {
+		  if (attributes['list'] === true) {
+		    attributes = (0, _clone2.default)(attributes);
+		    attributes['list'] = 'ordered';
+		  } else if (attributes['bullet'] === true) {
+		    attributes = (0, _clone2.default)(attributes);
+		    attributes['list'] = 'bullet';
+		  }
+		  return attributes;
 		}
 	
 		exports.default = Editor;
@@ -4596,8 +4640,9 @@ return /******/ (function(modules) { // webpackBootstrap
 		}(_eventemitter2.default);
 	
 		Emitter.events = {
-		  SCROLL_OPTIMIZE: 'scroll-optimize',
+		  EDITOR_CHANGE: 'editor-change',
 		  SCROLL_BEFORE_UPDATE: 'scroll-before-update',
+		  SCROLL_OPTIMIZE: 'scroll-optimize',
 		  SCROLL_UPDATE: 'scroll-update',
 		  SELECTION_CHANGE: 'selection-change',
 		  TEXT_CHANGE: 'text-change'
@@ -4940,6 +4985,208 @@ return /******/ (function(modules) { // webpackBootstrap
 		Object.defineProperty(exports, "__esModule", {
 		  value: true
 		});
+		exports.default = exports.Code = undefined;
+	
+		var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
+	
+		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+		var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
+	
+		var _delta = __webpack_require__(21);
+	
+		var _delta2 = _interopRequireDefault(_delta);
+	
+		var _parchment = __webpack_require__(3);
+	
+		var _parchment2 = _interopRequireDefault(_parchment);
+	
+		var _block = __webpack_require__(33);
+	
+		var _block2 = _interopRequireDefault(_block);
+	
+		var _inline = __webpack_require__(36);
+	
+		var _inline2 = _interopRequireDefault(_inline);
+	
+		var _text = __webpack_require__(37);
+	
+		var _text2 = _interopRequireDefault(_text);
+	
+		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+		function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+		function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+		function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+		var Code = function (_Inline) {
+		  _inherits(Code, _Inline);
+	
+		  function Code() {
+		    _classCallCheck(this, Code);
+	
+		    return _possibleConstructorReturn(this, Object.getPrototypeOf(Code).apply(this, arguments));
+		  }
+	
+		  return Code;
+		}(_inline2.default);
+	
+		Code.blotName = 'code';
+		Code.tagName = 'CODE';
+	
+		var CodeBlock = function (_Block) {
+		  _inherits(CodeBlock, _Block);
+	
+		  function CodeBlock() {
+		    _classCallCheck(this, CodeBlock);
+	
+		    return _possibleConstructorReturn(this, Object.getPrototypeOf(CodeBlock).apply(this, arguments));
+		  }
+	
+		  _createClass(CodeBlock, [{
+		    key: 'delta',
+		    value: function delta() {
+		      var _this3 = this;
+	
+		      var text = this.domNode.textContent;
+		      if (text.endsWith('\n')) {
+		        // Should always be true
+		        text = text.slice(0, -1);
+		      }
+		      return text.split('\n').reduce(function (delta, frag) {
+		        return delta.insert(frag).insert('\n', _this3.formats());
+		      }, new _delta2.default());
+		    }
+		  }, {
+		    key: 'format',
+		    value: function format(name, value) {
+		      if (name === this.statics.blotName && value) return;
+	
+		      var _descendant = this.descendant(_text2.default, this.length() - 1);
+	
+		      var _descendant2 = _slicedToArray(_descendant, 2);
+	
+		      var text = _descendant2[0];
+		      var offset = _descendant2[1];
+	
+		      if (text != null) {
+		        text.deleteAt(text.length() - 1, 1);
+		      }
+		      _get(Object.getPrototypeOf(CodeBlock.prototype), 'format', this).call(this, name, value);
+		    }
+		  }, {
+		    key: 'formatAt',
+		    value: function formatAt(index, length, name, value) {
+		      if (length === 0) return;
+		      if (_parchment2.default.query(name, _parchment2.default.Scope.BLOCK) == null || name === this.statics.blotName && value === this.statics.formats(this.domNode)) {
+		        return;
+		      }
+		      var nextNewline = this.newlineIndex(index);
+		      if (nextNewline < 0 || nextNewline >= index + length) return;
+		      var prevNewline = this.newlineIndex(index, true) + 1;
+		      var isolateLength = nextNewline - prevNewline + 1;
+		      var blot = this.isolate(prevNewline, isolateLength);
+		      var next = blot.next;
+		      blot.format(name, value);
+		      if (next instanceof CodeBlock) {
+		        next.formatAt(0, index - prevNewline + length - isolateLength, name, value);
+		      }
+		    }
+		  }, {
+		    key: 'insertAt',
+		    value: function insertAt(index, value, def) {
+		      if (def != null) return;
+	
+		      var _descendant3 = this.descendant(_text2.default, index);
+	
+		      var _descendant4 = _slicedToArray(_descendant3, 2);
+	
+		      var text = _descendant4[0];
+		      var offset = _descendant4[1];
+	
+		      text.insertAt(offset, value);
+		    }
+		  }, {
+		    key: 'length',
+		    value: function length() {
+		      return this.domNode.textContent.length;
+		    }
+		  }, {
+		    key: 'newlineIndex',
+		    value: function newlineIndex(searchIndex) {
+		      var reverse = arguments.length <= 1 || arguments[1] === undefined ? false : arguments[1];
+	
+		      if (!reverse) {
+		        var offset = this.domNode.textContent.slice(searchIndex).indexOf('\n');
+		        return offset > -1 ? searchIndex + offset : -1;
+		      } else {
+		        return this.domNode.textContent.slice(0, searchIndex).lastIndexOf('\n');
+		      }
+		    }
+		  }, {
+		    key: 'optimize',
+		    value: function optimize() {
+		      if (!this.domNode.textContent.endsWith('\n')) {
+		        this.appendChild(_parchment2.default.create('text', '\n'));
+		      }
+		      _get(Object.getPrototypeOf(CodeBlock.prototype), 'optimize', this).call(this);
+		      var next = this.next;
+		      if (next != null && next.prev === this && next.statics.blotName === this.statics.blotName && this.statics.formats(this.domNode) === next.statics.formats(next.domNode)) {
+		        next.optimize();
+		        next.moveChildren(this);
+		        next.remove();
+		      }
+		    }
+		  }, {
+		    key: 'replace',
+		    value: function replace(target) {
+		      _get(Object.getPrototypeOf(CodeBlock.prototype), 'replace', this).call(this, target);
+		      [].slice.call(this.domNode.querySelectorAll('*')).forEach(function (node) {
+		        var blot = _parchment2.default.find(node);
+		        if (blot == null) {
+		          node.parentNode.removeChild(node);
+		        } else if (blot instanceof _parchment2.default.Embed) {
+		          blot.remove();
+		        } else {
+		          blot.unwrap();
+		        }
+		      });
+		    }
+		  }], [{
+		    key: 'create',
+		    value: function create(value) {
+		      var domNode = _get(Object.getPrototypeOf(CodeBlock), 'create', this).call(this, value);
+		      domNode.setAttribute('spellcheck', false);
+		      return domNode;
+		    }
+		  }, {
+		    key: 'formats',
+		    value: function formats(domNode) {
+		      return true;
+		    }
+		  }]);
+	
+		  return CodeBlock;
+		}(_block2.default);
+	
+		CodeBlock.blotName = 'code-block';
+		CodeBlock.tagName = 'PRE';
+		CodeBlock.TAB = '  ';
+	
+		exports.Code = Code;
+		exports.default = CodeBlock;
+	
+	/***/ },
+	/* 33 */
+	/***/ function(module, exports, __webpack_require__) {
+	
+		'use strict';
+	
+		Object.defineProperty(exports, "__esModule", {
+		  value: true
+		});
 		exports.default = exports.BlockEmbed = exports.bubbleFormats = undefined;
 	
 		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -4958,19 +5205,19 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 		var _parchment2 = _interopRequireDefault(_parchment);
 	
-		var _break = __webpack_require__(33);
+		var _break = __webpack_require__(34);
 	
 		var _break2 = _interopRequireDefault(_break);
 	
-		var _embed = __webpack_require__(34);
+		var _embed = __webpack_require__(35);
 	
 		var _embed2 = _interopRequireDefault(_embed);
 	
-		var _inline = __webpack_require__(35);
+		var _inline = __webpack_require__(36);
 	
 		var _inline2 = _interopRequireDefault(_inline);
 	
-		var _text = __webpack_require__(36);
+		var _text = __webpack_require__(37);
 	
 		var _text2 = _interopRequireDefault(_text);
 	
@@ -5152,7 +5399,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		exports.default = Block;
 	
 	/***/ },
-	/* 33 */
+	/* 34 */
 	/***/ function(module, exports, __webpack_require__) {
 	
 		'use strict';
@@ -5165,7 +5412,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 		var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
 	
-		var _embed = __webpack_require__(34);
+		var _embed = __webpack_require__(35);
 	
 		var _embed2 = _interopRequireDefault(_embed);
 	
@@ -5219,7 +5466,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		exports.default = Break;
 	
 	/***/ },
-	/* 34 */
+	/* 35 */
 	/***/ function(module, exports, __webpack_require__) {
 	
 		'use strict';
@@ -5255,7 +5502,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		exports.default = Embed;
 	
 	/***/ },
-	/* 35 */
+	/* 36 */
 	/***/ function(module, exports, __webpack_require__) {
 	
 		'use strict';
@@ -5272,11 +5519,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 		var _extend2 = _interopRequireDefault(_extend);
 	
-		var _embed = __webpack_require__(34);
+		var _embed = __webpack_require__(35);
 	
 		var _embed2 = _interopRequireDefault(_embed);
 	
-		var _text = __webpack_require__(36);
+		var _text = __webpack_require__(37);
 	
 		var _text2 = _interopRequireDefault(_text);
 	
@@ -5306,7 +5553,9 @@ return /******/ (function(modules) { // webpackBootstrap
 		    value: function formatAt(index, length, name, value) {
 		      if (Inline.compare(this.statics.blotName, name) < 0 && _parchment2.default.query(name, _parchment2.default.Scope.BLOT)) {
 		        var blot = this.isolate(index, length);
-		        blot.wrap(name, value);
+		        if (value) {
+		          blot.wrap(name, value);
+		        }
 		      } else {
 		        _get(Object.getPrototypeOf(Inline.prototype), 'formatAt', this).call(this, index, length, name, value);
 		      }
@@ -5330,7 +5579,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		exports.default = Inline;
 	
 	/***/ },
-	/* 36 */
+	/* 37 */
 	/***/ function(module, exports, __webpack_require__) {
 	
 		'use strict';
@@ -5366,7 +5615,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		exports.default = TextBlot;
 	
 	/***/ },
-	/* 37 */
+	/* 38 */
 	/***/ function(module, exports) {
 	
 		'use strict';
@@ -5530,7 +5779,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		}
 	
 	/***/ },
-	/* 38 */
+	/* 39 */
 	/***/ function(module, exports) {
 	
 		"use strict";
@@ -5555,7 +5804,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		exports.default = Module;
 	
 	/***/ },
-	/* 39 */
+	/* 40 */
 	/***/ function(module, exports, __webpack_require__) {
 	
 		'use strict';
@@ -5573,7 +5822,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 		var _parchment2 = _interopRequireDefault(_parchment);
 	
-		var _clone = __webpack_require__(37);
+		var _clone = __webpack_require__(38);
 	
 		var _clone2 = _interopRequireDefault(_clone);
 	
@@ -5581,13 +5830,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 		var _deepEqual2 = _interopRequireDefault(_deepEqual);
 	
-		var _break = __webpack_require__(33);
+		var _break = __webpack_require__(34);
 	
 		var _break2 = _interopRequireDefault(_break);
 	
-		var _emitter = __webpack_require__(29);
+		var _emitter3 = __webpack_require__(29);
 	
-		var _emitter2 = _interopRequireDefault(_emitter);
+		var _emitter4 = _interopRequireDefault(_emitter3);
 	
 		var _logger = __webpack_require__(31);
 	
@@ -5626,26 +5875,26 @@ return /******/ (function(modules) { // webpackBootstrap
 		      _this.root.addEventListener(eventName, function () {
 		        // When range used to be a selection and user click within the selection,
 		        // the range now being a cursor has not updated yet without setTimeout
-		        setTimeout(_this.update.bind(_this, _emitter2.default.sources.USER), 100);
+		        setTimeout(_this.update.bind(_this, _emitter4.default.sources.USER), 100);
 		      });
 		    });
-		    this.emitter.on(_emitter2.default.events.TEXT_CHANGE, function (delta) {
-		      if (delta.length() > 0) {
-		        _this.update(_emitter2.default.sources.SILENT);
+		    this.emitter.on(_emitter4.default.events.EDITOR_CHANGE, function (type, delta) {
+		      if (type === _emitter4.default.events.TEXT_CHANGE && delta.length() > 0) {
+		        _this.update(_emitter4.default.sources.SILENT);
 		      }
 		    });
-		    this.emitter.on(_emitter2.default.events.SCROLL_BEFORE_UPDATE, function () {
+		    this.emitter.on(_emitter4.default.events.SCROLL_BEFORE_UPDATE, function () {
 		      var native = _this.getNativeRange();
 		      if (native == null) return;
 		      if (native.start.node === _this.cursor.textNode) return; // cursor.restore() will handle
 		      // TODO unclear if this has negative side effects
-		      _this.emitter.once(_emitter2.default.events.SCROLL_UPDATE, function () {
+		      _this.emitter.once(_emitter4.default.events.SCROLL_UPDATE, function () {
 		        try {
 		          _this.setNativeRange(native.start.node, native.start.offset, native.end.node, native.end.offset);
 		        } catch (ignored) {}
 		      });
 		    });
-		    this.update(_emitter2.default.sources.SILENT);
+		    this.update(_emitter4.default.sources.SILENT);
 		  }
 	
 		  _createClass(Selection, [{
@@ -5894,7 +6143,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		    value: function setRange(range) {
 		      var _this3 = this;
 	
-		      var source = arguments.length <= 1 || arguments[1] === undefined ? _emitter2.default.sources.API : arguments[1];
+		      var source = arguments.length <= 1 || arguments[1] === undefined ? _emitter4.default.sources.API : arguments[1];
 	
 		      debug.info('setRange', range);
 		      if (range != null) {
@@ -5931,7 +6180,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		  }, {
 		    key: 'update',
 		    value: function update() {
-		      var source = arguments.length <= 0 || arguments[0] === undefined ? _emitter2.default.sources.USER : arguments[0];
+		      var source = arguments.length <= 0 || arguments[0] === undefined ? _emitter4.default.sources.USER : arguments[0];
 	
 		      var nativeRange = void 0,
 		          oldRange = this.lastRange;
@@ -5947,11 +6196,18 @@ return /******/ (function(modules) { // webpackBootstrap
 		        this.savedRange = this.lastRange;
 		      }
 		      if (!(0, _deepEqual2.default)(oldRange, this.lastRange)) {
+		        var _emitter;
+	
 		        if (!this.composing && nativeRange != null && nativeRange.native.collapsed && nativeRange.start.node !== this.cursor.textNode) {
 		          this.cursor.restore();
 		        }
-		        if (source === _emitter2.default.sources.SILENT) return;
-		        this.emitter.emit(_emitter2.default.events.SELECTION_CHANGE, (0, _clone2.default)(this.lastRange), source);
+		        var args = [_emitter4.default.events.SELECTION_CHANGE, (0, _clone2.default)(this.lastRange), (0, _clone2.default)(oldRange), source];
+		        (_emitter = this.emitter).emit.apply(_emitter, [_emitter4.default.events.EDITOR_CHANGE].concat(args));
+		        if (source !== _emitter4.default.sources.SILENT) {
+		          var _emitter2;
+	
+		          (_emitter2 = this.emitter).emit.apply(_emitter2, args);
+		        }
 		      }
 		    }
 		  }]);
@@ -5978,7 +6234,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		exports.default = Selection;
 	
 	/***/ },
-	/* 40 */
+	/* 41 */
 	/***/ function(module, exports, __webpack_require__) {
 	
 		'use strict';
@@ -6067,7 +6323,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		exports.default = Theme;
 	
 	/***/ },
-	/* 41 */
+	/* 42 */
 	/***/ function(module, exports, __webpack_require__) {
 	
 		'use strict';
@@ -6080,7 +6336,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 		var _parchment2 = _interopRequireDefault(_parchment);
 	
-		var _block = __webpack_require__(32);
+		var _block = __webpack_require__(33);
 	
 		var _block2 = _interopRequireDefault(_block);
 	
@@ -6109,7 +6365,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		exports.default = Container;
 	
 	/***/ },
-	/* 42 */
+	/* 43 */
 	/***/ function(module, exports, __webpack_require__) {
 	
 		'use strict';
@@ -6128,7 +6384,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 		var _parchment2 = _interopRequireDefault(_parchment);
 	
-		var _embed = __webpack_require__(34);
+		var _embed = __webpack_require__(35);
 	
 		var _embed2 = _interopRequireDefault(_embed);
 	
@@ -6284,7 +6540,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		exports.default = Cursor;
 	
 	/***/ },
-	/* 43 */
+	/* 44 */
 	/***/ function(module, exports, __webpack_require__) {
 	
 		'use strict';
@@ -6311,11 +6567,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 		var _logger2 = _interopRequireDefault(_logger);
 	
-		var _block = __webpack_require__(32);
+		var _block = __webpack_require__(33);
 	
 		var _block2 = _interopRequireDefault(_block);
 	
-		var _container = __webpack_require__(41);
+		var _container = __webpack_require__(42);
 	
 		var _container2 = _interopRequireDefault(_container);
 	
@@ -6373,8 +6629,8 @@ return /******/ (function(modules) { // webpackBootstrap
 		      if (last != null && first !== last && firstOffset > 0 && !(first instanceof _block.BlockEmbed) && !(last instanceof _block.BlockEmbed)) {
 		        last.moveChildren(first);
 		        last.remove();
+		        this.optimize();
 		      }
-		      this.optimize();
 		    }
 		  }, {
 		    key: 'formatAt',
@@ -6398,6 +6654,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		          var embed = _parchment2.default.create(value, def);
 		          this.appendChild(embed);
 		        }
+		        this.optimize();
 		      } else {
 		        _get(Object.getPrototypeOf(Scroll.prototype), 'insertAt', this).call(this, index, value, def);
 		      }
@@ -6474,7 +6731,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		exports.default = Scroll;
 	
 	/***/ },
-	/* 44 */
+	/* 45 */
 	/***/ function(module, exports, __webpack_require__) {
 	
 		'use strict';
@@ -6504,23 +6761,23 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 		var _logger2 = _interopRequireDefault(_logger);
 	
-		var _module = __webpack_require__(38);
+		var _module = __webpack_require__(39);
 	
 		var _module2 = _interopRequireDefault(_module);
 	
-		var _block = __webpack_require__(32);
+		var _block = __webpack_require__(33);
 	
-		var _align = __webpack_require__(45);
+		var _align = __webpack_require__(46);
 	
-		var _background = __webpack_require__(46);
+		var _background = __webpack_require__(47);
 	
-		var _color = __webpack_require__(47);
+		var _color = __webpack_require__(48);
 	
-		var _direction = __webpack_require__(48);
+		var _direction = __webpack_require__(49);
 	
-		var _font = __webpack_require__(49);
+		var _font = __webpack_require__(50);
 	
-		var _size = __webpack_require__(50);
+		var _size = __webpack_require__(51);
 	
 		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -6839,7 +7096,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		exports.matchText = matchText;
 	
 	/***/ },
-	/* 45 */
+	/* 46 */
 	/***/ function(module, exports, __webpack_require__) {
 	
 		'use strict';
@@ -6867,7 +7124,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		exports.AlignStyle = AlignStyle;
 	
 	/***/ },
-	/* 46 */
+	/* 47 */
 	/***/ function(module, exports, __webpack_require__) {
 	
 		'use strict';
@@ -6881,7 +7138,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 		var _parchment2 = _interopRequireDefault(_parchment);
 	
-		var _color = __webpack_require__(47);
+		var _color = __webpack_require__(48);
 	
 		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -6896,7 +7153,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		exports.BackgroundStyle = BackgroundStyle;
 	
 	/***/ },
-	/* 47 */
+	/* 48 */
 	/***/ function(module, exports, __webpack_require__) {
 	
 		'use strict';
@@ -6958,7 +7215,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		exports.ColorStyle = ColorStyle;
 	
 	/***/ },
-	/* 48 */
+	/* 49 */
 	/***/ function(module, exports, __webpack_require__) {
 	
 		'use strict';
@@ -6986,7 +7243,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		exports.DirectionStyle = DirectionStyle;
 	
 	/***/ },
-	/* 49 */
+	/* 50 */
 	/***/ function(module, exports, __webpack_require__) {
 	
 		'use strict';
@@ -7014,7 +7271,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		exports.FontClass = FontClass;
 	
 	/***/ },
-	/* 50 */
+	/* 51 */
 	/***/ function(module, exports, __webpack_require__) {
 	
 		'use strict';
@@ -7043,7 +7300,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		exports.SizeStyle = SizeStyle;
 	
 	/***/ },
-	/* 51 */
+	/* 52 */
 	/***/ function(module, exports, __webpack_require__) {
 	
 		'use strict';
@@ -7063,7 +7320,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 		var _quill2 = _interopRequireDefault(_quill);
 	
-		var _module = __webpack_require__(38);
+		var _module = __webpack_require__(39);
 	
 		var _module2 = _interopRequireDefault(_module);
 	
@@ -7206,7 +7463,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		exports.getLastChangeIndex = getLastChangeIndex;
 	
 	/***/ },
-	/* 52 */
+	/* 53 */
 	/***/ function(module, exports, __webpack_require__) {
 	
 		'use strict';
@@ -7221,7 +7478,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
-		var _clone = __webpack_require__(37);
+		var _clone = __webpack_require__(38);
 	
 		var _clone2 = _interopRequireDefault(_clone);
 	
@@ -7249,13 +7506,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 		var _logger2 = _interopRequireDefault(_logger);
 	
-		var _module = __webpack_require__(38);
+		var _module = __webpack_require__(39);
 	
 		var _module2 = _interopRequireDefault(_module);
 	
-		var _selection = __webpack_require__(39);
+		var _selection = __webpack_require__(40);
 	
-		var _block = __webpack_require__(32);
+		var _block = __webpack_require__(33);
 	
 		var _block2 = _interopRequireDefault(_block);
 	
@@ -7600,7 +7857,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		exports.default = Keyboard;
 	
 	/***/ },
-	/* 53 */
+	/* 54 */
 	/***/ function(module, exports, __webpack_require__) {
 	
 		'use strict';
@@ -7667,7 +7924,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		exports.IndentClass = IndentClass;
 	
 	/***/ },
-	/* 54 */
+	/* 55 */
 	/***/ function(module, exports, __webpack_require__) {
 	
 		'use strict';
@@ -7676,7 +7933,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		  value: true
 		});
 	
-		var _block = __webpack_require__(32);
+		var _block = __webpack_require__(33);
 	
 		var _block2 = _interopRequireDefault(_block);
 	
@@ -7706,7 +7963,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		exports.default = Blockquote;
 	
 	/***/ },
-	/* 55 */
+	/* 56 */
 	/***/ function(module, exports, __webpack_require__) {
 	
 		'use strict';
@@ -7717,7 +7974,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
-		var _block = __webpack_require__(32);
+		var _block = __webpack_require__(33);
 	
 		var _block2 = _interopRequireDefault(_block);
 	
@@ -7754,7 +8011,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		exports.default = Header;
 	
 	/***/ },
-	/* 56 */
+	/* 57 */
 	/***/ function(module, exports, __webpack_require__) {
 	
 		'use strict';
@@ -7780,11 +8037,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 		var _parchment2 = _interopRequireDefault(_parchment);
 	
-		var _block = __webpack_require__(32);
+		var _block = __webpack_require__(33);
 	
 		var _block2 = _interopRequireDefault(_block);
 	
-		var _container = __webpack_require__(41);
+		var _container = __webpack_require__(42);
 	
 		var _container2 = _interopRequireDefault(_container);
 	
@@ -7924,7 +8181,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		exports.default = List;
 	
 	/***/ },
-	/* 57 */
+	/* 58 */
 	/***/ function(module, exports, __webpack_require__) {
 	
 		'use strict';
@@ -7933,7 +8190,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		  value: true
 		});
 	
-		var _inline = __webpack_require__(35);
+		var _inline = __webpack_require__(36);
 	
 		var _inline2 = _interopRequireDefault(_inline);
 	
@@ -7963,7 +8220,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		exports.default = Bold;
 	
 	/***/ },
-	/* 58 */
+	/* 59 */
 	/***/ function(module, exports, __webpack_require__) {
 	
 		'use strict';
@@ -7972,7 +8229,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		  value: true
 		});
 	
-		var _inline = __webpack_require__(35);
+		var _inline = __webpack_require__(36);
 	
 		var _inline2 = _interopRequireDefault(_inline);
 	
@@ -8002,7 +8259,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		exports.default = Italic;
 	
 	/***/ },
-	/* 59 */
+	/* 60 */
 	/***/ function(module, exports, __webpack_require__) {
 	
 		'use strict';
@@ -8016,7 +8273,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 		var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
 	
-		var _inline = __webpack_require__(35);
+		var _inline = __webpack_require__(36);
 	
 		var _inline2 = _interopRequireDefault(_inline);
 	
@@ -8083,7 +8340,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		exports.sanitize = _sanitize;
 	
 	/***/ },
-	/* 60 */
+	/* 61 */
 	/***/ function(module, exports, __webpack_require__) {
 	
 		'use strict';
@@ -8096,7 +8353,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 		var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
 	
-		var _inline = __webpack_require__(35);
+		var _inline = __webpack_require__(36);
 	
 		var _inline2 = _interopRequireDefault(_inline);
 	
@@ -8146,7 +8403,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		exports.default = Script;
 	
 	/***/ },
-	/* 61 */
+	/* 62 */
 	/***/ function(module, exports, __webpack_require__) {
 	
 		'use strict';
@@ -8155,7 +8412,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		  value: true
 		});
 	
-		var _inline = __webpack_require__(35);
+		var _inline = __webpack_require__(36);
 	
 		var _inline2 = _interopRequireDefault(_inline);
 	
@@ -8185,7 +8442,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		exports.default = Strike;
 	
 	/***/ },
-	/* 62 */
+	/* 63 */
 	/***/ function(module, exports, __webpack_require__) {
 	
 		'use strict';
@@ -8194,7 +8451,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		  value: true
 		});
 	
-		var _inline = __webpack_require__(35);
+		var _inline = __webpack_require__(36);
 	
 		var _inline2 = _interopRequireDefault(_inline);
 	
@@ -8224,7 +8481,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		exports.default = Underline;
 	
 	/***/ },
-	/* 63 */
+	/* 64 */
 	/***/ function(module, exports, __webpack_require__) {
 	
 		'use strict';
@@ -8237,11 +8494,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 		var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
 	
-		var _embed = __webpack_require__(34);
+		var _embed = __webpack_require__(35);
 	
 		var _embed2 = _interopRequireDefault(_embed);
 	
-		var _link = __webpack_require__(59);
+		var _link = __webpack_require__(60);
 	
 		var _link2 = _interopRequireDefault(_link);
 	
@@ -8298,7 +8555,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		exports.default = Image;
 	
 	/***/ },
-	/* 64 */
+	/* 65 */
 	/***/ function(module, exports, __webpack_require__) {
 	
 		'use strict';
@@ -8311,9 +8568,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 		var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
 	
-		var _block = __webpack_require__(32);
+		var _block = __webpack_require__(33);
 	
-		var _link = __webpack_require__(59);
+		var _link = __webpack_require__(60);
 	
 		var _link2 = _interopRequireDefault(_link);
 	
@@ -8386,122 +8643,6 @@ return /******/ (function(modules) { // webpackBootstrap
 		exports.default = Video;
 	
 	/***/ },
-	/* 65 */
-	/***/ function(module, exports, __webpack_require__) {
-	
-		'use strict';
-	
-		Object.defineProperty(exports, "__esModule", {
-		  value: true
-		});
-		exports.default = exports.Code = undefined;
-	
-		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-		var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
-	
-		var _delta = __webpack_require__(21);
-	
-		var _delta2 = _interopRequireDefault(_delta);
-	
-		var _parchment = __webpack_require__(3);
-	
-		var _parchment2 = _interopRequireDefault(_parchment);
-	
-		var _block = __webpack_require__(32);
-	
-		var _block2 = _interopRequireDefault(_block);
-	
-		var _inline = __webpack_require__(35);
-	
-		var _inline2 = _interopRequireDefault(_inline);
-	
-		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-		function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-		function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-		function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-		var Code = function (_Inline) {
-		  _inherits(Code, _Inline);
-	
-		  function Code() {
-		    _classCallCheck(this, Code);
-	
-		    return _possibleConstructorReturn(this, Object.getPrototypeOf(Code).apply(this, arguments));
-		  }
-	
-		  return Code;
-		}(_inline2.default);
-	
-		Code.blotName = 'code';
-		Code.tagName = 'CODE';
-	
-		var CodeBlock = function (_Block) {
-		  _inherits(CodeBlock, _Block);
-	
-		  function CodeBlock() {
-		    _classCallCheck(this, CodeBlock);
-	
-		    return _possibleConstructorReturn(this, Object.getPrototypeOf(CodeBlock).apply(this, arguments));
-		  }
-	
-		  _createClass(CodeBlock, [{
-		    key: 'delta',
-		    value: function delta() {
-		      var text = this.descendants(_parchment2.default.Leaf).map(function (leaf) {
-		        return leaf instanceof _parchment2.default.Text ? leaf.value() : '';
-		      }).join('');
-		      return new _delta2.default().insert(text).insert('\n', this.formats());
-		    }
-		  }, {
-		    key: 'formatAt',
-		    value: function formatAt(index, length, name, value) {
-		      if (_parchment2.default.query(name, _parchment2.default.Scope.BLOCK) || name === this.statics.blotName) {
-		        _get(Object.getPrototypeOf(CodeBlock.prototype), 'formatAt', this).call(this, index, length, name, value);
-		      }
-		    }
-		  }, {
-		    key: 'replace',
-		    value: function replace(target) {
-		      _get(Object.getPrototypeOf(CodeBlock.prototype), 'replace', this).call(this, target);
-		      this.descendants(function (blot) {
-		        return !(blot instanceof _parchment2.default.Text);
-		      }).forEach(function (blot) {
-		        if (blot instanceof _parchment2.default.Embed) {
-		          blot.remove();
-		        } else {
-		          blot.unwrap();
-		        }
-		      });
-		    }
-		  }], [{
-		    key: 'create',
-		    value: function create(value) {
-		      var domNode = _get(Object.getPrototypeOf(CodeBlock), 'create', this).call(this, value);
-		      domNode.setAttribute('spellcheck', false);
-		      return domNode;
-		    }
-		  }, {
-		    key: 'formats',
-		    value: function formats(domNode) {
-		      return true;
-		    }
-		  }]);
-	
-		  return CodeBlock;
-		}(_block2.default);
-	
-		CodeBlock.blotName = 'code-block';
-		CodeBlock.tagName = 'PRE';
-		CodeBlock.TAB = '  ';
-	
-		exports.Code = Code;
-		exports.default = CodeBlock;
-	
-	/***/ },
 	/* 66 */
 	/***/ function(module, exports, __webpack_require__) {
 	
@@ -8516,7 +8657,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 		var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
 	
-		var _embed = __webpack_require__(34);
+		var _embed = __webpack_require__(35);
 	
 		var _embed2 = _interopRequireDefault(_embed);
 	
@@ -8571,7 +8712,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		  if (window.katex == null) {
 		    throw new Error('Formula module requires KaTeX.');
 		  }
-		  Quill.register(FormulaBlot);
+		  Quill.register(FormulaBlot, true);
 		}
 	
 		exports.FormulaBlot = FormulaBlot;
@@ -8579,397 +8720,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	/***/ },
 	/* 67 */
-	/***/ function(module, exports, __webpack_require__) {
-	
-		'use strict';
-	
-		Object.defineProperty(exports, "__esModule", {
-		  value: true
-		});
-	
-		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-		var _quill = __webpack_require__(19);
-	
-		var _quill2 = _interopRequireDefault(_quill);
-	
-		var _module = __webpack_require__(38);
-	
-		var _module2 = _interopRequireDefault(_module);
-	
-		var _image = __webpack_require__(63);
-	
-		var _image2 = _interopRequireDefault(_image);
-	
-		var _keyboard = __webpack_require__(52);
-	
-		var _keyboard2 = _interopRequireDefault(_keyboard);
-	
-		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-		function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-		function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-		function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-		var ImageTooltip = function (_Module) {
-		  _inherits(ImageTooltip, _Module);
-	
-		  function ImageTooltip(quill, options) {
-		    _classCallCheck(this, ImageTooltip);
-	
-		    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(ImageTooltip).call(this, quill, options));
-	
-		    _this.container = _this.quill.addContainer('ql-image-tooltip');
-		    _this.container.classList.add('ql-hidden');
-		    _this.container.classList.add('ql-tooltip');
-		    _this.container.innerHTML = options.template;
-		    _this.preview = _this.container.querySelector('.ql-preview');
-		    _this.textbox = _this.container.querySelector('input[type=text]');
-		    _this.textbox.addEventListener('keydown', function (event) {
-		      if (_keyboard2.default.match(event, 'enter')) {
-		        _this.save();
-		        event.preventDefault();
-		      } else if (_keyboard2.default.match(event, 'escape')) {
-		        _this.hide();
-		        event.preventDefault();
-		      }
-		    });
-		    ['mousedown', 'touchstart'].forEach(function (name) {
-		      _this.container.querySelector('a.ql-action').addEventListener(name, function (event) {
-		        _this.save();
-		        event.preventDefault();
-		      });
-		      _this.container.querySelector('a.ql-cancel').addEventListener(name, function (event) {
-		        _this.hide();
-		        event.preventDefault();
-		      });
-		    });
-		    _this.textbox.addEventListener('input', _this.update.bind(_this));
-		    return _this;
-		  }
-	
-		  _createClass(ImageTooltip, [{
-		    key: 'center',
-		    value: function center() {
-		      this.container.style.left = this.quill.container.offsetWidth / 2 - this.container.offsetWidth / 2 + 'px';
-		      this.container.style.top = this.quill.container.offsetHeight / 2 - this.container.offsetHeight / 2 + 'px';
-		    }
-		  }, {
-		    key: 'hide',
-		    value: function hide() {
-		      this.container.classList.add('ql-hidden');
-		      if (this.preview.firstChild != null) {
-		        this.preview.removeChild(this.preview.firstChild);
-		        this.preview.classList.add('ql-empty');
-		      }
-		      this.quill.focus();
-		    }
-		  }, {
-		    key: 'save',
-		    value: function save() {
-		      var range = this.quill.getSelection(true);
-		      var index = range.index + range.length;
-		      this.quill.insertEmbed(index, _image2.default.blotName, this.textbox.value, _quill2.default.sources.USER);
-		      this.quill.setSelection(index + 1, _quill2.default.sources.SILENT);
-		      this.textbox.value = '';
-		      this.hide();
-		    }
-		  }, {
-		    key: 'show',
-		    value: function show() {
-		      this.container.classList.remove('ql-hidden');
-		      this.center();
-		      this.textbox.focus();
-		      return true;
-		    }
-		  }, {
-		    key: 'update',
-		    value: function update() {
-		      if (!_image2.default.match(this.textbox.value)) return;
-		      var url = _image2.default.sanitize(this.textbox.value);
-		      if (this.preview.firstChild != null) {
-		        this.preview.firstChild.setAttribute('src', url);
-		      } else {
-		        var img = document.createElement('img');
-		        img.setAttribute('src', url);
-		        this.preview.appendChild(img);
-		        this.preview.classList.remove('ql-empty');
-		      }
-		    }
-		  }]);
-	
-		  return ImageTooltip;
-		}(_module2.default);
-	
-		ImageTooltip.DEFAULTS = {
-		  template: ['<input class="input" type="text">', '<div class="ql-empty ql-preview"></div>', '<a class="ql-cancel"></a>', '<a class="ql-action"></a>'].join('')
-		};
-	
-		exports.default = ImageTooltip;
-	
-	/***/ },
-	/* 68 */
-	/***/ function(module, exports, __webpack_require__) {
-	
-		'use strict';
-	
-		Object.defineProperty(exports, "__esModule", {
-		  value: true
-		});
-	
-		var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
-	
-		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-		var _quill = __webpack_require__(19);
-	
-		var _quill2 = _interopRequireDefault(_quill);
-	
-		var _module = __webpack_require__(38);
-	
-		var _module2 = _interopRequireDefault(_module);
-	
-		var _selection = __webpack_require__(39);
-	
-		var _link = __webpack_require__(59);
-	
-		var _link2 = _interopRequireDefault(_link);
-	
-		var _keyboard = __webpack_require__(52);
-	
-		var _keyboard2 = _interopRequireDefault(_keyboard);
-	
-		var _tooltip = __webpack_require__(69);
-	
-		var _tooltip2 = _interopRequireDefault(_tooltip);
-	
-		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-		function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-		function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-		function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-		var LinkTooltip = function (_Module) {
-		  _inherits(LinkTooltip, _Module);
-	
-		  function LinkTooltip(quill) {
-		    var options = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
-	
-		    _classCallCheck(this, LinkTooltip);
-	
-		    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(LinkTooltip).call(this, quill, options));
-	
-		    _this.container = _this.quill.addContainer('ql-link-tooltip');
-		    _this.container.innerHTML = _this.options.template;
-		    _this.tooltip = new _tooltip2.default(_this.container, {
-		      bounds: quill.theme.options.bounds,
-		      scroll: quill.root
-		    });
-		    _this.hide();
-		    _this.preview = _this.container.querySelector('a.ql-preview');
-		    _this.textbox = _this.container.querySelector('input[type=text]');
-		    _this.textbox.addEventListener('keydown', function (event) {
-		      if (_keyboard2.default.match(event, 'enter')) {
-		        _this.save();
-		        event.preventDefault();
-		      } else if (_keyboard2.default.match(event, 'escape')) {
-		        _this.hide();
-		        event.preventDefault();
-		      }
-		    });
-		    ['mousedown', 'touchstart'].forEach(function (name) {
-		      _this.container.querySelector('a.ql-action').addEventListener(name, function (event) {
-		        if (_this.container.classList.contains('ql-editing')) {
-		          _this.save();
-		          event.preventDefault();
-		        } else {
-		          _this.edit();
-		          event.preventDefault();
-		        }
-		      });
-		      _this.container.querySelector('a.ql-remove').addEventListener(name, function (event) {
-		        _this.remove();
-		        event.preventDefault();
-		      });
-		    });
-		    quill.on(_quill2.default.events.SELECTION_CHANGE, function (range) {
-		      if (range == null && document.activeElement == _this.textbox) return;
-		      if (range != null && range.length === 0) {
-		        var offset = void 0;
-	
-		        var _this$quill$scroll$de = _this.quill.scroll.descendant(_link2.default, range.index);
-	
-		        var _this$quill$scroll$de2 = _slicedToArray(_this$quill$scroll$de, 2);
-	
-		        _this.link = _this$quill$scroll$de2[0];
-		        offset = _this$quill$scroll$de2[1];
-	
-		        if (_this.link != null) {
-		          _this.range = new _selection.Range(range.index - offset, _this.link.length());
-		          return _this.show();
-		        }
-		      }
-		      _this.hide();
-		    });
-		    return _this;
-		  }
-	
-		  _createClass(LinkTooltip, [{
-		    key: 'edit',
-		    value: function edit() {
-		      this.container.classList.add('ql-editing');
-		      this.textbox.focus();
-		      this.textbox.setSelectionRange(0, this.textbox.value.length);
-		    }
-		  }, {
-		    key: 'open',
-		    value: function open() {
-		      this.range = new _selection.Range(this.quill.selection.savedRange.index, this.quill.selection.savedRange.length);
-		      this.show();
-		      this.edit();
-		    }
-		  }, {
-		    key: 'hide',
-		    value: function hide() {
-		      this.range = this.link = null;
-		      this.tooltip.hide();
-		    }
-		  }, {
-		    key: 'remove',
-		    value: function remove() {
-		      this.quill.formatText(this.range, 'link', false, _quill2.default.sources.USER);
-		      this.quill.setSelection(this.range, _quill2.default.sources.SILENT);
-		      this.hide();
-		    }
-		  }, {
-		    key: 'save',
-		    value: function save() {
-		      var url = this.textbox.value;
-		      var scrollTop = this.quill.root.scrollTop;
-		      this.quill.formatText(this.range, 'link', url, _quill2.default.sources.USER);
-		      this.quill.setSelection(this.range, _quill2.default.sources.SILENT);
-		      this.quill.root.scrollTop = scrollTop;
-		      this.hide();
-		    }
-		  }, {
-		    key: 'show',
-		    value: function show() {
-		      this.container.classList.remove('ql-editing');
-		      this.tooltip.show();
-		      var preview = void 0,
-		          bounds = void 0;
-		      var range = this.quill.selection.savedRange;
-		      if (this.link != null) {
-		        preview = this.link.formats()['link'];
-		      } else {
-		        preview = this.quill.getText(range);
-		        if (/^\S+@\S+\.\S+$/.test(preview)) {
-		          preview = 'mailto:' + preview;
-		        }
-		      }
-		      this.preview.textContent = this.textbox.value = preview;
-		      this.preview.setAttribute('href', preview);
-		      this.tooltip.position(this.quill.getBounds(this.range), this.options.offset);
-		    }
-		  }]);
-	
-		  return LinkTooltip;
-		}(_module2.default);
-	
-		LinkTooltip.DEFAULTS = {
-		  offset: 10,
-		  template: ['<a class="ql-preview" target="_blank" href="about:blank"></a>', '<input type="text">', '<a class="ql-action"></a>', '<a class="ql-remove"></a>'].join('')
-		};
-	
-		exports.default = LinkTooltip;
-	
-	/***/ },
-	/* 69 */
-	/***/ function(module, exports) {
-	
-		'use strict';
-	
-		Object.defineProperty(exports, "__esModule", {
-		  value: true
-		});
-	
-		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-		function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-		var Tooltip = function () {
-		  function Tooltip(root) {
-		    var _this = this;
-	
-		    var containers = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
-	
-		    _classCallCheck(this, Tooltip);
-	
-		    this.containers = containers;
-		    this.root = root;
-		    this.root.classList.add('ql-tooltip');
-		    if (this.containers.scroll instanceof HTMLElement) {
-		      (function () {
-		        var offset = parseInt(window.getComputedStyle(_this.root).marginTop);
-		        _this.containers.scroll.addEventListener('scroll', function () {
-		          _this.root.style.marginTop = -1 * _this.containers.scroll.scrollTop + offset + 'px';
-		        });
-		      })();
-		    }
-		  }
-	
-		  _createClass(Tooltip, [{
-		    key: 'position',
-		    value: function position(reference) {
-		      var left = reference.left + reference.width / 2 - this.root.offsetWidth / 2;
-		      var top = reference.bottom;
-		      if (this.containers.scroll instanceof HTMLElement) {
-		        top += this.containers.scroll.scrollTop;
-		      }
-		      this.root.style.left = left + 'px';
-		      this.root.style.top = top + 'px';
-		      if (!(this.containers.bounds instanceof HTMLElement)) return;
-		      var containerBounds = this.containers.bounds.getBoundingClientRect();
-		      var rootBounds = this.root.getBoundingClientRect();
-		      var shift = 0;
-		      if (rootBounds.right > containerBounds.right) {
-		        shift = containerBounds.right - rootBounds.right;
-		        this.root.style.left = left + shift + 'px';
-		      }
-		      if (rootBounds.left < containerBounds.left) {
-		        shift = containerBounds.left - rootBounds.left;
-		        this.root.style.left = left + shift + 'px';
-		      }
-		      var arrow = this.root.querySelector('.ql-tooltip-arrow');
-		      if (arrow == null) return;
-		      arrow.style.marginLeft = '';
-		      if (shift !== 0) {
-		        arrow.style.marginLeft = -1 * shift - arrow.offsetWidth / 2 + 'px';
-		      }
-		    }
-		  }, {
-		    key: 'show',
-		    value: function show() {
-		      this.root.classList.remove('ql-hidden');
-		    }
-		  }, {
-		    key: 'hide',
-		    value: function hide() {
-		      this.root.classList.add('ql-hidden');
-		    }
-		  }]);
-	
-		  return Tooltip;
-		}();
-	
-		exports.default = Tooltip;
-	
-	/***/ },
-	/* 70 */
 	/***/ function(module, exports, __webpack_require__) {
 	
 		'use strict';
@@ -8991,11 +8741,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 		var _quill2 = _interopRequireDefault(_quill);
 	
-		var _module = __webpack_require__(38);
+		var _module = __webpack_require__(39);
 	
 		var _module2 = _interopRequireDefault(_module);
 	
-		var _code = __webpack_require__(65);
+		var _code = __webpack_require__(32);
 	
 		var _code2 = _interopRequireDefault(_code);
 	
@@ -9075,7 +8825,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		    if (typeof _this2.options.highlight !== 'function') {
 		      throw new Error('Syntax module requires highlight.js. Please include the library on the page.');
 		    }
-		    _quill2.default.register(CodeToken);
+		    _quill2.default.register(CodeToken, true);
 		    _quill2.default.register(SyntaxCodeBlock, true);
 		    var timer = null;
 		    _this2.quill.on(_quill2.default.events.SCROLL_OPTIMIZE, function () {
@@ -9117,7 +8867,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		exports.default = Syntax;
 	
 	/***/ },
-	/* 71 */
+	/* 68 */
 	/***/ function(module, exports, __webpack_require__) {
 	
 		'use strict';
@@ -9135,6 +8885,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 		var _extend2 = _interopRequireDefault(_extend);
 	
+		var _delta = __webpack_require__(21);
+	
+		var _delta2 = _interopRequireDefault(_delta);
+	
 		var _parchment = __webpack_require__(3);
 	
 		var _parchment2 = _interopRequireDefault(_parchment);
@@ -9147,11 +8901,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 		var _logger2 = _interopRequireDefault(_logger);
 	
-		var _module = __webpack_require__(38);
+		var _module = __webpack_require__(39);
 	
 		var _module2 = _interopRequireDefault(_module);
 	
+		var _selection = __webpack_require__(40);
+	
 		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+		function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 	
 		function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
@@ -9253,11 +9011,6 @@ return /******/ (function(modules) { // webpackBootstrap
 		            e.preventDefault();
 		          }
 		          _this2.quill.focus();
-		          if (_this2.handlers[format] != null) {
-		            _this2.handlers[format].call(_this2, value);
-		          } else {
-		            _this2.quill.format(format, value, _quill2.default.sources.USER);
-		          }
 	
 		          var _quill$selection$getR = _this2.quill.selection.getRange();
 	
@@ -9265,6 +9018,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 		          var range = _quill$selection$getR2[0];
 	
+		          if (_this2.handlers[format] != null) {
+		            _this2.handlers[format].call(_this2, value);
+		          } else if (_parchment2.default.query(format).prototype instanceof _parchment2.default.Embed) {
+		            _this2.quill.updateContents(new _delta2.default().retain(range.index).delete(range.length).insert(_defineProperty({}, format, true)), _quill2.default.sources.USER);
+		            range = new _selection.Range(range.index + 1, 0);
+		            _this2.quill.setSelection(range, _quill2.default.sources.SILENT);
+		          } else {
+		            _this2.quill.format(format, value, _quill2.default.sources.USER);
+		          }
 		          _this2.update(range);
 		        });
 		      });
@@ -9299,7 +9061,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		          var active = input.value === formats[format] || formats[format] != null && input.value === formats[format].toString();
 		          input.classList.toggle('ql-active', active);
 		        } else {
-		          input.classList.toggle('ql-active', formats[format] || false);
+		          input.classList.toggle('ql-active', formats[format] === true || false);
 		        }
 		      });
 		    }
@@ -9408,136 +9170,160 @@ return /******/ (function(modules) { // webpackBootstrap
 		exports.addControls = addControls;
 	
 	/***/ },
-	/* 72 */
+	/* 69 */
 	/***/ function(module, exports, __webpack_require__) {
 	
 		'use strict';
 	
 		module.exports = {
 		  'align': {
-		    '': __webpack_require__(73),
-		    'center': __webpack_require__(74),
-		    'right': __webpack_require__(75),
-		    'justify': __webpack_require__(76)
+		    '': __webpack_require__(70),
+		    'center': __webpack_require__(71),
+		    'right': __webpack_require__(72),
+		    'justify': __webpack_require__(73)
 		  },
-		  'background': __webpack_require__(77),
-		  'blockquote': __webpack_require__(78),
-		  'bold': __webpack_require__(79),
-		  'clean': __webpack_require__(80),
-		  'code-block': __webpack_require__(81),
-		  'color': __webpack_require__(82),
+		  'background': __webpack_require__(74),
+		  'blockquote': __webpack_require__(75),
+		  'bold': __webpack_require__(76),
+		  'clean': __webpack_require__(77),
+		  'code-block': __webpack_require__(78),
+		  'color': __webpack_require__(79),
 		  'direction': {
-		    '': __webpack_require__(83),
-		    'rtl': __webpack_require__(84)
+		    '': __webpack_require__(80),
+		    'rtl': __webpack_require__(81)
 		  },
-		  'formula': __webpack_require__(85),
-		  'italic': __webpack_require__(86),
+		  'float': {
+		    'center': __webpack_require__(82),
+		    'full': __webpack_require__(83),
+		    'left': __webpack_require__(84),
+		    'right': __webpack_require__(85)
+		  },
+		  'formula': __webpack_require__(86),
 		  'header': {
 		    '1': __webpack_require__(87),
 		    '2': __webpack_require__(88)
 		  },
-		  'image': __webpack_require__(89),
+		  'italic': __webpack_require__(89),
+		  'image': __webpack_require__(90),
 		  'indent': {
-		    '+1': __webpack_require__(90),
-		    '-1': __webpack_require__(91)
+		    '+1': __webpack_require__(91),
+		    '-1': __webpack_require__(92)
 		  },
-		  'link': __webpack_require__(92),
+		  'link': __webpack_require__(93),
 		  'list': {
-		    'ordered': __webpack_require__(93),
-		    'bullet': __webpack_require__(94)
+		    'ordered': __webpack_require__(94),
+		    'bullet': __webpack_require__(95)
 		  },
 		  'script': {
-		    'sub': __webpack_require__(95),
-		    'super': __webpack_require__(96)
+		    'sub': __webpack_require__(96),
+		    'super': __webpack_require__(97)
 		  },
-		  'strike': __webpack_require__(97),
-		  'underline': __webpack_require__(98),
-		  'video': __webpack_require__(99)
+		  'strike': __webpack_require__(98),
+		  'underline': __webpack_require__(99),
+		  'video': __webpack_require__(100)
 		};
 	
 	/***/ },
-	/* 73 */
+	/* 70 */
 	/***/ function(module, exports) {
 	
 		module.exports = "<svg viewbox=\"0 0 18 18\"> <line class=ql-stroke x1=3 x2=15 y1=9 y2=9></line> <line class=ql-stroke x1=3 x2=13 y1=14 y2=14></line> <line class=ql-stroke x1=3 x2=9 y1=4 y2=4></line> </svg>";
 	
 	/***/ },
-	/* 74 */
+	/* 71 */
 	/***/ function(module, exports) {
 	
 		module.exports = "<svg viewbox=\"0 0 18 18\"> <line class=ql-stroke x1=15 x2=3 y1=9 y2=9></line> <line class=ql-stroke x1=14 x2=4 y1=14 y2=14></line> <line class=ql-stroke x1=12 x2=6 y1=4 y2=4></line> </svg>";
 	
 	/***/ },
-	/* 75 */
+	/* 72 */
 	/***/ function(module, exports) {
 	
 		module.exports = "<svg viewbox=\"0 0 18 18\"> <line class=ql-stroke x1=15 x2=3 y1=9 y2=9></line> <line class=ql-stroke x1=15 x2=5 y1=14 y2=14></line> <line class=ql-stroke x1=15 x2=9 y1=4 y2=4></line> </svg>";
 	
 	/***/ },
-	/* 76 */
+	/* 73 */
 	/***/ function(module, exports) {
 	
 		module.exports = "<svg viewbox=\"0 0 18 18\"> <line class=ql-stroke x1=15 x2=3 y1=9 y2=9></line> <line class=ql-stroke x1=15 x2=3 y1=14 y2=14></line> <line class=ql-stroke x1=15 x2=3 y1=4 y2=4></line> </svg>";
 	
 	/***/ },
-	/* 77 */
+	/* 74 */
 	/***/ function(module, exports) {
 	
 		module.exports = "<svg viewbox=\"0 0 18 18\"> <g class=\"ql-fill ql-color-label\"> <polygon points=\"6 6.868 6 6 5 6 5 7 5.942 7 6 6.868\"></polygon> <rect height=1 width=1 x=4 y=4></rect> <polygon points=\"6.817 5 6 5 6 6 6.38 6 6.817 5\"></polygon> <rect height=1 width=1 x=2 y=6></rect> <rect height=1 width=1 x=3 y=5></rect> <rect height=1 width=1 x=4 y=7></rect> <polygon points=\"4 11.439 4 11 3 11 3 12 3.755 12 4 11.439\"></polygon> <rect height=1 width=1 x=2 y=12></rect> <rect height=1 width=1 x=2 y=9></rect> <rect height=1 width=1 x=2 y=15></rect> <polygon points=\"4.63 10 4 10 4 11 4.192 11 4.63 10\"></polygon> <rect height=1 width=1 x=3 y=8></rect> <path d=M10.832,4.2L11,4.582V4H10.708A1.948,1.948,0,0,1,10.832,4.2Z></path> <path d=M7,4.582L7.168,4.2A1.929,1.929,0,0,1,7.292,4H7V4.582Z></path> <path d=M8,13H7.683l-0.351.8a1.933,1.933,0,0,1-.124.2H8V13Z></path> <rect height=1 width=1 x=12 y=2></rect> <rect height=1 width=1 x=11 y=3></rect> <path d=M9,3H8V3.282A1.985,1.985,0,0,1,9,3Z></path> <rect height=1 width=1 x=2 y=3></rect> <rect height=1 width=1 x=6 y=2></rect> <rect height=1 width=1 x=3 y=2></rect> <rect height=1 width=1 x=5 y=3></rect> <rect height=1 width=1 x=9 y=2></rect> <rect height=1 width=1 x=15 y=14></rect> <polygon points=\"13.447 10.174 13.469 10.225 13.472 10.232 13.808 11 14 11 14 10 13.37 10 13.447 10.174\"></polygon> <rect height=1 width=1 x=13 y=7></rect> <rect height=1 width=1 x=15 y=5></rect> <rect height=1 width=1 x=14 y=6></rect> <rect height=1 width=1 x=15 y=8></rect> <rect height=1 width=1 x=14 y=9></rect> <path d=M3.775,14H3v1H4V14.314A1.97,1.97,0,0,1,3.775,14Z></path> <rect height=1 width=1 x=14 y=3></rect> <polygon points=\"12 6.868 12 6 11.62 6 12 6.868\"></polygon> <rect height=1 width=1 x=15 y=2></rect> <rect height=1 width=1 x=12 y=5></rect> <rect height=1 width=1 x=13 y=4></rect> <polygon points=\"12.933 9 13 9 13 8 12.495 8 12.933 9\"></polygon> <rect height=1 width=1 x=9 y=14></rect> <rect height=1 width=1 x=8 y=15></rect> <path d=M6,14.926V15H7V14.316A1.993,1.993,0,0,1,6,14.926Z></path> <rect height=1 width=1 x=5 y=15></rect> <path d=M10.668,13.8L10.317,13H10v1h0.792A1.947,1.947,0,0,1,10.668,13.8Z></path> <rect height=1 width=1 x=11 y=15></rect> <path d=M14.332,12.2a1.99,1.99,0,0,1,.166.8H15V12H14.245Z></path> <rect height=1 width=1 x=14 y=15></rect> <rect height=1 width=1 x=15 y=11></rect> </g> <polyline class=ql-stroke points=\"5.5 13 9 5 12.5 13\"></polyline> <line class=ql-stroke x1=11.63 x2=6.38 y1=11 y2=11></line> </svg>";
 	
 	/***/ },
-	/* 78 */
+	/* 75 */
 	/***/ function(module, exports) {
 	
 		module.exports = "<svg viewbox=\"0 0 18 18\"> <rect class=\"ql-fill ql-stroke\" height=3 width=3 x=4 y=5></rect> <rect class=\"ql-fill ql-stroke\" height=3 width=3 x=11 y=5></rect> <path class=\"ql-even ql-fill ql-stroke\" d=M7,8c0,4.031-3,5-3,5></path> <path class=\"ql-even ql-fill ql-stroke\" d=M14,8c0,4.031-3,5-3,5></path> </svg>";
 	
 	/***/ },
-	/* 79 */
+	/* 76 */
 	/***/ function(module, exports) {
 	
 		module.exports = "<svg viewbox=\"0 0 18 18\"> <path class=ql-stroke d=M5,4H9.5A2.5,2.5,0,0,1,12,6.5v0A2.5,2.5,0,0,1,9.5,9H5A0,0,0,0,1,5,9V4A0,0,0,0,1,5,4Z></path> <path class=ql-stroke d=M5,9h5.5A2.5,2.5,0,0,1,13,11.5v0A2.5,2.5,0,0,1,10.5,14H5a0,0,0,0,1,0,0V9A0,0,0,0,1,5,9Z></path> </svg>";
 	
 	/***/ },
-	/* 80 */
+	/* 77 */
 	/***/ function(module, exports) {
 	
 		module.exports = "<svg class=\"\" viewbox=\"0 0 18 18\"> <line class=ql-stroke x1=5 x2=13 y1=3 y2=3></line> <line class=ql-stroke x1=6 x2=9.35 y1=12 y2=3></line> <line class=ql-stroke x1=11 x2=15 y1=11 y2=15></line> <line class=ql-stroke x1=15 x2=11 y1=11 y2=15></line> <rect class=ql-fill height=1 rx=0.5 ry=0.5 width=7 x=2 y=14></rect> </svg>";
 	
 	/***/ },
-	/* 81 */
+	/* 78 */
 	/***/ function(module, exports) {
 	
 		module.exports = "<svg viewbox=\"0 0 18 18\"> <polyline class=\"ql-even ql-stroke\" points=\"5 7 3 9 5 11\"></polyline> <polyline class=\"ql-even ql-stroke\" points=\"13 7 15 9 13 11\"></polyline> <line class=ql-stroke x1=10 x2=8 y1=5 y2=13></line> </svg>";
 	
 	/***/ },
-	/* 82 */
+	/* 79 */
 	/***/ function(module, exports) {
 	
 		module.exports = "<svg viewbox=\"0 0 18 18\"> <line class=\"ql-color-label ql-stroke ql-transparent\" x1=3 x2=15 y1=15 y2=15></line> <polyline class=ql-stroke points=\"5.5 11 9 3 12.5 11\"></polyline> <line class=ql-stroke x1=11.63 x2=6.38 y1=9 y2=9></line> </svg>";
 	
 	/***/ },
-	/* 83 */
+	/* 80 */
 	/***/ function(module, exports) {
 	
 		module.exports = "<svg viewbox=\"0 0 18 18\"> <polygon class=\"ql-stroke ql-fill\" points=\"3 11 5 9 3 7 3 11\"></polygon> <line class=\"ql-stroke ql-fill\" x1=15 x2=11 y1=4 y2=4></line> <path class=ql-fill d=M11,3a3,3,0,0,0,0,6h1V3H11Z></path> <rect class=ql-fill height=11 width=1 x=11 y=4></rect> <rect class=ql-fill height=11 width=1 x=13 y=4></rect> </svg>";
 	
 	/***/ },
-	/* 84 */
+	/* 81 */
 	/***/ function(module, exports) {
 	
 		module.exports = "<svg viewbox=\"0 0 18 18\"> <polygon class=\"ql-stroke ql-fill\" points=\"15 12 13 10 15 8 15 12\"></polygon> <line class=\"ql-stroke ql-fill\" x1=9 x2=5 y1=4 y2=4></line> <path class=ql-fill d=M5,3A3,3,0,0,0,5,9H6V3H5Z></path> <rect class=ql-fill height=11 width=1 x=5 y=4></rect> <rect class=ql-fill height=11 width=1 x=7 y=4></rect> </svg>";
 	
 	/***/ },
+	/* 82 */
+	/***/ function(module, exports) {
+	
+		module.exports = "<svg viewbox=\"0 0 18 18\"> <path class=ql-fill d=M14,16H4a1,1,0,0,1,0-2H14A1,1,0,0,1,14,16Z /> <path class=ql-fill d=M14,4H4A1,1,0,0,1,4,2H14A1,1,0,0,1,14,4Z /> <rect class=ql-fill x=3 y=6 width=12 height=6 rx=1 ry=1 /> </svg>";
+	
+	/***/ },
+	/* 83 */
+	/***/ function(module, exports) {
+	
+		module.exports = "<svg viewbox=\"0 0 18 18\"> <path class=ql-fill d=M13,16H5a1,1,0,0,1,0-2h8A1,1,0,0,1,13,16Z /> <path class=ql-fill d=M13,4H5A1,1,0,0,1,5,2h8A1,1,0,0,1,13,4Z /> <rect class=ql-fill x=2 y=6 width=14 height=6 rx=1 ry=1 /> </svg>";
+	
+	/***/ },
+	/* 84 */
+	/***/ function(module, exports) {
+	
+		module.exports = "<svg viewbox=\"0 0 18 18\"> <path class=ql-fill d=M15,8H13a1,1,0,0,1,0-2h2A1,1,0,0,1,15,8Z /> <path class=ql-fill d=M15,12H13a1,1,0,0,1,0-2h2A1,1,0,0,1,15,12Z /> <path class=ql-fill d=M15,16H5a1,1,0,0,1,0-2H15A1,1,0,0,1,15,16Z /> <path class=ql-fill d=M15,4H5A1,1,0,0,1,5,2H15A1,1,0,0,1,15,4Z /> <rect class=ql-fill x=2 y=6 width=8 height=6 rx=1 ry=1 /> </svg>";
+	
+	/***/ },
 	/* 85 */
 	/***/ function(module, exports) {
 	
-		module.exports = "<svg viewbox=\"0 0 18 18\"> <path class=ql-fill d=M11.759,2.482a2.561,2.561,0,0,0-3.53.607A7.656,7.656,0,0,0,6.8,6.2C6.109,9.188,5.275,14.677,4.15,14.927a1.545,1.545,0,0,0-1.3-.933A0.922,0.922,0,0,0,2,15.036S1.954,16,4.119,16s3.091-2.691,3.7-5.553c0.177-.826.36-1.726,0.554-2.6L8.775,6.2c0.381-1.421.807-2.521,1.306-2.676a1.014,1.014,0,0,0,1.02.56A0.966,0.966,0,0,0,11.759,2.482Z></path> <rect class=ql-fill height=1.6 rx=0.8 ry=0.8 width=5 x=5.15 y=6.2></rect> <path class=ql-fill d=M13.663,12.027a1.662,1.662,0,0,1,.266-0.276q0.193,0.069.456,0.138a2.1,2.1,0,0,0,.535.069,1.075,1.075,0,0,0,.767-0.3,1.044,1.044,0,0,0,.314-0.8,0.84,0.84,0,0,0-.238-0.619,0.8,0.8,0,0,0-.594-0.239,1.154,1.154,0,0,0-.781.3,4.607,4.607,0,0,0-.781,1q-0.091.15-.218,0.346l-0.246.38c-0.068-.288-0.137-0.582-0.212-0.885-0.459-1.847-2.494-.984-2.941-0.8-0.482.2-.353,0.647-0.094,0.529a0.869,0.869,0,0,1,1.281.585c0.217,0.751.377,1.436,0.527,2.038a5.688,5.688,0,0,1-.362.467,2.69,2.69,0,0,1-.264.271q-0.221-.08-0.471-0.147a2.029,2.029,0,0,0-.522-0.066,1.079,1.079,0,0,0-.768.3A1.058,1.058,0,0,0,9,15.131a0.82,0.82,0,0,0,.832.852,1.134,1.134,0,0,0,.787-0.3,5.11,5.11,0,0,0,.776-0.993q0.141-.219.215-0.34c0.046-.076.122-0.194,0.223-0.346a2.786,2.786,0,0,0,.918,1.726,2.582,2.582,0,0,0,2.376-.185c0.317-.181.212-0.565,0-0.494A0.807,0.807,0,0,1,14.176,15a5.159,5.159,0,0,1-.913-2.446l0,0Q13.487,12.24,13.663,12.027Z></path> </svg>";
+		module.exports = "<svg viewbox=\"0 0 18 18\"> <path class=ql-fill d=M5,8H3A1,1,0,0,1,3,6H5A1,1,0,0,1,5,8Z /> <path class=ql-fill d=M5,12H3a1,1,0,0,1,0-2H5A1,1,0,0,1,5,12Z /> <path class=ql-fill d=M13,16H3a1,1,0,0,1,0-2H13A1,1,0,0,1,13,16Z /> <path class=ql-fill d=M13,4H3A1,1,0,0,1,3,2H13A1,1,0,0,1,13,4Z /> <rect class=ql-fill x=8 y=6 width=8 height=6 rx=1 ry=1 transform=\"translate(24 18) rotate(-180)\"/> </svg>";
 	
 	/***/ },
 	/* 86 */
 	/***/ function(module, exports) {
 	
-		module.exports = "<svg viewbox=\"0 0 18 18\"> <line class=ql-stroke x1=7 x2=13 y1=4 y2=4></line> <line class=ql-stroke x1=5 x2=11 y1=14 y2=14></line> <line class=ql-stroke x1=8 x2=10 y1=14 y2=4></line> </svg>";
+		module.exports = "<svg viewbox=\"0 0 18 18\"> <path class=ql-fill d=M11.759,2.482a2.561,2.561,0,0,0-3.53.607A7.656,7.656,0,0,0,6.8,6.2C6.109,9.188,5.275,14.677,4.15,14.927a1.545,1.545,0,0,0-1.3-.933A0.922,0.922,0,0,0,2,15.036S1.954,16,4.119,16s3.091-2.691,3.7-5.553c0.177-.826.36-1.726,0.554-2.6L8.775,6.2c0.381-1.421.807-2.521,1.306-2.676a1.014,1.014,0,0,0,1.02.56A0.966,0.966,0,0,0,11.759,2.482Z></path> <rect class=ql-fill height=1.6 rx=0.8 ry=0.8 width=5 x=5.15 y=6.2></rect> <path class=ql-fill d=M13.663,12.027a1.662,1.662,0,0,1,.266-0.276q0.193,0.069.456,0.138a2.1,2.1,0,0,0,.535.069,1.075,1.075,0,0,0,.767-0.3,1.044,1.044,0,0,0,.314-0.8,0.84,0.84,0,0,0-.238-0.619,0.8,0.8,0,0,0-.594-0.239,1.154,1.154,0,0,0-.781.3,4.607,4.607,0,0,0-.781,1q-0.091.15-.218,0.346l-0.246.38c-0.068-.288-0.137-0.582-0.212-0.885-0.459-1.847-2.494-.984-2.941-0.8-0.482.2-.353,0.647-0.094,0.529a0.869,0.869,0,0,1,1.281.585c0.217,0.751.377,1.436,0.527,2.038a5.688,5.688,0,0,1-.362.467,2.69,2.69,0,0,1-.264.271q-0.221-.08-0.471-0.147a2.029,2.029,0,0,0-.522-0.066,1.079,1.079,0,0,0-.768.3A1.058,1.058,0,0,0,9,15.131a0.82,0.82,0,0,0,.832.852,1.134,1.134,0,0,0,.787-0.3,5.11,5.11,0,0,0,.776-0.993q0.141-.219.215-0.34c0.046-.076.122-0.194,0.223-0.346a2.786,2.786,0,0,0,.918,1.726,2.582,2.582,0,0,0,2.376-.185c0.317-.181.212-0.565,0-0.494A0.807,0.807,0,0,1,14.176,15a5.159,5.159,0,0,1-.913-2.446l0,0Q13.487,12.24,13.663,12.027Z></path> </svg>";
 	
 	/***/ },
 	/* 87 */
@@ -9555,70 +9341,76 @@ return /******/ (function(modules) { // webpackBootstrap
 	/* 89 */
 	/***/ function(module, exports) {
 	
-		module.exports = "<svg viewbox=\"0 0 18 18\"> <rect class=ql-stroke height=10 width=12 x=3 y=4></rect> <circle class=ql-fill cx=6 cy=7 r=1></circle> <polyline class=\"ql-even ql-fill\" points=\"5 12 5 11 7 9 8 10 11 7 13 9 13 12 5 12\"></polyline> </svg>";
+		module.exports = "<svg viewbox=\"0 0 18 18\"> <line class=ql-stroke x1=7 x2=13 y1=4 y2=4></line> <line class=ql-stroke x1=5 x2=11 y1=14 y2=14></line> <line class=ql-stroke x1=8 x2=10 y1=14 y2=4></line> </svg>";
 	
 	/***/ },
 	/* 90 */
 	/***/ function(module, exports) {
 	
-		module.exports = "<svg viewbox=\"0 0 18 18\"> <line class=ql-stroke x1=3 x2=15 y1=14 y2=14></line> <line class=ql-stroke x1=3 x2=15 y1=4 y2=4></line> <line class=ql-stroke x1=9 x2=15 y1=9 y2=9></line> <polyline class=\"ql-fill ql-stroke\" points=\"3 7 3 11 5 9 3 7\"></polyline> </svg>";
+		module.exports = "<svg viewbox=\"0 0 18 18\"> <rect class=ql-stroke height=10 width=12 x=3 y=4></rect> <circle class=ql-fill cx=6 cy=7 r=1></circle> <polyline class=\"ql-even ql-fill\" points=\"5 12 5 11 7 9 8 10 11 7 13 9 13 12 5 12\"></polyline> </svg>";
 	
 	/***/ },
 	/* 91 */
 	/***/ function(module, exports) {
 	
-		module.exports = "<svg viewbox=\"0 0 18 18\"> <line class=ql-stroke x1=3 x2=15 y1=14 y2=14></line> <line class=ql-stroke x1=3 x2=15 y1=4 y2=4></line> <line class=ql-stroke x1=9 x2=15 y1=9 y2=9></line> <polyline class=ql-stroke points=\"5 7 5 11 3 9 5 7\"></polyline> </svg>";
+		module.exports = "<svg viewbox=\"0 0 18 18\"> <line class=ql-stroke x1=3 x2=15 y1=14 y2=14></line> <line class=ql-stroke x1=3 x2=15 y1=4 y2=4></line> <line class=ql-stroke x1=9 x2=15 y1=9 y2=9></line> <polyline class=\"ql-fill ql-stroke\" points=\"3 7 3 11 5 9 3 7\"></polyline> </svg>";
 	
 	/***/ },
 	/* 92 */
 	/***/ function(module, exports) {
 	
-		module.exports = "<svg viewbox=\"0 0 18 18\"> <line class=ql-stroke x1=7 x2=11 y1=7 y2=11></line> <path class=\"ql-even ql-stroke\" d=M8.9,4.577a3.476,3.476,0,0,1,.36,4.679A3.476,3.476,0,0,1,4.577,8.9C3.185,7.5,2.035,6.4,4.217,4.217S7.5,3.185,8.9,4.577Z></path> <path class=\"ql-even ql-stroke\" d=M13.423,9.1a3.476,3.476,0,0,0-4.679-.36,3.476,3.476,0,0,0,.36,4.679c1.392,1.392,2.5,2.542,4.679.36S14.815,10.5,13.423,9.1Z></path> </svg>";
+		module.exports = "<svg viewbox=\"0 0 18 18\"> <line class=ql-stroke x1=3 x2=15 y1=14 y2=14></line> <line class=ql-stroke x1=3 x2=15 y1=4 y2=4></line> <line class=ql-stroke x1=9 x2=15 y1=9 y2=9></line> <polyline class=ql-stroke points=\"5 7 5 11 3 9 5 7\"></polyline> </svg>";
 	
 	/***/ },
 	/* 93 */
 	/***/ function(module, exports) {
 	
-		module.exports = "<svg viewbox=\"0 0 18 18\"> <line class=ql-stroke x1=7 x2=15 y1=4 y2=4></line> <line class=ql-stroke x1=7 x2=15 y1=9 y2=9></line> <line class=ql-stroke x1=7 x2=15 y1=14 y2=14></line> <line class=\"ql-stroke ql-thin\" x1=2.5 x2=4.5 y1=5.5 y2=5.5></line> <path class=ql-fill d=M3.5,6A0.5,0.5,0,0,1,3,5.5V3.085l-0.276.138A0.5,0.5,0,0,1,2.053,3c-0.124-.247-0.023-0.324.224-0.447l1-.5A0.5,0.5,0,0,1,4,2.5v3A0.5,0.5,0,0,1,3.5,6Z></path> <path class=\"ql-stroke ql-thin\" d=M4.5,10.5h-2c0-.234,1.85-1.076,1.85-2.234A0.959,0.959,0,0,0,2.5,8.156></path> <path class=\"ql-stroke ql-thin\" d=M2.5,14.846a0.959,0.959,0,0,0,1.85-.109A0.7,0.7,0,0,0,3.75,14a0.688,0.688,0,0,0,.6-0.736,0.959,0.959,0,0,0-1.85-.109></path> </svg>";
+		module.exports = "<svg viewbox=\"0 0 18 18\"> <line class=ql-stroke x1=7 x2=11 y1=7 y2=11></line> <path class=\"ql-even ql-stroke\" d=M8.9,4.577a3.476,3.476,0,0,1,.36,4.679A3.476,3.476,0,0,1,4.577,8.9C3.185,7.5,2.035,6.4,4.217,4.217S7.5,3.185,8.9,4.577Z></path> <path class=\"ql-even ql-stroke\" d=M13.423,9.1a3.476,3.476,0,0,0-4.679-.36,3.476,3.476,0,0,0,.36,4.679c1.392,1.392,2.5,2.542,4.679.36S14.815,10.5,13.423,9.1Z></path> </svg>";
 	
 	/***/ },
 	/* 94 */
 	/***/ function(module, exports) {
 	
-		module.exports = "<svg viewbox=\"0 0 18 18\"> <line class=ql-stroke x1=6 x2=15 y1=4 y2=4></line> <line class=ql-stroke x1=6 x2=15 y1=9 y2=9></line> <line class=ql-stroke x1=6 x2=15 y1=14 y2=14></line> <line class=ql-stroke x1=3 x2=3 y1=4 y2=4></line> <line class=ql-stroke x1=3 x2=3 y1=9 y2=9></line> <line class=ql-stroke x1=3 x2=3 y1=14 y2=14></line> </svg>";
+		module.exports = "<svg viewbox=\"0 0 18 18\"> <line class=ql-stroke x1=7 x2=15 y1=4 y2=4></line> <line class=ql-stroke x1=7 x2=15 y1=9 y2=9></line> <line class=ql-stroke x1=7 x2=15 y1=14 y2=14></line> <line class=\"ql-stroke ql-thin\" x1=2.5 x2=4.5 y1=5.5 y2=5.5></line> <path class=ql-fill d=M3.5,6A0.5,0.5,0,0,1,3,5.5V3.085l-0.276.138A0.5,0.5,0,0,1,2.053,3c-0.124-.247-0.023-0.324.224-0.447l1-.5A0.5,0.5,0,0,1,4,2.5v3A0.5,0.5,0,0,1,3.5,6Z></path> <path class=\"ql-stroke ql-thin\" d=M4.5,10.5h-2c0-.234,1.85-1.076,1.85-2.234A0.959,0.959,0,0,0,2.5,8.156></path> <path class=\"ql-stroke ql-thin\" d=M2.5,14.846a0.959,0.959,0,0,0,1.85-.109A0.7,0.7,0,0,0,3.75,14a0.688,0.688,0,0,0,.6-0.736,0.959,0.959,0,0,0-1.85-.109></path> </svg>";
 	
 	/***/ },
 	/* 95 */
 	/***/ function(module, exports) {
 	
-		module.exports = "<svg viewbox=\"0 0 18 18\"> <path class=\"ql-stroke ql-thin\" d=M15.5,15.5h-3c0-.391,2.775-1.545,2.775-3.475a1.409,1.409,0,0,0-2.775-.182></path> <path class=ql-fill d=M6.215,4a6.281,6.281,0,0,0-3,.786,0.712,0.712,0,0,0-.287,1.048L3.112,6.192a0.663,0.663,0,0,0,1,.318,4,4,0,0,1,1.9-.543,1.523,1.523,0,0,1,1.7,1.685V7.877H7.345C5.3,7.877,2,8.345,2,11.135A2.857,2.857,0,0,0,5.031,14,3.337,3.337,0,0,0,7.9,12.2H7.937a1.954,1.954,0,0,0-.036.412v0.375a0.676,0.676,0,0,0,.735.786h0.61A0.681,0.681,0,0,0,10,12.989V7.8A3.47,3.47,0,0,0,6.215,4ZM7.74,9.675a2.394,2.394,0,0,1-2.1,2.509A1.265,1.265,0,0,1,4.26,10.929c0-1.423,1.955-1.61,3.1-1.61H7.74V9.675Z></path> </svg>";
+		module.exports = "<svg viewbox=\"0 0 18 18\"> <line class=ql-stroke x1=6 x2=15 y1=4 y2=4></line> <line class=ql-stroke x1=6 x2=15 y1=9 y2=9></line> <line class=ql-stroke x1=6 x2=15 y1=14 y2=14></line> <line class=ql-stroke x1=3 x2=3 y1=4 y2=4></line> <line class=ql-stroke x1=3 x2=3 y1=9 y2=9></line> <line class=ql-stroke x1=3 x2=3 y1=14 y2=14></line> </svg>";
 	
 	/***/ },
 	/* 96 */
 	/***/ function(module, exports) {
 	
-		module.exports = "<svg viewbox=\"0 0 18 18\"> <path class=\"ql-stroke ql-thin\" d=M15.5,7.5h-3c0-.391,2.775-1.545,2.775-3.475A1.409,1.409,0,0,0,12.5,3.841></path> <path class=ql-fill d=M6.215,4a6.281,6.281,0,0,0-3,.786,0.712,0.712,0,0,0-.287,1.048L3.112,6.192a0.663,0.663,0,0,0,1,.318,4,4,0,0,1,1.9-.543,1.523,1.523,0,0,1,1.7,1.685V7.877H7.345C5.3,7.877,2,8.345,2,11.135A2.857,2.857,0,0,0,5.031,14,3.337,3.337,0,0,0,7.9,12.2H7.937a1.954,1.954,0,0,0-.036.412v0.375a0.676,0.676,0,0,0,.735.786h0.61A0.681,0.681,0,0,0,10,12.989V7.8A3.47,3.47,0,0,0,6.215,4ZM7.74,9.675a2.394,2.394,0,0,1-2.1,2.509A1.265,1.265,0,0,1,4.26,10.929c0-1.423,1.955-1.61,3.1-1.61H7.74V9.675Z></path> </svg>";
+		module.exports = "<svg viewbox=\"0 0 18 18\"> <path class=ql-fill d=M15.5,15H13.861a3.858,3.858,0,0,0,1.914-2.975,1.8,1.8,0,0,0-1.6-1.751A1.921,1.921,0,0,0,12.021,11.7a0.50013,0.50013,0,1,0,.957.291h0a0.914,0.914,0,0,1,1.053-.725,0.81,0.81,0,0,1,.744.762c0,1.076-1.16971,1.86982-1.93971,2.43082A1.45639,1.45639,0,0,0,12,15.5a0.5,0.5,0,0,0,.5.5h3A0.5,0.5,0,0,0,15.5,15Z /> <path class=ql-fill d=M9.65,5.241a1,1,0,0,0-1.409.108L6,7.964,3.759,5.349A1,1,0,0,0,2.192,6.59178Q2.21541,6.6213,2.241,6.649L4.684,9.5,2.241,12.35A1,1,0,0,0,3.71,13.70722q0.02557-.02768.049-0.05722L6,11.036,8.241,13.65a1,1,0,1,0,1.567-1.24277Q9.78459,12.3777,9.759,12.35L7.316,9.5,9.759,6.651A1,1,0,0,0,9.65,5.241Z /> </svg>";
 	
 	/***/ },
 	/* 97 */
 	/***/ function(module, exports) {
 	
-		module.exports = "<svg viewbox=\"0 0 18 18\"> <line class=\"ql-stroke ql-thin\" x1=15.5 x2=2.5 y1=8.5 y2=9.5></line> <path class=ql-fill d=M9.007,8C6.542,7.791,6,7.519,6,6.5,6,5.792,7.283,5,9,5c1.571,0,2.765.679,2.969,1.309a1,1,0,0,0,1.9-.617C13.356,4.106,11.354,3,9,3,6.2,3,4,4.538,4,6.5a3.2,3.2,0,0,0,.5,1.843Z></path> <path class=ql-fill d=M8.984,10C11.457,10.208,12,10.479,12,11.5c0,0.708-1.283,1.5-3,1.5-1.571,0-2.765-.679-2.969-1.309a1,1,0,1,0-1.9.617C4.644,13.894,6.646,15,9,15c2.8,0,5-1.538,5-3.5a3.2,3.2,0,0,0-.5-1.843Z></path> </svg>";
+		module.exports = "<svg viewbox=\"0 0 18 18\"> <path class=ql-fill d=M15.5,7H13.861a4.015,4.015,0,0,0,1.914-2.975,1.8,1.8,0,0,0-1.6-1.751A1.922,1.922,0,0,0,12.021,3.7a0.5,0.5,0,1,0,.957.291,0.917,0.917,0,0,1,1.053-.725,0.81,0.81,0,0,1,.744.762c0,1.077-1.164,1.925-1.934,2.486A1.423,1.423,0,0,0,12,7.5a0.5,0.5,0,0,0,.5.5h3A0.5,0.5,0,0,0,15.5,7Z /> <path class=ql-fill d=M9.651,5.241a1,1,0,0,0-1.41.108L6,7.964,3.759,5.349a1,1,0,1,0-1.519,1.3L4.683,9.5,2.241,12.35a1,1,0,1,0,1.519,1.3L6,11.036,8.241,13.65a1,1,0,0,0,1.519-1.3L7.317,9.5,9.759,6.651A1,1,0,0,0,9.651,5.241Z /> </svg>";
 	
 	/***/ },
 	/* 98 */
 	/***/ function(module, exports) {
 	
-		module.exports = "<svg viewbox=\"0 0 18 18\"> <path class=ql-stroke d=M5,3V9a4.012,4.012,0,0,0,4,4H9a4.012,4.012,0,0,0,4-4V3></path> <rect class=ql-fill height=1 rx=0.5 ry=0.5 width=12 x=3 y=15></rect> </svg>";
+		module.exports = "<svg viewbox=\"0 0 18 18\"> <line class=\"ql-stroke ql-thin\" x1=15.5 x2=2.5 y1=8.5 y2=9.5></line> <path class=ql-fill d=M9.007,8C6.542,7.791,6,7.519,6,6.5,6,5.792,7.283,5,9,5c1.571,0,2.765.679,2.969,1.309a1,1,0,0,0,1.9-.617C13.356,4.106,11.354,3,9,3,6.2,3,4,4.538,4,6.5a3.2,3.2,0,0,0,.5,1.843Z></path> <path class=ql-fill d=M8.984,10C11.457,10.208,12,10.479,12,11.5c0,0.708-1.283,1.5-3,1.5-1.571,0-2.765-.679-2.969-1.309a1,1,0,1,0-1.9.617C4.644,13.894,6.646,15,9,15c2.8,0,5-1.538,5-3.5a3.2,3.2,0,0,0-.5-1.843Z></path> </svg>";
 	
 	/***/ },
 	/* 99 */
 	/***/ function(module, exports) {
 	
-		module.exports = "<svg viewbox=\"0 0 18 18\"> <rect class=ql-stroke height=12 width=12 x=3 y=3></rect> <rect class=ql-fill height=12 width=1 x=5 y=3></rect> <rect class=ql-fill height=12 width=1 x=12 y=3></rect> <rect class=ql-fill height=2 width=8 x=5 y=8></rect> <rect class=ql-fill height=1 width=3 x=3 y=5></rect> <rect class=ql-fill height=1 width=3 x=3 y=7></rect> <rect class=ql-fill height=1 width=3 x=3 y=10></rect> <rect class=ql-fill height=1 width=3 x=3 y=12></rect> <rect class=ql-fill height=1 width=3 x=12 y=5></rect> <rect class=ql-fill height=1 width=3 x=12 y=7></rect> <rect class=ql-fill height=1 width=3 x=12 y=10></rect> <rect class=ql-fill height=1 width=3 x=12 y=12></rect> </svg>";
+		module.exports = "<svg viewbox=\"0 0 18 18\"> <path class=ql-stroke d=M5,3V9a4.012,4.012,0,0,0,4,4H9a4.012,4.012,0,0,0,4-4V3></path> <rect class=ql-fill height=1 rx=0.5 ry=0.5 width=12 x=3 y=15></rect> </svg>";
 	
 	/***/ },
 	/* 100 */
+	/***/ function(module, exports) {
+	
+		module.exports = "<svg viewbox=\"0 0 18 18\"> <rect class=ql-stroke height=12 width=12 x=3 y=3></rect> <rect class=ql-fill height=12 width=1 x=5 y=3></rect> <rect class=ql-fill height=12 width=1 x=12 y=3></rect> <rect class=ql-fill height=2 width=8 x=5 y=8></rect> <rect class=ql-fill height=1 width=3 x=3 y=5></rect> <rect class=ql-fill height=1 width=3 x=3 y=7></rect> <rect class=ql-fill height=1 width=3 x=3 y=10></rect> <rect class=ql-fill height=1 width=3 x=3 y=12></rect> <rect class=ql-fill height=1 width=3 x=12 y=5></rect> <rect class=ql-fill height=1 width=3 x=12 y=7></rect> <rect class=ql-fill height=1 width=3 x=12 y=10></rect> <rect class=ql-fill height=1 width=3 x=12 y=12></rect> </svg>";
+	
+	/***/ },
+	/* 101 */
 	/***/ function(module, exports, __webpack_require__) {
 	
 		'use strict';
@@ -9631,7 +9423,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
-		var _dropdown = __webpack_require__(101);
+		var _dropdown = __webpack_require__(102);
 	
 		var _dropdown2 = _interopRequireDefault(_dropdown);
 	
@@ -9728,7 +9520,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		      var trigger = arguments.length <= 1 || arguments[1] === undefined ? false : arguments[1];
 	
 		      var selected = this.container.querySelector('.ql-selected');
-		      if (item === selected) return this.close();
+		      if (item === selected) return;
 		      if (selected != null) {
 		        selected.classList.remove('ql-selected');
 		      }
@@ -9754,12 +9546,12 @@ return /******/ (function(modules) { // webpackBootstrap
 		            event.initEvent('change', true, true);
 		            this.select.dispatchEvent(event);
 		          }
+		          this.close();
 		        }
 		      } else {
 		        if (this.label.dataset.value) delete this.label.dataset.value;
 		        if (this.label.dataset.label) delete this.label.dataset.label;
 		      }
-		      this.close();
 		    }
 		  }, {
 		    key: 'update',
@@ -9783,13 +9575,13 @@ return /******/ (function(modules) { // webpackBootstrap
 		exports.default = Picker;
 	
 	/***/ },
-	/* 101 */
+	/* 102 */
 	/***/ function(module, exports) {
 	
 		module.exports = "<svg viewbox=\"0 0 18 18\"> <polygon class=ql-stroke points=\"7 11 9 13 11 11 7 11\"></polygon> <polygon class=ql-stroke points=\"7 7 9 5 11 7 7 7\"></polygon> </svg>";
 	
 	/***/ },
-	/* 102 */
+	/* 103 */
 	/***/ function(module, exports, __webpack_require__) {
 	
 		'use strict';
@@ -9802,7 +9594,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 		var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
 	
-		var _picker = __webpack_require__(100);
+		var _picker = __webpack_require__(101);
 	
 		var _picker2 = _interopRequireDefault(_picker);
 	
@@ -9859,7 +9651,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		exports.default = ColorPicker;
 	
 	/***/ },
-	/* 103 */
+	/* 104 */
 	/***/ function(module, exports, __webpack_require__) {
 	
 		'use strict';
@@ -9872,7 +9664,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 		var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
 	
-		var _picker = __webpack_require__(100);
+		var _picker = __webpack_require__(101);
 	
 		var _picker2 = _interopRequireDefault(_picker);
 	
@@ -9914,168 +9706,8 @@ return /******/ (function(modules) { // webpackBootstrap
 		exports.default = IconPicker;
 	
 	/***/ },
-	/* 104 */
-	/***/ function(module, exports, __webpack_require__) {
-	
-		'use strict';
-	
-		Object.defineProperty(exports, "__esModule", {
-		  value: true
-		});
-	
-		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-		var _emitter = __webpack_require__(29);
-	
-		var _emitter2 = _interopRequireDefault(_emitter);
-	
-		var _keyboard = __webpack_require__(52);
-	
-		var _keyboard2 = _interopRequireDefault(_keyboard);
-	
-		var _base = __webpack_require__(105);
-	
-		var _base2 = _interopRequireDefault(_base);
-	
-		var _icons = __webpack_require__(72);
-	
-		var _icons2 = _interopRequireDefault(_icons);
-	
-		var _selection = __webpack_require__(39);
-	
-		var _tooltip = __webpack_require__(69);
-	
-		var _tooltip2 = _interopRequireDefault(_tooltip);
-	
-		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-		function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-		function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-		function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-		var BubbleTheme = function (_BaseTheme) {
-		  _inherits(BubbleTheme, _BaseTheme);
-	
-		  function BubbleTheme(quill, options) {
-		    _classCallCheck(this, BubbleTheme);
-	
-		    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(BubbleTheme).call(this, quill, options));
-	
-		    _this.quill.container.classList.add('ql-bubble');
-		    return _this;
-		  }
-	
-		  _createClass(BubbleTheme, [{
-		    key: 'buildLinkEditor',
-		    value: function buildLinkEditor(toolbar) {
-		      var _this2 = this;
-	
-		      var container = document.createElement('div');
-		      container.classList.add('ql-link-editor');
-		      var arrow = document.createElement('span');
-		      arrow.classList.add('ql-tooltip-arrow');
-		      var input = document.createElement('input');
-		      input.setAttribute('type', 'text');
-		      var close = document.createElement('a');
-		      container.appendChild(input);
-		      container.appendChild(close);
-		      this.tooltip.root.appendChild(arrow);
-		      this.tooltip.root.appendChild(container);
-		      this.quill.on(_emitter2.default.events.SELECTION_CHANGE, function (range) {
-		        if (range != null && range.length > 0) {
-		          _this2.tooltip.root.classList.remove('ql-editing');
-		          _this2.tooltip.show();
-		          // Lock our width so we will expand beyond our offsetParent boundaries
-		          _this2.tooltip.root.style.left = '0px';
-		          _this2.tooltip.root.style.width = '';
-		          _this2.tooltip.root.style.width = _this2.tooltip.root.offsetWidth + 'px';
-		          var lines = _this2.quill.scroll.lines(range.index, range.length);
-		          if (lines.length === 1) {
-		            _this2.tooltip.position(_this2.quill.getBounds(range));
-		          } else {
-		            var lastLine = lines[lines.length - 1];
-		            var index = lastLine.offset(_this2.quill.scroll);
-		            var length = Math.min(lastLine.length() - 1, range.index + range.length - index);
-		            var bounds = _this2.quill.getBounds(new _selection.Range(index, length));
-		            _this2.tooltip.position(bounds);
-		          }
-		        } else if (document.activeElement !== input && !!_this2.quill.hasFocus()) {
-		          _this2.tooltip.hide();
-		        }
-		      });
-		      this.quill.on(_emitter2.default.events.SCROLL_OPTIMIZE, function () {
-		        // Let selection be restored by toolbar handlers before repositioning
-		        setTimeout(function () {
-		          if (_this2.tooltip.root.classList.contains('ql-hidden')) return;
-		          var range = _this2.quill.getSelection();
-		          if (range != null) {
-		            _this2.tooltip.position(_this2.quill.getBounds(range));
-		          }
-		        }, 1);
-		      });
-		      toolbar.handlers['link'] = function (value) {
-		        if (!value) {
-		          _this2.quill.format('link', false);
-		        } else {
-		          _this2.tooltip.root.classList.add('ql-editing');
-		          input.focus();
-		        }
-		      };
-		      ['mousedown', 'touchstart'].forEach(function (name) {
-		        close.addEventListener(name, function (event) {
-		          _this2.tooltip.root.classList.remove('ql-editing');
-		          event.preventDefault();
-		        });
-		      });
-		      input.addEventListener('keydown', function (event) {
-		        if (_keyboard2.default.match(event, 'enter')) {
-		          var scrollTop = _this2.quill.root.scrollTop;
-		          _this2.quill.focus();
-		          _this2.quill.root.scrollTop = scrollTop;
-		          _this2.quill.format('link', input.value);
-		          _this2.tooltip.hide();
-		          input.value = '';
-		          event.preventDefault();
-		        } else if (_keyboard2.default.match(event, 'escape')) {
-		          _this2.tooltip.classList.remove('ql-editing');
-		          event.preventDefault();
-		        }
-		      });
-		    }
-		  }, {
-		    key: 'extendToolbar',
-		    value: function extendToolbar(toolbar) {
-		      var container = this.quill.addContainer('ql-tooltip', this.quill.root);
-		      this.tooltip = new _tooltip2.default(container, {
-		        bounds: this.options.bounds,
-		        scroll: this.quill.root
-		      });
-		      this.buildLinkEditor(toolbar);
-		      container.appendChild(toolbar.container);
-		      this.buildButtons([].slice.call(toolbar.container.querySelectorAll('button')));
-		      this.buildPickers([].slice.call(toolbar.container.querySelectorAll('select')));
-		      this.tooltip.hide();
-		    }
-		  }]);
-	
-		  return BubbleTheme;
-		}(_base2.default);
-	
-		BubbleTheme.DEFAULTS = {
-		  modules: {
-		    toolbar: {
-		      container: [['bold', 'italic', 'link'], [{ header: 1 }, { header: 2 }, 'blockquote']]
-		    }
-		  }
-		};
-	
-		exports.default = BubbleTheme;
-	
-	/***/ },
 	/* 105 */
-	/***/ function(module, exports, __webpack_require__) {
+	/***/ function(module, exports) {
 	
 		'use strict';
 	
@@ -10085,380 +9717,77 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
-		var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
-	
-		var _emitter = __webpack_require__(29);
-	
-		var _emitter2 = _interopRequireDefault(_emitter);
-	
-		var _theme = __webpack_require__(40);
-	
-		var _theme2 = _interopRequireDefault(_theme);
-	
-		var _colorPicker = __webpack_require__(102);
-	
-		var _colorPicker2 = _interopRequireDefault(_colorPicker);
-	
-		var _iconPicker = __webpack_require__(103);
-	
-		var _iconPicker2 = _interopRequireDefault(_iconPicker);
-	
-		var _picker = __webpack_require__(100);
-	
-		var _picker2 = _interopRequireDefault(_picker);
-	
-		var _icons = __webpack_require__(72);
-	
-		var _icons2 = _interopRequireDefault(_icons);
-	
-		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
 		function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
-		function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-		function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-		var ALIGNS = [false, 'center', 'right', 'justify'];
-	
-		var COLORS = ["#000000", "#e60000", "#ff9900", "#ffff00", "#008A00", "#0066cc", "#9933ff", "#ffffff", "#facccc", "#ffebcc", "#ffffcc", "#cce8cc", "#cce0f5", "#ebd6ff", "#bbbbbb", "#f06666", "#ffc266", "#ffff66", "#66b966", "#66a3e0", "#c285ff", "#888888", "#a10000", "#b26b00", "#b2b200", "#006100", "#0047b2", "#6b24b2", "#444444", "#5c0000", "#663d00", "#666600", "#003700", "#002966", "#3d1466"];
-	
-		var FONTS = [false, 'serif', 'monospace'];
-	
-		var HEADERS = ['1', '2', '3', false];
-	
-		var SIZES = ['small', false, 'large', 'huge'];
-	
-		var BaseTheme = function (_Theme) {
-		  _inherits(BaseTheme, _Theme);
-	
-		  function BaseTheme(quill, options) {
-		    _classCallCheck(this, BaseTheme);
-	
-		    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(BaseTheme).call(this, quill, options));
-	
-		    if (_this.options.modules.toolbar != null && _this.options.modules.toolbar.constructor !== Object) {
-		      _this.options.modules.toolbar = { container: _this.options.modules.toolbar };
-		    }
-		    return _this;
-		  }
-	
-		  _createClass(BaseTheme, [{
-		    key: 'addModule',
-		    value: function addModule(name) {
-		      var module = _get(Object.getPrototypeOf(BaseTheme.prototype), 'addModule', this).call(this, name);
-		      if (name === 'toolbar') {
-		        this.extendToolbar(module);
-		      }
-		      return module;
-		    }
-		  }, {
-		    key: 'buildButtons',
-		    value: function buildButtons(buttons) {
-		      buttons.forEach(function (button) {
-		        var className = button.getAttribute('class') || '';
-		        className.split(/\s+/).forEach(function (name) {
-		          if (!name.startsWith('ql-')) return;
-		          name = name.slice('ql-'.length);
-		          if (_icons2.default[name] == null) return;
-		          if (name === 'direction') {
-		            button.innerHTML = _icons2.default[name][''] + _icons2.default[name]['rtl'];
-		          } else if (typeof _icons2.default[name] === 'string') {
-		            button.innerHTML = _icons2.default[name];
-		          } else {
-		            var value = button.value || '';
-		            if (value != null && _icons2.default[name][value]) {
-		              button.innerHTML = _icons2.default[name][value];
-		            }
-		          }
-		        });
-		      });
-		    }
-		  }, {
-		    key: 'buildPickers',
-		    value: function buildPickers(selects) {
-		      var pickers = selects.map(function (select) {
-		        var picker = void 0;
-		        if (select.classList.contains('ql-align')) {
-		          if (select.querySelector('option') == null) {
-		            fillSelect(select, ALIGNS);
-		          }
-		          picker = new _iconPicker2.default(select, _icons2.default.align);
-		        } else if (select.classList.contains('ql-background') || select.classList.contains('ql-color')) {
-		          var format = select.classList.contains('ql-background') ? 'background' : 'color';
-		          if (select.querySelector('option') == null) {
-		            fillSelect(select, COLORS, format === 'background' ? '#ffffff' : '#000000');
-		          }
-		          picker = new _colorPicker2.default(select, _icons2.default[format]);
-		        } else {
-		          if (select.querySelector('option') == null) {
-		            if (select.classList.contains('ql-font')) {
-		              fillSelect(select, FONTS);
-		            } else if (select.classList.contains('ql-header')) {
-		              fillSelect(select, HEADERS);
-		            } else if (select.classList.contains('ql-size')) {
-		              fillSelect(select, SIZES);
-		            }
-		          }
-		          picker = new _picker2.default(select);
-		        }
-		        return picker;
-		      });
-		      var update = function update() {
-		        pickers.forEach(function (picker) {
-		          picker.update();
-		        });
-		      };
-		      this.quill.on(_emitter2.default.events.SELECTION_CHANGE, update).on(_emitter2.default.events.SCROLL_OPTIMIZE, update);
-		      document.body.addEventListener('click', function (e) {
-		        pickers.forEach(function (picker) {
-		          if (!(e.target.compareDocumentPosition(picker.container) & Node.DOCUMENT_POSITION_CONTAINS)) {
-		            picker.close();
-		          }
-		        });
-		      });
-		    }
-		  }]);
-	
-		  return BaseTheme;
-		}(_theme2.default);
-	
-		BaseTheme.DEFAULTS = {};
-	
-		function fillSelect(select, values) {
-		  var defaultValue = arguments.length <= 2 || arguments[2] === undefined ? false : arguments[2];
-	
-		  values.forEach(function (value) {
-		    var option = document.createElement('option');
-		    if (value === defaultValue) {
-		      option.setAttribute('selected', 'selected');
-		    } else {
-		      option.setAttribute('value', value);
-		    }
-		    select.appendChild(option);
-		  });
-		}
-	
-		exports.default = BaseTheme;
-	
-	/***/ },
-	/* 106 */
-	/***/ function(module, exports, __webpack_require__) {
-	
-		'use strict';
-	
-		Object.defineProperty(exports, "__esModule", {
-		  value: true
-		});
-	
-		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-		var _emitter = __webpack_require__(29);
-	
-		var _emitter2 = _interopRequireDefault(_emitter);
-	
-		var _base = __webpack_require__(105);
-	
-		var _base2 = _interopRequireDefault(_base);
-	
-		var _imageTooltip = __webpack_require__(107);
-	
-		var _imageTooltip2 = _interopRequireDefault(_imageTooltip);
-	
-		var _linkTooltip = __webpack_require__(108);
-	
-		var _linkTooltip2 = _interopRequireDefault(_linkTooltip);
-	
-		var _picker = __webpack_require__(100);
-	
-		var _picker2 = _interopRequireDefault(_picker);
-	
-		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-		function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-		function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-		function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-		var SnowTheme = function (_BaseTheme) {
-		  _inherits(SnowTheme, _BaseTheme);
-	
-		  function SnowTheme(quill, options) {
-		    _classCallCheck(this, SnowTheme);
-	
-		    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(SnowTheme).call(this, quill, options));
-	
-		    _this.quill.container.classList.add('ql-snow');
-		    return _this;
-		  }
-	
-		  _createClass(SnowTheme, [{
-		    key: 'extendToolbar',
-		    value: function extendToolbar(toolbar) {
-		      toolbar.container.classList.add('ql-snow');
-		      this.buildButtons([].slice.call(toolbar.container.querySelectorAll('button')));
-		      this.buildPickers([].slice.call(toolbar.container.querySelectorAll('select')));
-		      if (toolbar.container.querySelector('.ql-image')) {
-		        this.imageTooltip = new _imageTooltip2.default(this.quill);
-		      }
-		      if (toolbar.container.querySelector('.ql-link')) {
-		        this.linkTooltip = new _linkTooltip2.default(this.quill);
-		        this.quill.keyboard.addBinding({ key: 'K', shortKey: true }, function (range, context) {
-		          toolbar.handlers['link'].call(toolbar, !context.format.link);
-		        });
-		      }
-		    }
-		  }]);
-	
-		  return SnowTheme;
-		}(_base2.default);
-	
-		SnowTheme.DEFAULTS = {
-		  modules: {
-		    'toolbar': {
-		      container: [[{ header: ['1', '2', '3', false] }], ['bold', 'italic', 'underline', 'link'], [{ list: 'ordered' }, { list: 'bullet' }], ['clean']],
-		      handlers: {
-		        'image': function image() {
-		          this.quill.theme.imageTooltip.show();
-		        },
-		        'link': function link(value) {
-		          if (value) {
-		            var savedRange = this.quill.selection.savedRange;
-		            this.quill.theme.linkTooltip.open(savedRange);
-		          } else {
-		            this.quill.format('link', false);
-		          }
-		        }
-		      }
-		    }
-		  }
-		};
-	
-		exports.default = SnowTheme;
-	
-	/***/ },
-	/* 107 */
-	/***/ function(module, exports, __webpack_require__) {
-	
-		'use strict';
-	
-		Object.defineProperty(exports, "__esModule", {
-		  value: true
-		});
-	
-		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-		var _quill = __webpack_require__(19);
-	
-		var _quill2 = _interopRequireDefault(_quill);
-	
-		var _image = __webpack_require__(63);
-	
-		var _image2 = _interopRequireDefault(_image);
-	
-		var _keyboard = __webpack_require__(52);
-	
-		var _keyboard2 = _interopRequireDefault(_keyboard);
-	
-		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-		function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-		var ImageTooltip = function () {
-		  function ImageTooltip(quill) {
+		var Tooltip = function () {
+		  function Tooltip(root) {
 		    var _this = this;
 	
-		    _classCallCheck(this, ImageTooltip);
+		    var containers = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
 	
-		    this.quill = quill;
-		    this.container = this.quill.addContainer('ql-image-tooltip');
-		    this.container.classList.add('ql-hidden');
-		    this.container.classList.add('ql-tooltip');
-		    this.container.innerHTML = this.constructor.TEMPLATE;
-		    this.preview = this.container.querySelector('.ql-preview');
-		    this.textbox = this.container.querySelector('input[type=text]');
-		    this.textbox.addEventListener('keydown', function (event) {
-		      if (_keyboard2.default.match(event, 'enter')) {
-		        _this.save();
-		        event.preventDefault();
-		      } else if (_keyboard2.default.match(event, 'escape')) {
-		        _this.hide();
-		        event.preventDefault();
-		      }
-		    });
-		    ['mousedown', 'touchstart'].forEach(function (name) {
-		      _this.container.querySelector('a.ql-action').addEventListener(name, function (event) {
-		        _this.save();
-		        event.preventDefault();
-		      });
-		      _this.container.querySelector('a.ql-cancel').addEventListener(name, function (event) {
-		        _this.hide();
-		        event.preventDefault();
-		      });
-		    });
-		    this.textbox.addEventListener('input', this.update.bind(this));
+		    _classCallCheck(this, Tooltip);
+	
+		    this.containers = containers;
+		    this.root = root;
+		    this.root.classList.add('ql-tooltip');
+		    if (this.containers.scroll instanceof HTMLElement) {
+		      (function () {
+		        var offset = parseInt(window.getComputedStyle(_this.root).marginTop);
+		        _this.containers.scroll.addEventListener('scroll', function () {
+		          _this.root.style.marginTop = -1 * _this.containers.scroll.scrollTop + offset + 'px';
+		        });
+		      })();
+		    }
 		  }
 	
-		  _createClass(ImageTooltip, [{
-		    key: 'center',
-		    value: function center() {
-		      this.container.style.left = this.quill.container.offsetWidth / 2 - this.container.offsetWidth / 2 + 'px';
-		      this.container.style.top = this.quill.container.offsetHeight / 2 - this.container.offsetHeight / 2 + 'px';
-		    }
-		  }, {
-		    key: 'hide',
-		    value: function hide() {
-		      this.container.classList.add('ql-hidden');
-		      if (this.preview.firstChild != null) {
-		        this.preview.removeChild(this.preview.firstChild);
-		        this.preview.classList.add('ql-empty');
+		  _createClass(Tooltip, [{
+		    key: 'position',
+		    value: function position(reference) {
+		      var left = reference.left + reference.width / 2 - this.root.offsetWidth / 2;
+		      var top = reference.bottom;
+		      if (this.containers.scroll instanceof HTMLElement) {
+		        top += this.containers.scroll.scrollTop;
 		      }
-		      this.quill.focus();
-		    }
-		  }, {
-		    key: 'save',
-		    value: function save() {
-		      var range = this.quill.getSelection(true);
-		      var index = range.index + range.length;
-		      this.quill.insertEmbed(index, _image2.default.blotName, this.textbox.value, _quill2.default.sources.USER);
-		      this.quill.setSelection(index + 1, _quill2.default.sources.SILENT);
-		      this.textbox.value = '';
-		      this.hide();
+		      this.root.style.left = left + 'px';
+		      this.root.style.top = top + 'px';
+		      if (!(this.containers.bounds instanceof HTMLElement)) return;
+		      var containerBounds = this.containers.bounds.getBoundingClientRect();
+		      var rootBounds = this.root.getBoundingClientRect();
+		      var shift = 0;
+		      if (rootBounds.right > containerBounds.right) {
+		        shift = containerBounds.right - rootBounds.right;
+		        this.root.style.left = left + shift + 'px';
+		      }
+		      if (rootBounds.left < containerBounds.left) {
+		        shift = containerBounds.left - rootBounds.left;
+		        this.root.style.left = left + shift + 'px';
+		      }
+		      var arrow = this.root.querySelector('.ql-tooltip-arrow');
+		      if (arrow == null) return;
+		      arrow.style.marginLeft = '';
+		      if (shift !== 0) {
+		        arrow.style.marginLeft = -1 * shift - arrow.offsetWidth / 2 + 'px';
+		      }
 		    }
 		  }, {
 		    key: 'show',
 		    value: function show() {
-		      this.container.classList.remove('ql-hidden');
-		      this.center();
-		      this.textbox.focus();
-		      return true;
+		      this.root.classList.remove('ql-hidden');
 		    }
 		  }, {
-		    key: 'update',
-		    value: function update() {
-		      if (!_image2.default.match(this.textbox.value)) return;
-		      var url = _image2.default.sanitize(this.textbox.value);
-		      if (this.preview.firstChild != null) {
-		        this.preview.firstChild.setAttribute('src', url);
-		      } else {
-		        var img = document.createElement('img');
-		        img.setAttribute('src', url);
-		        this.preview.appendChild(img);
-		        this.preview.classList.remove('ql-empty');
-		      }
+		    key: 'hide',
+		    value: function hide() {
+		      this.root.classList.add('ql-hidden');
 		    }
 		  }]);
 	
-		  return ImageTooltip;
+		  return Tooltip;
 		}();
 	
-		ImageTooltip.TEMPLATE = ['<input class="input" type="text">', '<div class="ql-empty ql-preview"></div>', '<a class="ql-cancel"></a>', '<a class="ql-action"></a>'].join('');
-	
-		exports.default = ImageTooltip;
+		exports.default = Tooltip;
 	
 	/***/ },
-	/* 108 */
+	/* 106 */
 	/***/ function(module, exports, __webpack_require__) {
 	
 		'use strict';
@@ -10475,17 +9804,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 		var _quill2 = _interopRequireDefault(_quill);
 	
-		var _selection = __webpack_require__(39);
+		var _selection = __webpack_require__(40);
 	
-		var _keyboard = __webpack_require__(52);
+		var _keyboard = __webpack_require__(53);
 	
 		var _keyboard2 = _interopRequireDefault(_keyboard);
 	
-		var _link = __webpack_require__(59);
+		var _link = __webpack_require__(60);
 	
 		var _link2 = _interopRequireDefault(_link);
 	
-		var _tooltip = __webpack_require__(69);
+		var _tooltip = __webpack_require__(105);
 	
 		var _tooltip2 = _interopRequireDefault(_tooltip);
 	
@@ -10619,6 +9948,464 @@ return /******/ (function(modules) { // webpackBootstrap
 		LinkTooltip.TEMPLATE = ['<a class="ql-preview" target="_blank" href="about:blank"></a>', '<input type="text">', '<a class="ql-action"></a>', '<a class="ql-remove"></a>'].join('');
 	
 		exports.default = LinkTooltip;
+	
+	/***/ },
+	/* 107 */
+	/***/ function(module, exports, __webpack_require__) {
+	
+		'use strict';
+	
+		Object.defineProperty(exports, "__esModule", {
+		  value: true
+		});
+	
+		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+		var _emitter = __webpack_require__(29);
+	
+		var _emitter2 = _interopRequireDefault(_emitter);
+	
+		var _keyboard = __webpack_require__(53);
+	
+		var _keyboard2 = _interopRequireDefault(_keyboard);
+	
+		var _base = __webpack_require__(108);
+	
+		var _base2 = _interopRequireDefault(_base);
+	
+		var _icons = __webpack_require__(69);
+	
+		var _icons2 = _interopRequireDefault(_icons);
+	
+		var _selection = __webpack_require__(40);
+	
+		var _tooltip = __webpack_require__(105);
+	
+		var _tooltip2 = _interopRequireDefault(_tooltip);
+	
+		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+		function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+		function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+		function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+		var BubbleTheme = function (_BaseTheme) {
+		  _inherits(BubbleTheme, _BaseTheme);
+	
+		  function BubbleTheme(quill, options) {
+		    _classCallCheck(this, BubbleTheme);
+	
+		    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(BubbleTheme).call(this, quill, options));
+	
+		    _this.quill.container.classList.add('ql-bubble');
+		    return _this;
+		  }
+	
+		  _createClass(BubbleTheme, [{
+		    key: 'buildLinkEditor',
+		    value: function buildLinkEditor(toolbar) {
+		      var _this2 = this;
+	
+		      var container = document.createElement('div');
+		      container.classList.add('ql-link-editor');
+		      var arrow = document.createElement('span');
+		      arrow.classList.add('ql-tooltip-arrow');
+		      var input = document.createElement('input');
+		      input.setAttribute('type', 'text');
+		      var close = document.createElement('a');
+		      container.appendChild(input);
+		      container.appendChild(close);
+		      this.tooltip.root.appendChild(arrow);
+		      this.tooltip.root.appendChild(container);
+		      this.quill.on(_emitter2.default.events.SELECTION_CHANGE, function (range) {
+		        if (range != null && range.length > 0) {
+		          _this2.tooltip.root.classList.remove('ql-editing');
+		          _this2.tooltip.show();
+		          // Lock our width so we will expand beyond our offsetParent boundaries
+		          _this2.tooltip.root.style.left = '0px';
+		          _this2.tooltip.root.style.width = '';
+		          _this2.tooltip.root.style.width = _this2.tooltip.root.offsetWidth + 'px';
+		          var lines = _this2.quill.scroll.lines(range.index, range.length);
+		          if (lines.length === 1) {
+		            _this2.tooltip.position(_this2.quill.getBounds(range));
+		          } else {
+		            var lastLine = lines[lines.length - 1];
+		            var index = lastLine.offset(_this2.quill.scroll);
+		            var length = Math.min(lastLine.length() - 1, range.index + range.length - index);
+		            var bounds = _this2.quill.getBounds(new _selection.Range(index, length));
+		            _this2.tooltip.position(bounds);
+		          }
+		        } else if (document.activeElement !== input && !!_this2.quill.hasFocus()) {
+		          _this2.tooltip.hide();
+		        }
+		      });
+		      this.quill.on(_emitter2.default.events.SCROLL_OPTIMIZE, function () {
+		        // Let selection be restored by toolbar handlers before repositioning
+		        setTimeout(function () {
+		          if (_this2.tooltip.root.classList.contains('ql-hidden')) return;
+		          var range = _this2.quill.getSelection();
+		          if (range != null) {
+		            _this2.tooltip.position(_this2.quill.getBounds(range));
+		          }
+		        }, 1);
+		      });
+		      toolbar.handlers['link'] = function (value) {
+		        if (!value) {
+		          _this2.quill.format('link', false);
+		        } else {
+		          _this2.tooltip.root.classList.add('ql-editing');
+		          input.focus();
+		        }
+		      };
+		      ['mousedown', 'touchstart'].forEach(function (name) {
+		        close.addEventListener(name, function (event) {
+		          _this2.tooltip.root.classList.remove('ql-editing');
+		          event.preventDefault();
+		        });
+		      });
+		      input.addEventListener('keydown', function (event) {
+		        if (_keyboard2.default.match(event, 'enter')) {
+		          var scrollTop = _this2.quill.root.scrollTop;
+		          _this2.quill.focus();
+		          _this2.quill.root.scrollTop = scrollTop;
+		          _this2.quill.format('link', input.value);
+		          _this2.tooltip.hide();
+		          input.value = '';
+		          event.preventDefault();
+		        } else if (_keyboard2.default.match(event, 'escape')) {
+		          _this2.tooltip.classList.remove('ql-editing');
+		          event.preventDefault();
+		        }
+		      });
+		    }
+		  }, {
+		    key: 'extendToolbar',
+		    value: function extendToolbar(toolbar) {
+		      var container = this.quill.addContainer('ql-tooltip', this.quill.root);
+		      this.tooltip = new _tooltip2.default(container, {
+		        bounds: this.options.bounds,
+		        scroll: this.quill.root
+		      });
+		      this.buildLinkEditor(toolbar);
+		      container.appendChild(toolbar.container);
+		      this.buildButtons([].slice.call(toolbar.container.querySelectorAll('button')));
+		      this.buildPickers([].slice.call(toolbar.container.querySelectorAll('select')));
+		      this.tooltip.hide();
+		    }
+		  }]);
+	
+		  return BubbleTheme;
+		}(_base2.default);
+	
+		BubbleTheme.DEFAULTS = {
+		  modules: {
+		    toolbar: {
+		      container: [['bold', 'italic', 'link'], [{ header: 1 }, { header: 2 }, 'blockquote']]
+		    }
+		  }
+		};
+	
+		exports.default = BubbleTheme;
+	
+	/***/ },
+	/* 108 */
+	/***/ function(module, exports, __webpack_require__) {
+	
+		'use strict';
+	
+		Object.defineProperty(exports, "__esModule", {
+		  value: true
+		});
+	
+		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+		var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
+	
+		var _extend = __webpack_require__(26);
+	
+		var _extend2 = _interopRequireDefault(_extend);
+	
+		var _delta = __webpack_require__(21);
+	
+		var _delta2 = _interopRequireDefault(_delta);
+	
+		var _emitter = __webpack_require__(29);
+	
+		var _emitter2 = _interopRequireDefault(_emitter);
+	
+		var _theme = __webpack_require__(41);
+	
+		var _theme2 = _interopRequireDefault(_theme);
+	
+		var _colorPicker = __webpack_require__(103);
+	
+		var _colorPicker2 = _interopRequireDefault(_colorPicker);
+	
+		var _iconPicker = __webpack_require__(104);
+	
+		var _iconPicker2 = _interopRequireDefault(_iconPicker);
+	
+		var _picker = __webpack_require__(101);
+	
+		var _picker2 = _interopRequireDefault(_picker);
+	
+		var _icons = __webpack_require__(69);
+	
+		var _icons2 = _interopRequireDefault(_icons);
+	
+		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+		function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+		function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+		function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+		var ALIGNS = [false, 'center', 'right', 'justify'];
+	
+		var COLORS = ["#000000", "#e60000", "#ff9900", "#ffff00", "#008A00", "#0066cc", "#9933ff", "#ffffff", "#facccc", "#ffebcc", "#ffffcc", "#cce8cc", "#cce0f5", "#ebd6ff", "#bbbbbb", "#f06666", "#ffc266", "#ffff66", "#66b966", "#66a3e0", "#c285ff", "#888888", "#a10000", "#b26b00", "#b2b200", "#006100", "#0047b2", "#6b24b2", "#444444", "#5c0000", "#663d00", "#666600", "#003700", "#002966", "#3d1466"];
+	
+		var FONTS = [false, 'serif', 'monospace'];
+	
+		var HEADERS = ['1', '2', '3', false];
+	
+		var SIZES = ['small', false, 'large', 'huge'];
+	
+		var BaseTheme = function (_Theme) {
+		  _inherits(BaseTheme, _Theme);
+	
+		  function BaseTheme(quill, options) {
+		    _classCallCheck(this, BaseTheme);
+	
+		    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(BaseTheme).call(this, quill, options));
+	
+		    _this.options.modules.toolbar = _this.options.modules.toolbar || {};
+		    if (_this.options.modules.toolbar.constructor !== Object) {
+		      _this.options.modules.toolbar = {
+		        container: _this.options.modules.toolbar,
+		        handlers: {}
+		      };
+		    }
+		    _this.options.modules.toolbar.handlers = (0, _extend2.default)({}, BaseTheme.DEFAULTS.modules.toolbar.handlers, _this.constructor.DEFAULTS.modules.toolbar.handlers || {}, _this.options.modules.toolbar.handlers || {});
+		    return _this;
+		  }
+	
+		  _createClass(BaseTheme, [{
+		    key: 'addModule',
+		    value: function addModule(name) {
+		      var module = _get(Object.getPrototypeOf(BaseTheme.prototype), 'addModule', this).call(this, name);
+		      if (name === 'toolbar') {
+		        this.extendToolbar(module);
+		      }
+		      return module;
+		    }
+		  }, {
+		    key: 'buildButtons',
+		    value: function buildButtons(buttons) {
+		      buttons.forEach(function (button) {
+		        var className = button.getAttribute('class') || '';
+		        className.split(/\s+/).forEach(function (name) {
+		          if (!name.startsWith('ql-')) return;
+		          name = name.slice('ql-'.length);
+		          if (_icons2.default[name] == null) return;
+		          if (name === 'direction') {
+		            button.innerHTML = _icons2.default[name][''] + _icons2.default[name]['rtl'];
+		          } else if (typeof _icons2.default[name] === 'string') {
+		            button.innerHTML = _icons2.default[name];
+		          } else {
+		            var value = button.value || '';
+		            if (value != null && _icons2.default[name][value]) {
+		              button.innerHTML = _icons2.default[name][value];
+		            }
+		          }
+		        });
+		      });
+		    }
+		  }, {
+		    key: 'buildPickers',
+		    value: function buildPickers(selects) {
+		      var pickers = selects.map(function (select) {
+		        var picker = void 0;
+		        if (select.classList.contains('ql-align')) {
+		          if (select.querySelector('option') == null) {
+		            fillSelect(select, ALIGNS);
+		          }
+		          picker = new _iconPicker2.default(select, _icons2.default.align);
+		        } else if (select.classList.contains('ql-background') || select.classList.contains('ql-color')) {
+		          var format = select.classList.contains('ql-background') ? 'background' : 'color';
+		          if (select.querySelector('option') == null) {
+		            fillSelect(select, COLORS, format === 'background' ? '#ffffff' : '#000000');
+		          }
+		          picker = new _colorPicker2.default(select, _icons2.default[format]);
+		        } else {
+		          if (select.querySelector('option') == null) {
+		            if (select.classList.contains('ql-font')) {
+		              fillSelect(select, FONTS);
+		            } else if (select.classList.contains('ql-header')) {
+		              fillSelect(select, HEADERS);
+		            } else if (select.classList.contains('ql-size')) {
+		              fillSelect(select, SIZES);
+		            }
+		          }
+		          picker = new _picker2.default(select);
+		        }
+		        return picker;
+		      });
+		      var update = function update() {
+		        pickers.forEach(function (picker) {
+		          picker.update();
+		        });
+		      };
+		      this.quill.on(_emitter2.default.events.SELECTION_CHANGE, update).on(_emitter2.default.events.SCROLL_OPTIMIZE, update);
+		      document.body.addEventListener('click', function (e) {
+		        pickers.forEach(function (picker) {
+		          if (!(e.target.compareDocumentPosition(picker.container) & Node.DOCUMENT_POSITION_CONTAINS)) {
+		            picker.close();
+		          }
+		        });
+		      });
+		    }
+		  }]);
+	
+		  return BaseTheme;
+		}(_theme2.default);
+	
+		BaseTheme.DEFAULTS = {
+		  modules: {
+		    toolbar: {
+		      handlers: {
+		        image: function image(value) {
+		          var fileInput = this.container.querySelector('input.ql-image[type=file]');
+		          var quill = this.quill;
+		          if (fileInput == null) {
+		            fileInput = document.createElement('input');
+		            fileInput.setAttribute('type', 'file');
+		            fileInput.setAttribute('accept', 'image/*');
+		            fileInput.classList.add('ql-image');
+		            fileInput.addEventListener('change', function () {
+		              if (this.files != null && this.files[0] != null) {
+		                var reader = new FileReader();
+		                reader.onload = function (e) {
+		                  var range = quill.getSelection(true);
+		                  quill.updateContents(new _delta2.default().retain(range.index).delete(range.length).insert({ image: e.target.result }), _emitter2.default.sources.USER);
+		                  quill.setSelection(range.index + 1, _emitter2.default.sources.SILENT);
+		                  fileInput.value = "";
+		                };
+		                reader.readAsDataURL(this.files[0]);
+		              }
+		            });
+		            this.container.appendChild(fileInput);
+		          }
+		          fileInput.click();
+		        }
+		      }
+		    }
+		  }
+		};
+	
+		function fillSelect(select, values) {
+		  var defaultValue = arguments.length <= 2 || arguments[2] === undefined ? false : arguments[2];
+	
+		  values.forEach(function (value) {
+		    var option = document.createElement('option');
+		    if (value === defaultValue) {
+		      option.setAttribute('selected', 'selected');
+		    } else {
+		      option.setAttribute('value', value);
+		    }
+		    select.appendChild(option);
+		  });
+		}
+	
+		exports.default = BaseTheme;
+	
+	/***/ },
+	/* 109 */
+	/***/ function(module, exports, __webpack_require__) {
+	
+		'use strict';
+	
+		Object.defineProperty(exports, "__esModule", {
+		  value: true
+		});
+	
+		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+		var _emitter = __webpack_require__(29);
+	
+		var _emitter2 = _interopRequireDefault(_emitter);
+	
+		var _base = __webpack_require__(108);
+	
+		var _base2 = _interopRequireDefault(_base);
+	
+		var _linkTooltip = __webpack_require__(106);
+	
+		var _linkTooltip2 = _interopRequireDefault(_linkTooltip);
+	
+		var _picker = __webpack_require__(101);
+	
+		var _picker2 = _interopRequireDefault(_picker);
+	
+		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+		function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+		function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+		function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+		var SnowTheme = function (_BaseTheme) {
+		  _inherits(SnowTheme, _BaseTheme);
+	
+		  function SnowTheme(quill, options) {
+		    _classCallCheck(this, SnowTheme);
+	
+		    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(SnowTheme).call(this, quill, options));
+	
+		    _this.quill.container.classList.add('ql-snow');
+		    return _this;
+		  }
+	
+		  _createClass(SnowTheme, [{
+		    key: 'extendToolbar',
+		    value: function extendToolbar(toolbar) {
+		      toolbar.container.classList.add('ql-snow');
+		      this.buildButtons([].slice.call(toolbar.container.querySelectorAll('button')));
+		      this.buildPickers([].slice.call(toolbar.container.querySelectorAll('select')));
+		      if (toolbar.container.querySelector('.ql-link')) {
+		        this.linkTooltip = new _linkTooltip2.default(this.quill);
+		        this.quill.keyboard.addBinding({ key: 'K', shortKey: true }, function (range, context) {
+		          toolbar.handlers['link'].call(toolbar, !context.format.link);
+		        });
+		      }
+		    }
+		  }]);
+	
+		  return SnowTheme;
+		}(_base2.default);
+	
+		SnowTheme.DEFAULTS = {
+		  modules: {
+		    toolbar: {
+		      container: [[{ header: ['1', '2', '3', false] }], ['bold', 'italic', 'underline', 'link'], [{ list: 'ordered' }, { list: 'bullet' }], ['clean']],
+		      handlers: {
+		        link: function link(value) {
+		          if (value) {
+		            var savedRange = this.quill.selection.savedRange;
+		            this.quill.theme.linkTooltip.open(savedRange);
+		          } else {
+		            this.quill.format('link', false);
+		          }
+		        }
+		      }
+		    }
+		  }
+		};
+	
+		exports.default = SnowTheme;
 	
 	/***/ }
 	/******/ ])
