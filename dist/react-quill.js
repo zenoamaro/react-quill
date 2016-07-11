@@ -689,7 +689,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports) {
 
 	/*!
-	 * Quill Editor v1.0.0-beta.6.zenreach
+	 * Quill Editor v1.0.0-beta.8.zenreach
 	 * https://quilljs.com/
 	 * Copyright (c) 2014, Jason Chen
 	 * Copyright (c) 2013, salesforce.com
@@ -1082,7 +1082,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		        // Need to be reversed for if DOM nodes already in order
 		        [].slice.call(this.domNode.childNodes).reverse().forEach(function (node) {
 		            try {
-		                var child = Registry.find(node) || Registry.create(node);
+		                var child = makeBlot(node);
 		                _this.insertBefore(child, _this.children.head);
 		            }
 		            catch (err) {
@@ -1235,31 +1235,21 @@ return /******/ (function(modules) { // webpackBootstrap
 		                return;
 		            blot.detach();
 		        });
-		        addedNodes.sort(function (a, b) {
+		        addedNodes.filter(function (node) {
+		            return node.parentNode == _this.domNode;
+		        }).sort(function (a, b) {
 		            if (a === b)
 		                return 0;
 		            if (a.compareDocumentPosition(b) & Node.DOCUMENT_POSITION_FOLLOWING) {
-		                return -1;
+		                return 1;
 		            }
-		            return 1;
-		        });
-		        addedNodes.reverse().forEach(function (node) {
-		            if (node.parentNode !== _this.domNode)
-		                return;
+		            return -1;
+		        }).forEach(function (node) {
 		            var refBlot = null;
 		            if (node.nextSibling != null) {
 		                refBlot = Registry.find(node.nextSibling);
 		            }
-		            var blot;
-		            if (node instanceof HTMLFontElement) {
-		                // node is in the form <font><span><b>...</b></span></font>
-		                // Registry.create doesn't handle the <font> case well, and throws a ParchmentError
-		                var BlotClass = Registry.query(node.firstChild.firstChild);
-		                blot = new BlotClass(node.firstChild.firstChild);
-		            }
-		            else {
-		                blot = Registry.find(node) || Registry.create(node);
-		            }
+		            var blot = makeBlot(node);
 		            if (blot.next != refBlot || blot.next == null) {
 		                if (blot.parent != null) {
 		                    blot.parent.children.remove(blot);
@@ -1270,6 +1260,23 @@ return /******/ (function(modules) { // webpackBootstrap
 		    };
 		    return ContainerBlot;
 		}(shadow_1.default));
+		function makeBlot(node) {
+		    var blot = Registry.find(node);
+		    if (blot == null) {
+		        try {
+		            blot = Registry.create(node);
+		        }
+		        catch (e) {
+		            blot = Registry.create(Registry.Scope.INLINE);
+		            [].slice.call(node.childNodes).forEach(function (child) {
+		                blot.domNode.appendChild(child);
+		            });
+		            node.parentNode.replaceChild(blot.domNode, node);
+		            blot.attach();
+		        }
+		    }
+		    return blot;
+		}
 		Object.defineProperty(exports, "__esModule", { value: true });
 		exports.default = ContainerBlot;
 	
@@ -2607,8 +2614,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		    this.clipboard = this.theme.addModule('clipboard');
 		    this.history = this.theme.addModule('history');
 		    this.theme.init();
-		    // Setting would truncate a newline at the end
-		    this.pasteHTML(0, '<div class=\'ql-editor\' style="white-space: normal;">' + html + '</div>');
+		    this.pasteHTML('<div class=\'ql-editor\' style="white-space: normal;">' + html + '<p><br></p></div>');
 		    this.history.clear();
 		    if (options.readOnly) {
 		      this.disable();
@@ -2932,7 +2938,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		};
 		Quill.events = _emitter2.default.events;
 		Quill.sources = _emitter2.default.sources;
-		Quill.version = ("1.0.0-beta.6.zenreach");
+		Quill.version = ("1.0.0-beta.8.zenreach");
 	
 		Quill.imports = {
 		  'delta': _delta2.default,
@@ -6810,8 +6816,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 		    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Clipboard).call(this, quill, options));
 	
-		    _this.quill.root.addEventListener('copy', _this.onCopy.bind(_this));
-		    _this.quill.root.addEventListener('cut', _this.onCut.bind(_this));
 		    _this.quill.root.addEventListener('paste', _this.onPaste.bind(_this));
 		    _this.container = _this.quill.addContainer('ql-clipboard');
 		    _this.container.setAttribute('contenteditable', true);
@@ -6872,6 +6876,9 @@ return /******/ (function(modules) { // webpackBootstrap
 		      var traverse = function traverse(node) {
 		        // Post-order
 		        return [].reduce.call(node.childNodes || [], function (delta, childNode) {
+		          if (childNode.nodeType !== Node.ELEMENT_NODE && childNode.nodeType !== Node.TEXT_NODE) {
+		            return delta;
+		          }
 		          var childrenDelta = traverse(childNode);
 		          childrenDelta = _this2.matchers.reduce(function (childrenDelta, pair) {
 		            var _pair2 = _slicedToArray(pair, 2);
@@ -6900,28 +6907,6 @@ return /******/ (function(modules) { // webpackBootstrap
 		      return delta;
 		    }
 		  }, {
-		    key: 'onCopy',
-		    value: function onCopy(e) {
-		      var range = this.quill.getSelection();
-		      if (range == null || range.length === 0 || e.defaultPrevented) return;
-		      var clipboard = e.clipboardData || window.clipboardData;
-		      clipboard.setData('text', this.quill.getText(range));
-		      // Only Chrome allows this shortcut, IE11 errors for trying
-		      if (e.clipboardData) {
-		        clipboard.setData('application/json', JSON.stringify(this.quill.getContents(range)));
-		      }
-		      // e.preventDefault();
-		    }
-		  }, {
-		    key: 'onCut',
-		    value: function onCut(e) {
-		      if (e.defaultPrevented) return;
-		      this.onCopy(e);
-		      var range = this.quill.getSelection();
-		      this.quill.deleteText(range, _quill2.default.sources.USER);
-		      this.quill.setSelection(range.index, _quill2.default.sources.SILENT);
-		    }
-		  }, {
 		    key: 'onPaste',
 		    value: function onPaste(e) {
 		      var _this3 = this;
@@ -6930,33 +6915,15 @@ return /******/ (function(modules) { // webpackBootstrap
 		      var range = this.quill.getSelection();
 		      var clipboard = e.clipboardData || window.clipboardData;
 		      var delta = new _delta2.default().retain(range.index).delete(range.length);
-		      var done = function done(delta) {
+		      this.container.focus();
+		      setTimeout(function () {
+		        var html = _this3.container.innerHTML;
+		        delta = delta.concat(_this3.convert());
 		        _this3.quill.updateContents(delta, _quill2.default.sources.USER);
 		        // range.length contributes to delta.length()
 		        _this3.quill.setSelection(delta.length() - range.length, _quill2.default.sources.SILENT);
 		        _this3.quill.selection.scrollIntoView();
-		      };
-		      var intercept = function intercept(delta, callback) {
-		        _this3.container.focus();
-		        setTimeout(function () {
-		          var html = _this3.container.innerHTML;
-		          delta = delta.concat(_this3.convert());
-		          callback(delta);
-		        }, 1);
-		      };
-		      // Firefox types is an iterable, not array
-		      // IE11 types can be null
-		      if ([].indexOf.call(clipboard.types || [], 'application/json') > -1) {
-		        try {
-		          var pasteJSON = JSON.parse(clipboard.getData('application/json'));
-		          done(delta.concat(pasteJSON));
-		        } catch (err) {
-		          intercept(delta, done);
-		        }
-		        e.preventDefault();
-		      } else {
-		        intercept(delta, done);
-		      }
+		      }, 1);
 		    }
 		  }]);
 	
@@ -7051,13 +7018,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 		function matchStyles(node, delta) {
 		  var formats = {};
-		  if (node.style.fontWeight && computeStyle(node).fontWeight === 'bold') {
+		  var style = node.style || {};
+		  if (style.fontWeight && computeStyle(node).fontWeight === 'bold') {
 		    formats.bold = true;
 		  }
 		  if (Object.keys(formats).length > 0) {
 		    delta = delta.compose(new _delta2.default().retain(delta.length(), formats));
 		  }
-		  if (parseFloat(node.style.textIndent || 0) > 0) {
+		  if (parseFloat(style.textIndent || 0) > 0) {
 		    // Could be 0.5in
 		    delta = new _delta2.default().insert('\t').concat(delta);
 		  }
