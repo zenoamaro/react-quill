@@ -197,7 +197,7 @@ return /******/ (function(modules) { // webpackBootstrap
 				this.getEditorElement(),
 				this.getEditorConfig());
 	
-			this.setCustomFormats(editor);
+			// this.setCustomFormats(editor); // deprecated in Quill v1.0
 			var fontOptions = document.querySelectorAll('.quill-toolbar .ql-font.ql-picker .ql-picker-item');
 			for (var i=0; i<fontOptions.length; ++i) {
 				fontOptions[i].style.fontFamily = fontOptions[i].dataset.value;
@@ -252,7 +252,7 @@ return /******/ (function(modules) { // webpackBootstrap
 				readOnly:     this.props.readOnly,
 				theme:        this.props.theme,
 				// Let Quill set the defaults, if no formats supplied
-				formats:      this.props.formats ? [] : undefined,
+				formats:      this.props.formats,
 				styles:       this.props.styles,
 				modules:      this.props.modules,
 				pollInterval: this.props.pollInterval
