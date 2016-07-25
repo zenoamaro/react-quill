@@ -86,6 +86,56 @@ Quick start
     });
     ~~~
 
+### Using with Quill 1.0
+
+If using Quill >1.0.0 as a dependency, the toolbar should be configured directly through the Quill module API rather than through the React-Quill wrapper. 
+
+- Pass `toolbar={false}` as a prop to `ReactQuill` and remove the `ReactQuill.Toolbar` JSX element
+- [Quill Toolbar Module Docs (Beta)](http://beta.quilljs.com/docs/modules/toolbar/)
+
+#### Example
+
+~~~jsx
+var MyComponent = React.createClass({
+  /* ... */
+
+  _quillModules: {
+      toolbar: [ 
+          [{ 'header': [1, 2, false] }],
+          ['bold', 'italic', 'underline','strike', 'blockquote'],
+          [{'list': 'ordered'}, {'list': 'bullet'}, {'indent': '-1'}, {'indent': '+1'}], 
+          ['link', 'image'], 
+          ['clean'] 
+      ]
+      /* ... other modules */
+  },
+
+  _quillFormats: [ 
+      "header",
+      "bold", "italic", "underline", "strike", "blockquote",
+      "list", "bullet", "indent",
+      "link", "image" 
+  ],
+  
+  render: function() {
+    return (
+      <div className='_quill'>
+        <ReactQuill theme='snow' 
+                    modules={this._quillModules}
+                    formats={this._quillFormats}
+                    toolbar={false} // Let Quill manage toolbar
+                    bounds={'._quill'}>
+          <div key="editor"
+                ref="editor"
+                className="quill-contents border_solid_top"
+                dangerouslySetInnerHTML={{__html:this.state.editorContent}} />
+        </ReactQuill>
+      </div>
+    );
+  }
+});
+~~~
+
 4. Mixing in:
 
     ~~~jsx
@@ -220,6 +270,9 @@ API reference
 
 `theme`
 : The name of the theme to apply to the editor. Defaults to `base`.
+
+`bounds`
+: Selector used by Quill to constrain position of popups. Defaults to `document.body`.
 
 `pollInterval`
 : Interval in ms between checks for local changes in editor contents.

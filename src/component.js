@@ -32,7 +32,7 @@ var QuillComponent = React.createClass({
 		defaultValue: T.string,
 		readOnly: T.bool,
 		modules: T.object,
-		toolbar: T.oneOfType([ T.array, T.oneOf([false]), ]),
+		toolbar: T.oneOfType([ T.array, T.oneOf([false]), ]), // deprecated for v1.0.0, use toolbar module
 		formats: T.array,
 		styles: T.oneOfType([ T.object, T.oneOf([false]) ]),
 		theme: T.string,
@@ -154,6 +154,9 @@ var QuillComponent = React.createClass({
 		this.componentDidMount();
 	},
 
+	/**
+	 * @deprecated v1.0.0
+	 */
 	setCustomFormats: function (editor) {
 		if (!this.props.formats) {
 			return;
@@ -169,14 +172,16 @@ var QuillComponent = React.createClass({
 		var config = {
 			readOnly:     this.props.readOnly,
 			theme:        this.props.theme,
-			// Let Quill set the defaults, if no formats supplied
-			formats:      this.props.formats,
+			formats:      this.props.formats, // Let Quill set the defaults, if no formats supplied
 			styles:       this.props.styles,
 			modules:      this.props.modules,
-			pollInterval: this.props.pollInterval
+			pollInterval: this.props.pollInterval,
+			bounds:       this.props.bounds,
 		};
 		// Unless we're redefining the toolbar, or it has been explicitly
 		// disabled, attach to the default one as a ref.
+		// Note: Toolbar should be configured as a module for Quill v1.0.0 and above
+		// Pass toolbar={false} for versions >1.0
 		if (this.props.toolbar !== false && !config.modules.toolbar) {
 			// Don't mutate the original modules
 			// because it's shared between components.
