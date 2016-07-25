@@ -135,6 +135,7 @@ var QuillToolbar = React.createClass({
 			case 'group':
 				return this.renderGroup(item, key);
 			case 'font':
+			case 'header':
 			case 'align':
 			case 'size':
 			case 'color':
@@ -146,7 +147,11 @@ var QuillToolbar = React.createClass({
 			case 'strike':
 			case 'link':
 			case 'list':
+			case 'bullet':
+			case 'ordered':
+			case 'indent':
 			case 'image':
+			case 'video':
 				return this.renderButton(item, key);
 			default:
 				return this.renderAction(item, key);
