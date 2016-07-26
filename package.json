@@ -37,7 +37,7 @@
     "LICENSE"
   ],
   "dependencies": {
-    "quill": "quilljs/quill#v1.0.0-beta.9"
+    "quill": "^1.0.0-beta.9"
   },
   "peerDependencies": {
     "react": ">=0.14.0"
