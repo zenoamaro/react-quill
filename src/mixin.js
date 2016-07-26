@@ -40,8 +40,8 @@ var QuillMixin = {
 	},
 
 	setEditorReadOnly: function(editor, value) {
-		value? editor.editor.disable()
-		     : editor.editor.enable();
+		value? editor.disable()
+		     : editor.enable();
 	},
 
 	/*
