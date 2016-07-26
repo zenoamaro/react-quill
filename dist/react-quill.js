@@ -645,8 +645,8 @@ return /******/ (function(modules) { // webpackBootstrap
 		},
 	
 		setEditorReadOnly: function(editor, value) {
-			value? editor.editor.disable()
-			     : editor.editor.enable();
+			value? editor.disable()
+			     : editor.enable();
 		},
 	
 		/*
@@ -693,13 +693,13 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ },
 /* 7 */
-/*!********************************!*\
-  !*** ../~/quill/dist/quill.js ***!
-  \********************************/
+/*!*******************************!*\
+  !*** ./~/quill/dist/quill.js ***!
+  \*******************************/
 /***/ function(module, exports) {
 
 	/*!
-	 * Quill Editor v1.0.0-beta.8
+	 * Quill Editor v1.0.0-beta.9
 	 * https://quilljs.com/
 	 * Copyright (c) 2014, Jason Chen
 	 * Copyright (c) 2013, salesforce.com
@@ -2715,8 +2715,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 		      var range = this.getSelection();
 		      var change = this.editor.formatLine(index, length, formats, source);
-		      this.selection.setRange(range, true, _emitter2.default.sources.SILENT);
-		      this.selection.scrollIntoView();
+		      this.setSelection(range, _emitter2.default.sources.SILENT);
 		      return change;
 		    }
 		  }, {
@@ -2735,8 +2734,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 		      var range = this.getSelection();
 		      var change = this.editor.formatText(index, length, formats, source);
-		      this.selection.setRange(range, true, _emitter2.default.sources.SILENT);
-		      this.selection.scrollIntoView();
+		      this.setSelection(range, _emitter2.default.sources.SILENT);
 		      return change;
 		    }
 		  }, {
@@ -2948,10 +2946,8 @@ return /******/ (function(modules) { // webpackBootstrap
 		        delta = new _delta2.default(delta.slice());
 		      }
 		      var change = this.editor.applyDelta(delta, source);
-		      if (range != null) {
-		        range = shiftRange(range, change, source);
-		        this.setSelection(range, _emitter2.default.sources.SILENT);
-		      }
+		      range = shiftRange(range, change, source);
+		      this.setSelection(range, _emitter2.default.sources.SILENT);
 		      return change;
 		    }
 		  }]);
@@ -2969,7 +2965,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		};
 		Quill.events = _emitter2.default.events;
 		Quill.sources = _emitter2.default.sources;
-		Quill.version = ("1.0.0-beta.8");
+		Quill.version = ("1.0.0-beta.9");
 	
 		Quill.imports = {
 		  'delta': _delta2.default,
@@ -3126,7 +3122,6 @@ return /******/ (function(modules) { // webpackBootstrap
 		var op = __webpack_require__(27);
 	
 		var NULL_CHARACTER = String.fromCharCode(0); // Placeholder char for embed in diff()
-	
 	
 		var Delta = function Delta(ops) {
 		  // Assume we are given a well formed ops
@@ -5355,7 +5350,6 @@ return /******/ (function(modules) { // webpackBootstrap
 		BlockEmbed.scope = _parchment2.default.Scope.BLOCK_BLOT;
 		// It is important for cursor behavior BlockEmbeds use tags that are block level elements
 	
-	
 		var Block = function (_Parchment$Block) {
 		  _inherits(Block, _Parchment$Block);
 	
@@ -5953,12 +5947,11 @@ return /******/ (function(modules) { // webpackBootstrap
 		        setTimeout(_this.update.bind(_this, _emitter4.default.sources.USER), 100);
 		      });
 		    });
-		    var scrollTop = void 0;
+		    var scrollTop = this.root.scrollTop;
 		    this.root.addEventListener('blur', function () {
 		      scrollTop = _this.root.scrollTop;
 		    });
 		    this.root.addEventListener('focus', function () {
-		      if (scrollTop == null) return;
 		      _this.root.scrollTop = scrollTop;
 		    });
 		    this.emitter.on(_emitter4.default.events.EDITOR_CHANGE, function (type, delta) {
@@ -6070,7 +6063,11 @@ return /******/ (function(modules) { // webpackBootstrap
 		          }
 		          var rect = range.getBoundingClientRect();
 		        } else {
-		          var rect = leaf.domNode.getBoundingClientRect();
+		          if (leaf instanceof _break2.default) {
+		            var rect = leaf.parent.domNode.getBoundingClientRect();
+		          } else {
+		            var rect = leaf.domNode.getBoundingClientRect();
+		          }
 		          if (offset > 0) side = 'right';
 		        }
 		        bounds = {
@@ -6194,7 +6191,6 @@ return /******/ (function(modules) { // webpackBootstrap
 		    value: function setNativeRange(startNode, startOffset) {
 		      var endNode = arguments.length <= 2 || arguments[2] === undefined ? startNode : arguments[2];
 		      var endOffset = arguments.length <= 3 || arguments[3] === undefined ? startOffset : arguments[3];
-		      var force = arguments.length <= 4 || arguments[4] === undefined ? false : arguments[4];
 	
 		      debug.info('setNativeRange', startNode, startOffset, endNode, endOffset);
 		      if (startNode != null && (this.root.parentNode == null || startNode.parentNode == null || endNode.parentNode == null)) {
@@ -6205,7 +6201,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		      if (startNode != null) {
 		        if (!this.hasFocus()) this.root.focus();
 		        var nativeRange = this.getNativeRange();
-		        if (nativeRange == null || force || startNode !== nativeRange.start.node || startOffset !== nativeRange.start.offset || endNode !== nativeRange.end.node || endOffset !== nativeRange.end.offset) {
+		        if (nativeRange == null || startNode !== nativeRange.start.node || startOffset !== nativeRange.start.offset || endNode !== nativeRange.end.node || endOffset !== nativeRange.end.offset) {
 		          var range = document.createRange();
 		          range.setStart(startNode, startOffset);
 		          range.setEnd(endNode, endOffset);
@@ -6223,13 +6219,8 @@ return /******/ (function(modules) { // webpackBootstrap
 		    value: function setRange(range) {
 		      var _this3 = this;
 	
-		      var force = arguments.length <= 1 || arguments[1] === undefined ? false : arguments[1];
-		      var source = arguments.length <= 2 || arguments[2] === undefined ? _emitter4.default.sources.API : arguments[2];
+		      var source = arguments.length <= 1 || arguments[1] === undefined ? _emitter4.default.sources.API : arguments[1];
 	
-		      if (typeof force === 'string') {
-		        source = force;
-		        force = false;
-		      }
 		      debug.info('setRange', range);
 		      if (range != null) {
 		        (function () {
@@ -6255,10 +6246,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 		            args.push(node, offset);
 		          });
-		          if (args.length < 2) {
-		            args = args.concat(args);
-		          }
-		          _this3.setNativeRange.apply(_this3, _toConsumableArray(args).concat([force]));
+		          _this3.setNativeRange.apply(_this3, args);
 		        })();
 		      } else {
 		        this.setNativeRange(null);
@@ -6625,7 +6613,6 @@ return /******/ (function(modules) { // webpackBootstrap
 		Cursor.tagName = 'span';
 		Cursor.CONTENTS = '﻿'; // Zero width no break space
 	
-	
 		exports.default = Cursor;
 	
 	/***/ },
@@ -6932,6 +6919,23 @@ return /******/ (function(modules) { // webpackBootstrap
 		      this.matchers.push([selector, matcher]);
 		    }
 		  }, {
+		    key: 'clean',
+		    value: function clean() {
+		      var treeWalker = document.createTreeWalker(this.container, NodeFilter.SHOW_COMMENT, { acceptNode: function acceptNode(node) {
+		          return NodeFilter.FILTER_ACCEPT;
+		        } }, false);
+		      var comments = [];
+		      while (treeWalker.nextNode()) {
+		        comments.push(treeWalker.currentNode);
+		      }
+		      comments.forEach(function (node) {
+		        if (node != null && node.parentNode != null) {
+		          node.parentNode.removeChild(node);
+		        }
+		      });
+		      this.container.normalize();
+		    }
+		  }, {
 		    key: 'convert',
 		    value: function convert(html) {
 		      var _this2 = this;
@@ -6940,59 +6944,51 @@ return /******/ (function(modules) { // webpackBootstrap
 		      if (typeof html === 'string') {
 		        this.container.innerHTML = html;
 		      }
-		      var textMatchers = [],
-		          elementMatchers = [];
+		      this.clean();
 		      this.matchers.forEach(function (pair) {
 		        var _pair = _slicedToArray(pair, 2);
 	
 		        var selector = _pair[0];
 		        var matcher = _pair[1];
 	
-		        switch (selector) {
-		          case Node.TEXT_NODE:
-		            textMatchers.push(matcher);
-		            break;
-		          case Node.ELEMENT_NODE:
-		            elementMatchers.push(matcher);
-		            break;
-		          default:
-		            [].forEach.call(_this2.container.querySelectorAll(selector), function (node) {
-		              // TODO use weakmap
-		              node[DOM_KEY] = node[DOM_KEY] || [];
-		              node[DOM_KEY].push(matcher);
-		            });
-		            break;
+		        if (typeof selector === 'string') {
+		          [].forEach.call(_this2.container.querySelectorAll(selector), function (node) {
+		            // TODO use weakmap
+		            node[DOM_KEY] = node[DOM_KEY] || [];
+		            node[DOM_KEY].push(matcher);
+		          });
 		        }
 		      });
 		      var traverse = function traverse(node) {
 		        // Post-order
-		        if (node.nodeType === node.TEXT_NODE) {
-		          return textMatchers.reduce(function (delta, matcher) {
-		            return matcher(node, delta);
-		          }, new _delta2.default());
-		        } else if (node.nodeType === node.ELEMENT_NODE) {
-		          return [].reduce.call(node.childNodes || [], function (delta, childNode) {
-		            var childrenDelta = traverse(childNode);
-		            if (childNode.nodeType === node.ELEMENT_NODE) {
-		              childrenDelta = elementMatchers.reduce(function (childrenDelta, matcher) {
-		                return matcher(childNode, childrenDelta);
-		              }, childrenDelta);
-		              childrenDelta = (childNode[DOM_KEY] || []).reduce(function (childrenDelta, matcher) {
-		                return matcher(childNode, childrenDelta);
-		              }, childrenDelta);
+		        return [].reduce.call(node.childNodes || [], function (delta, childNode) {
+		          if (childNode.nodeType !== Node.ELEMENT_NODE && childNode.nodeType !== Node.TEXT_NODE) {
+		            return delta;
+		          }
+		          var childrenDelta = traverse(childNode);
+		          childrenDelta = _this2.matchers.reduce(function (childrenDelta, pair) {
+		            var _pair2 = _slicedToArray(pair, 2);
+	
+		            var type = _pair2[0];
+		            var matcher = _pair2[1];
+	
+		            if (type === true || childNode.nodeType === type) {
+		              childrenDelta = matcher(childNode, childrenDelta);
 		            }
-		            return delta.concat(childrenDelta);
-		          }, new _delta2.default());
-		        } else {
-		          return new _delta2.default();
-		        }
+		            return childrenDelta;
+		          }, childrenDelta);
+		          childrenDelta = (childNode[DOM_KEY] || []).reduce(function (childrenDelta, matcher) {
+		            return matcher(childNode, childrenDelta);
+		          }, childrenDelta);
+		          return delta.concat(childrenDelta);
+		        }, new _delta2.default());
 		      };
 		      var delta = traverse(this.container);
 		      // Remove trailing newline
 		      if (deltaEndsWith(delta, '\n') && delta.ops[delta.ops.length - 1].attributes == null) {
 		        delta = delta.compose(new _delta2.default().retain(delta.length() - 1).delete(1));
 		      }
-		      debug.log('convert', this.container.innerHTML, delta);
+		      debug.info('convert', this.container.innerHTML, delta);
 		      this.container.innerHTML = '';
 		      return delta;
 		    }
@@ -7092,18 +7088,16 @@ return /******/ (function(modules) { // webpackBootstrap
 		}
 	
 		function matchNewline(node, delta) {
-		  if (isLine(node) && !deltaEndsWith(delta, '\n')) {
+		  if (!isLine(node)) return delta;
+		  if (computeStyle(node).whiteSpace.startsWith('pre') || !deltaEndsWith(delta, '\n')) {
 		    delta.insert('\n');
 		  }
 		  return delta;
 		}
 	
 		function matchSpacing(node, delta) {
-		  if (isLine(node) && node.nextElementSibling != null && !deltaEndsWith(delta, '\n\n')) {
-		    var nodeHeight = node.offsetHeight + parseFloat(computeStyle(node).marginTop) + parseFloat(computeStyle(node).marginBottom);
-		    if (node.nextElementSibling.offsetTop > node.offsetTop + nodeHeight * 1.5) {
-		      delta.insert('\n');
-		    }
+		  if (isLine(node) && node.nextElementSibling != null && node.nextElementSibling.offsetTop > node.offsetTop + node.offsetHeight * 1.5 && !deltaEndsWith(delta, '\n\n')) {
+		    delta.insert('\n');
 		  }
 		  return delta;
 		}
@@ -8999,9 +8993,6 @@ return /******/ (function(modules) { // webpackBootstrap
 		    Object.keys(_this.options.handlers).forEach(function (format) {
 		      _this.addHandler(format, _this.options.handlers[format]);
 		    });
-		    _this.container.addEventListener('mousedown', function (e) {
-		      e.preventDefault(); // Prevent blur
-		    });
 		    [].forEach.call(_this.container.querySelectorAll('button, select'), function (input) {
 		      _this.attach(input);
 		    });
@@ -9050,37 +9041,39 @@ return /******/ (function(modules) { // webpackBootstrap
 		          return;
 		        }
 		      }
-		      var eventName = input.tagName === 'SELECT' ? 'change' : 'click';
-		      input.addEventListener(eventName, function (e) {
-		        var value = void 0;
-		        if (input.tagName === 'SELECT') {
-		          if (input.selectedIndex < 0) return;
-		          var selected = input.options[input.selectedIndex];
-		          if (selected.hasAttribute('selected')) {
-		            value = false;
+		      var eventNames = input.tagName === 'SELECT' ? ['change'] : ['mousedown', 'touchstart'];
+		      eventNames.forEach(function (eventName) {
+		        input.addEventListener(eventName, function (e) {
+		          var value = void 0;
+		          if (input.tagName === 'SELECT') {
+		            if (input.selectedIndex < 0) return;
+		            var selected = input.options[input.selectedIndex];
+		            if (selected.hasAttribute('selected')) {
+		              value = false;
+		            } else {
+		              value = selected.value || false;
+		            }
 		          } else {
-		            value = selected.value || false;
+		            value = input.classList.contains('ql-active') ? false : input.value || true;
+		            e.preventDefault();
 		          }
-		        } else {
-		          value = input.classList.contains('ql-active') ? false : input.value || true;
-		          e.preventDefault();
-		        }
-		        _this2.quill.focus();
+		          _this2.quill.focus();
 	
-		        var _quill$selection$getR = _this2.quill.selection.getRange();
+		          var _quill$selection$getR = _this2.quill.selection.getRange();
 	
-		        var _quill$selection$getR2 = _slicedToArray(_quill$selection$getR, 1);
+		          var _quill$selection$getR2 = _slicedToArray(_quill$selection$getR, 1);
 	
-		        var range = _quill$selection$getR2[0];
+		          var range = _quill$selection$getR2[0];
 	
-		        if (_this2.handlers[format] != null) {
-		          _this2.handlers[format].call(_this2, value);
-		        } else if (_parchment2.default.query(format).prototype instanceof _parchment2.default.Embed) {
-		          _this2.quill.updateContents(new _delta2.default().retain(range.index).delete(range.length).insert(_defineProperty({}, format, true)), _quill2.default.sources.USER);
-		        } else {
-		          _this2.quill.format(format, value, _quill2.default.sources.USER);
-		        }
-		        _this2.update(range);
+		          if (_this2.handlers[format] != null) {
+		            _this2.handlers[format].call(_this2, value);
+		          } else if (_parchment2.default.query(format).prototype instanceof _parchment2.default.Embed) {
+		            _this2.quill.updateContents(new _delta2.default().retain(range.index).delete(range.length).insert(_defineProperty({}, format, true)), _quill2.default.sources.USER);
+		          } else {
+		            _this2.quill.format(format, value, _quill2.default.sources.USER);
+		          }
+		          _this2.update(range);
+		        });
 		      });
 		      // TODO use weakmap
 		      this.controls.push([format, input]);
@@ -9088,7 +9081,8 @@ return /******/ (function(modules) { // webpackBootstrap
 		  }, {
 		    key: 'update',
 		    value: function update(range) {
-		      var formats = range == null ? {} : this.quill.getFormat(range);
+		      if (range == null) return;
+		      var formats = this.quill.getFormat(range);
 		      this.controls.forEach(function (pair) {
 		        var _pair = _slicedToArray(pair, 2);
 	
@@ -9100,11 +9094,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		          if (formats[format] == null) {
 		            option = input.querySelector('option[selected]');
 		          } else if (!Array.isArray(formats[format])) {
-		            var value = formats[format];
-		            if (typeof value === 'string') {
-		              value = value.replace(/\"/g, '&quot;');
-		            }
-		            option = input.querySelector('option[value="' + value + '"]');
+		            option = input.querySelector('option[value="' + formats[format] + '"]');
 		          }
 		          if (option == null) {
 		            input.value = ''; // TODO make configurable?
@@ -9494,8 +9484,11 @@ return /******/ (function(modules) { // webpackBootstrap
 		    this.buildPicker();
 		    this.select.style.display = 'none';
 		    this.select.parentNode.insertBefore(this.container, this.select);
-		    this.label.addEventListener('click', function (event) {
-		      _this.container.classList.toggle('ql-expanded');
+		    ['mousedown', 'touchstart'].forEach(function (name) {
+		      _this.label.addEventListener(name, function (event) {
+		        _this.container.classList.toggle('ql-expanded');
+		        event.preventDefault(); // prevent focus loss
+		      });
 		    });
 		    this.select.addEventListener('change', this.update.bind(this));
 		  }
@@ -9513,8 +9506,11 @@ return /******/ (function(modules) { // webpackBootstrap
 		      if (option.textContent) {
 		        item.dataset.label = option.textContent;
 		      }
-		      item.addEventListener('click', function (event) {
-		        _this2.selectItem(item, true);
+		      ['mousedown', 'touchstart'].forEach(function (name) {
+		        item.addEventListener(name, function (event) {
+		          _this2.selectItem(item, true);
+		          event.preventDefault();
+		        });
 		      });
 		      return item;
 		    }
@@ -9807,9 +9803,6 @@ return /******/ (function(modules) { // webpackBootstrap
 		    value: function listen() {
 		      var _this2 = this;
 	
-		      this.root.addEventListener('mousedown', function (e) {
-		        e.preventDefault();
-		      });
 		      this.textbox.addEventListener('keydown', function (event) {
 		        if (_keyboard2.default.match(event, 'enter')) {
 		          _this2.save();
@@ -10045,8 +10038,11 @@ return /******/ (function(modules) { // webpackBootstrap
 		      var _this3 = this;
 	
 		      _get(Object.getPrototypeOf(BubbleTooltip.prototype), 'listen', this).call(this);
-		      this.root.querySelector('.ql-close').addEventListener('click', function (event) {
-		        _this3.root.classList.remove('ql-editing');
+		      ['mousedown', 'touchstart'].forEach(function (name) {
+		        _this3.root.querySelector('.ql-close').addEventListener(name, function (event) {
+		          _this3.root.classList.remove('ql-editing');
+		          event.preventDefault();
+		        });
 		      });
 		      this.quill.on(_emitter2.default.events.SCROLL_OPTIMIZE, function () {
 		        // Let selection be restored by toolbar handlers before repositioning
@@ -10166,7 +10162,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		      if (!document.body.contains(quill.root)) {
 		        return document.body.removeEventListener('click', listener);
 		      }
-		      if (_this.tooltip != null && !_this.tooltip.root.contains(e.target) && document.activeElement !== _this.tooltip.textbox && !_this.quill.hasFocus()) {
+		      if (_this.tooltip != null && !_this.tooltip.root.contains(e.target) && document.activeElement !== _this.tooltip.textbox) {
 		        _this.tooltip.hide();
 		      }
 		      if (_this.pickers != null) {
@@ -10465,20 +10461,12 @@ return /******/ (function(modules) { // webpackBootstrap
 		        _this3.hide();
 		      });
 		    }
-		  }, {
-		    key: 'show',
-		    value: function show() {
-		      _get(Object.getPrototypeOf(SnowTooltip.prototype), 'show', this).call(this);
-		      if (this.root.dataset.mode) {
-		        delete this.root.dataset.mode;
-		      }
-		    }
 		  }]);
 	
 		  return SnowTooltip;
 		}(_tooltip2.default);
 	
-		SnowTooltip.TEMPLATE = ['<a class="ql-preview" target="_blank" href="about:blank"></a>', '<input type="text" data-formula-holder="e=mc^2" data-link-holder="quilljs.com" data-video-holder="Embed URL">', '<a class="ql-action"></a>', '<a class="ql-remove"></a>'].join('');
+		SnowTooltip.TEMPLATE = ['<a class="ql-preview" target="_blank" href="about:blank"></a>', '<input type="text" data-formula="e=mc^2" data-link="quilljs.com" data-video="Embed URL">', '<a class="ql-action"></a>', '<a class="ql-remove"></a>'].join('');
 	
 		exports.default = SnowTheme;
 	
