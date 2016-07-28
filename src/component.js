@@ -30,6 +30,7 @@ var QuillComponent = React.createClass({
 		style: T.object,
 		value: T.string,
 		defaultValue: T.string,
+		placeholder: T.string,
 		readOnly: T.bool,
 		modules: T.object,
 		toolbar: T.oneOfType([ T.array, T.oneOf([false]), ]), // deprecated for v1.0.0, use toolbar module
@@ -177,6 +178,7 @@ var QuillComponent = React.createClass({
 			modules:      this.props.modules,
 			pollInterval: this.props.pollInterval,
 			bounds:       this.props.bounds,
+			placeholder:  this.props.placeholder,
 		};
 		// Unless we're redefining the toolbar, or it has been explicitly
 		// disabled, attach to the default one as a ref.
