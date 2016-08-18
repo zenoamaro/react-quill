@@ -1,6 +1,20 @@
 Changelog
 =========
 
+v2.0.0-rc.1
+------
+- Added CSS for alternate themes (bubble, core) to `/dist`
+
+v2.0.0-rc.0
+------
+- Upgraded Quill to v1.0.0-rc.1
+
+ak-quill-1.0.0-beta.11
+------
+- Updated Quill to v1.0.0-beta.11
+- Added support for configuring Quill modules directly, including toolbar, and deprecates previous toolbar methods
+- Increments NPM package version
+
 v0.4.1
 ------
 - Added contents of `dist` to NPM package.
