@@ -179,7 +179,7 @@ And then link the appropriate stylesheet:
 
 This may vary depending how application is structured, directories or otherwise. For example, if you use a CSS pre-processor like SASS, you may want to import that stylesheet inside your own.
 
-Quill will include a set of basic styles upon instantiation, so that including `quill.base.css` is not needed. If you would instead like to avoid this style injection, so to include `quill.base.css` manually or use your own styles, pass `false` (not just a _falsy_ value) as `styles`:
+Quill will include a set of basic styles upon instantiation, so that including `quill.core.css` is not needed. If you would instead like to avoid this style injection, so to include `quill.core.css` manually or use your own styles, pass `false` (not just a _falsy_ value) as `styles`:
 
     <ReactQuill styles={false}>
 
