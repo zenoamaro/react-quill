@@ -1,6 +1,6 @@
 {
   "name": "react-quill",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "The Quill rich-text editor as a React component.",
   "author": "zenoamaro <zenoamaro@gmail.com>",
   "homepage": "https://github.com/zenoamaro/react-quill",
@@ -37,7 +37,7 @@
     "LICENSE"
   ],
   "dependencies": {
-    "quill": "^1.0.0"
+    "quill": "^1.0.2"
   },
   "peerDependencies": {
     "react": ">=0.14.0"
