@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Bubble Theme - Quill</title>
+  <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="language" content="english">
+<meta name="viewport" content="width=device-width">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:site" content="@quilljs">
+<meta name="twitter:title" content="Quill">
+<meta name="twitter:description" content="A Rich Text Editor with an API">
+<meta name="twitter:image" content="http://quilljs.com/assets/images/cloud-large.png">
+<meta property="og:type" content="website">
+<meta property="og:url" content="http://quilljs.com/standalone/bubble/">
+<meta property="og:image" content="http://quilljs.com/assets/images/cloud-large.png">
+ 
+<link type="application/atom+xml" rel="alternate" href="/feed.xml" title="Quill - A Rich Text Editor with an API" />
+  
+  
+<link rel="stylesheet" href="../quill.bubble.css" />
+
+<style>
+  #editor-container {
+    height: 350px;
+  }
+  #standalone-container {
+    margin: 50px auto;
+    width: 720px;
+  }
+</style>
+
+
+</head>
+<body>
+  
+<div id="standalone-container">
+  <div id="editor-container"></div>
+</div>
+
+  
+  
+<script type="text/javascript" src="../quill.js"></script>
+
+<script>
+  var quill = new Quill('#editor-container', {
+    placeholder: 'Compose an epic...',
+    theme: 'bubble'
+  });
+</script>
+
+
+</body>
+</html>

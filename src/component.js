@@ -9,6 +9,15 @@ var React = require('react'),
 // FIXME: Remove with the switch to JSX
 QuillToolbar = React.createFactory(QuillToolbar);
 
+var find = function(arr, predicate) {
+	if (!arr) {
+		return;
+	}
+	for (var i=0; i<arr.length; ++i) {
+		if (predicate(arr[i])) return arr[i];
+	}
+}
+
 var QuillComponent = React.createClass({
 
 	displayName: 'Quill',
@@ -21,9 +30,10 @@ var QuillComponent = React.createClass({
 		style: T.object,
 		value: T.string,
 		defaultValue: T.string,
+		placeholder: T.string,
 		readOnly: T.bool,
 		modules: T.object,
-		toolbar: T.oneOfType([ T.array, T.oneOf([false]), ]),
+		toolbar: T.oneOfType([ T.array, T.oneOf([false]), ]), // deprecated for v1.0.0, use toolbar module
 		formats: T.array,
 		styles: T.oneOfType([ T.object, T.oneOf([false]) ]),
 		theme: T.string,
@@ -52,11 +62,8 @@ var QuillComponent = React.createClass({
 	getDefaultProps: function() {
 		return {
 			className: '',
-			theme: 'base',
-			modules: {
-				'link-tooltip': true,
-				'image-tooltip': true
-			}
+			theme: 'snow',
+			modules: {}
 		};
 	},
 
@@ -109,18 +116,16 @@ var QuillComponent = React.createClass({
 			this.getEditorElement(),
 			this.getEditorConfig());
 
-		this.setCustomFormats(editor);
+		// this.setCustomFormats(editor); // deprecated in Quill v1.0
+		var fontOptions = document.querySelectorAll('.quill-toolbar .ql-font.ql-picker .ql-picker-item');
+		for (var i=0; i<fontOptions.length; ++i) {
+			fontOptions[i].style.fontFamily = fontOptions[i].dataset.value;
+		}
 
-		// NOTE: Custom formats will be stripped when creating
-		//       the editor, since they are not present there yet.
-		//       Therefore, we re-set the contents from state.
-		this.setState({ editor:editor }, function() {
-			this.setEditorContents(editor, this.state.value);
-		}.bind(this));
+		this.setState({ editor:editor });
 	},
 
 	componentWillUnmount: function() {
-		this.destroyEditor(this.state.editor);
 		// NOTE: Don't set the state to null here
 		//       as it would generate a loop.
 	},
@@ -150,6 +155,9 @@ var QuillComponent = React.createClass({
 		this.componentDidMount();
 	},
 
+	/**
+	 * @deprecated v1.0.0
+	 */
 	setCustomFormats: function (editor) {
 		if (!this.props.formats) {
 			return;
@@ -165,21 +173,24 @@ var QuillComponent = React.createClass({
 		var config = {
 			readOnly:     this.props.readOnly,
 			theme:        this.props.theme,
-			// Let Quill set the defaults, if no formats supplied
-			formats:      this.props.formats ? [] : undefined,
+			formats:      this.props.formats, // Let Quill set the defaults, if no formats supplied
 			styles:       this.props.styles,
 			modules:      this.props.modules,
-			pollInterval: this.props.pollInterval
+			pollInterval: this.props.pollInterval,
+			bounds:       this.props.bounds,
+			placeholder:  this.props.placeholder,
 		};
 		// Unless we're redefining the toolbar, or it has been explicitly
 		// disabled, attach to the default one as a ref.
+		// Note: Toolbar should be configured as a module for Quill v1.0.0 and above
+		// Pass toolbar={false} for versions >1.0
 		if (this.props.toolbar !== false && !config.modules.toolbar) {
 			// Don't mutate the original modules
 			// because it's shared between components.
 			config.modules = JSON.parse(JSON.stringify(config.modules));
 			config.modules.toolbar = {
 				container: ReactDOM.findDOMNode(this.refs.toolbar)
-			};
+			}
 		}
 		return config;
 	},
@@ -205,32 +216,34 @@ var QuillComponent = React.createClass({
 	configuration of toolbar and contents area.
 	*/
 	renderContents: function() {
-		if (React.Children.count(this.props.children)) {
-			// Clone children to own their refs.
-			return React.Children.map(
-				this.props.children,
-				function(c) { return React.cloneElement(c, { ref: c.ref }) }
-			);
-		} else {
-			return [
-				// Quill modifies these elements in-place,
-				// so we need to re-render them every time.
+		var contents = [];
+		var children = React.Children.map(
+			this.props.children,
+			function(c) { return React.cloneElement(c, {ref: c.ref}); }
+		);
 
-				// Render the toolbar unless explicitly disabled.
-				this.props.toolbar !== false? QuillToolbar({
-					key: 'toolbar-' + Math.random(),
-					ref: 'toolbar',
-					items: this.props.toolbar
-				}) : false,
-
-				React.DOM.div({
-					key: 'editor-' + Math.random(),
-					ref: 'editor',
-					className: 'quill-contents',
-					dangerouslySetInnerHTML: { __html:this.getEditorContents() }
-				})
-			];
+		if (this.props.toolbar !== false) {
+			var toolbar = find(children, function(child) {
+				return child.ref === 'toolbar';
+			})
+			contents.push(toolbar ? toolbar : QuillToolbar({
+				key: 'toolbar-' + Math.random(),
+				ref: 'toolbar',
+				items: this.props.toolbar
+			}))
 		}
+
+		var editor = find(children, function(child) {
+			return child.ref === 'editor';
+		})
+		contents.push(editor ? editor : React.DOM.div({
+			key: 'editor-' + Math.random(),
+			ref: 'editor',
+			className: 'quill-contents',
+			dangerouslySetInnerHTML: { __html:this.getEditorContents() }
+		}))
+
+		return contents;
 	},
 
 	render: function() {
@@ -258,7 +271,7 @@ var QuillComponent = React.createClass({
 	onEditorChangeSelection: function(range, source, editor) {
 		var s = this.getEditorSelection() || {};
 		var r = range || {};
-		if (r.start !== s.start || r.end !== s.end) {
+		if (r.length !== s.length || r.index !== s.index) {
 			this.setState({ selection: range });
 			if (this.props.onChangeSelection) {
 				this.props.onChangeSelection(range, source, editor);

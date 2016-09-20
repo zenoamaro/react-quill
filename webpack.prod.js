@@ -38,12 +38,6 @@ module.exports = {
 			'commonjs2': 'react-dom/server',
 			'amd': 'react-dom/server',
 			'root': 'ReactDOMServer'
-		},
-		'quill': {
-			'commonjs': 'quill',
-			'commonjs2': 'quill',
-			'amd': 'quill',
-			'root': 'Quill'
 		}
 	},
 
