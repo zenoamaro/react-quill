@@ -701,7 +701,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports) {
 
 	/*!
-	 * Quill Editor v1.0.2
+	 * Quill Editor v1.0.4
 	 * https://quilljs.com/
 	 * Copyright (c) 2014, Jason Chen
 	 * Copyright (c) 2013, salesforce.com
@@ -2454,7 +2454,8 @@ return /******/ (function(modules) { // webpackBootstrap
 		    this.clipboard = this.theme.addModule('clipboard');
 		    this.history = this.theme.addModule('history');
 		    this.theme.init();
-		    this.pasteHTML('<div class=\'ql-editor\' style="white-space: normal;">' + html + '<p><br></p></div>');
+		    var contents = this.clipboard.convert('<div class=\'ql-editor\' style="white-space: normal;">' + html + '<p><br></p></div>');
+		    this.setContents(contents);
 		    this.history.clear();
 		    if (options.readOnly) {
 		      this.disable();
@@ -2707,15 +2708,8 @@ return /******/ (function(modules) { // webpackBootstrap
 		    }
 		  }, {
 		    key: 'pasteHTML',
-		    value: function pasteHTML(index, html) {
-		      var source = arguments.length <= 2 || arguments[2] === undefined ? _emitter2.default.sources.API : arguments[2];
-	
-		      if (typeof index === 'string') {
-		        return this.setContents(this.clipboard.convert(index), html);
-		      } else {
-		        var paste = this.clipboard.convert(html);
-		        return this.updateContents(new _delta2.default().retain(index).concat(paste), source);
-		      }
+		    value: function pasteHTML(index, html, source) {
+		      this.clipboard.dangerouslyPasteHTML(index, html, source);
 		    }
 		  }, {
 		    key: 'removeFormat',
@@ -2806,7 +2800,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		}();
 	
 		Quill.DEFAULTS = {
-		  bounds: document.body,
+		  bounds: null,
 		  formats: null,
 		  modules: {},
 		  placeholder: '',
@@ -2815,7 +2809,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		};
 		Quill.events = _emitter2.default.events;
 		Quill.sources = _emitter2.default.sources;
-		Quill.version =  false ? 'dev' : ("1.0.2");
+		Quill.version =  false ? 'dev' : ("1.0.4");
 	
 		Quill.imports = {
 		  'delta': _delta2.default,
@@ -2833,7 +2827,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		      history: true
 		    }
 		  }, userConfig);
-		  if (userConfig.theme == null || userConfig.theme === Quill.DEFAULTS.theme) {
+		  if (!userConfig.theme || userConfig.theme === Quill.DEFAULTS.theme) {
 		    userConfig.theme = _theme2.default;
 		  } else {
 		    userConfig.theme = Quill.import('themes/' + userConfig.theme);
@@ -2861,7 +2855,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		    return config;
 		  }, {});
 		  // Special case toolbar shorthand
-		  if (userConfig.modules != null && userConfig.modules.toolbar != null && userConfig.modules.toolbar.constructor !== Object) {
+		  if (userConfig.modules != null && userConfig.modules.toolbar && userConfig.modules.toolbar.constructor !== Object) {
 		    userConfig.modules.toolbar = {
 		      container: userConfig.modules.toolbar
 		    };
@@ -2872,6 +2866,12 @@ return /******/ (function(modules) { // webpackBootstrap
 		      userConfig[key] = document.querySelector(userConfig[key]);
 		    }
 		  });
+		  userConfig.modules = Object.keys(userConfig.modules).reduce(function (config, name) {
+		    if (userConfig.modules[name]) {
+		      config[name] = userConfig.modules[name];
+		    }
+		    return config;
+		  }, {});
 		  return userConfig;
 		}
 	
@@ -5652,6 +5652,17 @@ return /******/ (function(modules) { // webpackBootstrap
 		        _get(Inline.prototype.__proto__ || Object.getPrototypeOf(Inline.prototype), 'formatAt', this).call(this, index, length, name, value);
 		      }
 		    }
+		  }, {
+		    key: 'optimize',
+		    value: function optimize() {
+		      _get(Inline.prototype.__proto__ || Object.getPrototypeOf(Inline.prototype), 'optimize', this).call(this);
+		      var ref = this.parent.parent;
+		      if (this.parent instanceof Inline && Inline.compare(this.statics.blotName, this.parent.statics.blotName) > 0) {
+		        var parent = this.parent.isolate(this.offset(), this.length());
+		        this.moveChildren(parent);
+		        parent.wrap(this);
+		      }
+		    }
 		  }], [{
 		    key: 'compare',
 		    value: function compare(self, other) {
@@ -6328,7 +6339,6 @@ return /******/ (function(modules) { // webpackBootstrap
 		    value: function getRange() {
 		      var _this2 = this;
 	
-		      if (!this.hasFocus()) return [null, null];
 		      var range = this.getNativeRange();
 		      if (range == null) return [null, null];
 		      var positions = [[range.start.node, range.start.offset]];
@@ -6903,6 +6913,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 		var CLIPBOARD_CONFIG = [[Node.TEXT_NODE, matchText], ['br', matchBreak], [Node.ELEMENT_NODE, matchNewline], [Node.ELEMENT_NODE, matchBlot], [Node.ELEMENT_NODE, matchSpacing], [Node.ELEMENT_NODE, matchAttributor], [Node.ELEMENT_NODE, matchStyles], ['b', matchAlias.bind(matchAlias, 'bold')], ['i', matchAlias.bind(matchAlias, 'italic')], ['style', matchIgnore]];
 	
+		var ATTRIBUTE_ATTRIBUTORS = [_align.AlignAttribute, _direction.DirectionAttribute].reduce(function (memo, attr) {
+		  memo[attr.keyName] = attr;
+		  return memo;
+		}, {});
+	
 		var STYLE_ATTRIBUTORS = [_align.AlignStyle, _background.BackgroundStyle, _color.ColorStyle, _direction.DirectionStyle, _font.FontStyle, _size.SizeStyle].reduce(function (memo, attr) {
 		  memo[attr.keyName] = attr;
 		  return memo;
@@ -6998,6 +7013,18 @@ return /******/ (function(modules) { // webpackBootstrap
 		      return delta;
 		    }
 		  }, {
+		    key: 'dangerouslyPasteHTML',
+		    value: function dangerouslyPasteHTML(index, html) {
+		      var source = arguments.length <= 2 || arguments[2] === undefined ? _quill2.default.sources.API : arguments[2];
+	
+		      if (typeof index === 'string') {
+		        return this.quill.setContents(this.convert(index), html);
+		      } else {
+		        var paste = this.convert(html);
+		        return this.quill.updateContents(new _delta2.default().retain(index).concat(paste), source);
+		      }
+		    }
+		  }, {
 		    key: 'onPaste',
 		    value: function onPaste(e) {
 		      var _this3 = this;
@@ -7008,6 +7035,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		      var bodyTop = document.body.scrollTop;
 		      this.container.focus();
 		      setTimeout(function () {
+		        _this3.quill.selection.update(_quill2.default.sources.SILENT);
 		        delta = delta.concat(_this3.convert());
 		        _this3.quill.updateContents(delta, _quill2.default.sources.USER);
 		        // range.length contributes to delta.length()
@@ -7061,6 +7089,10 @@ return /******/ (function(modules) { // webpackBootstrap
 		    if (attr != null) {
 		      formats[attr.attrName] = attr.value(node);
 		      if (formats[attr.attrName]) return;
+		    }
+		    if (ATTRIBUTE_ATTRIBUTORS[name] != null) {
+		      attr = ATTRIBUTE_ATTRIBUTORS[name];
+		      formats[attr.attrName] = attr.value(node);
 		    }
 		    if (STYLE_ATTRIBUTORS[name] != null) {
 		      attr = STYLE_ATTRIBUTORS[name];
@@ -7174,7 +7206,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		Object.defineProperty(exports, "__esModule", {
 		  value: true
 		});
-		exports.AlignStyle = exports.AlignClass = undefined;
+		exports.AlignStyle = exports.AlignClass = exports.AlignAttribute = undefined;
 	
 		var _parchment = __webpack_require__(2);
 	
@@ -7187,9 +7219,11 @@ return /******/ (function(modules) { // webpackBootstrap
 		  whitelist: ['right', 'center', 'justify']
 		};
 	
+		var AlignAttribute = new _parchment2.default.Attributor.Attribute('align', 'align', config);
 		var AlignClass = new _parchment2.default.Attributor.Class('align', 'ql-align', config);
 		var AlignStyle = new _parchment2.default.Attributor.Style('align', 'text-align', config);
 	
+		exports.AlignAttribute = AlignAttribute;
 		exports.AlignClass = AlignClass;
 		exports.AlignStyle = AlignStyle;
 	
@@ -7293,7 +7327,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		Object.defineProperty(exports, "__esModule", {
 		  value: true
 		});
-		exports.DirectionStyle = exports.DirectionClass = undefined;
+		exports.DirectionStyle = exports.DirectionClass = exports.DirectionAttribute = undefined;
 	
 		var _parchment = __webpack_require__(2);
 	
@@ -7306,9 +7340,11 @@ return /******/ (function(modules) { // webpackBootstrap
 		  whitelist: ['rtl']
 		};
 	
+		var DirectionAttribute = new _parchment2.default.Attributor.Attribute('direction', 'dir', config);
 		var DirectionClass = new _parchment2.default.Attributor.Class('direction', 'ql-direction', config);
 		var DirectionStyle = new _parchment2.default.Attributor.Style('direction', 'direction', config);
 	
+		exports.DirectionAttribute = DirectionAttribute;
 		exports.DirectionClass = DirectionClass;
 		exports.DirectionStyle = DirectionStyle;
 	
@@ -7323,11 +7359,21 @@ return /******/ (function(modules) { // webpackBootstrap
 		});
 		exports.FontClass = exports.FontStyle = undefined;
 	
+		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+		var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
+	
 		var _parchment = __webpack_require__(2);
 	
 		var _parchment2 = _interopRequireDefault(_parchment);
 	
 		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+		function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+		function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+		function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
 		var config = {
 		  scope: _parchment2.default.Scope.INLINE,
@@ -7335,7 +7381,27 @@ return /******/ (function(modules) { // webpackBootstrap
 		};
 	
 		var FontClass = new _parchment2.default.Attributor.Class('font', 'ql-font', config);
-		var FontStyle = new _parchment2.default.Attributor.Style('font', 'font-family', config);
+	
+		var FontStyleAttributor = function (_Parchment$Attributor) {
+		  _inherits(FontStyleAttributor, _Parchment$Attributor);
+	
+		  function FontStyleAttributor() {
+		    _classCallCheck(this, FontStyleAttributor);
+	
+		    return _possibleConstructorReturn(this, (FontStyleAttributor.__proto__ || Object.getPrototypeOf(FontStyleAttributor)).apply(this, arguments));
+		  }
+	
+		  _createClass(FontStyleAttributor, [{
+		    key: 'value',
+		    value: function value(node) {
+		      return _get(FontStyleAttributor.prototype.__proto__ || Object.getPrototypeOf(FontStyleAttributor.prototype), 'value', this).call(this, node).replace(/["']/g, '');
+		    }
+		  }]);
+	
+		  return FontStyleAttributor;
+		}(_parchment2.default.Attributor.Style);
+	
+		var FontStyle = new FontStyleAttributor('font', 'font-family', config);
 	
 		exports.FontStyle = FontStyle;
 		exports.FontClass = FontClass;
@@ -7564,6 +7630,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 		var _delta2 = _interopRequireDefault(_delta);
 	
+		var _op = __webpack_require__(26);
+	
+		var _op2 = _interopRequireDefault(_op);
+	
 		var _parchment = __webpack_require__(2);
 	
 		var _parchment2 = _interopRequireDefault(_parchment);
@@ -7628,9 +7698,23 @@ return /******/ (function(modules) { // webpackBootstrap
 		    _this.addBinding({ key: Keyboard.keys.ENTER, metaKey: null, ctrlKey: null, altKey: null }, function () {});
 		    _this.addBinding({ key: Keyboard.keys.BACKSPACE }, { collapsed: true, prefix: /^.?$/ }, function (range, context) {
 		      if (range.index === 0) return;
-		      var index = context.offset === 0 ? range.index : range.index - 1;
-		      this.quill.deleteText(index, 1, _quill2.default.sources.USER);
-		      this.quill.setSelection(range.index - 1, _quill2.default.sources.SILENT);
+	
+		      var _quill$scroll$line = this.quill.scroll.line(range.index);
+	
+		      var _quill$scroll$line2 = _slicedToArray(_quill$scroll$line, 1);
+	
+		      var line = _quill$scroll$line2[0];
+	
+		      var formats = {};
+		      if (context.offset === 0) {
+		        var curFormats = line.formats();
+		        var prevFormats = this.quill.getFormat(range.index - 1, 1);
+		        formats = _op2.default.attributes.diff(curFormats, prevFormats) || {};
+		      }
+		      this.quill.deleteText(range.index - 1, 1, _quill2.default.sources.USER);
+		      if (Object.keys(formats).length > 0) {
+		        this.quill.formatLine(range.index - 1, 1, formats, _quill2.default.sources.USER);
+		      }
 		      this.quill.selection.scrollIntoView();
 		    });
 		    _this.addBinding({ key: Keyboard.keys.DELETE }, { collapsed: true, suffix: /^$/ }, function (range) {
@@ -7678,12 +7762,12 @@ return /******/ (function(modules) { // webpackBootstrap
 		        var range = _this2.quill.getSelection();
 		        if (range == null) return; // implies we do not have focus
 	
-		        var _quill$scroll$line = _this2.quill.scroll.line(range.index);
+		        var _quill$scroll$line3 = _this2.quill.scroll.line(range.index);
 	
-		        var _quill$scroll$line2 = _slicedToArray(_quill$scroll$line, 2);
+		        var _quill$scroll$line4 = _slicedToArray(_quill$scroll$line3, 2);
 	
-		        var line = _quill$scroll$line2[0];
-		        var offset = _quill$scroll$line2[1];
+		        var line = _quill$scroll$line4[0];
+		        var offset = _quill$scroll$line4[1];
 	
 		        var _quill$scroll$leaf = _this2.quill.scroll.leaf(range.index);
 	
@@ -8078,6 +8162,8 @@ return /******/ (function(modules) { // webpackBootstrap
 		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 		_core2.default.register({
+		  'attributors/attribute/direction': _direction.DirectionAttribute,
+	
 		  'attributors/class/align': _align.AlignClass,
 		  'attributors/class/background': _background.BackgroundClass,
 		  'attributors/class/color': _color.ColorClass,
@@ -8826,6 +8912,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 		function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
+		var ATTRIBUTES = ['alt', 'height', 'width'];
+	
 		var Image = function (_Embed) {
 		  _inherits(Image, _Embed);
 	
@@ -8838,7 +8926,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		  _createClass(Image, [{
 		    key: 'format',
 		    value: function format(name, value) {
-		      if (name === 'height' || name === 'width') {
+		      if (ATTRIBUTES.indexOf(name) > -1) {
 		        if (value) {
 		          this.domNode.setAttribute(name, value);
 		        } else {
@@ -8860,10 +8948,12 @@ return /******/ (function(modules) { // webpackBootstrap
 		  }, {
 		    key: 'formats',
 		    value: function formats(domNode) {
-		      var formats = {};
-		      if (domNode.hasAttribute('height')) formats['height'] = domNode.getAttribute('height');
-		      if (domNode.hasAttribute('width')) formats['width'] = domNode.getAttribute('width');
-		      return formats;
+		      return ATTRIBUTES.reduce(function (formats, attribute) {
+		        if (domNode.hasAttribute(attribute)) {
+		          formats[attribute] = domNode.getAttribute(attribute);
+		        }
+		        return formats;
+		      }, {});
 		    }
 		  }, {
 		    key: 'match',
@@ -8919,6 +9009,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 		function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
+		var ATTRIBUTES = ['height', 'width'];
+	
 		var Video = function (_BlockEmbed) {
 		  _inherits(Video, _BlockEmbed);
 	
@@ -8931,7 +9023,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		  _createClass(Video, [{
 		    key: 'format',
 		    value: function format(name, value) {
-		      if (name === 'height' || name === 'width') {
+		      if (ATTRIBUTES.indexOf(name) > -1) {
 		        if (value) {
 		          this.domNode.setAttribute(name, value);
 		        } else {
@@ -8953,10 +9045,12 @@ return /******/ (function(modules) { // webpackBootstrap
 		  }, {
 		    key: 'formats',
 		    value: function formats(domNode) {
-		      var formats = {};
-		      if (domNode.hasAttribute('height')) formats['height'] = domNode.getAttribute('height');
-		      if (domNode.hasAttribute('width')) formats['width'] = domNode.getAttribute('width');
-		      return formats;
+		      return ATTRIBUTES.reduce(function (formats, attribute) {
+		        if (domNode.hasAttribute(attribute)) {
+		          formats[attribute] = domNode.getAttribute(attribute);
+		        }
+		        return formats;
+		      }, {});
 		    }
 		  }, {
 		    key: 'sanitize',
@@ -10071,7 +10165,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		    _classCallCheck(this, Tooltip);
 	
 		    this.quill = quill;
-		    this.boundsContainer = boundsContainer;
+		    this.boundsContainer = boundsContainer || document.body;
 		    this.root = quill.addContainer('ql-tooltip');
 		    this.root.innerHTML = this.constructor.TEMPLATE;
 		    var offset = parseInt(window.getComputedStyle(this.root).marginTop);
@@ -10203,7 +10297,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		  return BubbleTheme;
 		}(_base2.default);
 	
-		BubbleTheme.DEFAULTS = (0, _extend2.default)(true, {}, _base.BaseTooltip.DEFAULTS, {
+		BubbleTheme.DEFAULTS = (0, _extend2.default)(true, {}, _base2.default.DEFAULTS, {
 		  modules: {
 		    toolbar: {
 		      handlers: {
@@ -10360,7 +10454,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 		var ALIGNS = [false, 'center', 'right', 'justify'];
 	
-		var COLORS = ["#000000", "#e60000", "#ff9900", "#ffff00", "#008A00", "#0066cc", "#9933ff", "#ffffff", "#facccc", "#ffebcc", "#ffffcc", "#cce8cc", "#cce0f5", "#ebd6ff", "#bbbbbb", "#f06666", "#ffc266", "#ffff66", "#66b966", "#66a3e0", "#c285ff", "#888888", "#a10000", "#b26b00", "#b2b200", "#006100", "#0047b2", "#6b24b2", "#444444", "#5c0000", "#663d00", "#666600", "#003700", "#002966", "#3d1466"];
+		var COLORS = ["#000000", "#e60000", "#ff9900", "#ffff00", "#008a00", "#0066cc", "#9933ff", "#ffffff", "#facccc", "#ffebcc", "#ffffcc", "#cce8cc", "#cce0f5", "#ebd6ff", "#bbbbbb", "#f06666", "#ffc266", "#ffff66", "#66b966", "#66a3e0", "#c285ff", "#888888", "#a10000", "#b26b00", "#b2b200", "#006100", "#0047b2", "#6b24b2", "#444444", "#5c0000", "#663d00", "#666600", "#003700", "#002966", "#3d1466"];
 	
 		var FONTS = [false, 'serif', 'monospace'];
 	
