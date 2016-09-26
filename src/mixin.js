@@ -20,14 +20,14 @@ var QuillMixin = {
 		// accidentally modifying editor state.
 		var unprivilegedEditor = this.makeUnprivilegedEditor(editor);
 
-		editor.on('text-change', function(delta, source) {
-			if (this.onEditorChange) {
-				this.onEditorChange(
-					editor.root.innerHTML, delta, source,
-					unprivilegedEditor
-				);
-			}
-		}.bind(this));
+		editor.on('text-change', function(delta, oldDelta, source) {
+      if (this.onEditorChange) {
+        this.onEditorChange(
+          editor.root.innerHTML, delta, source,
+          unprivilegedEditor
+        );
+      }
+    }.bind(this));
 
 		editor.on('selection-change', function(range, source) {
 			if (this.onEditorChangeSelection) {
