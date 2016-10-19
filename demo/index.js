@@ -16,7 +16,7 @@ var Editor = React.createClass({
 
 	formatRange: function(range) {
 		return range
-			? [range.start, range.end].join(',')
+			? [range.index, range.index + range.length].join(',')
 			: 'none';
 	},
 
