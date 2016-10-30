@@ -1,47 +1,51 @@
 'use strict';
 
-var Quill = require('quill');
+import Quill from 'quill'
 
-var QuillMixin = {
+export default const QuillMixin = {
 
 	/**
 	Creates an editor on the given element. The editor will
 	be passed the configuration, have its events bound,
 	*/
-	createEditor: function($el, config) {
+	createEditor: ($el, config) => {
 		var editor = new Quill($el, config);
 		this.hookEditor(editor);
 		return editor;
 	},
 
-	hookEditor: function(editor) {
+	hookEditor: (editor) => {
 		// Expose the editor on change events via a weaker,
 		// unprivileged proxy object that does not allow
 		// accidentally modifying editor state.
 		var unprivilegedEditor = this.makeUnprivilegedEditor(editor);
 
-		editor.on('text-change', function(delta, oldDelta, source) {
-			if (this.onEditorChange) {
-				this.onEditorChange(
-					editor.root.innerHTML, delta, source,
-					unprivilegedEditor
-				);
-			}
-		}.bind(this));
+		editor
+			.on('text-change', (delta, oldDelta, source) => {
+				if (this.onEditorChange) {
+					this.onEditorChange(
+						editor.root.innerHTML,
+						delta,
+						source,
+						unprivilegedEditor
+					)
+				}
+			})
 
-		editor.on('selection-change', function(range, oldRange, source) {
-			if (this.onEditorChangeSelection) {
-				this.onEditorChangeSelection(
-					range, source,
-					unprivilegedEditor
-				);
-			}
-		}.bind(this));
+		editor
+			.on('selection-change', (range, oldRange, source) => {
+				if (this.onEditorChangeSelection) {
+					this.onEditorChangeSelection(
+						range,
+						source,
+						unprivilegedEditor
+					);
+				}
+			})
 	},
 
-	setEditorReadOnly: function(editor, value) {
-		value? editor.disable()
-		     : editor.enable();
+	setEditorReadOnly: (editor, value) => {
+		value ? editor.disable() : editor.enable();
 	},
 
 	/*
@@ -49,20 +53,20 @@ var QuillMixin = {
 	the previous selection hanging around so that
 	the cursor won't move.
 	*/
-	setEditorContents: function(editor, value) {
-		var sel = editor.getSelection();
-		editor.pasteHTML(value || '');
-		if (sel) this.setEditorSelection(editor, sel);
+	setEditorContents: (editor, value) => {
+		const sel = editor.getSelection()
+		editor.pasteHTML(value || '')
+		if (sel) this.setEditorSelection(editor, sel)
 	},
 
-	setEditorSelection: function(editor, range) {
+	setEditorSelection: (editor, range) => {
 		if (range) {
 			// Validate bounds before applying.
-			var length = editor.getLength();
-			range.index = Math.max(0, Math.min(range.index, range.length-1));
-			range.length = length;
+			var length = editor.getLength()
+			range.index = Math.max(0, Math.min(range.index, range.length-1))
+			range.length = length
 		}
-		editor.setSelection(range);
+		editor.setSelection(range)
 	},
 
 	/*
@@ -70,17 +74,15 @@ var QuillMixin = {
 	exposes read-only accessors found on the editor instance,
 	without any state-modificating methods.
 	*/
-	makeUnprivilegedEditor: function(editor) {
-		var e = editor;
+	makeUnprivilegedEditor: (editor) => {
+		var e = editor
 		return {
-			getLength:    function(){ e.getLength.apply(e, arguments); },
-			getText:      function(){ e.getText.apply(e, arguments); },
-			getContents:  function(){ e.getContents.apply(e, arguments); },
-			getSelection: function(){ e.getSelection.apply(e, arguments); },
-			getBounds:    function(){ e.getBounds.apply(e, arguments); },
+			getLength:    () => {e.getLength.apply(e, arguments) },
+			getText:      () => {e.getText.apply(e, arguments) },
+			getContents:  () => {e.getContents.apply(e, arguments) },
+			getSelection: () => {e.getSelection.apply(e, arguments) },
+			getBounds:    () => {e.getBounds.apply(e, arguments) },
 		};
 	}
 
-};
-
-module.exports = QuillMixin;
+}

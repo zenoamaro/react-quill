@@ -20,6 +20,18 @@ module.exports = {
 		noParse: /node_modules\/quill\/dist/
 	},
 
+	loaders: [
+		{
+		  test :/\.js$/,
+		  loader: 'babel-loader',
+		  query: { presets: ['react', 'latest', 'stage-0'] }
+		}
+	],
+
+	resolve: {
+	  extensions: ['', '.js', '.jsx']
+	},
+
 	externals: {
 		'react': {
 			'commonjs': 'react',

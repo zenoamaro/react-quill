@@ -43,6 +43,11 @@
     "react": ">=0.14.0"
   },
   "devDependencies": {
+    "babel": "^6.5.2",
+    "babel-loader": "^6.2.7",
+    "babel-preset-latest": "^6.16.0",
+    "babel-preset-react": "^6.16.0",
+    "babel-preset-stage-0": "^6.16.0",
     "blanket": "^1.1.6",
     "jsdom": "^7.0.1",
     "jshint": "^2.5.10",

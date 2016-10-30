@@ -1,10 +1,11 @@
 'use strict';
 
-var React = require('react'),
-	ReactDOMServer = require('react-dom/server'),
-	T = React.PropTypes;
+import React, { Component, PropTypes } from 'react'
+import ReactDOMServer from 'react-dom/server'
 
-var defaultColors = [
+const T = PropTypes
+
+const defaultColors = [
 	'rgb(  0,   0,   0)', 'rgb(230,   0,   0)', 'rgb(255, 153,   0)',
 	'rgb(255, 255,   0)', 'rgb(  0, 138,   0)', 'rgb(  0, 102, 204)',
 	'rgb(153,  51, 255)', 'rgb(255, 255, 255)', 'rgb(250, 204, 204)',
@@ -17,130 +18,146 @@ var defaultColors = [
 	'rgb(107,  36, 178)', 'rgb( 68,  68,  68)', 'rgb( 92,   0,   0)',
 	'rgb(102,  61,   0)', 'rgb(102, 102,   0)', 'rgb(  0,  55,   0)',
 	'rgb(  0,  41, 102)', 'rgb( 61,  20,  10)',
-].map(function(color){ return { value: color } });
+].map(color => { return  {value: color} });
 
-var defaultItems = [
-
-	{ label:'Formats', type:'group', items: [
-		{ label:'Font', type:'font', items: [
-			{ label:'Sans Serif',  value:'sans-serif', selected:true },
-			{ label:'Serif',       value:'serif' },
-			{ label:'Monospace',   value:'monospace' }
+const defaultItems = [
+	{ label:'Formats',type:'group',items: [
+		{ label:'Font',type:'font',items: [
+			{ label:'Sans Serif', value:'sans-serif',selected:true },
+			{ label:'Serif',      value:'serif' },
+			{ label:'Monospace',  value:'monospace' }
 		]},
-		{ label:'Size', type:'size', items: [
-			{ label:'Small',  value:'10px' },
-			{ label:'Normal', value:'13px', selected:true },
-			{ label:'Large',  value:'18px' },
-			{ label:'Huge',   value:'32px' }
+		{ label:'Size',type:'size',items: [
+			{ label:'Small', value:'10px' },
+			{ label:'Normal',value:'13px',selected:true },
+			{ label:'Large', value:'18px' },
+			{ label:'Huge',  value:'32px' }
 		]},
-		{ label:'Alignment', type:'align', items: [
-			{ label:'', value:'', selected:true },
-			{ label:'', value:'center' },
-			{ label:'', value:'right' },
-			{ label:'', value:'justify' }
+		{ label:'Alignment',type:'align',items: [
+			{ label:'',value:'',selected:true },
+			{ label:'',value:'center' },
+			{ label:'',value:'right' },
+			{ label:'',value:'justify' }
 		]}
 	]},
 
-	{ label:'Text', type:'group', items: [
-		{ type:'bold', label:'Bold' },
-		{ type:'italic', label:'Italic' },
-		{ type:'strike', label:'Strike' },
-		{ type:'underline', label:'Underline' },
-		{ type:'color', label:'Color', items:defaultColors },
-		{ type:'background', label:'Background color', items:defaultColors },
-		{ type:'link', label:'Link' }
+	{ label:'Text',type:'group',items: [
+		{ type:'bold',label:'Bold' },
+		{ type:'italic',label:'Italic' },
+		{ type:'strike',label:'Strike' },
+		{ type:'underline',label:'Underline' },
+		{ type:'color',label:'Color',items:defaultColors },
+		{ type:'background',label:'Background color',items:defaultColors },
+		{ type:'link',label:'Link' }
 	]},
 
-	{ label:'Blocks', type:'group', items: [
-		{ type:'list', value:'bullet' },
-		{ type:'list', value:'ordered' }
+	{ label:'Blocks',type:'group',items: [
+		{ type:'list',value:'bullet' },
+		{ type:'list',value:'ordered' }
 	]},
 
-	{ label:'Blocks', type:'group', items: [
-		{ type:'image', label:'Image' }
+	{ label:'Blocks',type:'group',items: [
+		{ type:'image',label:'Image' }
 	]}
 
 ];
 
-var QuillToolbar = React.createClass({
 
-	displayName: 'Quill Toolbar',
 
-	propTypes: {
+class QuillToolbar extends Component {
+
+	static propTypes = {
 		id:        T.string,
 		className: T.string,
 		items:     T.array
-	},
+	}
 
-	getDefaultProps: function(){
+	getDefaultProps = () => {
 		return {
 			items: defaultItems
-		};
-	},
+		}
+	}
 
-	renderGroup: function(item, key) {
-		return React.DOM.span({
-			key: item.label || key,
-			className:'ql-formats' },
-			item.items.map(this.renderItem)
-		);
-	},
+	getClassName = () => {
+		return `quill-toolbar ${this.props.className || ''}`
+	}
 
-	renderChoiceItem: function(item, key) {
-		return React.DOM.option({
-			key: item.label || item.value || key,
-			value:item.value },
-			item.label
-		);
-	},
+	renderGroup = (item,key) => {
+		return (
+			<span
+				key={ item.label || key }
+				className={ 'ql-formats' }
+			>
+				{ item.items.map(this.renderItem) }
+			</span>
+		)
+	}
 
-	renderChoices: function(item, key) {
+	renderChoiceItem = (item, key) => {
+		return (
+			<option
+				key={ item.label || item.value || key }
+				value={ item.value }
+			>
+				{ item.label }
+			</option>
+		)
+	}
+
+	renderChoices = (item, key) => {
 		var attrs = {
 			key: item.label || key,
 			title: item.label,
-			className: 'ql-'+item.type
-		};
-		var self = this;
-		var choiceItems = item.items.map(function(item, key) {
+			className: `ql-${item.type}`
+		}
+
+		const choiceItems = item.items.map((item, key) => {
 			if (item.selected) {
 				attrs.defaultValue = item.value;
 			}
-			return self.renderChoiceItem(item, key);
+			return this.renderChoiceItem(item, key);
 		})
-		return React.DOM.select(attrs, choiceItems);
-	},
 
-	renderButton: function(item, key) {
-		return React.DOM.button({
-			type: 'button',
-			key: item.label || item.value || key,
-			value: item.value,
-			className: 'ql-'+item.type,
-			title: item.label },
-			item.children
-		);
-	},
+		return (<select {...attrs}>{ choiceItems }</select>)
+	}
 
-	renderAction: function(item, key) {
-		return React.DOM.span({
-			key: item.label || item.value || key,
-			className: 'ql-'+item.type,
-			title: item.label },
-			item.children
-		);
-	},
+	renderButton = (item, key) => {
+		return (
+			<button
+				type='button'
+				key={ item.label || item.value || key }
+				value={ item.value }
+				className={ `ql-${item.type}` }
+				title={ item.label }
+			>
+			 { item.children }
+			</button>
+		)
+	}
 
-	renderItem: function(item, key) {
+	renderAction = (item, key) => {
+		return (
+			<span
+				key={ item.label || item.value || key }
+				className={ `ql-${item.type}`}
+				title={ item.title }
+			>
+				{ item.children }
+			</span>
+		)
+	}
+
+	renderItem = (item, key) => {
 		switch (item.type) {
 			case 'group':
-				return this.renderGroup(item, key);
+				return this.renderGroup(item, key)
 			case 'font':
 			case 'header':
 			case 'align':
 			case 'size':
 			case 'color':
 			case 'background':
-				return this.renderChoices(item, key);
+				return this.renderChoices(item, key)
 			case 'bold':
 			case 'italic':
 			case 'underline':
@@ -152,28 +169,26 @@ var QuillToolbar = React.createClass({
 			case 'indent':
 			case 'image':
 			case 'video':
-				return this.renderButton(item, key);
+				return this.renderButton(item, key)
 			default:
-				return this.renderAction(item, key);
+				return this.renderAction(item, key)
 		}
-	},
-
-	getClassName: function() {
-		return 'quill-toolbar ' + (this.props.className||'');
-	},
-
-	render: function() {
-		var children = this.props.items.map(this.renderItem);
-		var html = children.map(ReactDOMServer.renderToStaticMarkup).join('');
-		return React.DOM.div({
-			className: this.getClassName(),
-			style: this.props.style || {},
-			dangerouslySetInnerHTML: { __html:html }
-		});
 	}
 
-});
+	render = () => {
+		var children = this.props.items.map(this.renderItem)
+		const __html = children.map(ReactDOMServer.renderToStaticMarkup).join('')
+		return (
+			<div
+				className={ this.getClassName() }
+				style={ style }
+				dangerouslySetInnerHTML={ { __html } }
+			/>
+		)
+	}
+}
 
+QuillToolbar.displayName = 'Quill Toolbar'
+QuillToolbar.defaultItems = defaultItems
+QuillToolbar.defaultColors = defaultColors
 module.exports = QuillToolbar;
-QuillToolbar.defaultItems = defaultItems;
-QuillToolbar.defaultColors = defaultColors;
