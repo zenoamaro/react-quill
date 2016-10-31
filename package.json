@@ -39,7 +39,7 @@
     "LICENSE"
   ],
   "dependencies": {
-    "quill": "^1.0.2"
+    "quill": "^1.1.3"
   },
   "peerDependencies": {
     "react": ">=0.14.0"

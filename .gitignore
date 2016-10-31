@@ -6,3 +6,6 @@
 *.log
 /tmp
 /node_modules
+
+# need to npm run build to see this
+./demo/index.js

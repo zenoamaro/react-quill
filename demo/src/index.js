@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 import QuillComponent from '../../src'
-console.log('quill component', QuillComponent)
 
 class Editor extends Component {
 
@@ -113,6 +112,7 @@ class Editor extends Component {
     return (
       <div>
         <QuillComponent { ...props } />
+        { this.renderSidebar() }
       </div>
     )
   }
