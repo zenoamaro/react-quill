@@ -2,7 +2,7 @@
 React-Quill v0.4.1
 https://github.com/zenoamaro/react-quill
 */
-import Quill from 'quill'
+import Quill from 'quill/core'
 import QuillComponent from './component'
 import Mixin from './mixin'
 import ToolBar from './toolbar'
@@ -14,4 +14,4 @@ const FontFamilyStyle = new Parchment.Attributor.Style('font', 'font-family', { 
 Quill.register(FontStyle, true)
 Quill.register(FontFamilyStyle, true)
 
-export { Quill }
+export { Quill, Mixin, ToolBar, QuillComponent as default }

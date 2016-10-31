@@ -1,71 +1,53 @@
-'use strict';
-
 import React, { PropTypes, Component, cloneElement } from 'react'
 import ReactDOM from 'react-dom'
 import QuillToolbar from './toolbar'
 import QuillMixin from './mixin'
-
-const T = PropTypes
-
-const find = (arr, predicate) => {
-  if (!arr) {
-    return;
-  }
-  for (let i=0; i<arr.length; ++i) {
-    if (predicate(arr[i])) return arr[i];
-  }
-}
-
-const displayName = 'Quill'
-
-const mixins = [ QuillMixin ]
+import { find } from './utils'
 
 const dirtyProps = [
-    'id',
-    'className',
-    'modules',
-    'toolbar',
-    'formats',
-    'styles',
-    'theme',
-    'pollInterval'
-  ]
+  'id',
+  'className',
+  'modules',
+  'toolbar',
+  'formats',
+  'styles',
+  'theme',
+  'pollInterval'
+]
+
+const defaultProps = {
+  className: '',
+  theme: 'snow',
+  modules: {}
+}
 
 class QuillComponent extends Component {
 
   static propTypes = {
-    id: T.string,
-    className: T.string,
-    style: T.object,
-    value: T.string,
-    defaultValue: T.string,
-    placeholder: T.string,
-    readOnly: T.bool,
-    modules: T.object,
-    toolbar: T.oneOfType([ T.array, T.oneOf([false]), ]), // deprecated for v1.0.0, use toolbar module
-    formats: T.array,
-    styles: T.oneOfType([ T.object, T.oneOf([false]) ]),
-    theme: T.string,
-    pollInterval: T.number,
-    onKeyPress: T.func,
-    onKeyDown: T.func,
-    onKeyUp: T.func,
-    onChange: T.func,
-    onChangeSelection: T.func
+    id: PropTypes.string,
+    className: PropTypes.string,
+    style: PropTypes.object,
+    value: PropTypes.string,
+    defaultValue: PropTypes.string,
+    placeholder: PropTypes.string,
+    readOnly: PropTypes.bool,
+    modules: PropTypes.object,
+    toolbar: PropTypes.oneOfType([ PropTypes.array, PropTypes.oneOf([false]), ]), // deprecated for v1.0.0, use toolbar module
+    formats: PropTypes.array,
+    styles: PropTypes.oneOfType([ PropTypes.object, PropTypes.oneOf([false]) ]),
+    theme: PropTypes.string,
+    pollInterval: PropTypes.number,
+    onKeyPress: PropTypes.func,
+    onKeyDown: PropTypes.func,
+    onKeyUp: PropTypes.func,
+    onChange: PropTypes.func,
+    onChangeSelection: PropTypes.func
   }
 
   constructor (props){
     super(props)
     this.state = {
       value: this.isControlled() ? this.props.value : this.props.defaultValue
-    }
-  }
-
-  getDefaultProps = () => {
-    return {
-      className: '',
-      theme: 'snow',
-      modules: {}
     }
   }
 
@@ -101,8 +83,10 @@ class QuillComponent extends Component {
     }
   }
 
-  componentDidMount= () => {
-    const editor = this.createEditor(this.getEditorElement(), this.getEditorConfig())
+  componentDidMount = () => {
+    const editorEl = this.getEditorElement()
+    const editorConfig = this.getEditorConfig()
+    const editor = QuillMixin.createEditor(editorEl, editorConfig)
 
     // this.setCustomFormats(editor); // deprecated in Quill v1.0
     const fontOptions = document.querySelectorAll('.quill-toolbar .ql-font.ql-picker .ql-picker-item')
@@ -159,6 +143,16 @@ class QuillComponent extends Component {
     }
   }
 
+  /**
+  Creates an editor on the given element. The editor will
+  be passed the configuration, have its events bound,
+  */
+  createEditor = ($el, config) => {
+    var editor = new Quill($el, config);
+    this.hookEditor(editor);
+    return editor;
+  }
+
   getEditorConfig = () => {
     const config = {
       readOnly:     this.props.readOnly,
@@ -200,58 +194,6 @@ class QuillComponent extends Component {
   getEditorSelection = () => {
     return this.state.selection;
   }
-
-  /*
-  Renders either the specified contents, or a default
-  configuration of toolbar and contents area.
-  */
-  renderContents = () => {
-    const contents = [];
-    const children = React.Children.map(this.props.children, c => cloneElement(c, {ref: c.ref}) );
-
-    if (this.props.toolbar !== false) {
-      const toolbar = find(children, child => child.ref === 'toolbar')
-
-      contents.push(toolbar ? toolbar : QuillToolbar({
-        key: 'toolbar-' + Math.random(),
-        ref: 'toolbar',
-        items: this.props.toolbar
-      }))
-    }
-
-    const editor = find(children, child => child.ref === 'editor')
-
-    contents.push(editor ? editor : (
-        <div
-          key={`editor${Math.random()}`}
-          ref='editor'
-          className="quill-contents"
-          dangerouslySetInnerHTML={ this.getEditorContents() }
-        ></div>
-      )
-    )
-
-    return contents;
-  }
-
-  render = () => {
-    const { id, style, className, onKeyPress, onKeyDown, onKeyUp } = this.props
-    return (
-      <div
-        id={ id }
-        style={ style }
-        className={ className }
-        onKeyPress={ onKeyPress }
-        onKeyDown={ onKeyDown }
-        onKeyUp={ onKeyUp }
-        onChange={ this.preventDefault }
-      >
-        { this.renderContents() }
-      </div>
-
-    )
-  }
-
   onEditorChange = (value, delta, source, editor) => {
     if (value !== this.getEditorContents()) {
       this.setState({ value });
@@ -288,7 +230,69 @@ class QuillComponent extends Component {
     event.preventDefault()
     event.stopPropagation()
   }
+
+  /*
+  Renders either the specified contents, or a default
+  configuration of toolbar and contents area.
+  */
+  renderContents = () => {
+    const contents = []
+    const children = React.Children.map(this.props.children, c => cloneElement(c, {ref: c.ref}) )
+
+    if (this.props.toolbar !== false) {
+      const toolbar = find(children, child => child.ref === 'toolbar')
+      let el
+      if(toolbar){
+        el = toolbar
+      } else {
+        el = (
+          <QuillToolbar
+            key={ `toolbar-${Math.random()}` }
+            ref={ 'toolbar' }
+            items={ this.props.toolbar }
+          />
+        )
+      }
+      contents.push(el)
+    }
+
+    const editor = find(children, child => child.ref === 'editor')
+
+    contents.push(editor ? editor : (
+        <div
+          key={`editor${Math.random()}`}
+          ref='editor'
+          className='quill-contents'
+          dangerouslySetInnerHTML={ {__html: this.getEditorContents()} }
+        >
+        </div>
+      )
+    )
+
+    return contents
+  }
+
+  render = () => {
+    const { id, style, className, onKeyPress, onKeyDown, onKeyUp } = this.props
+    return (
+      <div
+        id={ id }
+        style={ style }
+        className={ className }
+        onKeyPress={ onKeyPress }
+        onKeyDown={ onKeyDown }
+        onKeyUp={ onKeyUp }
+        onChange={ this.preventDefault }
+      >
+        { this.renderContents() }
+      </div>
+
+    )
+  }
 }
 
+QuillComponent.defaultProps = defaultProps
+QuillComponent.displayName = 'Quill'
+// QuillComponent.mixins = [ QuillMixin ]
 
 export default QuillComponent

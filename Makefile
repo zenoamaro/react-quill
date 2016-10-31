@@ -29,12 +29,16 @@ test:
 build:
 	@webpack --config webpack.dev.js
 	@webpack --config webpack.prod.js
+	@webpack --config webpack.demo.js
 	@ln -fs ../node_modules/quill/dist/quill.core.css dist
 	@ln -fs ../node_modules/quill/dist/quill.snow.css dist
 	@ln -fs ../node_modules/quill/dist/quill.bubble.css dist
 
 watch:
 	@webpack --watch --config webpack.dev.js
+
+demo:
+	@webpack --watch --config webpack.demo.js
 
 clean:
 	@if [ -d dist ]; then rm -r dist; fi
