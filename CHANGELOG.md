@@ -1,6 +1,12 @@
 Changelog
 =========
 
+v2.0.2
+------
+- Updates Quill to version 1.1.5
+- Removes deprecated configuration options
+  - Support for the toolbar prop has been dropped in favor of the Quill toolbar module
+
 v2.0.0-rc.1
 ------
 - Added CSS for alternate themes (bubble, core) to `/dist`
