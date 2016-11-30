@@ -2,12 +2,8 @@
 
 var React = require('react'),
 	ReactDOM = require('react-dom'),
-	QuillToolbar = require('./toolbar'),
 	QuillMixin = require('./mixin'),
 	T = React.PropTypes;
-
-// FIXME: Remove with the switch to JSX
-QuillToolbar = React.createFactory(QuillToolbar);
 
 var find = function(arr, predicate) {
 	if (!arr) {
@@ -33,7 +29,6 @@ var QuillComponent = React.createClass({
 		placeholder: T.string,
 		readOnly: T.bool,
 		modules: T.object,
-		toolbar: T.oneOfType([ T.array, T.oneOf([false]), ]), // deprecated for v1.0.0, use toolbar module
 		formats: T.array,
 		styles: T.oneOfType([ T.object, T.oneOf([false]) ]),
 		theme: T.string,
@@ -52,7 +47,6 @@ var QuillComponent = React.createClass({
 		'id',
 		'className',
 		'modules',
-		'toolbar',
 		'formats',
 		'styles',
 		'theme',
@@ -116,12 +110,6 @@ var QuillComponent = React.createClass({
 			this.getEditorElement(),
 			this.getEditorConfig());
 
-		// this.setCustomFormats(editor); // deprecated in Quill v1.0
-		var fontOptions = document.querySelectorAll('.quill-toolbar .ql-font.ql-picker .ql-picker-item');
-		for (var i=0; i<fontOptions.length; ++i) {
-			fontOptions[i].style.fontFamily = fontOptions[i].dataset.value;
-		}
-
 		this.setState({ editor:editor });
 	},
 
@@ -180,18 +168,6 @@ var QuillComponent = React.createClass({
 			bounds:       this.props.bounds,
 			placeholder:  this.props.placeholder,
 		};
-		// Unless we're redefining the toolbar, or it has been explicitly
-		// disabled, attach to the default one as a ref.
-		// Note: Toolbar should be configured as a module for Quill v1.0.0 and above
-		// Pass toolbar={false} for versions >1.0
-		if (this.props.toolbar !== false && !config.modules.toolbar) {
-			// Don't mutate the original modules
-			// because it's shared between components.
-			config.modules = JSON.parse(JSON.stringify(config.modules));
-			config.modules.toolbar = {
-				container: ReactDOM.findDOMNode(this.refs.toolbar)
-			}
-		}
 		return config;
 	},
 
@@ -221,17 +197,6 @@ var QuillComponent = React.createClass({
 			this.props.children,
 			function(c) { return React.cloneElement(c, {ref: c.ref}); }
 		);
-
-		if (this.props.toolbar !== false) {
-			var toolbar = find(children, function(child) {
-				return child.ref === 'toolbar';
-			})
-			contents.push(toolbar ? toolbar : QuillToolbar({
-				key: 'toolbar-' + Math.random(),
-				ref: 'toolbar',
-				items: this.props.toolbar
-			}))
-		}
 
 		var editor = find(children, function(child) {
 			return child.ref === 'editor';
