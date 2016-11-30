@@ -25,116 +25,116 @@ Quick start
 
 ### Use straight away
 
-    ~~~jsx
-    var React = require('react');
-    var ReactQuill = require('react-quill');
+```jsx
+var React = require('react');
+var ReactQuill = require('react-quill');
 
-    var MyComponent = React.createClass({
-      /* ... */
+var MyComponent = React.createClass({
+  /* ... */
 
-      render: function() {
-        return (
-          <ReactQuill value={this.state.value} />
-        );
-      }
-    });
-    ~~~
+  render: function() {
+    return (
+      <ReactQuill value={this.state.value} />
+    );
+  }
+});
+```
 
 ### Bind to the `onChange` event and customize a few settings:
 
-    ~~~jsx
-    /*
-    Include `quill.snow.css` to use the editor's standard theme. For example,
-    depending on the structure of your app, you could do something like this:
+```jsx
+/*
+Include `quill.snow.css` to use the editor's standard theme. For example,
+depending on the structure of your app, you could do something like this:
 
-    <link rel="stylesheet" href="../node_modules/react-quill/dist/quill.snow.css">
-    */
+<link rel="stylesheet" href="../node_modules/react-quill/dist/quill.snow.css">
+*/
 
-    var MyComponent = React.createClass({
-      /* ... */
+var MyComponent = React.createClass({
+  /* ... */
 
-      onTextChange: function(value) {
-        this.setState({ text:value });
-      },
+  onTextChange: function(value) {
+    this.setState({ text:value });
+  },
 
-      render: function() {
-        return (
-          <ReactQuill theme="snow"
-                      value={this.state.text}
-                      onChange={this.onTextChange} />
-        );
-      }
-    });
-    ~~~
+  render: function() {
+    return (
+      <ReactQuill theme="snow"
+                  value={this.state.text}
+                  onChange={this.onTextChange} />
+    );
+  }
+});
+```
 
 ### Toolbar
 
 The editor toolbar can be configured directly through the [Quill module API)(http://quilljs.com/docs/modules/toolbar/):
 
 
-  ~~~jsx
-  var MyComponent = React.createClass({
-    /* ... */
+```jsx
+var MyComponent = React.createClass({
+  /* ... */
 
-    _quillModules: {
-        toolbar: [ 
-            [{ 'header': [1, 2, false] }],
-            ['bold', 'italic', 'underline','strike', 'blockquote'],
-            [{'list': 'ordered'}, {'list': 'bullet'}, {'indent': '-1'}, {'indent': '+1'}], 
-            ['link', 'image'], 
-            ['clean'] 
-        ]
-        /* ... other modules */
-    },
+  _quillModules: {
+      toolbar: [ 
+          [{ 'header': [1, 2, false] }],
+          ['bold', 'italic', 'underline','strike', 'blockquote'],
+          [{'list': 'ordered'}, {'list': 'bullet'}, {'indent': '-1'}, {'indent': '+1'}], 
+          ['link', 'image'], 
+          ['clean'] 
+      ]
+      /* ... other modules */
+  },
 
-    _quillFormats: [ 
-        "header",
-        "bold", "italic", "underline", "strike", "blockquote",
-        "list", "bullet", "indent",
-        "link", "image" 
-    ],
-    
-    render: function() {
-      return (
-        <div className='_quill'>
-          <ReactQuill theme='snow' 
-                      modules={this._quillModules}
-                      formats={this._quillFormats}
-                      bounds={'._quill'}>
-            <div key="editor"
-                  ref="editor"
-                  className="quill-contents border_solid_top"
-                  dangerouslySetInnerHTML={{__html:this.state.editorContent}} />
-          </ReactQuill>
-        </div>
-      );
-    }
-  });
-  ~~~ 
+  _quillFormats: [ 
+      "header",
+      "bold", "italic", "underline", "strike", "blockquote",
+      "list", "bullet", "indent",
+      "link", "image" 
+  ],
+  
+  render: function() {
+    return (
+      <div className='_quill'>
+        <ReactQuill theme='snow' 
+                    modules={this._quillModules}
+                    formats={this._quillFormats}
+                    bounds={'._quill'}>
+          <div key="editor"
+                ref="editor"
+                className="quill-contents border_solid_top"
+                dangerouslySetInnerHTML={{__html:this.state.editorContent}} />
+        </ReactQuill>
+      </div>
+    );
+  }
+});
+```
 
 ### Mixing in:
 
-    ~~~jsx
-    var MyComponent = React.createClass({
-      mixins: [ ReactQuill.Mixin ],
+```jsx
+var MyComponent = React.createClass({
+  mixins: [ ReactQuill.Mixin ],
 
-      componentDidMount: function() {
-        var editor = this.createEditor(
-          this.getEditorElement(),
-          this.getEditorConfig()
-        );
-        this.setState({ editor:editor });
-      },
+  componentDidMount: function() {
+    var editor = this.createEditor(
+      this.getEditorElement(),
+      this.getEditorConfig()
+    );
+    this.setState({ editor:editor });
+  },
 
-      componentWillReceiveProps: function(nextProps) {
-        if ('value' in nextProps && nextProps.value !== this.props.value) {
-          this.setEditorContents(this.state.editor, nextProps.value);
-        }
-      },
+  componentWillReceiveProps: function(nextProps) {
+    if ('value' in nextProps && nextProps.value !== this.props.value) {
+      this.setEditorContents(this.state.editor, nextProps.value);
+    }
+  },
 
-      /* ... */
-    });
-    ~~~
+  /* ... */
+});
+```
 
     See [component.js](src/component.js) for a fully fleshed-out example.
 
