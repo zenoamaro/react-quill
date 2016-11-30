@@ -3,8 +3,6 @@ React-Quill ![](https://travis-ci.org/zenoamaro/react-quill.svg?branch=master)
 
 A [Quill] component for [React].
 
-See the [live demo].
-
 [Quill]: https://quilljs.com
 [React]: https://facebook.github.io/react/
 [live demo]: https://zenoamaro.github.io/react-quill/
@@ -17,10 +15,15 @@ See the [live demo].
   6. [Changelog](#changelog)
   7. [License](#license)
 
+*Updating from React Quill < 2.0.0*
+
+React Quill 2.0.0 uses the new Quill 1.0.0 API. Please review the [changelog](CHANGELOG.md) for breaking changes. The previous tooblar configuration optopns have been dropped in favor of the new [Toolbar module](http://quilljs.com/docs/modules/toolbar/).
+
 
 Quick start
 -----------
-1. Use straight away:
+
+### Use straight away
 
     ~~~jsx
     var React = require('react');
@@ -37,7 +40,7 @@ Quick start
     });
     ~~~
 
-2. Bind to the `onChange` event and customize a few settings:
+### Bind to the `onChange` event and customize a few settings:
 
     ~~~jsx
     /*
@@ -64,79 +67,52 @@ Quick start
     });
     ~~~
 
-3. Custom controls:
+### Toolbar
 
-    ~~~jsx
-    var MyComponent = React.createClass({
-      /* ... */
+The editor toolbar can be configured directly through the [Quill module API)(http://quilljs.com/docs/modules/toolbar/):
 
-      render: function() {
-        return (
-          <ReactQuill>
-            <ReactQuill.Toolbar key="toolbar"
-                                ref="toolbar"
-                                items={ReactQuill.Toolbar.defaultItems} />
+
+  ~~~jsx
+  var MyComponent = React.createClass({
+    /* ... */
+
+    _quillModules: {
+        toolbar: [ 
+            [{ 'header': [1, 2, false] }],
+            ['bold', 'italic', 'underline','strike', 'blockquote'],
+            [{'list': 'ordered'}, {'list': 'bullet'}, {'indent': '-1'}, {'indent': '+1'}], 
+            ['link', 'image'], 
+            ['clean'] 
+        ]
+        /* ... other modules */
+    },
+
+    _quillFormats: [ 
+        "header",
+        "bold", "italic", "underline", "strike", "blockquote",
+        "list", "bullet", "indent",
+        "link", "image" 
+    ],
+    
+    render: function() {
+      return (
+        <div className='_quill'>
+          <ReactQuill theme='snow' 
+                      modules={this._quillModules}
+                      formats={this._quillFormats}
+                      bounds={'._quill'}>
             <div key="editor"
-                 ref="editor"
-                 className="quill-contents"
-                 dangerouslySetInnerHTML={{__html:this.getEditorContents()}} />
+                  ref="editor"
+                  className="quill-contents border_solid_top"
+                  dangerouslySetInnerHTML={{__html:this.state.editorContent}} />
           </ReactQuill>
-        );
-      }
-    });
-    ~~~
+        </div>
+      );
+    }
+  });
+  ~~~ 
 
-### Using with Quill 1.0
-
-If using Quill >1.0.0 as a dependency, the toolbar should be configured directly through the Quill module API rather than through the React-Quill wrapper. 
-
-- Pass `toolbar={false}` as a prop to `ReactQuill` and remove the `ReactQuill.Toolbar` JSX element
-- [Quill Toolbar Module Docs (Beta)](http://beta.quilljs.com/docs/modules/toolbar/)
-
-#### Example
-
-~~~jsx
-var MyComponent = React.createClass({
-  /* ... */
-
-  _quillModules: {
-      toolbar: [ 
-          [{ 'header': [1, 2, false] }],
-          ['bold', 'italic', 'underline','strike', 'blockquote'],
-          [{'list': 'ordered'}, {'list': 'bullet'}, {'indent': '-1'}, {'indent': '+1'}], 
-          ['link', 'image'], 
-          ['clean'] 
-      ]
-      /* ... other modules */
-  },
-
-  _quillFormats: [ 
-      "header",
-      "bold", "italic", "underline", "strike", "blockquote",
-      "list", "bullet", "indent",
-      "link", "image" 
-  ],
-  
-  render: function() {
-    return (
-      <div className='_quill'>
-        <ReactQuill theme='snow' 
-                    modules={this._quillModules}
-                    formats={this._quillFormats}
-                    toolbar={false} // Let Quill manage toolbar
-                    bounds={'._quill'}>
-          <div key="editor"
-                ref="editor"
-                className="quill-contents border_solid_top"
-                dangerouslySetInnerHTML={{__html:this.state.editorContent}} />
-        </ReactQuill>
-      </div>
-    );
-  }
-});
-~~~
-
-4. Mixing in:
+### Mixing in:
 
     ~~~jsx
     var MyComponent = React.createClass({
@@ -218,9 +194,6 @@ API reference
 `ReactQuill.Mixin`
 : Provides the bridge between React and Quill. `ReactQuill` implements this mixin; in the same way you can use it to build your own component, or replace it to implement a new core for the default component.
 
-`ReactQuill.Toolbar`
-: The component that renders the basic ReactQuill toolbar. The default collection of items and color swatches is available as `ReactQuill.Toolbar.defaultItems` and `ReactQuill.Toolbar.defaultColors` respectively.
-
 `ReactQuill.Quill`
 : The `Quill` namespace on which you can call `registerModule` and such.
 
@@ -238,6 +211,9 @@ API reference
 
 `defaultValue`
 : Initial value for the editor as an uncontrolled component.
+
+`placeholder`
+: Initial value for empty editor.
 
 `readOnly`
 : If true, the editor won't allow changing its contents.
@@ -330,6 +306,13 @@ More tasks are available on the [Makefile](Makefile):
 
 Changelog
 ---------
+
+#### v2.0.2
+- Updates Quill to 1.1.5 and removes deprecated configuration options
+
+#### v2.0.0
+- Updates Quill to 1.0.0 (first stable release)
+
 #### v0.4.1
 - Added contents of `dist` to NPM package.
 
@@ -370,7 +353,7 @@ Roadmap
 -------
 - [ ] ES6 rewrite
 - [x] React 0.14 support
-- [ ] First-class support for modules
+- [x] First-class support for modules
 - [ ] Better API for custom controls
 - [ ] Tests!
 
