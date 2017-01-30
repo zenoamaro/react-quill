@@ -69,7 +69,7 @@ var MyComponent = React.createClass({
 
 ### Toolbar
 
-The editor toolbar can be configured directly through the [Quill module API)(http://quilljs.com/docs/modules/toolbar/):
+The editor toolbar can be configured directly through the [Quill module API](http://quilljs.com/docs/modules/toolbar/):
 
 
 ```jsx
