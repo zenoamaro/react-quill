@@ -5,6 +5,7 @@ var ReactDOM = require('react-dom');
 var QuillToolbar = require('./toolbar');
 var QuillMixin = require('./mixin');
 var find = require('lodash/find');
+var isEqual = require('lodash/isEqual');
 var T = React.PropTypes;
 
 // FIXME: Remove with the switch to JSX
@@ -128,7 +129,7 @@ var QuillComponent = React.createClass({
 		// Check if one of the changes should trigger a re-render.
 		for (var i=0; i<this.dirtyProps.length; i++) {
 			var prop = this.dirtyProps[i];
-			if (nextProps[prop] !== this.props[prop]) {
+			if (!isEqual(nextProps[prop], this.props[prop])) {
 				return true;
 			}
 		}

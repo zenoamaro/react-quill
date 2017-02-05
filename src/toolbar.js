@@ -2,6 +2,7 @@
 
 var React = require('react');
 var ReactDOMServer = require('react-dom/server');
+var isEqual = require('lodash/isEqual');
 var T = React.PropTypes;
 
 var defaultColors = [
@@ -76,6 +77,10 @@ var QuillToolbar = React.createClass({
 		return {
 			items: defaultItems
 		};
+	},
+
+	shouldComponentUpdate: function(nextProps, nextState) {
+		return !isEqual(nextProps, this.props);
 	},
 
 	renderGroup: function(item, key) {
