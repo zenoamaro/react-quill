@@ -76,6 +76,7 @@ var QuillToolbar = React.createClass({
 	propTypes: {
 		id:        T.string,
 		className: T.string,
+		style:     T.object,
 		items:     T.array
 	},
 
@@ -187,7 +188,7 @@ var QuillToolbar = React.createClass({
 		return React.DOM.div({
 			id: this.props.id,
 			className: this.getClassName(),
-			style: this.props.style || {},
+			style: this.props.style,
 			dangerouslySetInnerHTML: { __html:html }
 		});
 	},
