@@ -83,6 +83,7 @@ var QuillComponent = React.createClass({
 	dirtyProps: [
 		'id',
 		'className',
+		'style',
 		'modules',
 		'formats',
 		'bounds',
