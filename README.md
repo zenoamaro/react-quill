@@ -189,6 +189,10 @@ Please note that many [migration steps to Quill v1.0](http://quilljs.com/guides/
 
 Otherwise, you can set this to an object containing selectors and rules, that will be injected inside the document by Quill.
 
+### The `pollInterval` property
+
+This property previously set the frequency with which Quill polled the DOM for changes. It does not have any effect anymore, and can safely be removed from the props.
+
 
 Bundling with Webpack
 ---------------------
@@ -277,9 +281,6 @@ API reference
 
 `bounds`
 : Selector used by Quill to constrain position of popups. Defaults to `document.body`.
-
-`pollInterval`
-: Interval in ms between checks for local changes in editor contents.
 
 `onChange(content, delta, source, editor)`
 : Called back with the new contents of the editor after change. It will be passed the HTML contents of the editor, a delta object expressing the change-set itself, the source of the change, and finally a read-only proxy to editor accessors such as `getText()`.

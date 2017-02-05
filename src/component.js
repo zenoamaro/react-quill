@@ -30,12 +30,19 @@ var QuillComponent = React.createClass({
 		toolbar: T.oneOfType([ T.array, T.oneOf([false]), ]), // deprecated for v1.0.0, use toolbar module
 		formats: T.array,
 		styles: T.oneOfType([ T.object, T.oneOf([false]) ]),
-		pollInterval: T.number,
 		onKeyPress: T.func,
 		onKeyDown: T.func,
 		onKeyUp: T.func,
 		onChange: T.func,
 		onChangeSelection: T.func,
+
+		pollInterval: function(props) {
+			if ('pollInterval' in props) return new Error(
+				'The `pollInterval` property does not have any effect anymore. ' +
+				'You can safely remove it from your props.' +
+				'See: https://github.com/zenoamaro/react-quill#upgrading-to-react-quill-v1-0-0'
+			);
+		}
 	},
 		
 	/*
@@ -49,7 +56,6 @@ var QuillComponent = React.createClass({
 		'formats',
 		'styles',
 		'theme',
-		'pollInterval'
 	],
 
 	getDefaultProps: function() {
@@ -171,7 +177,6 @@ var QuillComponent = React.createClass({
 			formats:      this.props.formats,
 			styles:       this.props.styles,
 			modules:      this.props.modules,
-			pollInterval: this.props.pollInterval,
 			bounds:       this.props.bounds,
 			placeholder:  this.props.placeholder,
 		};
