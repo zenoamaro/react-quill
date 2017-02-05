@@ -186,6 +186,10 @@ Upgrading to React-Quill v1.0.0
 Please note that many [migration steps to Quill v1.0](http://quilljs.com/guides/upgrading-to-1-0/) may also apply.
 
 
+### The `formats` property
+
+Previously, it was possible to provide custom formats to the `formats` prop. [Use Parchment to provide new formats](https://github.com/quilljs/parchment) instead.
+
 ### The `styles` property
 
 Previously, it was allowed to inject CSS styles by providing an object to the `styles` property. This option has been removed from Quill 1.0, and support for it in React Quill has gone as well. If you need to inject styles, link an external stylesheet instead.
@@ -260,17 +264,7 @@ API reference
 : A list of toolbar items to use as custom configuration for the toolbar. Pass `false` to disable the toolbar completely. Defaults items are available for reference in [`ReactQuill.Toolbar.defaultItems`](src/toolbar.js#L21) and [`ReactQuill.Toolbar.defaultColors`](src/toolbar.js#L6). See also the [Toolbar module](http://quilljs.com/docs/modules/toolbar/) over the Quill documentation for more information on the inner workings.
 
 `formats`
-: An array of formats to be enabled during editing. All implemented formats are enabled by default. See [Formats](http://quilljs.com/docs/formats/) for a list. Also accepts definitions of custom formats:
-```javascript
-[
-  "list",
-  "bullet",
-  "bold",
-  "italic",
-  { name: "h1", tag: "H1", prepare: "heading", type: "line" },
-  { name: "h2", tag: "H2", prepare: "heading", type: "line" },
-  { name: "h3", tag: "H3", prepare: "heading", type: "line" }
-];
+: An array of formats to be enabled during editing. All implemented formats are enabled by default. See [Formats](http://quilljs.com/docs/formats/) for a list.
 ```
 
 `style`

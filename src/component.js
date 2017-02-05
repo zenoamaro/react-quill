@@ -28,12 +28,20 @@ var QuillComponent = React.createClass({
 		placeholder: T.string,
 		modules: T.object,
 		toolbar: T.oneOfType([ T.array, T.oneOf([false]), ]), // deprecated for v1.0.0, use toolbar module
-		formats: T.array,
 		onKeyPress: T.func,
 		onKeyDown: T.func,
 		onKeyUp: T.func,
 		onChange: T.func,
 		onChangeSelection: T.func,
+
+		formats: function(props) {	
+			var isNotArrayOfString = T.arrayOf(T.string).apply(this, arguments);
+
+			if (isNotArrayOfString) return new Error(
+				'You cannot specify custom `formats` anymore. Use Parchment instead.  ' +
+				'See: https://github.com/zenoamaro/react-quill#upgrading-to-react-quill-v1-0-0'
+			);
+		},
 
 		styles: function(props) {
 			if ('styles' in props) return new Error(
@@ -118,16 +126,8 @@ var QuillComponent = React.createClass({
 	componentDidMount: function() {
 		var editor = this.createEditor(
 			this.getEditorElement(),
-			this.getEditorConfig());
-
-		var fontOptions = document.querySelectorAll(
-			'.quill-toolbar .ql-font.ql-picker .ql-picker-item'
+			this.getEditorConfig()
 		);
-
-		for (var i=0; i<fontOptions.length; ++i) {
-			fontOptions[i].style.fontFamily = fontOptions[i].dataset.value;
-		}
-
 		this.setState({ editor:editor });
 	},
 
@@ -159,20 +159,6 @@ var QuillComponent = React.createClass({
 
 	componentDidUpdate: function() {
 		this.componentDidMount();
-	},
-
-	/**
-	 * @deprecated v1.0.0
-	 */
-	setCustomFormats: function (editor) {
-		if (!this.props.formats) {
-			return;
-		}
-
-		for (var i = 0; i < this.props.formats.length; i++) {
-			var format = this.props.formats[i];
-			editor.addFormat(format.name || format, format);
-		}
 	},
 
 	getEditorConfig: function() {
