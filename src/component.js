@@ -4,19 +4,11 @@ var React = require('react');
 var ReactDOM = require('react-dom');
 var QuillToolbar = require('./toolbar');
 var QuillMixin = require('./mixin');
+var find = require('lodash/find');
 var T = React.PropTypes;
 
 // FIXME: Remove with the switch to JSX
 QuillToolbar = React.createFactory(QuillToolbar);
-
-var find = function(arr, predicate) {
-	if (!arr) {
-		return;
-	}
-	for (var i=0; i<arr.length; ++i) {
-		if (predicate(arr[i])) return arr[i];
-	}
-}
 
 var QuillComponent = React.createClass({
 
