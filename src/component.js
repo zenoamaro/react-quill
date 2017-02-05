@@ -28,6 +28,7 @@ var QuillComponent = React.createClass({
 		placeholder: T.string,
 		modules: T.object,
 		toolbar: T.oneOfType([ T.array, T.oneOf([false]), ]), // deprecated for v1.0.0, use toolbar module
+		bounds: T.oneOfType([T.string, T.element]),
 		onKeyPress: T.func,
 		onKeyDown: T.func,
 		onKeyUp: T.func,
@@ -68,6 +69,7 @@ var QuillComponent = React.createClass({
 		'modules',
 		'toolbar',
 		'formats',
+		'bounds',
 		'theme',
 	],
 

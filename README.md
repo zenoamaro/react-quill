@@ -274,7 +274,7 @@ API reference
 : The name of the theme to apply to the editor. Defaults to `base`.
 
 `bounds`
-: Selector used by Quill to constrain position of popups. Defaults to `document.body`.
+: Selector or DOM element used by Quill to constrain position of popups. Defaults to `document.body`.
 
 `onChange(content, delta, source, editor)`
 : Called back with the new contents of the editor after change. It will be passed the HTML contents of the editor, a delta object expressing the change-set itself, the source of the change, and finally a read-only proxy to editor accessors such as `getText()`.
