@@ -4,6 +4,7 @@ var React = require('react');
 var ReactDOM = require('react-dom');
 var QuillMixin = require('./mixin');
 var find = require('lodash/find');
+var some = require('lodash/some');
 var isEqual = require('lodash/isEqual');
 var T = React.PropTypes;
 
@@ -156,15 +157,11 @@ var QuillComponent = React.createClass({
 	},
 
 	shouldComponentUpdate: function(nextProps, nextState) {
-		// Check if one of the changes should trigger a re-render.
-		for (var i=0; i<this.dirtyProps.length; i++) {
-			var prop = this.dirtyProps[i];
-			if (!isEqual(nextProps[prop], this.props[prop])) {
-				return true;
-			}
-		}
-		// Never re-render otherwise.
-		return false;
+		// Rerender whenever a "dirtyProp" changes
+		var props = this.props;
+		return some(this.dirtyProps, function(prop) {
+			return !isEqual(nextProps[prop], props[prop]);
+		});
 	},
 
 	/*
