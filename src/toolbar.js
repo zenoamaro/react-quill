@@ -1,3 +1,9 @@
+/*
+QuillToolbar is deprecated. Consider switching to the official Quill
+toolbar format, or providing your own toolbar instead. 
+See https://quilljs.com/docs/modules/toolbar
+*/
+
 'use strict';
 
 var React = require('react');
@@ -79,6 +85,14 @@ var QuillToolbar = React.createClass({
 		};
 	},
 
+	componentDidMount: function() {
+		console.warn(
+			'QuillToolbar is deprecated. Consider switching to the official Quill ' +
+			'toolbar format, or providing your own toolbar instead. ' +
+			'See: https://github.com/zenoamaro/react-quill#upgrading-to-react-quill-v1-0-0'
+		);
+	},
+
 	shouldComponentUpdate: function(nextProps, nextState) {
 		return !isEqual(nextProps, this.props);
 	},
@@ -127,7 +141,7 @@ var QuillToolbar = React.createClass({
 	},
 
 	renderAction: function(item, key) {
-		return React.DOM.span({
+		return React.DOM.button({
 			key: item.label || item.value || key,
 			className: 'ql-'+item.type,
 			title: item.label },
@@ -171,11 +185,12 @@ var QuillToolbar = React.createClass({
 		var children = this.props.items.map(this.renderItem);
 		var html = children.map(ReactDOMServer.renderToStaticMarkup).join('');
 		return React.DOM.div({
+			id: this.props.id,
 			className: this.getClassName(),
 			style: this.props.style || {},
 			dangerouslySetInnerHTML: { __html:html }
 		});
-	}
+	},
 
 });
 

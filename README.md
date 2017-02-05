@@ -185,6 +185,59 @@ Upgrading to React-Quill v1.0.0
 -------------------------------
 Please note that many [migration steps to Quill v1.0](http://quilljs.com/guides/upgrading-to-1-0/) may also apply.
 
+### The toolbar module
+
+With v1.0.0, Quill adopted a new [toolbar configuration format]((https://quilljs.com/docs/modules/toolbar/), to which React Quill will delegates all toolbar functionality, and which is now the preferred way to customize the toolbar.
+
+Previously, toolbar properties could be set by passing a `toolbar` prop to React Quill. Pass the same options as `modules.toolbar` instead.
+
+~~~diff
++ modules: {
+    toolbar: [
+       ...
+    ],
++ },
+  
+  <ReactQuill
+-   toolbar={this.toolbar}
++   modules={this.modules}
+  />
+~~~
+
+If you provided your own HTML toolbar component, you can still do the same:
+
+~~~diff
++ modules: {
++   toolbar: '#my-toolbar-component',
++ },
+  
+  <ReactQuill
+-   toolbar="#my-toolbar-component"
++   modules={this.modules}
+  />
+~~~
+
+Previously, React Quill would create a custom HTML toolbar for you if you passed a configuration object as the `toolbar` prop. This will not happen anymore. You can still create a `ReactQuill.Toolbar` explicitly:
+
+~~~diff
++ modules: {
++   toolbar: '#my-quill-toolbar',
++ },
+
++ <ReactQuill.Toolbar
++   id='my-quill-toolbar'
++   items={this.oldStyleToolbarItems}
++ />
+
+  <ReactQuill
+-   toolbar={this.oldStyleToolbarItems}
++   modules={this.modules}
+  />
+~~~
+
+However, consider switching to the new Quill format instead, or provide your own toolbar component.
+
+React Quill now follows the Quill toolbar format closely. See the [Quill toolbar documentation](https://quilljs.com/docs/modules/toolbar/) for a complete reference on all supported options.
 
 ### The `formats` property
 
@@ -234,7 +287,7 @@ API reference
 : Provides the bridge between React and Quill. `ReactQuill` implements this mixin; in the same way you can use it to build your own component, or replace it to implement a new core for the default component.
 
 `ReactQuill.Toolbar`
-: The component that renders the basic ReactQuill toolbar. The default collection of items and color swatches is available as `ReactQuill.Toolbar.defaultItems` and `ReactQuill.Toolbar.defaultColors` respectively.
+: The component that renders the custom ReactQuill toolbar. The default collection of items and color swatches is available as `ReactQuill.Toolbar.defaultItems` and `ReactQuill.Toolbar.defaultColors` respectively. ⚠️ The Toolbar component is deprecated since v1.0.0. See [upgrading to React Quill v1.0.0](#upgrading-to-react-quill-v1-0-0).
 
 `ReactQuill.Quill`
 : The `Quill` namespace on which you can call `registerModule` and such.
@@ -258,10 +311,7 @@ API reference
 : If true, the editor won't allow changing its contents.
 
 `modules`
-: An object specifying what modules are enabled, and their configuration. See the [modules section](http://quilljs.com/docs/modules/) over the Quill documentation for more information on what modules are available.
-
-`toolbar`
-: A list of toolbar items to use as custom configuration for the toolbar. Pass `false` to disable the toolbar completely. Defaults items are available for reference in [`ReactQuill.Toolbar.defaultItems`](src/toolbar.js#L21) and [`ReactQuill.Toolbar.defaultColors`](src/toolbar.js#L6). See also the [Toolbar module](http://quilljs.com/docs/modules/toolbar/) over the Quill documentation for more information on the inner workings.
+: An object specifying which modules are enabled, and their configuration. The editor toolbar is a commonly customized module. See the [modules section](http://quilljs.com/docs/modules/) over the Quill documentation for more information on what modules are available.
 
 `formats`
 : An array of formats to be enabled during editing. All implemented formats are enabled by default. See [Formats](http://quilljs.com/docs/formats/) for a list.

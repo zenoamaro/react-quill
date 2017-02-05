@@ -2,14 +2,10 @@
 
 var React = require('react');
 var ReactDOM = require('react-dom');
-var QuillToolbar = require('./toolbar');
 var QuillMixin = require('./mixin');
 var find = require('lodash/find');
 var isEqual = require('lodash/isEqual');
 var T = React.PropTypes;
-
-// FIXME: Remove with the switch to JSX
-QuillToolbar = React.createFactory(QuillToolbar);
 
 var QuillComponent = React.createClass({
 
@@ -26,8 +22,6 @@ var QuillComponent = React.createClass({
 		value: T.string,
 		defaultValue: T.string,
 		placeholder: T.string,
-		modules: T.object,
-		toolbar: T.oneOfType([ T.array, T.oneOf([false]), ]), // deprecated for v1.0.0, use toolbar module
 		bounds: T.oneOfType([T.string, T.element]),
 		onKeyPress: T.func,
 		onKeyDown: T.func,
@@ -35,7 +29,30 @@ var QuillComponent = React.createClass({
 		onChange: T.func,
 		onChangeSelection: T.func,
 
-		formats: function(props) {	
+		modules: function(props) {
+			var isNotObject = T.object.apply(this, arguments);
+			if (isNotObject) return isNotObject;
+
+			if (
+				props.modules && 
+				props.modules.toolbar &&
+				props.modules.toolbar[0] &&
+				props.modules.toolbar[0].type
+			) return new Error(
+				'Since v1.0.0, React Quill will not create a custom toolbar for you ' +
+				'anymore. Create a toolbar explictly, or let Quill create one. ' +
+				'See: https://github.com/zenoamaro/react-quill#upgrading-to-react-quill-v1-0-0'
+			);
+		},
+
+		toolbar: function(props) {
+			if ('toolbar' in props) return new Error(
+				'The `toolbar` prop has been deprecated. Use `modules.toolbar` instead. ' +
+				'See: https://github.com/zenoamaro/react-quill#upgrading-to-react-quill-v1-0-0'
+			);
+		},
+
+		formats: function(props) {
 			var isNotArrayOfString = T.arrayOf(T.string).apply(this, arguments);
 
 			if (isNotArrayOfString) return new Error(
@@ -67,7 +84,6 @@ var QuillComponent = React.createClass({
 		'id',
 		'className',
 		'modules',
-		'toolbar',
 		'formats',
 		'bounds',
 		'theme',
@@ -164,27 +180,14 @@ var QuillComponent = React.createClass({
 	},
 
 	getEditorConfig: function() {
-		var config = {
-			readOnly:     this.props.readOnly,
-			theme:        this.props.theme,
+		return {
+			bounds:       this.props.bounds,
 			formats:      this.props.formats,
 			modules:      this.props.modules,
-			bounds:       this.props.bounds,
 			placeholder:  this.props.placeholder,
+			readOnly:     this.props.readOnly,
+			theme:        this.props.theme,
 		};
-		// Unless we're redefining the toolbar, or it has been explicitly
-		// disabled, attach to the default one as a ref.
-		// Note: Toolbar should be configured as a module for Quill v1.0.0 and above
-		// Pass toolbar={false} for versions >1.0
-		if (this.props.toolbar !== false && !config.modules.toolbar) {
-			// Don't mutate the original `modules`
-			// because it's shared between components.
-			config.modules = JSON.parse(JSON.stringify(config.modules));
-			config.modules.toolbar = {
-				container: ReactDOM.findDOMNode(this.refs.toolbar)
-			}
-		}
-		return config;
 	},
 
 	getEditor: function() {
@@ -204,8 +207,7 @@ var QuillComponent = React.createClass({
 	},
 
 	/*
-	Renders either the specified contents, or a default
-	configuration of toolbar and contents area.
+	Renders an editor element, unless it has been provided one to clone.
 	*/
 	renderContents: function() {
 		var contents = [];
@@ -213,17 +215,6 @@ var QuillComponent = React.createClass({
 			this.props.children,
 			function(c) { return React.cloneElement(c, {ref: c.ref}); }
 		);
-
-		if (this.props.toolbar !== false) {
-			var toolbar = find(children, function(child) {
-				return child.ref === 'toolbar';
-			})
-			contents.push(toolbar || QuillToolbar({
-				key: 'toolbar-' + Math.random(),
-				ref: 'toolbar',
-				items: this.props.toolbar
-			}));
-		}
 
 		var editor = find(children, function(child) {
 			return child.ref === 'editor';
@@ -245,8 +236,7 @@ var QuillComponent = React.createClass({
 			className: ['quill'].concat(this.props.className).join(' '),
 			onKeyPress: this.props.onKeyPress,
 			onKeyDown: this.props.onKeyDown,
-			onKeyUp: this.props.onKeyUp,
-			onChange: this.preventDefault },
+			onKeyUp: this.props.onKeyUp },
 			this.renderContents()
 		);
 	},
@@ -277,15 +267,6 @@ var QuillComponent = React.createClass({
 
 	blur: function() {
 		this.setEditorSelection(this.state.editor, null);
-	},
-
-	/*
-	Stop change events from the toolbar from
-	bubbling up outside.
-	*/
-	preventDefault: function(event) {
-		event.preventDefault();
-		event.stopPropagation();
 	}
 
 });
