@@ -11,11 +11,12 @@ See a [live demo].
 
   1. [Quick start](#quick-start)
   2. [Styles and themes](#styles-and-themes)
-  3. [Bundling with Webpack](#bundling-with-webpack)
-  4. [API reference](#api-reference)
-  5. [Building and testing](#building-and-testing)
-  6. [Changelog](#changelog)
-  7. [License](#license)
+  3. [Upgrading to React-Quill v1.0.0](#upgrading-to-react-quill-v1-0-0)
+  4. [Bundling with Webpack](#bundling-with-webpack)
+  5. [API reference](#api-reference)
+  6. [Building and testing](#building-and-testing)
+  7. [Changelog](#changelog)
+  8. [License](#license)
 
 
 Quick start
@@ -182,6 +183,9 @@ This may vary depending how application is structured, directories or otherwise.
 Quill will include a set of basic styles upon instantiation, so that including `quill.core.css` is not needed. If you would instead like to avoid this style injection, so to include `quill.core.css` manually or use your own styles, pass `false` (not just a _falsy_ value) as `styles`:
 
     <ReactQuill styles={false}>
+Upgrading to React-Quill v1.0.0
+-------------------------------
+Please note that many [migration steps to Quill v1.0](http://quilljs.com/guides/upgrading-to-1-0/) may also apply.
 
 Otherwise, you can set this to an object containing selectors and rules, that will be injected inside the document by Quill.
 
