@@ -3,7 +3,7 @@ React-Quill ![](https://travis-ci.org/zenoamaro/react-quill.svg?branch=master)
 
 A [Quill] component for [React].
 
-See the [live demo].
+See a [live demo].
 
 [Quill]: https://quilljs.com
 [React]: https://facebook.github.io/react/
@@ -171,7 +171,7 @@ It includes a full-fledged theme, called _snow_, that is Quill's standard appear
 
 These stylesheets can be found in the Quill distribution, but for convenience they are also linked among React Quill's `dist`s. In a common case you would activate a theme like this:
 
-    <ReactQuill theme='snow' />
+    <ReactQuill theme="snow" />
 
 And then link the appropriate stylesheet:
 

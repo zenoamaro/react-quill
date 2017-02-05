@@ -1,10 +1,10 @@
 'use strict';
 
-var React = require('react'),
-	ReactDOM = require('react-dom'),
-	QuillToolbar = require('./toolbar'),
-	QuillMixin = require('./mixin'),
-	T = React.PropTypes;
+var React = require('react');
+var ReactDOM = require('react-dom');
+var QuillToolbar = require('./toolbar');
+var QuillMixin = require('./mixin');
+var T = React.PropTypes;
 
 // FIXME: Remove with the switch to JSX
 QuillToolbar = React.createFactory(QuillToolbar);
@@ -27,24 +27,24 @@ var QuillComponent = React.createClass({
 	propTypes: {
 		id: T.string,
 		className: T.string,
+		theme: T.string,
 		style: T.object,
+		readOnly: T.bool,
 		value: T.string,
 		defaultValue: T.string,
 		placeholder: T.string,
-		readOnly: T.bool,
 		modules: T.object,
 		toolbar: T.oneOfType([ T.array, T.oneOf([false]), ]), // deprecated for v1.0.0, use toolbar module
 		formats: T.array,
 		styles: T.oneOfType([ T.object, T.oneOf([false]) ]),
-		theme: T.string,
 		pollInterval: T.number,
 		onKeyPress: T.func,
 		onKeyDown: T.func,
 		onKeyUp: T.func,
 		onChange: T.func,
-		onChangeSelection: T.func
+		onChangeSelection: T.func,
 	},
-
+		
 	/*
 	Changing one of these props should cause a re-render.
 	*/
@@ -63,7 +63,7 @@ var QuillComponent = React.createClass({
 		return {
 			className: '',
 			theme: 'snow',
-			modules: {}
+			modules: {},
 		};
 	},
 
@@ -116,8 +116,10 @@ var QuillComponent = React.createClass({
 			this.getEditorElement(),
 			this.getEditorConfig());
 
-		// this.setCustomFormats(editor); // deprecated in Quill v1.0
-		var fontOptions = document.querySelectorAll('.quill-toolbar .ql-font.ql-picker .ql-picker-item');
+		var fontOptions = document.querySelectorAll(
+			'.quill-toolbar .ql-font.ql-picker .ql-picker-item'
+		);
+
 		for (var i=0; i<fontOptions.length; ++i) {
 			fontOptions[i].style.fontFamily = fontOptions[i].dataset.value;
 		}
@@ -173,7 +175,7 @@ var QuillComponent = React.createClass({
 		var config = {
 			readOnly:     this.props.readOnly,
 			theme:        this.props.theme,
-			formats:      this.props.formats, // Let Quill set the defaults, if no formats supplied
+			formats:      this.props.formats,
 			styles:       this.props.styles,
 			modules:      this.props.modules,
 			pollInterval: this.props.pollInterval,
@@ -185,7 +187,7 @@ var QuillComponent = React.createClass({
 		// Note: Toolbar should be configured as a module for Quill v1.0.0 and above
 		// Pass toolbar={false} for versions >1.0
 		if (this.props.toolbar !== false && !config.modules.toolbar) {
-			// Don't mutate the original modules
+			// Don't mutate the original `modules`
 			// because it's shared between components.
 			config.modules = JSON.parse(JSON.stringify(config.modules));
 			config.modules.toolbar = {
@@ -226,22 +228,22 @@ var QuillComponent = React.createClass({
 			var toolbar = find(children, function(child) {
 				return child.ref === 'toolbar';
 			})
-			contents.push(toolbar ? toolbar : QuillToolbar({
+			contents.push(toolbar || QuillToolbar({
 				key: 'toolbar-' + Math.random(),
 				ref: 'toolbar',
 				items: this.props.toolbar
-			}))
+			}));
 		}
 
 		var editor = find(children, function(child) {
 			return child.ref === 'editor';
-		})
-		contents.push(editor ? editor : React.DOM.div({
+		});
+		contents.push(editor || React.DOM.div({
 			key: 'editor-' + Math.random(),
 			ref: 'editor',
 			className: 'quill-contents',
 			dangerouslySetInnerHTML: { __html:this.getEditorContents() }
-		}))
+		}));
 
 		return contents;
 	},

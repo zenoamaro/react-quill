@@ -1,8 +1,8 @@
 'use strict';
 
-var React = require('react'),
-	ReactDOMServer = require('react-dom/server'),
-	T = React.PropTypes;
+var React = require('react');
+var ReactDOMServer = require('react-dom/server');
+var T = React.PropTypes;
 
 var defaultColors = [
 	'rgb(  0,   0,   0)', 'rgb(230,   0,   0)', 'rgb(255, 153,   0)',
@@ -72,7 +72,7 @@ var QuillToolbar = React.createClass({
 		items:     T.array
 	},
 
-	getDefaultProps: function(){
+	getDefaultProps: function() {
 		return {
 			items: defaultItems
 		};

@@ -1,14 +1,15 @@
 /*
-React-Quill v0.4.1
+React-Quill v1.0.0
 https://github.com/zenoamaro/react-quill
 */
+var Quill = require('quill')
+var Parchment = Quill.import('parchment');
+var QuillStyle = Parchment.Attributor.Style;
+var styleOptions = { scope: Parchment.Scope.INLINE };
+Quill.register(new QuillStyle('size', 'font-size', styleOptions), true);
+Quill.register(new QuillStyle('font', 'font-family', styleOptions), true);
+
+module.exports.Quill = Quill;
 module.exports = require('./component');
 module.exports.Mixin = require('./mixin');
 module.exports.Toolbar = require('./toolbar');
-var quill = require('quill')
-var Parchment = quill.import('parchment');
-var FontStyle = new Parchment.Attributor.Style('size', 'font-size', { scope: Parchment.Scope.INLINE });
-var FontFamilyStyle = new Parchment.Attributor.Style('font', 'font-family', { scope: Parchment.Scope.INLINE });
-quill.register(FontStyle, true);
-quill.register(FontFamilyStyle, true);
-module.exports.Quill = quill;
