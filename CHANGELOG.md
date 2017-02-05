@@ -1,19 +1,36 @@
 Changelog
 =========
 
-v2.0.0-rc.1
+v1.0.0
 ------
-- Added CSS for alternate themes (bubble, core) to `/dist`
+This release supports Quill v1.0.0+. ⚠️ There are many breaking changes, so refer to the documentation for information on how to migrate your application.
 
-v2.0.0-rc.0
-------
-- Upgraded Quill to v1.0.0-rc.1
-
-ak-quill-1.0.0-beta.11
-------
-- Updated Quill to v1.0.0-beta.11
-- Added support for configuring Quill modules directly, including toolbar, and deprecates previous toolbar methods
-- Increments NPM package version
+- Updated to support Quill v1.0.0+ (@clemmy, @alexkrolick)
+- Bundling Quill with ReactQuill (@clemmy)
+- Deprecated `toolbar` property and component
+- Deprecated the `styles` property
+- Deprecated custom formats via the `formats` property
+- Deprecated the `pollInterval` property
+- Rerendering on `style` property change
+- Improved docs for `bounds`, which now rerenders on change
+- Performing deep props comparison to avoid rerenders
+- Restoring selection event after text change
+- Fixed the order of parameters in change events (@webcarrot)
+- Using 'core' instead of 'base' CSS (@alexkrolick)
+- Added support for the `placeholder` property (@alexkrolick)
+- Enable/disable editor using top-level Quill API (@alexkrolick)
+- Prevent whitespace issues when initializing the editor (@bobrafie)
+- Using buttons instead of spans for toolbar actions (@clemmy)
+- Removed getHtml from unprivileged editor (@clemmy)
+- Fixed calculations for range fields (@clemmy)
+- Removed deprecated destroy functionality (@clemmy)
+- Added return statement to proxy editor methods (@druti)
+- Inline styles support for Quill Toolbar (@e-jigsaw)
+- Fixed custom font size definitions (@clemmy)
+- Support for bullet and ordered lists in toolbar (@clemmy)
+- Updated the toolbar alignment section (@clemmy)
+- Updated rendering of toolbar actions (@clemmy)
+- Improved toolbar renderChoices implementation (@zhang-z)
 
 v0.4.1
 ------
