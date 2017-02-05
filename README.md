@@ -21,147 +21,97 @@ See a [live demo].
 
 Quick start
 -----------
-1. Use straight away:
 
-    ~~~jsx
-    var React = require('react');
-    var ReactQuill = require('react-quill');
-
-    var MyComponent = React.createClass({
-      /* ... */
-
-      render: function() {
-        return (
-          <ReactQuill value={this.state.value} />
-        );
-      }
-    });
-    ~~~
-
-2. Bind to the `onChange` event and customize a few settings:
-
-    ~~~jsx
-    /*
-    Include `quill.snow.css` to use the editor's standard theme. For example,
-    depending on the structure of your app, you could do something like this:
-
-    <link rel="stylesheet" href="../node_modules/react-quill/dist/quill.snow.css">
-    */
-
-    var MyComponent = React.createClass({
-      /* ... */
-
-      onTextChange: function(value) {
-        this.setState({ text:value });
-      },
-
-      render: function() {
-        return (
-          <ReactQuill theme="snow"
-                      value={this.state.text}
-                      onChange={this.onTextChange} />
-        );
-      }
-    });
-    ~~~
-
-3. Custom controls:
-
-    ~~~jsx
-    var MyComponent = React.createClass({
-      /* ... */
-
-      render: function() {
-        return (
-          <ReactQuill>
-            <ReactQuill.Toolbar key="toolbar"
-                                ref="toolbar"
-                                items={ReactQuill.Toolbar.defaultItems} />
-            <div key="editor"
-                 ref="editor"
-                 className="quill-contents"
-                 dangerouslySetInnerHTML={{__html:this.getEditorContents()}} />
-          </ReactQuill>
-        );
-      }
-    });
-    ~~~
-
-### Using with Quill 1.0
-
-If using Quill >1.0.0 as a dependency, the toolbar should be configured directly through the Quill module API rather than through the React-Quill wrapper. 
-
-- Pass `toolbar={false}` as a prop to `ReactQuill` and remove the `ReactQuill.Toolbar` JSX element
-- [Quill Toolbar Module Docs (Beta)](http://beta.quilljs.com/docs/modules/toolbar/)
-
-#### Example
+### Use it straight away:
 
 ~~~jsx
 var MyComponent = React.createClass({
-  /* ... */
 
-  _quillModules: {
-      toolbar: [ 
-          [{ 'header': [1, 2, false] }],
-          ['bold', 'italic', 'underline','strike', 'blockquote'],
-          [{'list': 'ordered'}, {'list': 'bullet'}, {'indent': '-1'}, {'indent': '+1'}], 
-          ['link', 'image'], 
-          ['clean'] 
-      ]
-      /* ... other modules */
+  onTextChange: function(value) {
+    this.setState({ text:value });
   },
 
-  _quillFormats: [ 
-      "header",
-      "bold", "italic", "underline", "strike", "blockquote",
-      "list", "bullet", "indent",
-      "link", "image" 
-  ],
-  
   render: function() {
     return (
-      <div className='_quill'>
-        <ReactQuill theme='snow' 
-                    modules={this._quillModules}
-                    formats={this._quillFormats}
-                    toolbar={false} // Let Quill manage toolbar
-                    bounds={'._quill'}>
-          <div key="editor"
-                ref="editor"
-                className="quill-contents border_solid_top"
-                dangerouslySetInnerHTML={{__html:this.state.editorContent}} />
-        </ReactQuill>
-      </div>
+      <ReactQuill value={this.state.text}
+                  onChange={this.onTextChange} />
     );
-  }
+  },
+
 });
 ~~~
 
-4. Mixing in:
+### Theming, custom toolbar and formats, custom editing area:
 
-    ~~~jsx
-    var MyComponent = React.createClass({
-      mixins: [ ReactQuill.Mixin ],
+~~~jsx
+/*
+Include `quill.snow.css` to use the editor's standard theme. For example,
+depending on the structure of your app, you could do something like this:
 
-      componentDidMount: function() {
-        var editor = this.createEditor(
-          this.getEditorElement(),
-          this.getEditorConfig()
-        );
-        this.setState({ editor:editor });
-      },
+<link rel="stylesheet" href="../node_modules/react-quill/dist/quill.snow.css">
+*/
 
-      componentWillReceiveProps: function(nextProps) {
-        if ('value' in nextProps && nextProps.value !== this.props.value) {
-          this.setEditorContents(this.state.editor, nextProps.value);
-        }
-      },
+var MyComponent = React.createClass({
 
-      /* ... */
-    });
-    ~~~
+  modules: {
+    toolbar: [
+      [{ 'header': [1, 2, false] }],
+      ['bold', 'italic', 'underline','strike', 'blockquote'],
+      [{'list': 'ordered'}, {'list': 'bullet'}, {'indent': '-1'}, {'indent': '+1'}],
+      ['link', 'image'],
+      ['clean']
+    ],
+  },
 
-    See [component.js](src/component.js) for a fully fleshed-out example.
+  formats: [
+    'header',
+    'bold', 'italic', 'underline', 'strike', 'blockquote',
+    'list', 'bullet', 'indent',
+    'link', 'image'
+  ],
+
+  render: function() {
+    return (
+      <div className="text-editor">
+        <ReactQuill theme="snow"
+                    modules={this.modules}
+                    formats={this.formats}>
+          <div key="editor"
+                ref="editor"
+                className="quill-contents my-class-name"
+                dangerouslySetInnerHTML={{__html:this.state.editorContent}}/>
+        </ReactQuill>
+      </div>
+    );
+  },
+
+});
+~~~
+
+### Mixing in:
+
+~~~jsx
+var MyComponent = React.createClass({
+  mixins: [ ReactQuill.Mixin ],
+
+  componentDidMount: function() {
+    var editor = this.createEditor(
+      this.getEditorElement(),
+      this.getEditorConfig()
+    );
+    this.setState({ editor:editor });
+  },
+
+  componentWillReceiveProps: function(nextProps) {
+    if ('value' in nextProps && nextProps.value !== this.props.value) {
+      this.setEditorContents(this.state.editor, nextProps.value);
+    }
+  },
+
+});
+~~~
+
+See [component.js](src/component.js) for a fully fleshed-out example.
 
 
 Styles and themes
