@@ -15,7 +15,7 @@ A [Quill] component for [React].
   6. [Changelog](#changelog)
   7. [License](#license)
 
-*Updating from React Quill < 2.0.0*
+### Updating from React Quill < 2.0.0
 
 React Quill 2.0.0 uses the new Quill 1.0.0 API. Please review the [changelog](CHANGELOG.md) for breaking changes. The previous tooblar configuration optopns have been dropped in favor of the new [Toolbar module](http://quilljs.com/docs/modules/toolbar/).
 
