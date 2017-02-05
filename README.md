@@ -180,14 +180,17 @@ And then link the appropriate stylesheet:
 
 This may vary depending how application is structured, directories or otherwise. For example, if you use a CSS pre-processor like SASS, you may want to import that stylesheet inside your own.
 
-Quill will include a set of basic styles upon instantiation, so that including `quill.core.css` is not needed. If you would instead like to avoid this style injection, so to include `quill.core.css` manually or use your own styles, pass `false` (not just a _falsy_ value) as `styles`:
 
-    <ReactQuill styles={false}>
 Upgrading to React-Quill v1.0.0
 -------------------------------
 Please note that many [migration steps to Quill v1.0](http://quilljs.com/guides/upgrading-to-1-0/) may also apply.
 
-Otherwise, you can set this to an object containing selectors and rules, that will be injected inside the document by Quill.
+
+### The `styles` property
+
+Previously, it was allowed to inject CSS styles by providing an object to the `styles` property. This option has been removed from Quill 1.0, and support for it in React Quill has gone as well. If you need to inject styles, link an external stylesheet instead.
+
+See the [Quill Release Notes](http://quilljs.com/guides/upgrading-to-1-0/#configuration).
 
 ### The `pollInterval` property
 
@@ -272,9 +275,6 @@ API reference
 
 `style`
 : An object with custom CSS rules to apply on the editor's container. Rules should be in React's "camelCased" naming style.
-
-`styles`
-: An object with custom CSS selectors and rules to add to the editor. Neither should be in "camelCased" style. Pass `false` to prevent Quill from injecting any style at all (except for text formats). See [configuration](http://quilljs.com/docs/configuration/) for details.
 
 `theme`
 : The name of the theme to apply to the editor. Defaults to `base`.

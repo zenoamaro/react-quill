@@ -29,12 +29,18 @@ var QuillComponent = React.createClass({
 		modules: T.object,
 		toolbar: T.oneOfType([ T.array, T.oneOf([false]), ]), // deprecated for v1.0.0, use toolbar module
 		formats: T.array,
-		styles: T.oneOfType([ T.object, T.oneOf([false]) ]),
 		onKeyPress: T.func,
 		onKeyDown: T.func,
 		onKeyUp: T.func,
 		onChange: T.func,
 		onChangeSelection: T.func,
+
+		styles: function(props) {
+			if ('styles' in props) return new Error(
+				'The `styles` prop has been deprecated. Use custom stylesheets instead. ' +
+				'See: https://github.com/zenoamaro/react-quill#upgrading-to-react-quill-v1-0-0'
+			);
+		},
 
 		pollInterval: function(props) {
 			if ('pollInterval' in props) return new Error(
@@ -54,7 +60,6 @@ var QuillComponent = React.createClass({
 		'modules',
 		'toolbar',
 		'formats',
-		'styles',
 		'theme',
 	],
 
@@ -175,7 +180,6 @@ var QuillComponent = React.createClass({
 			readOnly:     this.props.readOnly,
 			theme:        this.props.theme,
 			formats:      this.props.formats,
-			styles:       this.props.styles,
 			modules:      this.props.modules,
 			bounds:       this.props.bounds,
 			placeholder:  this.props.placeholder,
