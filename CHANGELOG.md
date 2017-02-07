@@ -14,6 +14,7 @@ This release supports Quill v1.0.0+. ⚠️ There are many breaking changes, so 
 - Rerendering on `style` property change
 - Improved docs for `bounds`, which now rerenders on change
 - Performing deep props comparison to avoid rerenders
+- Fixed the unprivileged editor not returning values
 - Restoring selection event after text change
 - Fixed the order of parameters in change events (@webcarrot)
 - Using 'core' instead of 'base' CSS (@alexkrolick)

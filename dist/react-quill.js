@@ -11132,11 +11132,11 @@ return /******/ (function(modules) { // webpackBootstrap
 		makeUnprivilegedEditor: function(editor) {
 			var e = editor;
 			return {
-				getLength:    function(){ e.getLength.apply(e, arguments); },
-				getText:      function(){ e.getText.apply(e, arguments); },
-				getContents:  function(){ e.getContents.apply(e, arguments); },
-				getSelection: function(){ e.getSelection.apply(e, arguments); },
-				getBounds:    function(){ e.getBounds.apply(e, arguments); },
+				getLength:    function(){ return e.getLength.apply(e, arguments); },
+				getText:      function(){ return e.getText.apply(e, arguments); },
+				getContents:  function(){ return e.getContents.apply(e, arguments); },
+				getSelection: function(){ return e.getSelection.apply(e, arguments); },
+				getBounds:    function(){ return e.getBounds.apply(e, arguments); },
 			};
 		}
 	
@@ -15949,6 +15949,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		propTypes: {
 			id:        T.string,
 			className: T.string,
+			style:     T.object,
 			items:     T.array
 		},
 	
@@ -16060,7 +16061,7 @@ return /******/ (function(modules) { // webpackBootstrap
 			return React.DOM.div({
 				id: this.props.id,
 				className: this.getClassName(),
-				style: this.props.style || {},
+				style: this.props.style,
 				dangerouslySetInnerHTML: { __html:html }
 			});
 		},
