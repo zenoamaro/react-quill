@@ -28,57 +28,24 @@ var defaultContent = (
 var defaultColors = ReactQuill.Toolbar.defaultColors;
 
 /*
-This is the same as the default toolbar configuration,
-and is here just to allow a sneak peek on what's configurable.
+This is slightly more than the regular configuration,
+and is here to allow a sneak peek on what's configurable.
 */
-var toolbarItems = [
-
-	{ label:'Formats', type:'group', items: [
-		{ label:'Font', type:'font', items: [
-			{ label:'Sans Serif',  value:'sans-serif', selected:true },
-			{ label:'Serif',       value:'serif' },
-			{ label:'Monospace',   value:'monospace' }
-		]},
-		{ type:'separator' },
-		{ label:'Size', type:'size', items: [
-			{ label:'Small',  value:'10px' },
-			{ label:'Normal', value:'13px', selected:true },
-			{ label:'Large',  value:'18px' },
-			{ label:'Huge',   value:'32px' }
-		]},
-		{ type:'separator' },
-		{ label:'Alignment', type:'align', items: [
-			{ label:'', value:'left', selected:true },
-			{ label:'', value:'center' },
-			{ label:'', value:'right' },
-			{ label:'', value:'justify' }
-		]}
-	]},
-
-	{ label:'Text', type:'group', items: [
-		{ type:'bold', label:'Bold' },
-		{ type:'italic', label:'Italic' },
-		{ type:'strike', label:'Strike' },
-		{ type:'underline', label:'Underline' },
-		{ type:'separator' },
-		{ type:'color', label:'Color', items:defaultColors },
-		{ type:'background', label:'Background color', items:defaultColors },
-		{ type:'separator' },
-		{ type:'link', label:'Link' }
-	]},
-
-	{ label:'Blocks', type:'group', items: [
-		{ type:'bullet', label:'Bullet' },
-		{ type:'separator' },
-		{ type:'list', label:'List' }
-	]},
-
-	{ label:'Blocks', type:'group', items: [
-		{ type:'image', label:'Image' }
-	]}
-
-];
-
+var modules = {
+	syntax: true,
+	toolbar: [
+		[{ font: [] }, { size: [] }],
+		[{ align: [] }, 'direction' ],
+		[ 'bold', 'italic', 'underline', 'strike' ],
+		[{ color: [] }, { background: [] }],
+		[{ script: 'super' }, { script: 'sub' }],
+		['blockquote', 'code-block' ],
+		[{ list: 'ordered' }, { list: 'bullet'}, { indent: '-1' }, { indent: '+1' }],
+		[ 'link', 'image', 'video' ],
+		[ 'clean' ]
+	],
+};
+ 
 
 /*
 A simple editor component, with a real-time preview
@@ -114,7 +81,7 @@ var Editor = React.createClass({
 				ReactQuill({
 					className: 'editor',
 					theme: 'snow',
-					toolbar: toolbarItems,
+					modules: modules,
 					value: this.state.value,
 					onChange: this.onEditorChange
 				}),
