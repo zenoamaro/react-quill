@@ -101,7 +101,7 @@ var QuillComponent = React.createClass({
 
 	/*
 	We consider the component to be controlled if
-	whenever `value` is bein sent in props.
+	whenever `value` is being sent in props.
 	*/
 	isControlled: function() {
 		return 'value' in this.props;
