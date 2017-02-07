@@ -273,6 +273,9 @@ API reference
 `readOnly`
 : If true, the editor won't allow changing its contents.
 
+`placeholder`
+: The default value for the empty editor.
+
 `modules`
 : An object specifying which modules are enabled, and their configuration. The editor toolbar is a commonly customized module. See the [modules section](http://quilljs.com/docs/modules/) over the Quill documentation for more information on what modules are available.
 
