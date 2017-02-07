@@ -32,7 +32,6 @@ This is slightly more than the regular configuration,
 and is here to allow a sneak peek on what's configurable.
 */
 var modules = {
-	syntax: true,
 	toolbar: [
 		[{ font: [] }, { size: [] }],
 		[{ align: [] }, 'direction' ],
