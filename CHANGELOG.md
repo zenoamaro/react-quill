@@ -11,7 +11,7 @@ This release supports Quill v1.0.0+. ⚠️ There are many breaking changes, so 
 - Deprecated the `styles` property
 - Deprecated custom formats via the `formats` property
 - Deprecated the `pollInterval` property
-- Rerendering on `style` property change
+- Rerendering on `style` property change (@lavrton)
 - Improved docs for `bounds`, which now rerenders on change
 - Performing deep props comparison to avoid rerenders
 - Fixed the unprivileged editor not returning values
