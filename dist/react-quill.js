@@ -15881,6 +15881,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var React = __webpack_require__(/*! react */ 3);
 	var ReactDOMServer = __webpack_require__(/*! react-dom/server */ 138);
+	var find = __webpack_require__(/*! lodash/find */ 6);
 	var isEqual = __webpack_require__(/*! lodash/isEqual */ 136);
 	var T = React.PropTypes;
 	
@@ -15982,24 +15983,20 @@ return /******/ (function(modules) { // webpackBootstrap
 		renderChoiceItem: function(item, key) {
 			return React.DOM.option({
 				key: item.label || item.value || key,
-				value:item.value },
+				value: item.value },
 				item.label
 			);
 		},
 	
 		renderChoices: function(item, key) {
+			var choiceItems = item.items.map(renderChoiceItem);
+			var selectedItem = find(item.items, function(item){ return item.selected });
 			var attrs = {
 				key: item.label || key,
 				title: item.label,
-				className: 'ql-'+item.type
+				className: 'ql-'+item.type,
+				value: selectedItem.value,
 			};
-			var self = this;
-			var choiceItems = item.items.map(function(item, key) {
-				if (item.selected) {
-					attrs.defaultValue = item.value;
-				}
-				return self.renderChoiceItem(item, key);
-			})
 			return React.DOM.select(attrs, choiceItems);
 		},
 	

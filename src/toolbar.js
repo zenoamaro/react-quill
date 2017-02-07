@@ -8,6 +8,7 @@ See https://quilljs.com/docs/modules/toolbar
 
 var React = require('react');
 var ReactDOMServer = require('react-dom/server');
+var find = require('lodash/find');
 var isEqual = require('lodash/isEqual');
 var T = React.PropTypes;
 
@@ -109,24 +110,20 @@ var QuillToolbar = React.createClass({
 	renderChoiceItem: function(item, key) {
 		return React.DOM.option({
 			key: item.label || item.value || key,
-			value:item.value },
+			value: item.value },
 			item.label
 		);
 	},
 
 	renderChoices: function(item, key) {
+		var choiceItems = item.items.map(renderChoiceItem);
+		var selectedItem = find(item.items, function(item){ return item.selected });
 		var attrs = {
 			key: item.label || key,
 			title: item.label,
-			className: 'ql-'+item.type
+			className: 'ql-'+item.type,
+			value: selectedItem.value,
 		};
-		var self = this;
-		var choiceItems = item.items.map(function(item, key) {
-			if (item.selected) {
-				attrs.defaultValue = item.value;
-			}
-			return self.renderChoiceItem(item, key);
-		})
 		return React.DOM.select(attrs, choiceItems);
 	},
 

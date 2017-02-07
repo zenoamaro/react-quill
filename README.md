@@ -372,6 +372,7 @@ This release adds support for Quill v1.0.0+. ⚠️ There are many breaking chan
 - Updated the toolbar alignment section (@clemmy)
 - Updated rendering of toolbar actions (@clemmy)
 - Improved toolbar renderChoices implementation (@zhang-z)
+- Fixed use of `defaultValue` in Toolbar selects
 
 #### v0.4.1
 - Added contents of `dist` to NPM package.
