@@ -61,7 +61,7 @@ var MyComponent = React.createClass({
 Include `quill.snow.css` to use the editor's standard theme. For example,
 depending on the structure of your app, you could do something like this:
 
-<link rel="stylesheet" href="../node_modules/react-quill/dist/quill.snow.css">
+<link rel="stylesheet" href="node_modules/react-quill/dist/quill.snow.css">
 */
 
 var MyComponent = React.createClass({
@@ -139,7 +139,7 @@ These stylesheets can be found in the Quill distribution, but for convenience th
 
 And then link the appropriate stylesheet:
 
-    <link rel="stylesheet" href="../node_modules/react-quill/dist/quill.snow.css">
+    <link rel="stylesheet" href="node_modules/react-quill/dist/quill.snow.css">
 
 This may vary depending how application is structured, directories or otherwise. For example, if you use a CSS pre-processor like SASS, you may want to import that stylesheet inside your own.
 
@@ -346,6 +346,7 @@ This release adds support for Quill v1.0.0+. ⚠️ There are many breaking chan
 
 - Updated to support Quill v1.0.0+ (@clemmy, @alexkrolick)
 - Bundling Quill with ReactQuill (@clemmy)
+- Bundling CSS files in the NPM package
 - Deprecated `toolbar` property and component
 - Deprecated the `styles` property
 - Deprecated custom formats via the `formats` property

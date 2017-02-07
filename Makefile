@@ -29,9 +29,9 @@ test:
 build:
 	@webpack --config webpack.dev.js
 	@webpack --config webpack.prod.js
-	@ln -fs ../node_modules/quill/dist/quill.core.css dist
-	@ln -fs ../node_modules/quill/dist/quill.snow.css dist
-	@ln -fs ../node_modules/quill/dist/quill.bubble.css dist
+	@cp node_modules/quill/dist/quill.core.css dist
+	@cp node_modules/quill/dist/quill.snow.css dist
+	@cp node_modules/quill/dist/quill.bubble.css dist
 
 watch:
 	@webpack --watch --config webpack.dev.js
