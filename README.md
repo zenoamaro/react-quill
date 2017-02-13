@@ -26,6 +26,11 @@ Thanks to @clemmy and @alexkrolick for landing this much-awaited change. There a
  
 ---
 
+🎧 **Latest published package version: `v1.0.0-beta-1`**  
+Follow React Quill's development on the beta channel leading to `v1.0.0`.
+ 
+---
+
 🏵 **Welcoming @alexkrolick to the team!**  
 His contributions have been incredible so far, and his passion and dedication will bring some much-deserved love to this project. 
 
