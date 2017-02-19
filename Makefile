@@ -23,7 +23,7 @@ coverage:
 
 test:
 	@make lint
-	@make spec SPEC_FLAGS="-R dot"
+	@make spec
 	@make coverage COVERAGE_FLAGS="-R travis-cov"
 
 build:
