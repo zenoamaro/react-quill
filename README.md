@@ -3,7 +3,7 @@ React-Quill ![](https://travis-ci.org/zenoamaro/react-quill.svg?branch=master)
 
 A [Quill] component for [React].
 
-See a [live demo].
+See a [live demo] or [Codepen](http://codepen.io/alexkrolick/pen/xgyOXQ/left?editors=0010#0).
 
 [Quill]: https://quilljs.com
 [React]: https://facebook.github.io/react/
