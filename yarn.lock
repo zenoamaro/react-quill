@@ -1166,6 +1166,10 @@ jsbn@~0.1.0:
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/jsbn/-/jsbn-0.1.1.tgz#a5e654c2e5a2deb5f201d96cefbca80c0ef2f513"
 
+jsdom-global@^2.1.1:
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/jsdom-global/-/jsdom-global-2.1.1.tgz#47d46fe77f6167baf5d34431d3bb59fc41b0915a"
+
 jsdom@^9.11.0:
   version "9.11.0"
   resolved "https://registry.yarnpkg.com/jsdom/-/jsdom-9.11.0.tgz#a95b0304e521a2ca5a63c6ea47bf7708a7a84591"

@@ -50,6 +50,7 @@
     "chai-enzyme": "^0.6.1",
     "enzyme": "^2.7.1",
     "jsdom": "^9.11.0",
+    "jsdom-global": "^2.1.1",
     "jshint": "^2.5.10",
     "mocha": "^3.2.0",
     "mocha-text-cov": "^0.1.0",
