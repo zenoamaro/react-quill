@@ -8,22 +8,21 @@
 
 var React = require('react');
 var ReactQuill = require('../src/index');
-var { mount } = require('enzyme');
+var { mount, shallow } = require('enzyme');
+var { expect } = require('chai');
 var sinon = require('sinon');
 
 describe('<ReactQuill />', function() {
 
   it('calls componentDidMount', function() {
     sinon.spy(ReactQuill.prototype, 'componentDidMount');
-    const wrapper = mount(
-      getTestNode()
-    );
-    expect(Foo.prototype.componentDidMount.calledOnce).to.equal(true);
+    const wrapper = mount(ReactQuillNode());
+    expect(ReactQuill.prototype.componentDidMount.calledOnce).to.equal(true);
   });
 
 });
 
-function getTestNode() {
+function ReactQuillNode() {
   var editorHtml = '';
   return React.createElement(
     ReactQuill,
