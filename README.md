@@ -22,7 +22,7 @@ See a [live demo].
 ---
 
 💯 **React Quill now supports Quill v1.0.0!**  
-Thanks to @clemmy and @alexkrolick for landing this much-awaited change. There are many breaking changes, so be sure to read the [migration guide](#upgrading-to-react-quill-v1-0-0).
+Thanks to @clemmy and @alexkrolick for landing this much-awaited change. There are many breaking changes, so be sure to read the [migration guide](#upgrading-to-react-quill-v100).
  
 ---
 
