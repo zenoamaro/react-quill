@@ -1,6 +1,6 @@
 LINT=./node_modules/.bin/jshint
 LINT_FLAGS=
-TEST=./node_modules/.bin/mocha
+TEST=./node_modules/.bin/mocha --recursive --require=./test/setup.js
 SPEC_FLAGS=-R spec
 COVERAGE_FLAGS=-R mocha-text-cov
 
@@ -23,7 +23,7 @@ coverage:
 
 test:
 	@make lint
-	@make spec SPEC_FLAGS="-R dot"
+	@make spec
 	@make coverage COVERAGE_FLAGS="-R travis-cov"
 
 build:

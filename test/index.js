@@ -1,12 +1,41 @@
-'use strict';
+/**
+ * Test suite uses mocha and enzyme to mock browser APIs
+ * 
+ * See Enzyme docs: 
+ * https://github.com/airbnb/enzyme/blob/master/docs/guides/jsdom.md
+ * https://github.com/airbnb/enzyme/blob/master/docs/api/mount.md
+ */
 
-// Fake DOM
-global.document = require('jsdom').jsdom();
+var React = require('react');
+var ReactQuill = require('../src/index');
+var { mount, shallow } = require('enzyme');
+var { expect } = require('chai');
+var sinon = require('sinon');
 
-// Code coverage.
-require('blanket')({ pattern: 'src' });
+describe('<ReactQuill />', function() {
 
-// Run tests.
-require('./mixin');
-require('./toolbar');
-require('./component');
+  it('calls componentDidMount', function() {
+    sinon.spy(ReactQuill.prototype, 'componentDidMount');
+    const wrapper = mount(ReactQuillNode());
+    expect(ReactQuill.prototype.componentDidMount.calledOnce).to.equal(true);
+  });
+
+});
+
+function ReactQuillNode() {
+  var editorHtml = '';
+  return React.createElement(
+    ReactQuill,
+    {
+      value: editorHtml
+    },
+    [
+      React.DOM.div({
+        key: "editor",
+        ref: "editor",
+        className: "quill-contents",
+        dangerouslySetInnerHTML: { __html: editorHtml }
+      }),
+    ]
+  );
+}

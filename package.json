@@ -37,6 +37,8 @@
     "LICENSE"
   ],
   "dependencies": {
+    "chai": "^3.5.0",
+    "cheerio": "^0.22.0",
     "lodash": "^4.17.4",
     "quill": "^1.2.0"
   },
@@ -45,14 +47,18 @@
   },
   "devDependencies": {
     "blanket": "^1.1.6",
-    "jsdom": "^7.0.1",
+    "chai-enzyme": "^0.6.1",
+    "enzyme": "^2.7.1",
+    "jsdom": "^9.11.0",
+    "jsdom-global": "^2.1.1",
     "jshint": "^2.5.10",
-    "mocha": "^2.0.1",
+    "mocha": "^3.2.0",
     "mocha-text-cov": "^0.1.0",
-    "react": "^0.14.7",
-    "react-dom": "^0.14.7",
+    "react": "^0.14.0",
+    "react-addons-test-utils": "^0.14.0",
+    "react-dom": "^0.14.0",
     "should": "^4.3.0",
-    "sinon": "^1.12.1",
+    "sinon": "^1.17.7",
     "travis-cov": "^0.2.5",
     "uglify-js": "^2.4.15",
     "webpack": "^1.4.13"
