@@ -1,6 +1,6 @@
 LINT=./node_modules/.bin/jshint
 LINT_FLAGS=
-TEST=./node_modules/.bin/mocha
+TEST=./node_modules/.bin/mocha --recursive --require=./test/setup.js
 SPEC_FLAGS=-R spec
 COVERAGE_FLAGS=-R mocha-text-cov
 
