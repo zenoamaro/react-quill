@@ -20,21 +20,40 @@ describe('<ReactQuill />', function() {
     expect(ReactQuill.prototype.componentDidMount.calledOnce).to.equal(true);
   });
 
+  it('allows props to be set', () => {
+    var props = {foo: 'bar'}
+    const wrapper = mount(ReactQuillNode(props));
+    expect(wrapper.props().foo).to.equal('bar');
+    wrapper.setProps({ foo: 'baz' });
+    expect(wrapper.props().foo).to.equal('baz');
+  });
+
+  it('sends a change event when the editor content changes');
+
+  it('blocks changes when disabled')
+
+  it('shows placeholder when empty')
+
+  it('allows editor to be focused')
+
 });
 
-function ReactQuillNode() {
-  var editorHtml = '';
+function ReactQuillNode(props, html) {
+  html = html || '';
+  props = props || {};
+  Object.assign(props, {
+    modules: {'toolbar': ['underline', 'bold', 'italic']},
+    formats: ['underline', 'bold', 'italic']
+  })
   return React.createElement(
     ReactQuill,
-    {
-      value: editorHtml
-    },
+    props,
     [
       React.DOM.div({
         key: "editor",
         ref: "editor",
         className: "quill-contents",
-        dangerouslySetInnerHTML: { __html: editorHtml }
+        dangerouslySetInnerHTML: { __html: html }
       }),
     ]
   );
