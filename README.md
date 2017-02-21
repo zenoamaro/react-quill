@@ -316,7 +316,7 @@ API reference
 
 ### Methods
 
-If you have [a ref to a ReactQuill node](https://facebook.github.io/react/docs/more-about-refs.html), you will be able to invoke the following methods:
+If you have [a ref to a ReactQuill node](https://facebook.github.io/react/docs/more-about-refs.html) ([Codepen example](https://codepen.io/alexkrolick/pen/YNmGar?editors=0011)), you will be able to invoke the following methods:
 
 `focus()`
 : Focuses the editor.
