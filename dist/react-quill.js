@@ -10857,7 +10857,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 		/*
 		We consider the component to be controlled if
-		whenever `value` is bein sent in props.
+		whenever `value` is being sent in props.
 		*/
 		isControlled: function() {
 			return 'value' in this.props;
@@ -10910,6 +10910,8 @@ return /******/ (function(modules) { // webpackBootstrap
 		componentWillUnmount: function() {
 			// NOTE: Don't set the state to null here
 			//       as it would generate a loop.
+			var e = this.getEditor();
+			if (e) this.unhookEditor(e);
 		},
 	
 		shouldComponentUpdate: function(nextProps, nextState) {
@@ -11096,6 +11098,11 @@ return /******/ (function(modules) { // webpackBootstrap
 					);
 				}
 			}.bind(this));
+		},
+	
+		unhookEditor: function(editor) {
+			editor.off('selection-change');
+			editor.off('editor-change')
 		},
 	
 		setEditorReadOnly: function(editor, value) {
