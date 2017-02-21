@@ -43,6 +43,11 @@ var QuillMixin = {
 		}.bind(this));
 	},
 
+	unhookEditor: function(editor) {
+		editor.off('selection-change');
+		editor.off('editor-change')
+	},
+
 	setEditorReadOnly: function(editor, value) {
 		value? editor.disable()
 		     : editor.enable();
