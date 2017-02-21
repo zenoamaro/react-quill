@@ -154,6 +154,8 @@ var QuillComponent = React.createClass({
 	componentWillUnmount: function() {
 		// NOTE: Don't set the state to null here
 		//       as it would generate a loop.
+		var e = this.getEditor();
+		if (e) this.unhookEditor(e);
 	},
 
 	shouldComponentUpdate: function(nextProps, nextState) {

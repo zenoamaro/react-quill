@@ -20,27 +20,36 @@ var QuillMixin = {
 		// accidentally modifying editor state.
 		var unprivilegedEditor = this.makeUnprivilegedEditor(editor);
 
-		editor.on('editor-change', function(delta, oldDelta, source) {
-			if (this.onEditorChange) {
-				this.onEditorChange(
-					editor.root.innerHTML, delta, source,
-					unprivilegedEditor
-				);
-				this.onEditorChangeSelection(
-					editor.getSelection(), source,
-					unprivilegedEditor
-				)
-			}
-		}.bind(this));
+		editor.on('editor-change', this.handleEditorChange);
 
-		editor.on('selection-change', function(range, oldRange, source) {
-			if (this.onEditorChangeSelection) {
-				this.onEditorChangeSelection(
-					range, source,
-					unprivilegedEditor
-				);
-			}
-		}.bind(this));
+		editor.on('selection-change', this.handleSelectionChange);
+	},
+
+	handleEditorChange: function(delta, oldDelta, source) {
+		if (this.onEditorChange) {
+			this.onEditorChange(
+				editor.root.innerHTML, delta, source,
+				unprivilegedEditor
+			);
+			this.onEditorChangeSelection(
+				editor.getSelection(), source,
+				unprivilegedEditor
+			)
+		}
+	},
+
+	handleSelectionChange: function(range, oldRange, source) {
+		if (this.onEditorChangeSelection) {
+			this.onEditorChangeSelection(
+				range, source,
+				unprivilegedEditor
+			);
+		}
+	},
+
+	unhookEditor: function(editor) {
+		editor.off('selection-change', this.handleEditorChange);
+		editor.off('editor-change', this.handleSelectionChange);
 	},
 
 	setEditorReadOnly: function(editor, value) {

@@ -10857,7 +10857,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 		/*
 		We consider the component to be controlled if
-		whenever `value` is bein sent in props.
+		whenever `value` is being sent in props.
 		*/
 		isControlled: function() {
 			return 'value' in this.props;
@@ -10910,6 +10910,8 @@ return /******/ (function(modules) { // webpackBootstrap
 		componentWillUnmount: function() {
 			// NOTE: Don't set the state to null here
 			//       as it would generate a loop.
+			var e = this.getEditor();
+			if (e) this.unhookEditor(e);
 		},
 	
 		shouldComponentUpdate: function(nextProps, nextState) {
@@ -11075,27 +11077,36 @@ return /******/ (function(modules) { // webpackBootstrap
 			// accidentally modifying editor state.
 			var unprivilegedEditor = this.makeUnprivilegedEditor(editor);
 	
-			editor.on('editor-change', function(delta, oldDelta, source) {
-				if (this.onEditorChange) {
-					this.onEditorChange(
-						editor.root.innerHTML, delta, source,
-						unprivilegedEditor
-					);
-					this.onEditorChangeSelection(
-						editor.getSelection(), source,
-						unprivilegedEditor
-					)
-				}
-			}.bind(this));
+			editor.on('editor-change', this.handleEditorChange);
 	
-			editor.on('selection-change', function(range, oldRange, source) {
-				if (this.onEditorChangeSelection) {
-					this.onEditorChangeSelection(
-						range, source,
-						unprivilegedEditor
-					);
-				}
-			}.bind(this));
+			editor.on('selection-change', this.handleSelectionChange);
+		},
+	
+		handleEditorChange: function(delta, oldDelta, source) {
+			if (this.onEditorChange) {
+				this.onEditorChange(
+					editor.root.innerHTML, delta, source,
+					unprivilegedEditor
+				);
+				this.onEditorChangeSelection(
+					editor.getSelection(), source,
+					unprivilegedEditor
+				)
+			}
+		},
+	
+		handleSelectionChange: function(range, oldRange, source) {
+			if (this.onEditorChangeSelection) {
+				this.onEditorChangeSelection(
+					range, source,
+					unprivilegedEditor
+				);
+			}
+		},
+	
+		unhookEditor: function(editor) {
+			editor.off('selection-change', this.handleEditorChange);
+			editor.off('editor-change', this.handleSelectionChange);
 		},
 	
 		setEditorReadOnly: function(editor, value) {
