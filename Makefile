@@ -3,6 +3,7 @@ LINT_FLAGS=
 TEST=./node_modules/.bin/mocha --recursive --require=./test/setup.js
 SPEC_FLAGS=-R spec
 COVERAGE_FLAGS=-R mocha-text-cov
+WEBPACK=./node_modules/.bin/webpack
 
 usage:
 	@echo lint: lints the source
@@ -27,14 +28,14 @@ test:
 	@make coverage COVERAGE_FLAGS="-R travis-cov"
 
 build:
-	@webpack --config webpack.dev.js
-	@webpack --config webpack.prod.js
+	@$(WEBPACK) --config webpack.dev.js
+	@$(WEBPACK) --config webpack.prod.js
 	@cp node_modules/quill/dist/quill.core.css dist
 	@cp node_modules/quill/dist/quill.snow.css dist
 	@cp node_modules/quill/dist/quill.bubble.css dist
 
 watch:
-	@webpack --watch --config webpack.dev.js
+	@$(WEBPACK) --watch --config webpack.dev.js
 
 clean:
 	@if [ -d dist ]; then rm -r dist; fi

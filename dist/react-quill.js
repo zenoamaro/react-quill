@@ -68,8 +68,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	Quill.register(new QuillStyle('size', 'font-size', styleOptions), true);
 	Quill.register(new QuillStyle('font', 'font-family', styleOptions), true);
 	
-	module.exports.Quill = Quill;
 	module.exports = __webpack_require__(/*! ./component */ 2);
+	module.exports.Quill = Quill;
 	module.exports.Mixin = __webpack_require__(/*! ./mixin */ 5);
 	module.exports.Toolbar = __webpack_require__(/*! ./toolbar */ 137);
 

@@ -37,8 +37,6 @@
     "LICENSE"
   ],
   "dependencies": {
-    "chai": "^3.5.0",
-    "cheerio": "^0.22.0",
     "lodash": "^4.17.4",
     "quill": "^1.2.0"
   },
@@ -47,7 +45,9 @@
   },
   "devDependencies": {
     "blanket": "^1.1.6",
+    "chai": "^3.5.0",
     "chai-enzyme": "^0.6.1",
+    "cheerio": "^0.22.0",
     "enzyme": "^2.7.1",
     "jsdom": "^9.11.0",
     "jsdom-global": "^2.1.1",
