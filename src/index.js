@@ -9,7 +9,7 @@ var styleOptions = { scope: Parchment.Scope.INLINE };
 Quill.register(new QuillStyle('size', 'font-size', styleOptions), true);
 Quill.register(new QuillStyle('font', 'font-family', styleOptions), true);
 
-module.exports.Quill = Quill;
 module.exports = require('./component');
+module.exports.Quill = Quill;
 module.exports.Mixin = require('./mixin');
 module.exports.Toolbar = require('./toolbar');
