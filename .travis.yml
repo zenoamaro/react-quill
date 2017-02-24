@@ -1,9 +1,17 @@
 language: node_js
 
 node_js:
-  - "0.11"
-  - "0.10"
-  - "0.8"
+  - "node"
+  - "6"
+  - "5"
 
 before_install:
   - npm install -g npm
+
+install:
+  - npm install
+
+script:
+  - make build
+  - make spec
+  - make lint

@@ -29,7 +29,7 @@ var QuillMixin = {
 				this.onEditorChangeSelection(
 					editor.getSelection(), source,
 					unprivilegedEditor
-				)
+				);
 			}
 		}.bind(this);
 
