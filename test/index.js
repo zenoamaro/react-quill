@@ -28,18 +28,6 @@ describe('<ReactQuill />', function() {
     expect(wrapper.props().foo).to.equal('baz');
   });
 
-  it('warns about providing custom formats as props', (done) => {
-    function Custom(stuff) {
-      this.stuff = stuff;
-    }
-    var props = {formats: [new Custom()]}
-    try {
-      mount(ReactQuillNode(props));
-    } catch(err) {
-      if (err) done();
-    }
-  })
-
   it('sends a change event when the editor content changes');
 
   it('blocks changes when disabled')
