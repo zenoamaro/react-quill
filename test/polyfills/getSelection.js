@@ -1,8 +1,10 @@
 module.exports = function(global) {
-  global.document = global.document || {}
-  global.document.getSelection = function() { 
+  global.document = global.document || {};
+  global.window = global.window || {};
+  global.document.getSelection = global.window.getSelection || function() { 
       return { 
-          getRangeAt: function() {}
+          getRangeAt: function() {},
+          removeAllRanges: function() {},
       };
   };
 }

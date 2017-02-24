@@ -8,9 +8,14 @@
 
 var React = require('react');
 var ReactQuill = require('../src/index');
+var Quill = ReactQuill.Quill;
 var { mount, shallow } = require('enzyme');
-var { expect } = require('chai');
+var chai = require('chai');
+var { expect, assert } = chai;
+var chaiEnzyme = require('chai-enzyme');
 var sinon = require('sinon');
+
+chai.use(chaiEnzyme());
 
 describe('<ReactQuill />', function() {
 
@@ -28,13 +33,47 @@ describe('<ReactQuill />', function() {
     expect(wrapper.props().foo).to.equal('baz');
   });
 
-  it('sends a change event when the editor content changes');
+  describe('Quill instance', function() {
 
-  it('blocks changes when disabled')
+    it('is attached to the component', () => {
+      const wrapper = mount(ReactQuillNode());
+      const quill = getQuillFromEditorNode(wrapper);
+      expect(quill instanceof Quill).to.equal(true)
+    })
 
-  it('shows placeholder when empty')
+    it('receives options from props', () => {
+      var enabledFormats = ['underline', 'bold', 'italic'];
+      var props = {
+        placeholder: 'foobar',
+        readOnly: true,
+        formats: enabledFormats,
+        modules: {
+          toolbar: enabledFormats,
+        }
+      }
+      const wrapper = mount(ReactQuillNode(props));
+      const quill = getQuillFromEditorNode(wrapper);
+      expect(quill.options.placeholder).to.equal(props.placeholder)
+      expect(quill.options.readOnly).to.equal(props.readOnly)
+      expect(quill.options.modules).to.include.keys(Object.keys(props.modules))
+      expect(quill.options.formats).to.include.members(props.formats)
+    })
 
-  it('allows editor to be focused')
+    it('sends a change event when the editor content changes') // tricky to simulate
+
+    it('shows defaultValue by default if value prop is undefined') // hardcode expected HTML first
+
+    it ('shows the value prop by default instead of defaultValue if both are defined') // ^same
+
+    it('allows editor to be focused') // might be tricky without focus class
+
+  })
+
+  describe('Editor', function() {
+
+    it('passes new html content to onChange handler when content changes')
+
+  })
 
 });
 
@@ -57,4 +96,8 @@ function ReactQuillNode(props, html) {
       }),
     ]
   );
+}
+
+function getQuillFromEditorNode(wrapper) {
+  return wrapper.get(0).getEditor();
 }
