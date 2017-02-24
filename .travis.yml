@@ -7,3 +7,10 @@ node_js:
 
 before_install:
   - npm install -g npm
+
+install:
+  - npm install
+
+script:
+  - make build
+  - make spec
