@@ -10,14 +10,15 @@ See a [live demo] or [Codepen](http://codepen.io/alexkrolick/pen/xgyOXQ/left?edi
 [live demo]: https://zenoamaro.github.io/react-quill/
 
   1. [Quick start](#quick-start)
-  2. [Styles and themes](#styles-and-themes)
-  3. [Upgrading to React-Quill v1.0.0](#upgrading-to-react-quill-v1-0-0)
-  4. [Bundling with Webpack](#bundling-with-webpack)
-  5. [API reference](#api-reference)
-  6. [Building and testing](#building-and-testing)
-  7. [Changelog](#changelog)
-  8. [Contributors](#contributors)
-  9. [License](#license)
+  1. [Styles and themes](#styles-and-themes)
+  1. [Upgrading to React-Quill v1.0.0](#upgrading-to-react-quill-v100)
+  1. [Bundling with Webpack](#bundling-with-webpack)
+  1. [API reference](#api-reference)
+  1. [Browser Support](#browser-support)
+  1. [Building and testing](#building-and-testing)
+  1. [Changelog](#changelog)
+  1. [Contributors](#contributors)
+  1. [License](#license)
 
 ---
 
@@ -346,11 +347,15 @@ More tasks are available on the [Makefile](Makefile):
     test: lint, spec and coverage threshold test
     build: builds the minified version
 
+Browser Support
+---------------
+
+Please check the browser support table for the upstream [Quill](https://github.com/quilljs/quill) dependency. The React part of the codebase is ES5-compatible.
 
 Changelog
 ---------
 #### v1.0.0
-This release adds support for Quill v1.0.0+. ⚠️ There are many breaking changes, both in Quill and in ReactQuill. See [Upgrading to React-Quill v1.0.0](#upgrading-to-react-quill-v1-0-0).
+This release adds support for Quill v1.0.0+. ⚠️ There are many breaking changes, both in Quill and in ReactQuill. See [Upgrading to React-Quill v1.0.0](#upgrading-to-react-quill-v100).
 
 - Updated to support Quill v1.0.0+ (@clemmy, @alexkrolick)
 - Bundling Quill with ReactQuill (@clemmy)
@@ -381,6 +386,11 @@ This release adds support for Quill v1.0.0+. ⚠️ There are many breaking chan
 - Updated rendering of toolbar actions (@clemmy)
 - Improved toolbar renderChoices implementation (@zhang-z)
 - Fixed use of `defaultValue` in Toolbar selects
+- Fix bounds validation in setEditorSelection (@wouterh)
+- Expose Quill in exports (@tdg5)
+- Add unhook function to clean up event listeners on unmount (@alexkrolick, @jrmmnr)
+- Fix documentation typos (@l3kn)
+- Start testing with Enzyme (@alexkrolick)
 
 #### v0.4.1
 - Added contents of `dist` to NPM package.
