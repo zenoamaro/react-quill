@@ -116,7 +116,7 @@ var QuillToolbar = React.createClass({
 	},
 
 	renderChoices: function(item, key) {
-		var choiceItems = item.items.map(renderChoiceItem);
+		var choiceItems = item.items.map(this.renderChoiceItem);
 		var selectedItem = find(item.items, function(item){ return item.selected });
 		var attrs = {
 			key: item.label || key,
@@ -147,6 +147,7 @@ var QuillToolbar = React.createClass({
 		);
 	},
 
+	/* jshint maxcomplexity: false */
 	renderItem: function(item, key) {
 		switch (item.type) {
 			case 'group':

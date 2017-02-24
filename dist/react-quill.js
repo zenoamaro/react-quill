@@ -61,7 +61,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	React-Quill v1.0.0
 	https://github.com/zenoamaro/react-quill
 	*/
-	var Quill = __webpack_require__(/*! quill */ 1)
+	var Quill = __webpack_require__(/*! quill */ 1);
 	var Parchment = Quill.import('parchment');
 	var QuillStyle = Parchment.Attributor.Style;
 	var styleOptions = { scope: Parchment.Scope.INLINE };
@@ -10810,7 +10810,7 @@ return /******/ (function(modules) { // webpackBootstrap
 			},
 	
 			formats: function(props) {
-				var isNotArrayOfString = T.arrayOf(T.string).apply(this, arguments);
+				var isNotArrayOfString = T.arrayOf(T.string).apply(this, props);
 	
 				if (isNotArrayOfString) return new Error(
 					'You cannot specify custom `formats` anymore. Use Parchment instead.  ' +
@@ -10914,7 +10914,7 @@ return /******/ (function(modules) { // webpackBootstrap
 			if (e) this.unhookEditor(e);
 		},
 	
-		shouldComponentUpdate: function(nextProps, nextState) {
+		shouldComponentUpdate: function(nextProps) {
 			// Rerender whenever a "dirtyProp" changes
 			var props = this.props;
 			return some(this.dirtyProps, function(prop) {
@@ -11128,8 +11128,8 @@ return /******/ (function(modules) { // webpackBootstrap
 			if (range) {
 				// Validate bounds before applying.
 				var length = editor.getLength();
-				range.index = Math.max(0, Math.min(range.index, range.length-1));
-				range.length = length;
+				range.index = Math.max(0, Math.min(range.index, length-1));
+				range.length = Math.max(0, Math.min(range.length, (length-1) - range.index));
 			}
 			editor.setSelection(range);
 		},
@@ -15978,7 +15978,7 @@ return /******/ (function(modules) { // webpackBootstrap
 			);
 		},
 	
-		shouldComponentUpdate: function(nextProps, nextState) {
+		shouldComponentUpdate: function(nextProps) {
 			return !isEqual(nextProps, this.props);
 		},
 	
@@ -15999,7 +15999,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		},
 	
 		renderChoices: function(item, key) {
-			var choiceItems = item.items.map(renderChoiceItem);
+			var choiceItems = item.items.map(this.renderChoiceItem);
 			var selectedItem = find(item.items, function(item){ return item.selected });
 			var attrs = {
 				key: item.label || key,

@@ -4,6 +4,7 @@ TEST=./node_modules/.bin/mocha --recursive --require=./test/setup.js
 SPEC_FLAGS=-R spec
 COVERAGE_FLAGS=-R mocha-text-cov
 WEBPACK=./node_modules/.bin/webpack
+SOURCE=./src
 
 usage:
 	@echo lint: lints the source
