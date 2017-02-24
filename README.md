@@ -432,7 +432,10 @@ React Quill would not be where it is today without the contributions of many peo
 - @Janekk
 - @AndyTheGiant
 - @chrismcv
-
+- @wouterh
+- @tdg5
+- @jrmmnr
+- @l3kn
 
 Roadmap
 -------
