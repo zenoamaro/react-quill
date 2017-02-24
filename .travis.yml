@@ -14,3 +14,4 @@ install:
 script:
   - make build
   - make spec
+  - make lint
