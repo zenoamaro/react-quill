@@ -14,7 +14,7 @@ See a [live demo] or [Codepen](http://codepen.io/alexkrolick/pen/xgyOXQ/left?edi
   1. [Upgrading to React-Quill v1.0.0](#upgrading-to-react-quill-v100)
   1. [Bundling with Webpack](#bundling-with-webpack)
   1. [API reference](#api-reference)
-  1. [Browser Support](#browser-support)
+  1. [Browser support](#browser-support)
   1. [Building and testing](#building-and-testing)
   1. [Changelog](#changelog)
   1. [Contributors](#contributors)
@@ -347,7 +347,7 @@ More tasks are available on the [Makefile](Makefile):
     test: lint, spec and coverage threshold test
     build: builds the minified version
 
-Browser Support
+Browser support
 ---------------
 
 Please check the browser support table for the upstream [Quill](https://github.com/quilljs/quill) dependency. The React part of the codebase is ES5-compatible.
