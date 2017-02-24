@@ -6,4 +6,5 @@
 *.log
 /tmp
 /node_modules
-/dist
+/src
+/test

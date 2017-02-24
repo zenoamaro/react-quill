@@ -27,10 +27,10 @@
     "rich",
     "text",
     "rich-text",
-    "textarea"
+    "textarea",
+    "quill"
   ],
   "files": [
-    "src/",
     "dist/",
     "README.md",
     "CHANGELOG.md",
