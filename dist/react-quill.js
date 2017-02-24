@@ -10810,7 +10810,7 @@ return /******/ (function(modules) { // webpackBootstrap
 			},
 	
 			formats: function(props) {
-				var isNotArrayOfString = T.arrayOf(T.string).apply(this, props);
+				var isNotArrayOfString = T.arrayOf(T.string).apply(this, arguments);
 	
 				if (isNotArrayOfString) return new Error(
 					'You cannot specify custom `formats` anymore. Use Parchment instead.  ' +
@@ -10914,7 +10914,7 @@ return /******/ (function(modules) { // webpackBootstrap
 			if (e) this.unhookEditor(e);
 		},
 	
-		shouldComponentUpdate: function(nextProps) {
+		shouldComponentUpdate: function(nextProps, nextState) {
 			// Rerender whenever a "dirtyProp" changes
 			var props = this.props;
 			return some(this.dirtyProps, function(prop) {
@@ -11086,7 +11086,7 @@ return /******/ (function(modules) { // webpackBootstrap
 					this.onEditorChangeSelection(
 						editor.getSelection(), source,
 						unprivilegedEditor
-					)
+					);
 				}
 			}.bind(this);
 	
@@ -15978,7 +15978,7 @@ return /******/ (function(modules) { // webpackBootstrap
 			);
 		},
 	
-		shouldComponentUpdate: function(nextProps) {
+		shouldComponentUpdate: function(nextProps, nextState) {
 			return !isEqual(nextProps, this.props);
 		},
 	
@@ -16030,6 +16030,7 @@ return /******/ (function(modules) { // webpackBootstrap
 			);
 		},
 	
+		/* jshint maxcomplexity: false */
 		renderItem: function(item, key) {
 			switch (item.type) {
 				case 'group':
