@@ -116,7 +116,7 @@ var QuillComponent = React.createClass({
 	},
 
 	componentWillReceiveProps: function(nextProps) {
-		var editor = this.state.editor;
+		var editor = this.editor;
 		// If the component is unmounted and mounted too quickly
 		// an error is thrown in setEditorContents since editor is
 		// still undefined. Must check if editor is undefined
@@ -148,7 +148,7 @@ var QuillComponent = React.createClass({
 			this.getEditorElement(),
 			this.getEditorConfig()
 		);
-		this.setState({ editor:editor });
+		this.editor = editor;
 	},
 
 	componentWillUnmount: function() {
@@ -191,10 +191,11 @@ var QuillComponent = React.createClass({
 	},
 
 	getEditor: function() {
-		return this.state.editor;
+		return this.editor;
 	},
 
-	getEditorElement: function() {
+	getEditorElement: function () {
+		// TODO: replace string ref with callback ref
 		return ReactDOM.findDOMNode(this.refs.editor);
 	},
 
@@ -262,11 +263,11 @@ var QuillComponent = React.createClass({
 	},
 
 	focus: function() {
-		this.state.editor.focus();
+		this.editor.focus();
 	},
 
 	blur: function() {
-		this.setEditorSelection(this.state.editor, null);
+		this.setEditorSelection(this.editor, null);
 	}
 
 });
