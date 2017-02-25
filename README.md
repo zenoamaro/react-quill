@@ -386,11 +386,11 @@ This release adds support for Quill v1.0.0+. ⚠️ There are many breaking chan
 - Updated rendering of toolbar actions (@clemmy)
 - Improved toolbar renderChoices implementation (@zhang-z)
 - Fixed use of `defaultValue` in Toolbar selects
-- Fix bounds validation in setEditorSelection (@wouterh)
-- Expose Quill in exports (@tdg5)
-- Add unhook function to clean up event listeners on unmount (@alexkrolick, @jrmmnr)
-- Fix documentation typos (@l3kn)
-- Start testing with Enzyme (@alexkrolick)
+- Fixed bounds validation in setEditorSelection (@wouterh)
+- Exposed Quill in exports (@tdg5)
+- Added unhook function to clean up event listeners on unmount (@alexkrolick, @jrmmnr)
+- Fixed documentation typos (@l3kn)
+- Started testing with Enzyme (@alexkrolick)
 
 #### v0.4.1
 - Added contents of `dist` to NPM package.
