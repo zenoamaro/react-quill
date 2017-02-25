@@ -347,6 +347,8 @@ More tasks are available on the [Makefile](Makefile):
     test: lint, spec and coverage threshold test
     build: builds the minified version
 
+Note that `dist` is ignored in the git repository as of version 1.0.0. If you need to use the built files without downloading the package from NPM, you can run the build tasks yourself or use a CDN like [unpkg](https://unpkg.com/react-quill@1.0.0-beta-1/dist/react-quill.min.js).
+
 Browser support
 ---------------
 
@@ -360,6 +362,7 @@ This release adds support for Quill v1.0.0+. ⚠️ There are many breaking chan
 - Updated to support Quill v1.0.0+ (@clemmy, @alexkrolick)
 - Bundling Quill with ReactQuill (@clemmy)
 - Bundling CSS files in the NPM package
+- Removed `dist` from source control (@alexkrolick)
 - Deprecated `toolbar` property and component
 - Deprecated the `styles` property
 - Deprecated custom formats via the `formats` property
