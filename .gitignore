@@ -1,8 +1,19 @@
+# Misc
 *~
 ~*
 *.tmp
 *.orig
 *.bak
 *.log
+*.DS_STORE
 /tmp
+
+# Dependencies
 /node_modules
+
+# Compiled files
+/dist
+
+# Packaging artifacts
+/react-quill-*.tgz
+/package

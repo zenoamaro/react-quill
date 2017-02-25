@@ -1,0 +1,11 @@
+*~
+~*
+*.tmp
+*.orig
+*.bak
+*.log
+/tmp
+/node_modules
+/src
+/test
+/package
