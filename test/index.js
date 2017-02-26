@@ -17,6 +17,13 @@ var sinon = require('sinon');
 
 chai.use(chaiEnzyme());
 
+console.log('\n\
+  Note that some functionality cannot be tested outside of a full browser environment.\n\n\
+  To manually test the component:\n\
+    1) Run "npm install" \& "npm run build"\n\
+    2) Open "demo/index.html" in a web browser.\
+')
+
 describe('<ReactQuill />', function() {
 
   it('calls componentDidMount', function() {
