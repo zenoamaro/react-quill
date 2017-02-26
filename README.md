@@ -156,7 +156,7 @@ Please note that many [migration steps to Quill v1.0](http://quilljs.com/guides/
 
 ### The toolbar module
 
-With v1.0.0, Quill adopted a new [toolbar configuration format]((https://quilljs.com/docs/modules/toolbar/), to which React Quill will delegates all toolbar functionality, and which is now the preferred way to customize the toolbar.
+With v1.0.0, Quill adopted a new [toolbar configuration format](https://quilljs.com/docs/modules/toolbar/), to which React Quill will delegates all toolbar functionality, and which is now the preferred way to customize the toolbar.
 
 Previously, toolbar properties could be set by passing a `toolbar` prop to React Quill. Pass the same options as `modules.toolbar` instead.
 
