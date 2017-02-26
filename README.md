@@ -37,6 +37,13 @@ His contributions have been incredible so far, and his passion and dedication wi
 
 ---
 
+#Installation
+
+This module is distributed using [npm](https://npmjs.com) which comes bundled with [node](https://nodejs.org):
+
+```console
+npm install react-quill
+```
 
 Quick start
 -----------
