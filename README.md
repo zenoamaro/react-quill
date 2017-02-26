@@ -1,4 +1,4 @@
-React-Quill ![](https://travis-ci.org/zenoamaro/react-quill.svg?branch=master)
+React-Quill [![](https://travis-ci.org/zenoamaro/react-quill.svg?branch=master)](https://travis-ci.org/zenoamaro/react-quill)
 ==============================================================================
 
 A [Quill] component for [React].
