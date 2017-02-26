@@ -63,7 +63,7 @@ var QuillMixin = {
 	*/
 	setEditorContents: function(editor, value) {
 		var sel = editor.getSelection();
-		editor.clipboard.dangerouslyPasteHTML(value || '', 'reactquill');
+		editor.clipboard.dangerouslyPasteHTML(value || '');
 		if (sel) this.setEditorSelection(editor, sel);
 	},
 

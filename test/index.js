@@ -26,7 +26,7 @@ console.log('\n\
 
 describe('<ReactQuill />', function() {
 
-  it('calls componentDidMount', function() {
+  it('calls componentDidMount', () => {
     sinon.spy(ReactQuill.prototype, 'componentDidMount');
     const wrapper = mount(ReactQuillNode());
     expect(ReactQuill.prototype.componentDidMount.calledOnce).to.equal(true);
@@ -40,47 +40,108 @@ describe('<ReactQuill />', function() {
     expect(wrapper.props().foo).to.equal('baz');
   });
 
-  describe('Quill instance', function() {
+  it('attaches a Quill instance to the component', () => {
+    const wrapper = mount(ReactQuillNode());
+    const quill = wrapper.getNode().getEditor();
+    expect(quill instanceof Quill).to.equal(true)
+  })
 
-    it('is attached to the component', () => {
-      const wrapper = mount(ReactQuillNode());
-      const quill = getQuillFromEditorNode(wrapper);
-      expect(quill instanceof Quill).to.equal(true)
-    })
-
-    it('receives options from props', () => {
-      var enabledFormats = ['underline', 'bold', 'italic'];
-      var props = {
-        placeholder: 'foobar',
-        readOnly: true,
-        formats: enabledFormats,
-        modules: {
-          toolbar: enabledFormats,
-        }
+  it('passes options to Quill from props', () => {
+    var enabledFormats = ['underline', 'bold', 'italic'];
+    var props = {
+      placeholder: 'foobar',
+      readOnly: true,
+      formats: enabledFormats,
+      modules: {
+        toolbar: enabledFormats,
       }
-      const wrapper = mount(ReactQuillNode(props));
-      const quill = getQuillFromEditorNode(wrapper);
-      expect(quill.options.placeholder).to.equal(props.placeholder)
-      expect(quill.options.readOnly).to.equal(props.readOnly)
-      expect(quill.options.modules).to.include.keys(Object.keys(props.modules))
-      expect(quill.options.formats).to.include.members(props.formats)
-    })
-
-    it('sends a change event when the editor content changes') // tricky to simulate
-
-    it('shows defaultValue by default if value prop is undefined') // hardcode expected HTML first
-
-    it ('shows the value prop by default instead of defaultValue if both are defined') // ^same
-
-    it('allows editor to be focused') // might be tricky without focus class
-
+    }
+    const wrapper = mount(ReactQuillNode(props));
+    const quill = wrapper.getNode().getEditor();
+    expect(quill.options.placeholder).to.equal(props.placeholder)
+    expect(quill.options.readOnly).to.equal(props.readOnly)
+    expect(quill.options.modules).to.include.keys(Object.keys(props.modules))
+    expect(quill.options.formats).to.include.members(props.formats)
   })
 
-  describe('Editor', function() {
-
-    it('passes new html content to onChange handler when content changes')
-
+  it('calls onChange with the new value when Quill calls pasteHTML', () => {
+    const onChangeSpy = sinon.spy();
+    const inHtml = '<p>Hello, world!</p>';
+    const onChange = (value) => {
+      expect(inHtml).to.equal(value)
+      onChangeSpy();
+    }
+    const wrapper = mount(ReactQuillNode({
+      onChange: onChange,
+    }));
+    wrapper.getNode().getEditor().clipboard.dangerouslyPasteHTML(inHtml)
+    expect(wrapper.getDOMNode().querySelector('.ql-editor').innerHTML).to.equal(inHtml)
+    expect(onChangeSpy).to.have.property('callCount', 1);
   })
+
+  it('calls onChange with the new value when Quill calls insertText', () => {
+    const onChangeSpy = sinon.spy();
+    const inHtml = '<p><strong>Hello, World!</strong></p>';
+    const onChange = (value) => {
+      expect(inHtml).to.equal(value)
+      onChangeSpy();
+    }
+    const wrapper = mount(ReactQuillNode({
+      onChange: onChange,
+    }));
+    wrapper.getNode().getEditor().insertText(0, 'Hello, World!', 'bold', true);
+    expect(wrapper.getDOMNode().querySelector('.ql-editor').innerHTML).to.equal(inHtml)
+    expect(onChangeSpy).to.have.property('callCount', 1);
+  })
+
+  it('shows defaultValue if value prop is undefined', () => {
+    const defaultValue = '<p>Hello, world!</p>';
+    const wrapper = mount(ReactQuillNode({
+      defaultValue: defaultValue,
+    }));
+    const quill = wrapper.getNode().getEditor();
+    expect(wrapper.getNode().getEditorContents()).to.equal(defaultValue)
+  })
+
+  it('shows the value prop instead of defaultValue if both are defined', () => {
+    const defaultValue = '<p>Hello, world!</p>';
+    const value = '<p>Good night, moon!</p>';
+    const wrapper = mount(ReactQuillNode({
+      defaultValue: defaultValue,
+      value: value,
+    }));
+    const quill = wrapper.getNode().getEditor();
+    expect(wrapper.getNode().getEditorContents()).to.equal(value)
+  })
+
+  /**
+   * This can't be tested with the current state of JSDOM. 
+   * The selection functions have been shimmed in this test suite, 
+   * but they  will not work until DOM traversal is implemented in 
+   * https://github.com/tmpvar/jsdom/issues/317.
+   * Leaving this pending test as a reminder to follow up.
+   */
+  it('focuses editor when calling focus()')
+
+  /**
+   * A test for this may work if checking document.activeElement,
+   * but chances are the focus was never removed from the body
+   * after calling focus(). See JSDOM issue #317.
+   */
+  it('removes focus from the editor when calling blur()')
+
+  /**
+   * In a browser, querySelector('.ql-editor').textContent = 'hi' would 
+   * trigger a 'text-change' event, but here it doesn't. Is the polyfill
+   * for MutationObserver not working?
+   */
+  it('calls onChange after the textContent of the editor changes')
+
+  /**
+   * This is hard to do without Selenium's 'type' function, but it is the 
+   * ultimate test of whether everything is working or not
+   */
+  it('calls onChange after keypresses are sent to the editor')
 
 });
 
@@ -103,8 +164,4 @@ function ReactQuillNode(props, html) {
       }),
     ]
   );
-}
-
-function getQuillFromEditorNode(wrapper) {
-  return wrapper.get(0).getEditor();
 }
