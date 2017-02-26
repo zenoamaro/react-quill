@@ -208,9 +208,13 @@ However, consider switching to the new Quill format instead, or provide your own
 
 React Quill now follows the Quill toolbar format closely. See the [Quill toolbar documentation](https://quilljs.com/docs/modules/toolbar/) for a complete reference on all supported options.
 
-### The `formats` property
+### Custom formats with the `formats` property is _deprecated_
 
-Previously, it was possible to provide custom formats to the `formats` prop. [Use Parchment to provide new formats](https://github.com/quilljs/parchment) instead.
+As of 1.0.0, [use Parchment to define new formats](https://github.com/quilljs/parchment). Use the [Quill export](#exports) from the module to register and extend formats:
+
+```js
+Quill.register('formats/CustomFormat', MyCustomFormat);
+```
 
 ### The `styles` property
 
@@ -286,7 +290,8 @@ API reference
 : An object specifying which modules are enabled, and their configuration. The editor toolbar is a commonly customized module. See the [modules section](http://quilljs.com/docs/modules/) over the Quill documentation for more information on what modules are available.
 
 `formats`
-: An array of formats to be enabled during editing. All implemented formats are enabled by default. See [Formats](http://quilljs.com/docs/formats/) for a list.
+: An array of formats to be enabled during editing. All implemented formats are enabled by default. See [Formats](http://quilljs.com/docs/formats/) for a list. 
+  Custom formats should not be included in the array as of version 1.0.0. Instead they should be created through [Parchment](https://github.com/quilljs/parchment) and registered with the module's [Quill export](#exports).
 
 `style`
 : An object with custom CSS rules to apply on the editor's container. Rules should be in React's "camelCased" naming style.
