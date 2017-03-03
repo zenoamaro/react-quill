@@ -10,12 +10,16 @@ See a [live demo] or [Codepen](http://codepen.io/alexkrolick/pen/xgyOXQ/left?edi
 [live demo]: https://zenoamaro.github.io/react-quill/
 
   1. [Quick start](#quick-start)
-  1. [Styles and themes](#styles-and-themes)
+  1. [Advanced Options](#advanced-options)
+    1. [Theme](#theme)
+    1. [Custom Toolbar](#custom-toolbar)
+    1. [Custom Formats](#custom-formats)
+    1. [Mixin](#mixin)
   1. [Upgrading to React-Quill v1.0.0](#upgrading-to-react-quill-v100)
-  1. [Bundling with Webpack](#bundling-with-webpack)
   1. [API reference](#api-reference)
   1. [Browser support](#browser-support)
   1. [Building and testing](#building-and-testing)
+    1. [Bundling with Webpack](#bundling-with-webpack)
   1. [Changelog](#changelog)
   1. [Contributors](#contributors)
   1. [License](#license)
@@ -38,38 +42,59 @@ His contributions have been incredible so far, and his passion and dedication wi
 ---
 
 
-Quick start
------------
+## Quick Start
 
-### Use it straight away:
+```jsx
+class MyComponent extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = { text: '' }
+  }
 
-~~~jsx
-var MyComponent = React.createClass({
+  handleChange(value) {
+    this.setState({ text: value })
+  }
 
-  onTextChange: function(value) {
-    this.setState({ text:value });
-  },
-
-  render: function() {
+  render() {
     return (
       <ReactQuill value={this.state.text}
-                  onChange={this.onTextChange} />
-    );
-  },
+                  onChange={this.handleChange} />
+    )
+  }
+}
+```
 
-});
-~~~
+## Advanced Options
 
-### Theming, custom toolbar and formats, custom editing area:
+### Theme
 
-~~~jsx
-/*
-Include `quill.snow.css` to use the editor's standard theme. For example,
-depending on the structure of your app, you could do something like this:
+The Quill editor supports [themes](http://quilljs.com/docs/themes/). It includes a full-fledged theme, called _snow_, that is Quill's standard appearance, a _bubble_ theme that is similar to the inline editor on Medium, and a _base_ theme containing only the bare essentials to allow modules like toolbars or tooltips to work.
 
+These stylesheets can be found in the Quill distribution, but for convenience they are also linked in React Quill's `dist` folder. In a common case you would activate a theme by setting the theme [prop](#props) like this:
+
+```jsx
+<ReactQuill theme="snow" /> // or "bubble", "base"
+```
+
+And then link the appropriate stylesheet (only link the CSS for the themes you want to use):
+
+```html
 <link rel="stylesheet" href="node_modules/react-quill/dist/quill.snow.css">
-*/
+<link rel="stylesheet" href="node_modules/react-quill/dist/quill.bubble.css">
+<link rel="stylesheet" href="node_modules/react-quill/dist/quill.base.css">
 
+```
+
+This may vary depending how application is structured, directories or otherwise. For example, if you use a CSS pre-processor like SASS, you may want to import that stylesheet inside your own.
+
+### Custom Toolbar
+
+#### Default Toolbar Elements
+
+The [Quill Toolbar Module](http://quilljs.com/docs/modules/toolbar/) API provides an easy way to configure the default toolbar icons using an array of format names.
+
+<details>
+```jsx
 var MyComponent = React.createClass({
 
   modules: {
@@ -105,11 +130,200 @@ var MyComponent = React.createClass({
   },
 
 });
-~~~
+```
+</details>
 
-### Mixing in:
+#### HTML Toolbar
 
-~~~jsx
+You can also supply your own HTML/JSX toolbar with custom elements that are not part of the Quill theme.
+
+<details>
+See this example live on Codepen: [Custom Toolbar Example](https://codepen.io/alexkrolick/pen/gmroPj?editors=0010)
+```jsx
+/*
+ * Custom "star" icon for the toolbar using an Octicon
+ * https://octicons.github.io
+ */
+const CustomButton = () => <span className="octicon octicon-star" />
+
+/*
+ * Event handler to be attached using Quill toolbar module
+ * http://quilljs.com/docs/modules/toolbar/
+ */
+function insertStar () {
+  const cursorPosition = this.quill.getSelection().index
+  this.quill.insertText(cursorPosition, "★")
+  this.quill.setSelection(cursorPosition + 1)
+}
+
+/*
+ * Custom toolbar component including insertStar button and dropdowns
+ */
+const CustomToolbar = () => (
+  <div id="toolbar">
+    <select className="ql-header">
+      <option value="1"></option>
+      <option value="2"></option>
+      <option selected></option>
+    </select>
+    <button className="ql-bold"></button>
+    <button className="ql-italic"></button>
+    <select className="ql-color">
+      <option value="red"></option>
+      <option value="green"></option>
+      <option value="blue"></option>
+      <option value="orange"></option>
+      <option value="violet"></option>
+      <option value="#d0d1d2"></option>
+      <option selected></option>
+    </select>    
+    <button className="ql-insertStar">
+      <CustomButton />
+    </button>
+  </div>
+)
+
+/* 
+ * Editor component with custom toolbar and content containers
+ */
+class Editor extends React.Component {
+  constructor (props) {
+    super(props)
+    this.state = { editorHtml: '' }
+    this.handleChange = this.handleChange.bind(this)
+  }
+  
+  handleChange (html) {
+  	this.setState({ editorHtml: html });
+  }
+  
+  render() {
+    return (
+      <div className="text-editor">
+        <CustomToolbar />
+        <ReactQuill 
+          onChange={this.handleChange} 
+          placeholder={this.props.placeholder}
+          modules={Editor.modules}
+        >
+          <div 
+            key="editor"                     
+            ref="editor"
+            className="quill-contents"                     
+            dangerouslySetInnerHTML={{__html:this.state.editorHtml}}
+          />
+        </ReactQuill>
+      </div>
+    )
+  }
+}
+
+/* 
+ * Quill modules to attach to editor
+ * See http://quilljs.com/docs/modules/ for complete options
+ */
+Editor.modules = {
+  toolbar: {
+    container: "#toolbar",
+    handlers: {
+      "insertStar": insertStar,
+    }
+  }
+}
+
+/* 
+ * Quill editor formats
+ * See http://quilljs.com/docs/formats/
+ */
+Editor.formats = [
+  'header', 'font', 'size',
+  'bold', 'italic', 'underline', 'strike', 'blockquote',
+  'list', 'bullet', 'indent',
+  'link', 'image', 'color',
+]
+
+/* 
+ * PropType validation
+ */
+Editor.propTypes = {
+  placeholder: React.PropTypes.string,
+}
+
+/* 
+ * Render component on page
+ */
+ReactDOM.render(
+  <Editor placeholder={'Write something or insert a star ★'}/>, 
+  document.querySelector('.app')
+)
+```
+</details>
+
+### Custom Formats
+
+The component has two types of formats: 
+
+1. The default [Quill formats](http://quilljs.com/docs/formats/) that are enabled/disabled using the [`formats` prop](#props). All formats are enabled by default.
+2. Custom formats created using Parchment and registered with your component's Quill instance
+
+<details>
+<summary>Expand custom format example</summary>
+ES6 Import
+```js
+import ReactQuill, { Quill } from 'react-quill'
+```
+
+CommonJS Require
+```js
+var ReactQuill = require('react-quill'); 
+var Quill = ReactQuill.Quill;
+```
+
+```jsx
+/*
+ * Example Parchment format from 
+ * https://quilljs.com/guides/cloning-medium-with-parchment/
+ */
+let Inline = Quill.import('blots/inline');
+class BoldBlot extends Inline { }
+BoldBlot.blotName = 'bold';
+BoldBlot.tagName = 'strong';
+Quill.register(BoldBlot);
+
+/*
+ * Editor component with default and custom formats
+ */
+class MyComponent extends React.Component {
+  constructor(props) {
+    this.formats = ['italic, 'underline'] // default formats
+    this.state = { text: '' }
+  }
+  
+  handleChange(value) {
+    this.setState({text: value})
+  }
+  
+  render() {
+    return (
+      <ReactQuill 
+        value={this.state.text}
+        onChange={this.handleChange}
+        formats={this.formats} // the custom format is already registered
+      />
+    )
+  }
+}
+```
+</details>
+
+### Mixin
+
+The module exports a mixin which can be used to create custom editor components. (Note that mixins will be deprecated in a future version of React).
+
+<details>
+```jsx
+import {Mixin} from 'react-quill'
+
 var MyComponent = React.createClass({
   mixins: [ ReactQuill.Mixin ],
 
@@ -128,30 +342,12 @@ var MyComponent = React.createClass({
   },
 
 });
-~~~
+```
+The ReactQuill default component is built using the mixin. See [component.js](src/component.js) for source.
+</details>
 
-See [component.js](src/component.js) for a fully fleshed-out example.
+## Upgrading to React-Quill v1.0.0
 
-
-Styles and themes
------------------
-The Quill editor supports themes.
-
-It includes a full-fledged theme, called _snow_, that is Quill's standard appearance, and a _base_ theme containing only the bare essentials to allow modules like toolbars or tooltips to work.
-
-These stylesheets can be found in the Quill distribution, but for convenience they are also linked among React Quill's `dist`s. In a common case you would activate a theme like this:
-
-    <ReactQuill theme="snow" />
-
-And then link the appropriate stylesheet:
-
-    <link rel="stylesheet" href="node_modules/react-quill/dist/quill.snow.css">
-
-This may vary depending how application is structured, directories or otherwise. For example, if you use a CSS pre-processor like SASS, you may want to import that stylesheet inside your own.
-
-
-Upgrading to React-Quill v1.0.0
--------------------------------
 Please note that many [migration steps to Quill v1.0](http://quilljs.com/guides/upgrading-to-1-0/) may also apply.
 
 ### The toolbar module
@@ -159,7 +355,7 @@ Please note that many [migration steps to Quill v1.0](http://quilljs.com/guides/
 With v1.0.0, Quill adopted a new [toolbar configuration format](https://quilljs.com/docs/modules/toolbar/), to which React Quill will delegates all toolbar functionality, and which is now the preferred way to customize the toolbar.
 
 Previously, toolbar properties could be set by passing a `toolbar` prop to React Quill. Pass the same options as `modules.toolbar` instead.
-
+<details>
 ~~~diff
 + modules: {
     toolbar: [
@@ -204,11 +400,12 @@ Previously, React Quill would create a custom HTML toolbar for you if you passed
   />
 ~~~
 
-However, consider switching to the new Quill format instead, or provide your own toolbar component.
+However, consider switching to the new Quill format instead, or provide your own [toolbar component](#html-toolbar).
 
 React Quill now follows the Quill toolbar format closely. See the [Quill toolbar documentation](https://quilljs.com/docs/modules/toolbar/) for a complete reference on all supported options.
+</details>
 
-### Custom formats with the `formats` property is _deprecated_
+### Adding custom formats with the `formats` property is deprecated
 
 As of 1.0.0, [use Parchment to define new formats](https://github.com/quilljs/parchment). Use the [Quill export](#exports) from the module to register and extend formats:
 
@@ -226,33 +423,7 @@ See the [Quill Release Notes](http://quilljs.com/guides/upgrading-to-1-0/#config
 
 This property previously set the frequency with which Quill polled the DOM for changes. It does not have any effect anymore, and can safely be removed from the props.
 
-
-Bundling with Webpack
----------------------
-Quill ships only a pre-built javascript file, so Webpack will complain:
-
-~~~
-Error: ./~/react-quill/~/quill/dist/quill.js
-Critical dependencies:
-6:478-485 This seems to be a pre-built javascript file. Though this is possible, it's not recommended. Try to require the original source to get better results.
-@ ./~/react-quill/~/quill/dist/quill.js 6:478-485
-~~~
-
-The warning is harmless, but if you want to silence it you can avoid parsing Quill by adding this to your Webpack configuration:
-
-~~~js
-module: {
-  // Shut off warnings about using pre-built javascript files
-  // as Quill.js unfortunately ships one as its `main`.
-  noParse: /node_modules\/quill\/dist/
-}
-~~~
-
-See [#7](https://github.com/zenoamaro/react-quill/issues/7) for more details.
-
-
-API reference
--------------
+## API reference
 
 ### Exports
 
@@ -334,15 +505,19 @@ If you have [a ref to a ReactQuill node](https://facebook.github.io/react/docs/m
 : Returns the Quill instance that backs the editor. While you can freely use this to access methods such as `getText()`, please avoid from imperatively manipulating the instance.
 
 
-Building and testing
---------------------
+## Building and testing
+
 You can run the automated test suite:
 
-    $ npm test
+```sh
+npm test
+```
 
 And build a minificated version of the source:
 
-    $ npm run build
+```sh
+npm run build
+```
 
 More tasks are available on the [Makefile](Makefile):
 
@@ -354,13 +529,35 @@ More tasks are available on the [Makefile](Makefile):
 
 Note that `dist` is ignored in the git repository as of version 1.0.0. If you need to use the built files without downloading the package from NPM, you can run the build tasks yourself or use a CDN like [unpkg](https://unpkg.com/react-quill@1.0.0-beta-1/dist/react-quill.min.js).
 
-Browser support
----------------
+### Bundling with Webpack
+
+Quill ships only a pre-built javascript file, so Webpack will complain after building a bundle:
+
+```
+Error: ./~/react-quill/~/quill/dist/quill.js
+Critical dependencies:
+6:478-485 This seems to be a pre-built javascript file. Though this is possible, it's not recommended. Try to require the original source to get better results.
+@ ./~/react-quill/~/quill/dist/quill.js 6:478-485
+```
+
+The warning is harmless, but if you want to silence it you can avoid parsing Quill by adding this to your Webpack configuration:
+
+```js
+module: {
+  // Shut off warnings about using pre-built javascript files
+  // as Quill.js unfortunately ships one as its `main`.
+  noParse: /node_modules\/quill\/dist/
+}
+```
+
+See [#7](https://github.com/zenoamaro/react-quill/issues/7) for more details.
+
+## Browser support
 
 Please check the browser support table for the upstream [Quill](https://github.com/quilljs/quill) dependency. The React part of the codebase is ES5-compatible.
 
-Changelog
----------
+## Changelog
+
 #### v1.0.0
 This release adds support for Quill v1.0.0+. ⚠️ There are many breaking changes, both in Quill and in ReactQuill. See [Upgrading to React-Quill v1.0.0](#upgrading-to-react-quill-v100).
 
@@ -420,8 +617,8 @@ This release adds support for React 0.14. ⚠️ Shims to support older versions
 [Full changelog](CHANGELOG.md)
 
 
-Contributors
-------------
+## Contributors
+
 React Quill would not be where it is today without the contributions of many people, which we are incredibly grateful for:
 - @zenoamaro (maintainer)
 - @alexkrolick (maintainer)
@@ -445,16 +642,16 @@ React Quill would not be where it is today without the contributions of many peo
 - @jrmmnr
 - @l3kn
 
-Roadmap
--------
+## Roadmap
+
 - [x] React 0.14 support
 - [x] Quill v1.0.0+ support
 - [ ] ES6 rewrite
 - [ ] Tests!
 
 
-License
--------
+## License
+
 The MIT License (MIT)
 
 Copyright (c) 2016, zenoamaro <zenoamaro@gmail.com>
