@@ -350,6 +350,9 @@ The ReactQuill default component is built using the mixin. See [component.js](sr
 
 Please note that many [migration steps to Quill v1.0](http://quilljs.com/guides/upgrading-to-1-0/) may also apply.
 
+<details>
+<summary>Expand upgrade guide</summary>
+
 ### The toolbar module
 
 With v1.0.0, Quill adopted a new [toolbar configuration format](https://quilljs.com/docs/modules/toolbar/), to which React Quill will delegates all toolbar functionality, and which is now the preferred way to customize the toolbar.
@@ -422,6 +425,8 @@ See the [Quill Release Notes](http://quilljs.com/guides/upgrading-to-1-0/#config
 ### The `pollInterval` property
 
 This property previously set the frequency with which Quill polled the DOM for changes. It does not have any effect anymore, and can safely be removed from the props.
+
+</details>
 
 ## API reference
 
