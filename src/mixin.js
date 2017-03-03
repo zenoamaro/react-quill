@@ -20,9 +20,9 @@ var QuillMixin = {
 		// accidentally modifying editor state.
 		var unprivilegedEditor = this.makeUnprivilegedEditor(editor);
 
-		this.handleEditorChange = function(delta, oldDelta, source) {
-			if (this.onEditorChange) {
-				this.onEditorChange(
+		this.handleTextChange = function(delta, oldDelta, source) {
+			if (this.onEditorChangeText) {
+				this.onEditorChangeText(
 					editor.root.innerHTML, delta, source,
 					unprivilegedEditor
 				);
@@ -42,7 +42,7 @@ var QuillMixin = {
 			}
 		}.bind(this);
 
-		editor.on('editor-change', this.handleEditorChange);
+		editor.on('text-change', this.handleTextChange);
 		editor.on('selection-change', this.handleSelectionChange);
 	},
 

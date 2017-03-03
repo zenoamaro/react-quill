@@ -242,7 +242,7 @@ var QuillComponent = React.createClass({
 		);
 	},
 
-	onEditorChange: function(value, delta, source, editor) {
+	onEditorChangeText: function(value, delta, source, editor) {
 		if (value !== this.getEditorContents()) {
 			this.setState({ value: value });
 			if (this.props.onChange) {
