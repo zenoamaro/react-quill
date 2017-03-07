@@ -651,8 +651,8 @@ React Quill would not be where it is today without the contributions of many peo
 
 - [x] React 0.14 support
 - [x] Quill v1.0.0+ support
+- [x] Tests!
 - [ ] ES6 rewrite
-- [ ] Tests!
 
 
 ## License
