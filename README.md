@@ -329,7 +329,7 @@ var MyComponent = React.createClass({
 
   componentDidMount: function() {
     var editor = this.createEditor(
-      this.getEditorElement(),
+      this.getEditingArea(),
       this.getEditorConfig()
     );
     this.setState({ editor:editor });

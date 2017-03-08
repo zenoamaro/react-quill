@@ -160,7 +160,7 @@ var QuillComponent = React.createClass({
 
 	componentDidMount: function() {
 		var editor = this.createEditor(
-			this.getEditorElement(),
+			this.getEditingArea(),
 			this.getEditorConfig()
 		);
 		this.editor = editor;
@@ -209,9 +209,8 @@ var QuillComponent = React.createClass({
 		return this.editor;
 	},
 
-	getEditorElement: function () {
-		// TODO: replace string ref with callback ref
-		return ReactDOM.findDOMNode(this.refs.editor);
+	getEditingArea: function () {
+		return ReactDOM.findDOMNode(this.editingArea);
 	},
 
 	getEditorContents: function() {
@@ -226,10 +225,11 @@ var QuillComponent = React.createClass({
 	Renders an editor area, unless it has been provided one to clone.
 	*/
 	renderEditingArea: function() {
+		var self = this;
 		var children = this.props.children;
 
 		var properties = {
-			ref: 'editor',
+			ref: function(element) { self.editingArea = element },
 			dangerouslySetInnerHTML: { __html:this.getEditorContents() }
 		};
 
