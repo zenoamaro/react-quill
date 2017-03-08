@@ -58,14 +58,14 @@ var QuillComponent = React.createClass({
 
 			if (isNotArrayOfString) return new Error(
 				'You cannot specify custom `formats` anymore. Use Parchment instead.  ' +
-				'See: https://github.com/zenoamaro/react-quill#upgrading-to-react-quill-v1-0-0'
+				'See: https://github.com/zenoamaro/react-quill#upgrading-to-react-quill-v100.'
 			);
 		},
 
 		styles: function(props) {
 			if ('styles' in props) return new Error(
 				'The `styles` prop has been deprecated. Use custom stylesheets instead. ' +
-				'See: https://github.com/zenoamaro/react-quill#upgrading-to-react-quill-v1-0-0'
+				'See: https://github.com/zenoamaro/react-quill#upgrading-to-react-quill-v100.'
 			);
 		},
 
@@ -73,7 +73,7 @@ var QuillComponent = React.createClass({
 			if ('pollInterval' in props) return new Error(
 				'The `pollInterval` property does not have any effect anymore. ' +
 				'You can safely remove it from your props.' +
-				'See: https://github.com/zenoamaro/react-quill#upgrading-to-react-quill-v1-0-0'
+				'See: https://github.com/zenoamaro/react-quill#upgrading-to-react-quill-v100.'
 			);
 		},
 
