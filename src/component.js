@@ -103,6 +103,7 @@ var QuillComponent = React.createClass({
 		'formats',
 		'bounds',
 		'theme',
+		'children',
 	],
 
 	getDefaultProps: function() {
