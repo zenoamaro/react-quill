@@ -31,8 +31,9 @@ Thanks to @clemmy and @alexkrolick for landing this much-awaited change. There a
  
 ---
 
-🎧 **Latest published package version: `v1.0.0-beta-1`**  
-Follow React Quill's development on the beta channel leading to `v1.0.0`.
+🎧 **Latest published package version: `v1.0.0-beta-3`**  
+Follow React Quill's development on the beta channel leading to `v1.0.0`.  
+`npm install react-quill@v1.0.0-beta-3`
  
 ---
 
@@ -436,7 +437,7 @@ This property previously set the frequency with which Quill polled the DOM for c
 : Provides the bridge between React and Quill. `ReactQuill` implements this mixin; in the same way you can use it to build your own component, or replace it to implement a new core for the default component.
 
 `ReactQuill.Toolbar`
-: The component that renders the custom ReactQuill toolbar. The default collection of items and color swatches is available as `ReactQuill.Toolbar.defaultItems` and `ReactQuill.Toolbar.defaultColors` respectively. ⚠️ The Toolbar component is deprecated since v1.0.0. See [upgrading to React Quill v1.0.0](#upgrading-to-react-quill-v1-0-0).
+: The component that renders the custom ReactQuill toolbar. The default collection of items and color swatches is available as `ReactQuill.Toolbar.defaultItems` and `ReactQuill.Toolbar.defaultColors` respectively. ⚠️ The Toolbar component is deprecated since v1.0.0. See [upgrading to React Quill v1.0.0](#upgrading-to-react-quill-v100).
 
 `ReactQuill.Quill`
 : The `Quill` namespace on which you can call `registerModule` and such.
