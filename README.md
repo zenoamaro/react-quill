@@ -338,12 +338,13 @@ class MyComponent extends React.Component {
 
 ### Mixin
 
-The module exports a mixin which can be used to create custom editor components. (Note that mixins will be deprecated in a future version of React).
+The module exports a mixin which can be used to create custom editor components. (Note that mixins will be deprecated in a future version of React). 
 
 <details>
+The ReactQuill default component is built using the mixin. See [component.js](src/component.js) for source.
+
 ```jsx
 import {Mixin} from 'react-quill'
-The ReactQuill default component is built using the mixin. See [component.js](src/component.js) for source.
 
 var MyComponent = React.createClass({
   mixins: [ ReactQuill.Mixin ],
@@ -501,7 +502,7 @@ This property previously set the frequency with which Quill polled the DOM for c
 : Selector or DOM element used by Quill to constrain position of popups. Defaults to `document.body`.
 
 `children`
-: A single React element that will be used as the editing area for Quill in place of the default, which is a `<div>`. Note that you cannot use a `<textarea>`, as it is not a supported target. Note also that updating children is costly, as it will cause the Quill editor to be recreated. Use value if you want to control the html contents of the editor.
+: A single React element that will be used as the editing area for Quill in place of the default, which is a `<div>`. Note that you cannot use a `<textarea>`, as it is not a supported target. Note also that updating children is costly, as it will cause the Quill editor to be recreated. Set the `value` prop if you want to control the html contents of the editor.
 
 `onChange(content, delta, source, editor)`
 : Called back with the new contents of the editor after change. It will be passed the HTML contents of the editor, a delta object expressing the change-set itself, the source of the change, and finally a read-only proxy to editor accessors such as `getText()`.
