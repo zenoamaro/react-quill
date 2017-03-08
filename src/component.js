@@ -208,26 +208,22 @@ var QuillComponent = React.createClass({
 	},
 
 	/*
-	Renders an editor element, unless it has been provided one to clone.
+	Renders an editor area, unless it has been provided one to clone.
 	*/
-	renderContents: function() {
-		var contents = [];
-		var children = React.Children.map(
-			this.props.children,
-			function(c) { return React.cloneElement(c, {ref: c.ref}); }
-		);
+	renderEditingArea: function() {
+		var children = this.props.children;
 
-		var editor = find(children, function(child) {
-			return child.ref === 'editor';
-		});
-		contents.push(editor || React.DOM.div({
-			key: 'editor-' + Math.random(),
+		var properties = {
 			ref: 'editor',
-			className: 'quill-contents',
 			dangerouslySetInnerHTML: { __html:this.getEditorContents() }
-		}));
+		};
 
-		return contents;
+		if (React.Children.count(children) === 0) {
+			return React.DOM.div(properties);
+		}
+
+		var editor = React.Children.only(children);
+		return React.cloneElement(editor, properties);
 	},
 
 	render: function() {
@@ -238,7 +234,7 @@ var QuillComponent = React.createClass({
 			onKeyPress: this.props.onKeyPress,
 			onKeyDown: this.props.onKeyDown,
 			onKeyUp: this.props.onKeyUp },
-			this.renderContents()
+			this.renderEditingArea()
 		);
 	},
 
