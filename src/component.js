@@ -75,6 +75,20 @@ var QuillComponent = React.createClass({
 				'You can safely remove it from your props.' +
 				'See: https://github.com/zenoamaro/react-quill#upgrading-to-react-quill-v1-0-0'
 			);
+		},
+
+		children: function(props) {
+			var isNotASingleElement = React.PropTypes.element.apply(this, arguments);
+			if (isNotASingleElement) return new Error(
+				'The Quill editing area can only be composed of a single React element.'
+			);
+
+			if (React.Children.count(props.children)) {
+				var child = React.Children.only(props.children);
+				if (child.type === 'textarea') return new Error(
+					'Quill does not support editing on a <textarea>. Use a <div> instead.'
+				);
+			}
 		}
 	},
 		
