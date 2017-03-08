@@ -78,6 +78,7 @@ var QuillComponent = React.createClass({
 		},
 
 		children: function(props) {
+			// Validate that the editor has only one child element and it is not a <textarea>
 			var isNotASingleElement = React.PropTypes.element.apply(this, arguments);
 			if (isNotASingleElement) return new Error(
 				'The Quill editing area can only be composed of a single React element.'
