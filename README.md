@@ -93,6 +93,9 @@ This may vary depending how application is structured, directories or otherwise.
 
 The [Quill Toolbar Module](http://quilljs.com/docs/modules/toolbar/) API provides an easy way to configure the default toolbar icons using an array of format names.
 
+<details>
+<summary>Example Code</summary>
+
 ```jsx
 var MyComponent = React.createClass({
 
@@ -131,11 +134,17 @@ var MyComponent = React.createClass({
 });
 ```
 
+</details>
+
 #### HTML Toolbar
 
 You can also supply your own HTML/JSX toolbar with custom elements that are not part of the Quill theme.
 
 See this example live on Codepen: [Custom Toolbar Example](https://codepen.io/alexkrolick/pen/gmroPj?editors=0010)
+
+<details>
+<summary>Example Code</summary>
+
 ```jsx
 /*
  * Custom "star" icon for the toolbar using an Octicon
@@ -255,12 +264,17 @@ ReactDOM.render(
 )
 ```
 
+</details>
+
 ### Custom Formats
 
 The component has two types of formats: 
 
 1. The default [Quill formats](http://quilljs.com/docs/formats/) that are enabled/disabled using the [`formats` prop](#props). All formats are enabled by default.
 2. Custom formats created using Parchment and registered with your component's Quill instance
+
+<details>
+<summary>Example Code</summary>
 
 ES6 Import
 ```js
@@ -272,7 +286,6 @@ CommonJS Require
 var ReactQuill = require('react-quill'); 
 var Quill = ReactQuill.Quill;
 ```
-
 
 ```jsx
 /*
@@ -310,9 +323,14 @@ class MyComponent extends React.Component {
 }
 ```
 
+</details>
+
 ### Mixin
 
 The module exports a mixin which can be used to create custom editor components. (Note that mixins will be deprecated in a future version of React).
+
+<details>
+<summary>Example Code</summary>
 
 ```jsx
 import {Mixin} from 'react-quill'
@@ -338,15 +356,23 @@ var MyComponent = React.createClass({
 ```
 The ReactQuill default component is built using the mixin. See [component.js](src/component.js) for source.
 
+</details>
+
 ## Upgrading to React-Quill v1.0.0
 
 Please note that many [migration steps to Quill v1.0](http://quilljs.com/guides/upgrading-to-1-0/) may also apply.
+
+<details>
+<summary>Expand Upgrade Guide</summary>
 
 ### The toolbar module
 
 With v1.0.0, Quill adopted a new [toolbar configuration format](https://quilljs.com/docs/modules/toolbar/), to which React Quill will delegates all toolbar functionality, and which is now the preferred way to customize the toolbar.
 
 Previously, toolbar properties could be set by passing a `toolbar` prop to React Quill. Pass the same options as `modules.toolbar` instead.
+
+<details>
+<summary>Read More</summary>
 
 ```diff
 + modules: {
@@ -396,6 +422,8 @@ However, consider switching to the new Quill format instead, or provide your own
 
 React Quill now follows the Quill toolbar format closely. See the [Quill toolbar documentation](https://quilljs.com/docs/modules/toolbar/) for a complete reference on all supported options.
 
+</details>
+
 ### Adding custom formats with the `formats` property is deprecated
 
 As of 1.0.0, [use Parchment to define new formats](https://github.com/quilljs/parchment). Use the [Quill export](#exports) from the module to register and extend formats:
@@ -413,6 +441,8 @@ See the [Quill Release Notes](http://quilljs.com/guides/upgrading-to-1-0/#config
 ### The `pollInterval` property
 
 This property previously set the frequency with which Quill polled the DOM for changes. It does not have any effect anymore, and can safely be removed from the props.
+
+</details>
 
 ## API reference
 
