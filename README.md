@@ -9,20 +9,20 @@ See a [live demo] or [Codepen](http://codepen.io/alexkrolick/pen/xgyOXQ/left?edi
 [React]: https://facebook.github.io/react/
 [live demo]: https://zenoamaro.github.io/react-quill/
 
-  1. [Quick start](#quick-start)
-  1. [Advanced Options](#advanced-options)
-    1. [Theme](#theme)
-    1. [Custom Toolbar](#custom-toolbar)
-    1. [Custom Formats](#custom-formats)
-    1. [Mixin](#mixin)
-  1. [Upgrading to React-Quill v1.0.0](#upgrading-to-react-quill-v100)
-  1. [API reference](#api-reference)
-  1. [Browser support](#browser-support)
-  1. [Building and testing](#building-and-testing)
-    1. [Bundling with Webpack](#bundling-with-webpack)
-  1. [Changelog](#changelog)
-  1. [Contributors](#contributors)
-  1. [License](#license)
+1. [Quick start](#quick-start)
+1. [Advanced Options](#advanced-options)
+   1. [Theme](#theme)
+   1. [Custom Toolbar](#custom-toolbar)
+   1. [Custom Formats](#custom-formats)
+   1. [Mixin](#mixin)
+1. [Upgrading to React-Quill v1.0.0](#upgrading-to-react-quill-v100)
+1. [API reference](#api-reference)
+1. [Browser support](#browser-support)
+1. [Building and testing](#building-and-testing)
+   1. [Bundling with Webpack](#bundling-with-webpack)
+1. [Changelog](#changelog)
+1. [Contributors](#contributors)
+1. [License](#license)
 
 ---
 
