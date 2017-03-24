@@ -122,10 +122,6 @@ var MyComponent = React.createClass({
         <ReactQuill theme="snow"
                     modules={this.modules}
                     formats={this.formats}>
-          <div key="editor"
-                ref="editor"
-                className="quill-contents my-class-name"
-                dangerouslySetInnerHTML={{__html:this.state.editorContent}}/>
         </ReactQuill>
       </div>
     );
@@ -211,14 +207,7 @@ class Editor extends React.Component {
           onChange={this.handleChange} 
           placeholder={this.props.placeholder}
           modules={Editor.modules}
-        >
-          <div 
-            key="editor"                     
-            ref="editor"
-            className="quill-contents"                     
-            dangerouslySetInnerHTML={{__html:this.state.editorHtml}}
-          />
-        </ReactQuill>
+        />
       </div>
     )
   }
@@ -325,12 +314,34 @@ class MyComponent extends React.Component {
 
 </details>
 
+### Custom editing area
+
+If you instantiate ReactQuill without children, it will create a `<div>` for you, to be used as the editing area for Quill. If you prefer, you can specify your own element for ReactQuill to use.
+
+<details>
+```jsx
+class MyComponent extends React.Component {
+
+  render() {
+    return (
+      <ReactQuill>
+        <div className="my-editing-area"/>
+      </ReactQuill>
+    );
+  }
+
+});
+```
+</details>
+
 ### Mixin
 
-The module exports a mixin which can be used to create custom editor components. (Note that mixins will be deprecated in a future version of React).
+The module exports a mixin which can be used to create custom editor components. (Note that mixins will be deprecated in a future version of React). 
 
 <details>
 <summary>Example Code</summary>
+
+The ReactQuill default component is built using the mixin. See [component.js](src/component.js) for source.
 
 ```jsx
 import {Mixin} from 'react-quill'
@@ -340,7 +351,7 @@ var MyComponent = React.createClass({
 
   componentDidMount: function() {
     var editor = this.createEditor(
-      this.getEditorElement(),
+      this.getEditingArea(),
       this.getEditorConfig()
     );
     this.setState({ editor:editor });
@@ -354,7 +365,6 @@ var MyComponent = React.createClass({
 
 });
 ```
-The ReactQuill default component is built using the mixin. See [component.js](src/component.js) for source.
 
 </details>
 
@@ -387,7 +397,7 @@ Previously, toolbar properties could be set by passing a `toolbar` prop to React
   />
 ```
 
-If you provided your own HTML toolbar component, you can still do the same:
+If you used to provide your own HTML toolbar component, you can still do the same:
 
 ```diff
 + modules: {
@@ -399,6 +409,8 @@ If you provided your own HTML toolbar component, you can still do the same:
 +   modules={this.modules}
   />
 ```
+
+Note that it is not possible to pass a toolbar component as a child to ReactQuill anymore.
 
 Previously, React Quill would create a custom HTML toolbar for you if you passed a configuration object as the `toolbar` prop. This will not happen anymore. You can still create a `ReactQuill.Toolbar` explicitly:
 
@@ -493,6 +505,9 @@ This property previously set the frequency with which Quill polled the DOM for c
 
 `bounds`
 : Selector or DOM element used by Quill to constrain position of popups. Defaults to `document.body`.
+
+`children`
+: A single React element that will be used as the editing area for Quill in place of the default, which is a `<div>`. Note that you cannot use a `<textarea>`, as it is not a supported target. Note also that updating children is costly, as it will cause the Quill editor to be recreated. Set the `value` prop if you want to control the html contents of the editor.
 
 `onChange(content, delta, source, editor)`
 : Called back with the new contents of the editor after change. It will be passed the HTML contents of the editor, a delta object expressing the change-set itself, the source of the change, and finally a read-only proxy to editor accessors such as `getText()`.

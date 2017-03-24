@@ -114,6 +114,13 @@ describe('<ReactQuill />', function() {
     expect(wrapper.getNode().getEditorContents()).to.equal(value)
   })
 
+  it('uses a custom editing area if provided', () => {
+    const editingArea = React.DOM.div({id:'venus'});
+    const wrapper = mount(ReactQuillNode({}, editingArea));
+    const quill = wrapper.getNode().getEditor();
+    expect(wrapper.getDOMNode().querySelector('div#venus')).not.to.be.null;
+  })
+
   /**
    * This can't be tested with the current state of JSDOM. 
    * The selection functions have been shimmed in this test suite, 
@@ -145,23 +152,15 @@ describe('<ReactQuill />', function() {
 
 });
 
-function ReactQuillNode(props, html) {
-  html = html || '';
-  props = props || {};
-  Object.assign(props, {
+function ReactQuillNode(props, children) {
+  props = Object.assign({
     modules: {'toolbar': ['underline', 'bold', 'italic']},
     formats: ['underline', 'bold', 'italic']
-  })
+  }, props);
+  
   return React.createElement(
     ReactQuill,
     props,
-    [
-      React.DOM.div({
-        key: "editor",
-        ref: "editor",
-        className: "quill-contents",
-        dangerouslySetInnerHTML: { __html: html }
-      }),
-    ]
+    children
   );
 }

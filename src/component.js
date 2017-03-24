@@ -58,14 +58,14 @@ var QuillComponent = React.createClass({
 
 			if (isNotArrayOfString) return new Error(
 				'You cannot specify custom `formats` anymore. Use Parchment instead.  ' +
-				'See: https://github.com/zenoamaro/react-quill#upgrading-to-react-quill-v1-0-0'
+				'See: https://github.com/zenoamaro/react-quill#upgrading-to-react-quill-v100.'
 			);
 		},
 
 		styles: function(props) {
 			if ('styles' in props) return new Error(
 				'The `styles` prop has been deprecated. Use custom stylesheets instead. ' +
-				'See: https://github.com/zenoamaro/react-quill#upgrading-to-react-quill-v1-0-0'
+				'See: https://github.com/zenoamaro/react-quill#upgrading-to-react-quill-v100.'
 			);
 		},
 
@@ -73,8 +73,23 @@ var QuillComponent = React.createClass({
 			if ('pollInterval' in props) return new Error(
 				'The `pollInterval` property does not have any effect anymore. ' +
 				'You can safely remove it from your props.' +
-				'See: https://github.com/zenoamaro/react-quill#upgrading-to-react-quill-v1-0-0'
+				'See: https://github.com/zenoamaro/react-quill#upgrading-to-react-quill-v100.'
 			);
+		},
+
+		children: function(props) {
+			// Validate that the editor has only one child element and it is not a <textarea>
+			var isNotASingleElement = React.PropTypes.element.apply(this, arguments);
+			if (isNotASingleElement) return new Error(
+				'The Quill editing area can only be composed of a single React element.'
+			);
+
+			if (React.Children.count(props.children)) {
+				var child = React.Children.only(props.children);
+				if (child.type === 'textarea') return new Error(
+					'Quill does not support editing on a <textarea>. Use a <div> instead.'
+				);
+			}
 		}
 	},
 		
@@ -89,6 +104,7 @@ var QuillComponent = React.createClass({
 		'formats',
 		'bounds',
 		'theme',
+		'children',
 	],
 
 	getDefaultProps: function() {
@@ -145,7 +161,7 @@ var QuillComponent = React.createClass({
 
 	componentDidMount: function() {
 		var editor = this.createEditor(
-			this.getEditorElement(),
+			this.getEditingArea(),
 			this.getEditorConfig()
 		);
 		this.editor = editor;
@@ -194,9 +210,8 @@ var QuillComponent = React.createClass({
 		return this.editor;
 	},
 
-	getEditorElement: function () {
-		// TODO: replace string ref with callback ref
-		return ReactDOM.findDOMNode(this.refs.editor);
+	getEditingArea: function () {
+		return ReactDOM.findDOMNode(this.editingArea);
 	},
 
 	getEditorContents: function() {
@@ -208,26 +223,23 @@ var QuillComponent = React.createClass({
 	},
 
 	/*
-	Renders an editor element, unless it has been provided one to clone.
+	Renders an editor area, unless it has been provided one to clone.
 	*/
-	renderContents: function() {
-		var contents = [];
-		var children = React.Children.map(
-			this.props.children,
-			function(c) { return React.cloneElement(c, {ref: c.ref}); }
-		);
+	renderEditingArea: function() {
+		var self = this;
+		var children = this.props.children;
 
-		var editor = find(children, function(child) {
-			return child.ref === 'editor';
-		});
-		contents.push(editor || React.DOM.div({
-			key: 'editor-' + Math.random(),
-			ref: 'editor',
-			className: 'quill-contents',
+		var properties = {
+			ref: function(element) { self.editingArea = element },
 			dangerouslySetInnerHTML: { __html:this.getEditorContents() }
-		}));
+		};
 
-		return contents;
+		if (React.Children.count(children) === 0) {
+			return React.DOM.div(properties);
+		}
+
+		var editor = React.Children.only(children);
+		return React.cloneElement(editor, properties);
 	},
 
 	render: function() {
@@ -238,7 +250,7 @@ var QuillComponent = React.createClass({
 			onKeyPress: this.props.onKeyPress,
 			onKeyDown: this.props.onKeyDown,
 			onKeyUp: this.props.onKeyUp },
-			this.renderContents()
+			this.renderEditingArea()
 		);
 	},
 
