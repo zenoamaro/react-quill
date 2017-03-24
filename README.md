@@ -319,6 +319,7 @@ class MyComponent extends React.Component {
 If you instantiate ReactQuill without children, it will create a `<div>` for you, to be used as the editing area for Quill. If you prefer, you can specify your own element for ReactQuill to use.
 
 <details>
+
 ```jsx
 class MyComponent extends React.Component {
 
@@ -332,6 +333,7 @@ class MyComponent extends React.Component {
 
 });
 ```
+
 </details>
 
 ### Mixin
