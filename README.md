@@ -9,20 +9,20 @@ See a [live demo] or [Codepen](http://codepen.io/alexkrolick/pen/xgyOXQ/left?edi
 [React]: https://facebook.github.io/react/
 [live demo]: https://zenoamaro.github.io/react-quill/
 
-  1. [Quick start](#quick-start)
-  1. [Advanced Options](#advanced-options)
-    1. [Theme](#theme)
-    1. [Custom Toolbar](#custom-toolbar)
-    1. [Custom Formats](#custom-formats)
-    1. [Mixin](#mixin)
-  1. [Upgrading to React-Quill v1.0.0](#upgrading-to-react-quill-v100)
-  1. [API reference](#api-reference)
-  1. [Browser support](#browser-support)
-  1. [Building and testing](#building-and-testing)
-    1. [Bundling with Webpack](#bundling-with-webpack)
-  1. [Changelog](#changelog)
-  1. [Contributors](#contributors)
-  1. [License](#license)
+1. [Quick start](#quick-start)
+1. [Advanced Options](#advanced-options)
+   1. [Theme](#theme)
+   1. [Custom Toolbar](#custom-toolbar)
+   1. [Custom Formats](#custom-formats)
+   1. [Mixin](#mixin)
+1. [Upgrading to React-Quill v1.0.0](#upgrading-to-react-quill-v100)
+1. [API reference](#api-reference)
+1. [Browser support](#browser-support)
+1. [Building and testing](#building-and-testing)
+   1. [Bundling with Webpack](#bundling-with-webpack)
+1. [Changelog](#changelog)
+1. [Contributors](#contributors)
+1. [License](#license)
 
 ---
 
@@ -31,8 +31,9 @@ Thanks to @clemmy and @alexkrolick for landing this much-awaited change. There a
  
 ---
 
-🎧 **Latest published package version: `v1.0.0-beta-1`**  
-Follow React Quill's development on the beta channel leading to `v1.0.0`.
+🎧 **Latest published package version: `v1.0.0-beta-3`**  
+Follow React Quill's development on the beta channel leading to `v1.0.0`.  
+`npm install react-quill@v1.0.0-beta-3`
  
 ---
 
@@ -82,7 +83,6 @@ And then link the appropriate stylesheet (only link the CSS for the themes you w
 <link rel="stylesheet" href="node_modules/react-quill/dist/quill.snow.css">
 <link rel="stylesheet" href="node_modules/react-quill/dist/quill.bubble.css">
 <link rel="stylesheet" href="node_modules/react-quill/dist/quill.base.css">
-
 ```
 
 This may vary depending how application is structured, directories or otherwise. For example, if you use a CSS pre-processor like SASS, you may want to import that stylesheet inside your own.
@@ -94,6 +94,8 @@ This may vary depending how application is structured, directories or otherwise.
 The [Quill Toolbar Module](http://quilljs.com/docs/modules/toolbar/) API provides an easy way to configure the default toolbar icons using an array of format names.
 
 <details>
+<summary>Example Code</summary>
+
 ```jsx
 var MyComponent = React.createClass({
 
@@ -120,10 +122,6 @@ var MyComponent = React.createClass({
         <ReactQuill theme="snow"
                     modules={this.modules}
                     formats={this.formats}>
-          <div key="editor"
-                ref="editor"
-                className="quill-contents my-class-name"
-                dangerouslySetInnerHTML={{__html:this.state.editorContent}}/>
         </ReactQuill>
       </div>
     );
@@ -131,14 +129,18 @@ var MyComponent = React.createClass({
 
 });
 ```
+
 </details>
 
 #### HTML Toolbar
 
 You can also supply your own HTML/JSX toolbar with custom elements that are not part of the Quill theme.
 
-<details>
 See this example live on Codepen: [Custom Toolbar Example](https://codepen.io/alexkrolick/pen/gmroPj?editors=0010)
+
+<details>
+<summary>Example Code</summary>
+
 ```jsx
 /*
  * Custom "star" icon for the toolbar using an Octicon
@@ -205,14 +207,7 @@ class Editor extends React.Component {
           onChange={this.handleChange} 
           placeholder={this.props.placeholder}
           modules={Editor.modules}
-        >
-          <div 
-            key="editor"                     
-            ref="editor"
-            className="quill-contents"                     
-            dangerouslySetInnerHTML={{__html:this.state.editorHtml}}
-          />
-        </ReactQuill>
+        />
       </div>
     )
   }
@@ -257,6 +252,7 @@ ReactDOM.render(
   document.querySelector('.app')
 )
 ```
+
 </details>
 
 ### Custom Formats
@@ -267,7 +263,8 @@ The component has two types of formats:
 2. Custom formats created using Parchment and registered with your component's Quill instance
 
 <details>
-<summary>Expand custom format example</summary>
+<summary>Example Code</summary>
+
 ES6 Import
 ```js
 import ReactQuill, { Quill } from 'react-quill'
@@ -314,6 +311,7 @@ class MyComponent extends React.Component {
   }
 }
 ```
+
 </details>
 
 ### Custom editing area
@@ -341,6 +339,8 @@ class MyComponent extends React.Component {
 The module exports a mixin which can be used to create custom editor components. (Note that mixins will be deprecated in a future version of React). 
 
 <details>
+<summary>Example Code</summary>
+
 The ReactQuill default component is built using the mixin. See [component.js](src/component.js) for source.
 
 ```jsx
@@ -365,6 +365,7 @@ var MyComponent = React.createClass({
 
 });
 ```
+
 </details>
 
 ## Upgrading to React-Quill v1.0.0
@@ -372,15 +373,18 @@ var MyComponent = React.createClass({
 Please note that many [migration steps to Quill v1.0](http://quilljs.com/guides/upgrading-to-1-0/) may also apply.
 
 <details>
-<summary>Expand upgrade guide</summary>
+<summary>Expand Upgrade Guide</summary>
 
 ### The toolbar module
 
 With v1.0.0, Quill adopted a new [toolbar configuration format](https://quilljs.com/docs/modules/toolbar/), to which React Quill will delegates all toolbar functionality, and which is now the preferred way to customize the toolbar.
 
 Previously, toolbar properties could be set by passing a `toolbar` prop to React Quill. Pass the same options as `modules.toolbar` instead.
+
 <details>
-~~~diff
+<summary>Read More</summary>
+
+```diff
 + modules: {
     toolbar: [
        ...
@@ -391,11 +395,11 @@ Previously, toolbar properties could be set by passing a `toolbar` prop to React
 -   toolbar={this.toolbar}
 +   modules={this.modules}
   />
-~~~
+```
 
 If you used to provide your own HTML toolbar component, you can still do the same:
 
-~~~diff
+```diff
 + modules: {
 +   toolbar: '#my-toolbar-component',
 + },
@@ -404,13 +408,13 @@ If you used to provide your own HTML toolbar component, you can still do the sam
 -   toolbar="#my-toolbar-component"
 +   modules={this.modules}
   />
-~~~
+```
 
 Note that it is not possible to pass a toolbar component as a child to ReactQuill anymore.
 
 Previously, React Quill would create a custom HTML toolbar for you if you passed a configuration object as the `toolbar` prop. This will not happen anymore. You can still create a `ReactQuill.Toolbar` explicitly:
 
-~~~diff
+```diff
 + modules: {
 +   toolbar: '#my-quill-toolbar',
 + },
@@ -424,11 +428,12 @@ Previously, React Quill would create a custom HTML toolbar for you if you passed
 -   toolbar={this.oldStyleToolbarItems}
 +   modules={this.modules}
   />
-~~~
+```
 
 However, consider switching to the new Quill format instead, or provide your own [toolbar component](#html-toolbar).
 
 React Quill now follows the Quill toolbar format closely. See the [Quill toolbar documentation](https://quilljs.com/docs/modules/toolbar/) for a complete reference on all supported options.
+
 </details>
 
 ### Adding custom formats with the `formats` property is deprecated
@@ -459,7 +464,7 @@ This property previously set the frequency with which Quill polled the DOM for c
 : Provides the bridge between React and Quill. `ReactQuill` implements this mixin; in the same way you can use it to build your own component, or replace it to implement a new core for the default component.
 
 `ReactQuill.Toolbar`
-: The component that renders the custom ReactQuill toolbar. The default collection of items and color swatches is available as `ReactQuill.Toolbar.defaultItems` and `ReactQuill.Toolbar.defaultColors` respectively. ⚠️ The Toolbar component is deprecated since v1.0.0. See [upgrading to React Quill v1.0.0](#upgrading-to-react-quill-v1-0-0).
+: The component that renders the custom ReactQuill toolbar. The default collection of items and color swatches is available as `ReactQuill.Toolbar.defaultItems` and `ReactQuill.Toolbar.defaultColors` respectively. ⚠️ The Toolbar component is deprecated since v1.0.0. See [upgrading to React Quill v1.0.0](#upgrading-to-react-quill-v100).
 
 `ReactQuill.Quill`
 : The `Quill` namespace on which you can call `registerModule` and such.
