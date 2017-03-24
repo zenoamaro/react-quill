@@ -14,6 +14,7 @@ See a [live demo] or [Codepen](http://codepen.io/alexkrolick/pen/xgyOXQ/left?edi
    1. [Theme](#theme)
    1. [Custom Toolbar](#custom-toolbar)
    1. [Custom Formats](#custom-formats)
+   1. [Custom Editing Area](#custom-editing-area)
    1. [Mixin](#mixin)
 1. [Upgrading to React-Quill v1.0.0](#upgrading-to-react-quill-v100)
 1. [API reference](#api-reference)
