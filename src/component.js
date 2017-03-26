@@ -150,29 +150,30 @@ var QuillComponent = React.createClass({
 		}
 
 		var editor = this.editor;
-		
+
 		// If the component is unmounted and mounted too quickly
 		// an error is thrown in setEditorContents since editor is
 		// still undefined. Must check if editor is undefined
 		// before performing this call.
-		if (editor) {
-			// Update only if we've been passed a new `value`.
-			// This leaves components using `defaultValue` alone.
-			if ('value' in nextProps) {
-				// NOTE: Seeing that Quill is missing a way to prevent
-				//       edits, we have to settle for a hybrid between
-				//       controlled and uncontrolled mode. We can't prevent
-				//       the change, but we'll still override content
-				//       whenever `value` differs from current state.
-				if (nextProps.value !== this.getEditorContents()) {
-					this.setEditorContents(editor, nextProps.value);
-				}
+		if (!editor) return;
+		
+		// Update only if we've been passed a new `value`.
+		// This leaves components using `defaultValue` alone.
+		if ('value' in nextProps) {
+			// NOTE: Seeing that Quill is missing a way to prevent
+			//       edits, we have to settle for a hybrid between
+			//       controlled and uncontrolled mode. We can't prevent
+			//       the change, but we'll still override content
+			//       whenever `value` differs from current state.
+			if (nextProps.value !== this.getEditorContents()) {
+				this.setEditorContents(editor, nextProps.value);
 			}
-			// We can update readOnly state in-place.
-			if ('readOnly' in nextProps) {
-				if (nextProps.readOnly !== this.props.readOnly) {
-					this.setEditorReadOnly(editor, nextProps.readOnly);
-				}
+		}
+		
+		// We can update readOnly state in-place.
+		if ('readOnly' in nextProps) {
+			if (nextProps.readOnly !== this.props.readOnly) {
+				this.setEditorReadOnly(editor, nextProps.readOnly);
 			}
 		}
 	},
@@ -189,7 +190,7 @@ var QuillComponent = React.createClass({
 	},
 
 	componentWillUnmount: function() {
-		var editor; if (editor = this.getEditor()) {
+		var editor; if ((editor = this.getEditor())) {
 			this.unhookEditor(editor);
 			this.editor = null;
 		}
