@@ -183,10 +183,16 @@ var QuillComponent = React.createClass({
 			this.getEditingArea(),
 			this.getEditorConfig()
 		);
-		if (this.state.value) this.setEditorContents(
-			this.editor,
-			this.state.value
-		);
+		if (this.quillDelta) {
+			this.editor.setContents(this.quillDelta);
+			this.editor.setSelection(this.quillSelection);		
+			this.editor.focus();
+			return;
+		}
+		if (this.state.value) {
+			this.setEditorContents(this.editor, this.state.value);
+			return;
+		}
 	},
 
 	componentWillUnmount: function() {
@@ -270,7 +276,11 @@ var QuillComponent = React.createClass({
 	to be cleaned up and re-rendered from scratch.
 	*/
 	regenerate: function() {
-		this.setState({generation: this.state.generation + 1});
+		this.quillDelta = this.editor.getContents();
+		this.quillSelection = this.editor.getSelection();
+		this.setState({
+			generation: this.state.generation + 1,
+		});
 	},
 
 	/*
