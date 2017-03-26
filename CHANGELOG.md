@@ -33,6 +33,12 @@ This release supports Quill v1.0.0+. ⚠️ There are many breaking changes, so 
 - Updated rendering of toolbar actions (@clemmy)
 - Improved toolbar renderChoices implementation (@zhang-z)
 - Fixed use of `defaultValue` in Toolbar selects
+- Fixed bounds validation in setEditorSelection (@wouterh)
+- Exposed Quill in exports (@tdg5)
+- Added unhook function to clean up event listeners on unmount (@alexkrolick, @jrmmnr)
+- Fixed documentation typos (@l3kn)
+- Started testing with Enzyme (@alexkrolick)
+- Fixed issue where changing props caused re-render artifacts (#147)
 
 v0.4.1
 ------
