@@ -42,14 +42,14 @@ var QuillComponent = React.createClass({
 			) return new Error(
 				'Since v1.0.0, React Quill will not create a custom toolbar for you ' +
 				'anymore. Create a toolbar explictly, or let Quill create one. ' +
-				'See: https://github.com/zenoamaro/react-quill#upgrading-to-react-quill-v1-0-0'
+				'See: https://github.com/zenoamaro/react-quill#upgrading-to-react-quill-v100'
 			);
 		},
 
 		toolbar: function(props) {
 			if ('toolbar' in props) return new Error(
 				'The `toolbar` prop has been deprecated. Use `modules.toolbar` instead. ' +
-				'See: https://github.com/zenoamaro/react-quill#upgrading-to-react-quill-v1-0-0'
+				'See: https://github.com/zenoamaro/react-quill#upgrading-to-react-quill-v100'
 			);
 		},
 
