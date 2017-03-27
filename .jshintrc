@@ -19,7 +19,7 @@
 	"strict": true,
 	"maxdepth": 3,
 	"maxparams": 4,
-	"maxcomplexity": 6,
+	"maxcomplexity": 8,
 	"maxlen": 100,
 	"eqnull": true,
 	"lastsemic": true,

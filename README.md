@@ -32,9 +32,9 @@ Thanks to @clemmy and @alexkrolick for landing this much-awaited change. There a
  
 ---
 
-🎧 **Latest published package version: `v1.0.0-beta-3`**  
+🎧 **Latest published package version: `v1.0.0-beta-4`**  
 Follow React Quill's development on the beta channel leading to `v1.0.0`.  
-`npm install react-quill@v1.0.0-beta-3`
+`npm install react-quill@v1.0.0-beta-4`
  
 ---
 
@@ -635,6 +635,7 @@ This release adds support for Quill v1.0.0+. ⚠️ There are many breaking chan
 - Added unhook function to clean up event listeners on unmount (@alexkrolick, @jrmmnr)
 - Fixed documentation typos (@l3kn)
 - Started testing with Enzyme (@alexkrolick)
+- Fixed issue where changing props caused re-render artifacts (#147)
 
 #### v0.4.1
 - Added contents of `dist` to NPM package.
