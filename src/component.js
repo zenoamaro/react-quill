@@ -183,10 +183,12 @@ var QuillComponent = React.createClass({
 			this.getEditingArea(),
 			this.getEditorConfig()
 		);
+		// Restore editor from Quill's native formats in regeneration scenario
 		if (this.quillDelta) {
 			this.editor.setContents(this.quillDelta);
 			this.editor.setSelection(this.quillSelection);		
 			this.editor.focus();
+			this.quillDelta = this.quillSelection = null;
 			return;
 		}
 		if (this.state.value) {
@@ -276,6 +278,7 @@ var QuillComponent = React.createClass({
 	to be cleaned up and re-rendered from scratch.
 	*/
 	regenerate: function() {
+		// Cache selection and contents in Quill's native format to be restored later
 		this.quillDelta = this.editor.getContents();
 		this.quillSelection = this.editor.getSelection();
 		this.setState({
