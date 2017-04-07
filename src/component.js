@@ -143,12 +143,6 @@ var QuillComponent = React.createClass({
 	},
 
 	componentWillReceiveProps: function(nextProps, nextState) {
-		// If we need to regenerate the component, we can avoid a detailed
-		// in-place update step, and just let everything rerender.
-		if (this.shouldComponentRegenerate(nextProps, nextState)) {
-			return this.regenerate();
-		}
-
 		var editor = this.editor;
 
 		// If the component is unmounted and mounted too quickly
@@ -175,6 +169,12 @@ var QuillComponent = React.createClass({
 			if (nextProps.readOnly !== this.props.readOnly) {
 				this.setEditorReadOnly(editor, nextProps.readOnly);
 			}
+		}
+
+		// If we need to regenerate the component, we can avoid a detailed
+		// in-place update step, and just let everything rerender.
+		if (this.shouldComponentRegenerate(nextProps, nextState)) {
+			return this.regenerate();
 		}
 	},
 
