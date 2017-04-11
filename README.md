@@ -83,7 +83,7 @@ And then link the appropriate stylesheet (only link the CSS for the themes you w
 ```html
 <link rel="stylesheet" href="node_modules/react-quill/dist/quill.snow.css">
 <link rel="stylesheet" href="node_modules/react-quill/dist/quill.bubble.css">
-<link rel="stylesheet" href="node_modules/react-quill/dist/quill.base.css">
+<link rel="stylesheet" href="node_modules/react-quill/dist/quill.core.css">
 ```
 
 This may vary depending how application is structured, directories or otherwise. For example, if you use a CSS pre-processor like SASS, you may want to import that stylesheet inside your own.
