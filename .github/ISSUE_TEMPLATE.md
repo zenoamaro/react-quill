@@ -9,4 +9,9 @@ Quill version:
 - [ ] master
 - [ ] 0.4.1
 - [ ] 1.0.0-beta-1
+- [ ] 1.0.0-beta-2
+- [ ] 1.0.0-beta-3
+- [ ] 1.0.0-beta-4
+- [ ] 1.0.0-beta-5
+- [ ] 1.0.0-rc-1
 - [ ] Other (fork)
