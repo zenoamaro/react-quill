@@ -36,7 +36,7 @@ build:
 	@cp node_modules/quill/dist/quill.snow.css dist
 	@cp node_modules/quill/dist/quill.bubble.css dist
 	@[[ -d $(LIB) ]] || mkdir $(LIB)
-	@cp -R $(SOURCE)/* $(LIB)
+	@cp -Rfv $(SOURCE)/* $(LIB)
 
 watch:
 	@$(WEBPACK) --watch --config webpack.dev.js
