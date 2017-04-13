@@ -45,7 +45,7 @@
     "quill": "^1.2.0"
   },
   "peerDependencies": {
-    "react": ">=0.14.0"
+    "react": "^0.14.0 || ^15.0.0-0"
   },
   "devDependencies": {
     "blanket": "^1.1.6",
