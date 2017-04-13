@@ -32,9 +32,9 @@ Thanks to @clemmy and @alexkrolick for landing this much-awaited change. There a
  
 ---
 
-🎧 **Latest published package version: `v1.0.0-rc-1`**  
+🎧 **Latest published package version: `v1.0.0-rc.2`**  
 Follow React Quill's development on the beta channel leading to `v1.0.0`.  
-`npm install react-quill@v1.0.0-rc-1`
+`npm install react-quill@v1.0.0-rc.2`
  
 ---
 
