@@ -317,7 +317,7 @@ class MyComponent extends React.Component {
 
 ### Custom editing area
 
-If you instantiate ReactQuill without children, it will create a `<div>` for you, to be used as the editing area for Quill. If you prefer, you can specify your own element for ReactQuill to use.
+If you instantiate ReactQuill without children, it will create a `<div>` for you, to be used as the editing area for Quill. If you prefer, you can specify your own element for ReactQuill to use. Note that `<textarea>`s are not supported by Quill at this time.
 
 <details>
 
@@ -372,6 +372,8 @@ var MyComponent = React.createClass({
 </details>
 
 ## Upgrading to React-Quill v1.0.0
+
+In most cases, ReactQuill will raise useful warnings to help you perform any necessary migration steps.
 
 Please note that many [migration steps to Quill v1.0](http://quilljs.com/guides/upgrading-to-1-0/) may also apply.
 
@@ -438,6 +440,20 @@ However, consider switching to the new Quill format instead, or provide your own
 React Quill now follows the Quill toolbar format closely. See the [Quill toolbar documentation](https://quilljs.com/docs/modules/toolbar/) for a complete reference on all supported options.
 
 </details>
+
+### Custom editing areas and refs
+
+Previously, to provide a custom element for Quill to mount on, it was necessary to pass a child identified by a specific `ref`: `editor`.
+
+This is now unnecessary, so you can omit the `ref` entirely if you don't need it. In addition, any `ref` you keep won't be stolen from the owner component anymore.
+
+Note, however, that React Quill will now ensure that the element is compatible with Quill. This means that passing a `<textarea>` now produces an error.
+
+### Passing children to ReactQuill
+
+Previously, it was possible to pass arbitrary components as children of React Quill. Their `ref` would identify them as either a custom toolbar or a custom editing area. 
+
+This is not possible anymore, and the only child you can pass now is an optional [custom Editing Area](#custom-editing-area) element.
 
 ### Adding custom formats with the `formats` property is deprecated
 
@@ -510,7 +526,7 @@ This property previously set the frequency with which Quill polled the DOM for c
 : Selector or DOM element used by Quill to constrain position of popups. Defaults to `document.body`.
 
 `children`
-: A single React element that will be used as the editing area for Quill in place of the default, which is a `<div>`. Note that you cannot use a `<textarea>`, as it is not a supported target. Note also that updating children is costly, as it will cause the Quill editor to be recreated. Set the `value` prop if you want to control the html contents of the editor.
+: A single React element that will be used as the editing area for Quill in place of the default, which is a `<div>`. Note that you cannot use a `<textarea>`, as it is not a supported target. Also note that updating children is costly, as it will cause the Quill editor to be recreated. Set the `value` prop if you want to control the html contents of the editor.
 
 `onChange(content, delta, source, editor)`
 : Called back with the new contents of the editor after change. It will be passed the HTML contents of the editor, a delta object expressing the change-set itself, the source of the change, and finally a read-only proxy to editor accessors such as `getText()`.
