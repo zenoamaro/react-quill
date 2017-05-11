@@ -58,6 +58,7 @@
     "jshint": "^2.5.10",
     "mocha": "^3.2.0",
     "mocha-text-cov": "^0.1.0",
+    "prop-types": "^15.5.9",
     "react": "^0.14.0",
     "react-addons-test-utils": "^0.14.0",
     "react-dom": "^0.14.0",
