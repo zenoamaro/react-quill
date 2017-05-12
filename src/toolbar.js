@@ -10,7 +10,7 @@ var React = require('react');
 var ReactDOMServer = require('react-dom/server');
 var find = require('lodash/find');
 var isEqual = require('lodash/isEqual');
-var T = React.PropTypes;
+var T = require('prop-types');
 
 var defaultColors = [
 	'rgb(  0,   0,   0)', 'rgb(230,   0,   0)', 'rgb(255, 153,   0)',
