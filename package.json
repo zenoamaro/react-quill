@@ -1,6 +1,6 @@
 {
   "name": "react-quill",
-  "version": "1.0.0-rc.2",
+  "version": "1.0.0-rc.3",
   "description": "The Quill rich-text editor as a React component.",
   "author": "zenoamaro <zenoamaro@gmail.com>",
   "homepage": "https://github.com/zenoamaro/react-quill",
@@ -42,29 +42,29 @@
   ],
   "dependencies": {
     "lodash": "^4.17.4",
-    "quill": "^1.2.0"
+    "quill": "^1.2.6"
   },
   "peerDependencies": {
     "react": "^0.14.0 || ^15.0.0-0"
   },
   "devDependencies": {
-    "blanket": "^1.1.6",
-    "chai": "^3.5.0",
-    "chai-enzyme": "^0.6.1",
-    "cheerio": "^0.22.0",
-    "enzyme": "^2.7.1",
-    "jsdom": "^9.11.0",
-    "jsdom-global": "^2.1.1",
-    "jshint": "^2.5.10",
-    "mocha": "^3.2.0",
-    "mocha-text-cov": "^0.1.0",
+    "blanket": "^1.2.3",
+    "chai": "^4.0.2",
+    "chai-enzyme": "^0.7.1",
+    "cheerio": "^1.0.0-rc.1",
+    "enzyme": "^2.8.2",
+    "jsdom": "^11.0.0",
+    "jsdom-global": "^3.0.2",
+    "jshint": "^2.9.4",
+    "mocha": "^3.4.2",
+    "mocha-text-cov": "^0.1.1",
     "react": "^0.14.0",
     "react-addons-test-utils": "^0.14.0",
     "react-dom": "^0.14.0",
     "should": "^4.3.0",
-    "sinon": "^1.17.7",
+    "sinon": "^2.3.5",
     "travis-cov": "^0.2.5",
-    "uglify-js": "^2.4.15",
+    "uglify-js": "^3.0.18",
     "webpack": "^1.4.13"
   }
 }
