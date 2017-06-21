@@ -27,19 +27,19 @@ See a [live demo] or [Codepen](http://codepen.io/alexkrolick/pen/xgyOXQ/left?edi
 
 ---
 
-💯 **React Quill now supports Quill v1.0.0!**  
+💯 **React Quill now supports Quill v1.0.0!**
 Thanks to @clemmy and @alexkrolick for landing this much-awaited change. There are many breaking changes, so be sure to read the [migration guide](#upgrading-to-react-quill-v100).
- 
+
 ---
 
-🎧 **Latest published package version: `v1.0.0-rc.2`**  
-Follow React Quill's development on the beta channel leading to `v1.0.0`.  
-`npm install react-quill@v1.0.0-rc.2`
- 
+🎧 **Latest published package version: `v1.0.0-rc.3`**
+Follow React Quill's development on the beta channel leading to `v1.0.0`.
+`npm install react-quill@v1.0.0-rc.3`
+
 ---
 
-🏵 **Welcoming @alexkrolick to the team!**  
-His contributions have been incredible so far, and his passion and dedication will bring some much-deserved love to this project. 
+🏵 **Welcoming @alexkrolick to the team!**
+His contributions have been incredible so far, and his passion and dedication will bring some much-deserved love to this project.
 
 ---
 
@@ -179,14 +179,14 @@ const CustomToolbar = () => (
       <option value="violet"></option>
       <option value="#d0d1d2"></option>
       <option selected></option>
-    </select>    
+    </select>
     <button className="ql-insertStar">
       <CustomButton />
     </button>
   </div>
 )
 
-/* 
+/*
  * Editor component with custom toolbar and content containers
  */
 class Editor extends React.Component {
@@ -195,17 +195,17 @@ class Editor extends React.Component {
     this.state = { editorHtml: '' }
     this.handleChange = this.handleChange.bind(this)
   }
-  
+
   handleChange (html) {
   	this.setState({ editorHtml: html });
   }
-  
+
   render() {
     return (
       <div className="text-editor">
         <CustomToolbar />
-        <ReactQuill 
-          onChange={this.handleChange} 
+        <ReactQuill
+          onChange={this.handleChange}
           placeholder={this.props.placeholder}
           modules={Editor.modules}
         />
@@ -214,7 +214,7 @@ class Editor extends React.Component {
   }
 }
 
-/* 
+/*
  * Quill modules to attach to editor
  * See http://quilljs.com/docs/modules/ for complete options
  */
@@ -227,7 +227,7 @@ Editor.modules = {
   }
 }
 
-/* 
+/*
  * Quill editor formats
  * See http://quilljs.com/docs/formats/
  */
@@ -238,18 +238,18 @@ Editor.formats = [
   'link', 'image', 'color',
 ]
 
-/* 
+/*
  * PropType validation
  */
 Editor.propTypes = {
   placeholder: React.PropTypes.string,
 }
 
-/* 
+/*
  * Render component on page
  */
 ReactDOM.render(
-  <Editor placeholder={'Write something or insert a star ★'}/>, 
+  <Editor placeholder={'Write something or insert a star ★'}/>,
   document.querySelector('.app')
 )
 ```
@@ -258,7 +258,7 @@ ReactDOM.render(
 
 ### Custom Formats
 
-The component has two types of formats: 
+The component has two types of formats:
 
 1. The default [Quill formats](http://quilljs.com/docs/formats/) that are enabled/disabled using the [`formats` prop](#props). All formats are enabled by default.
 2. Custom formats created using Parchment and registered with your component's Quill instance
@@ -273,13 +273,13 @@ import ReactQuill, { Quill } from 'react-quill'
 
 CommonJS Require
 ```js
-var ReactQuill = require('react-quill'); 
+var ReactQuill = require('react-quill');
 var Quill = ReactQuill.Quill;
 ```
 
 ```jsx
 /*
- * Example Parchment format from 
+ * Example Parchment format from
  * https://quilljs.com/guides/cloning-medium-with-parchment/
  */
 let Inline = Quill.import('blots/inline');
@@ -296,14 +296,14 @@ class MyComponent extends React.Component {
     this.formats = ['italic, 'underline'] // default formats
     this.state = { text: '' }
   }
-  
+
   handleChange(value) {
     this.setState({text: value})
   }
-  
+
   render() {
     return (
-      <ReactQuill 
+      <ReactQuill
         value={this.state.text}
         onChange={this.handleChange}
         formats={this.formats} // the custom format is already registered
@@ -339,7 +339,7 @@ class MyComponent extends React.Component {
 
 ### Mixin
 
-The module exports a mixin which can be used to create custom editor components. (Note that mixins will be deprecated in a future version of React). 
+The module exports a mixin which can be used to create custom editor components. (Note that mixins will be deprecated in a future version of React).
 
 <details>
 <summary>Example Code</summary>
@@ -395,7 +395,7 @@ Previously, toolbar properties could be set by passing a `toolbar` prop to React
        ...
     ],
 + },
-  
+
   <ReactQuill
 -   toolbar={this.toolbar}
 +   modules={this.modules}
@@ -408,7 +408,7 @@ If you used to provide your own HTML toolbar component, you can still do the sam
 + modules: {
 +   toolbar: '#my-toolbar-component',
 + },
-  
+
   <ReactQuill
 -   toolbar="#my-toolbar-component"
 +   modules={this.modules}
@@ -451,7 +451,7 @@ Note, however, that React Quill will now ensure that the element is compatible w
 
 ### Passing children to ReactQuill
 
-Previously, it was possible to pass arbitrary components as children of React Quill. Their `ref` would identify them as either a custom toolbar or a custom editing area. 
+Previously, it was possible to pass arbitrary components as children of React Quill. Their `ref` would identify them as either a custom toolbar or a custom editing area.
 
 This is not possible anymore, and the only child you can pass now is an optional [custom Editing Area](#custom-editing-area) element.
 
@@ -513,7 +513,7 @@ This property previously set the frequency with which Quill polled the DOM for c
 : An object specifying which modules are enabled, and their configuration. The editor toolbar is a commonly customized module. See the [modules section](http://quilljs.com/docs/modules/) over the Quill documentation for more information on what modules are available.
 
 `formats`
-: An array of formats to be enabled during editing. All implemented formats are enabled by default. See [Formats](http://quilljs.com/docs/formats/) for a list. 
+: An array of formats to be enabled during editing. All implemented formats are enabled by default. See [Formats](http://quilljs.com/docs/formats/) for a list.
   Custom formats should not be included in the array as of version 1.0.0. Instead they should be created through [Parchment](https://github.com/quilljs/parchment) and registered with the module's [Quill export](#exports).
 
 `style`
@@ -652,6 +652,7 @@ This release adds support for Quill v1.0.0+. ⚠️ There are many breaking chan
 - Fixed documentation typos (@l3kn)
 - Started testing with Enzyme (@alexkrolick)
 - Fixed issue where changing props caused re-render artifacts (#147)
+- Removed inline Parchment formats for font-size and font-family (#217)
 
 #### v0.4.1
 - Added contents of `dist` to NPM package.
