@@ -18,6 +18,8 @@
   "scripts": {
     "test": "make test",
     "build": "make build",
+    "prepack": "make build",
+    "postpack": "make clean",
     "prepublish": "make build",
     "postpublish": "make clean"
   },
