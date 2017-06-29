@@ -549,7 +549,7 @@ import ReactQuill, { Quill, Mixin, Toolbar } from 'react-quill'
 : An object with custom CSS rules to apply on the editor's container. Rules should be in React's "camelCased" naming style.
 
 `theme`
-: The name of the theme to apply to the editor. Defaults to `base`.
+: The name of the theme to apply to the editor. Defaults to `snow`, Quill's standard theme. Pass `null` to use the minimal core theme. See the [docs on themes](#theme) for more information on including the required stylesheets.
 
 `bounds`
 : Selector or DOM element used by Quill to constrain position of popups. Defaults to `document.body`.
