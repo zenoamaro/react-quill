@@ -10,7 +10,7 @@ See a [live demo] or [Codepen](http://codepen.io/alexkrolick/pen/xgyOXQ/left?edi
 [live demo]: https://zenoamaro.github.io/react-quill/
 
 1. [Quick start](#quick-start)
-1. [Advanced Options](#advanced-options)
+1. [Options](#options)
    1. [Theme](#theme)
    1. [Custom Toolbar](#custom-toolbar)
    1. [Custom Formats](#custom-formats)
@@ -46,11 +46,36 @@ His contributions have been incredible so far, and his passion and dedication wi
 
 ## Quick Start
 
+### Import the component (ES6 syntax below)
+
+```jsx
+import ReactQuill from 'react-quill'
+```
+
+### Import styles
+
+_Two common examples are shown below. How stylesheets are included in your app depends on build system (Webpack, SCSS, LESS, etc). See the documentation on [Themes](#theme) for more information._
+
+#### Using CDN
+
+```html
+<link rel="stylesheet" href="//cdn.quilljs.com/1.2.6/quill.snow.css">
+```
+
+#### Using `css-loader` with Webpack or `create-react-app`
+
+```jsx
+import theme from 'react-quill/dist/quill.snow.css'
+```
+
+### Use the component
+
 ```jsx
 class MyComponent extends React.Component {
   constructor(props) {
     super(props)
     this.state = { text: '' }
+    this.handleChange = this.handleChange.bind(this)
   }
 
   handleChange(value) {
@@ -66,16 +91,16 @@ class MyComponent extends React.Component {
 }
 ```
 
-## Advanced Options
+## Options
 
 ### Theme
 
-The Quill editor supports [themes](http://quilljs.com/docs/themes/). It includes a full-fledged theme, called _snow_, that is Quill's standard appearance, a _bubble_ theme that is similar to the inline editor on Medium, and a _base_ theme containing only the bare essentials to allow modules like toolbars or tooltips to work.
+The Quill editor supports [themes](http://quilljs.com/docs/themes/). It includes a full-fledged theme, called _snow_, that is Quill's standard appearance, a _bubble_ theme that is similar to the inline editor on Medium, and a _core_ theme containing only the bare essentials to allow modules like toolbars or tooltips to work.
 
-These stylesheets can be found in the Quill distribution, but for convenience they are also linked in React Quill's `dist` folder. In a common case you would activate a theme by setting the theme [prop](#props) like this:
+These stylesheets can be found in the Quill distribution, but for convenience they are also linked in React Quill's `dist` folder. In a common case you would activate a theme by setting the theme [prop](#props). Pass a falsy value (`null`) to disable the theme.
 
 ```jsx
-<ReactQuill theme="snow" /> // or "bubble", "base"
+<ReactQuill theme="snow" /> // or "bubble", null to use minimal core theme
 ```
 
 And then link the appropriate stylesheet (only link the CSS for the themes you want to use):
@@ -479,13 +504,17 @@ This property previously set the frequency with which Quill polled the DOM for c
 
 ### Exports
 
-`ReactQuill.Mixin`
-: Provides the bridge between React and Quill. `ReactQuill` implements this mixin; in the same way you can use it to build your own component, or replace it to implement a new core for the default component.
+```jsx
+import ReactQuill, { Quill, Mixin, Toolbar } from 'react-quill'
+```
 
-`ReactQuill.Toolbar`
+`Mixin`
+: Provides the bridge between React and Quill. `ReactQuill` implements this mixin; in the same way you can use it to build your own component, or replace it to implement a new core for the default component. _Note that mixins are deprecated in React and this export will be replaced by an HOC in the future._
+
+`Toolbar`
 : The component that renders the custom ReactQuill toolbar. The default collection of items and color swatches is available as `ReactQuill.Toolbar.defaultItems` and `ReactQuill.Toolbar.defaultColors` respectively. ⚠️ The Toolbar component is deprecated since v1.0.0. See [upgrading to React Quill v1.0.0](#upgrading-to-react-quill-v100).
 
-`ReactQuill.Quill`
+`Quill`
 : The `Quill` namespace on which you can call `registerModule` and such.
 
 
