@@ -39,6 +39,9 @@ This release supports Quill v1.0.0+. ⚠️ There are many breaking changes, so 
 - Fixed documentation typos (@l3kn)
 - Started testing with Enzyme (@alexkrolick)
 - Fixed issue where changing props caused re-render artifacts (#147)
+- Fixed bounds validation in setEditorSelection (@wouterh)
+- Updated README.md to reference core.css instead of base.css (@sandbochs)
+- Updated React peerDependency (@rpellerin)
 - Removed inline Parchment formats for font-size and font-family (#217)
 
 v0.4.1
