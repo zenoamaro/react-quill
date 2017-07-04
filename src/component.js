@@ -6,7 +6,8 @@ var QuillMixin = require('./mixin');
 var find = require('lodash/find');
 var some = require('lodash/some');
 var isEqual = require('lodash/isEqual');
-var T = React.PropTypes;
+var PropTypes = require('prop-types');
+var T = PropTypes;
 
 var QuillComponent = React.createClass({
 
@@ -35,7 +36,7 @@ var QuillComponent = React.createClass({
 			if (isNotObject) return isNotObject;
 
 			if (
-				props.modules && 
+				props.modules &&
 				props.modules.toolbar &&
 				props.modules.toolbar[0] &&
 				props.modules.toolbar[0].type
@@ -79,7 +80,7 @@ var QuillComponent = React.createClass({
 
 		children: function(props) {
 			// Validate that the editor has only one child element and it is not a <textarea>
-			var isNotASingleElement = React.PropTypes.element.apply(this, arguments);
+			var isNotASingleElement = T.element.apply(this, arguments);
 			if (isNotASingleElement) return new Error(
 				'The Quill editing area can only be composed of a single React element.'
 			);
@@ -92,7 +93,7 @@ var QuillComponent = React.createClass({
 			}
 		}
 	},
-		
+
 	/*
 	Changing one of these props should cause a full re-render.
 	*/
@@ -150,7 +151,7 @@ var QuillComponent = React.createClass({
 		// still undefined. Must check if editor is undefined
 		// before performing this call.
 		if (!editor) return;
-		
+
 		// Update only if we've been passed a new `value`.
 		// This leaves components using `defaultValue` alone.
 		if ('value' in nextProps) {
@@ -163,7 +164,7 @@ var QuillComponent = React.createClass({
 				this.setEditorContents(editor, nextProps.value);
 			}
 		}
-		
+
 		// We can update readOnly state in-place.
 		if ('readOnly' in nextProps) {
 			if (nextProps.readOnly !== this.props.readOnly) {
@@ -186,7 +187,7 @@ var QuillComponent = React.createClass({
 		// Restore editor from Quill's native formats in regeneration scenario
 		if (this.quillDelta) {
 			this.editor.setContents(this.quillDelta);
-			this.editor.setSelection(this.quillSelection);		
+			this.editor.setSelection(this.quillSelection);
 			this.editor.focus();
 			this.quillDelta = this.quillSelection = null;
 			return;
@@ -211,7 +212,7 @@ var QuillComponent = React.createClass({
 		if (this.state.generation !== nextState.generation) {
 			return true;
 		}
-		
+
 		// Compare props that require React updating the DOM.
 		return some(this.cleanProps, function(prop) {
 			// Note that `isEqual` compares deeply, making it safe to perform

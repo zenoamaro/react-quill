@@ -1,6 +1,6 @@
 /*
 QuillToolbar is deprecated. Consider switching to the official Quill
-toolbar format, or providing your own toolbar instead. 
+toolbar format, or providing your own toolbar instead.
 See https://quilljs.com/docs/modules/toolbar
 */
 
@@ -10,7 +10,8 @@ var React = require('react');
 var ReactDOMServer = require('react-dom/server');
 var find = require('lodash/find');
 var isEqual = require('lodash/isEqual');
-var T = React.PropTypes;
+var PropTypes = require('prop-types');
+var T = PropTypes;
 
 var defaultColors = [
 	'rgb(  0,   0,   0)', 'rgb(230,   0,   0)', 'rgb(255, 153,   0)',
