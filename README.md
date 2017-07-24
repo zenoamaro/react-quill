@@ -98,6 +98,16 @@ class MyComponent extends React.Component {
 }
 ```
 
+### Controlled vs Uncontrolled Mode
+
+Pass `defaultValue` instead of `value` if you want to use DOM or Quill APIs to imperatively manipulate the editor state.
+In this "uncontrolled" mode ReactQuill uses the prop as the initial value but allows the element to deviate after that. The `onChange` callback still works normally.
+
+- Read more about uncontrolled components in the [React docs][defaultvalues].
+- Read more about the available [props](#props).
+
+[defaultvalues]: https://facebook.github.io/react/docs/uncontrolled-components.html#default-values
+
 ## Options
 
 ### Theme
