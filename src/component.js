@@ -2,13 +2,15 @@
 
 var React = require('react');
 var ReactDOM = require('react-dom');
+var createClass = require('create-react-class');
 var QuillMixin = require('./mixin');
 var find = require('lodash/find');
 var some = require('lodash/some');
 var isEqual = require('lodash/isEqual');
-var T = React.PropTypes;
+var T = require('prop-types');
+var DOM = require('react-dom-factories');
 
-var QuillComponent = React.createClass({
+var QuillComponent = createClass({
 
 	displayName: 'Quill',
 
@@ -82,7 +84,7 @@ var QuillComponent = React.createClass({
 
 		children: function(props) {
 			// Validate that the editor has only one child element and it is not a <textarea>
-			var isNotASingleElement = React.PropTypes.element.apply(this, arguments);
+			var isNotASingleElement = T.element.apply(this, arguments);
 			if (isNotASingleElement) return new Error(
 				'The Quill editing area can only be composed of a single React element.'
 			);
@@ -340,13 +342,13 @@ var QuillComponent = React.createClass({
 
 		var editingArea = customElement
 			? React.cloneElement(customElement, properties)
-			: React.DOM.div(properties);
+			: DOM.div(properties);
 
 		return editingArea;
 	},
 
 	render: function() {
-		return React.DOM.div({
+		return DOM.div({
 			id: this.props.id,
 			style: this.props.style,
 			key: this.state.generation,

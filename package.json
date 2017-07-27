@@ -43,26 +43,30 @@
     "LICENSE"
   ],
   "dependencies": {
+    "create-react-class": "^15.6.0",
     "lodash": "^4.17.4",
-    "quill": "^1.2.6"
+    "prop-types": "^15.5.10",
+    "quill": "^1.2.6",
+    "react-dom-factories": "^1.0.0"
   },
   "peerDependencies": {
-    "react": "^0.14.0 || ^15.0.0-0"
+    "react": "^0.14.9 || ^15.3.0 || ^16.0.0"
   },
   "devDependencies": {
     "blanket": "^1.2.3",
-    "chai": "^4.0.2",
-    "chai-enzyme": "^0.7.1",
+    "chai": "^4.1.0",
+    "chai-enzyme": "^0.8.0",
     "cheerio": "^1.0.0-rc.1",
-    "enzyme": "^2.8.2",
+    "enzyme": "^2.9.1",
     "jsdom": "^11.0.0",
     "jsdom-global": "^3.0.2",
     "jshint": "^2.9.4",
     "mocha": "^3.4.2",
     "mocha-text-cov": "^0.1.1",
-    "react": "^0.14.0",
-    "react-addons-test-utils": "^0.14.0",
-    "react-dom": "^0.14.0",
+    "react": "^15.6.1",
+    "react-addons-test-utils": "^15.6.0",
+    "react-dom": "^15.6.1",
+    "react-test-renderer": "^15.6.1",
     "should": "^4.3.0",
     "sinon": "^2.3.5",
     "travis-cov": "^0.2.5",

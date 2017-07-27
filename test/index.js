@@ -7,6 +7,7 @@
  */
 
 const React = require('react');
+const DOM = require('react-dom-factories');
 const sinon = require('sinon');
 const {expect, assert} = require('chai');
 const ReactQuill = require('../src/index');
@@ -151,7 +152,7 @@ describe('<ReactQuill />', function() {
   })
 
   it('uses a custom editing area if provided', () => {
-    const editingArea = React.DOM.div({id:'venus'});
+    const editingArea = DOM.div({id:'venus'});
     const wrapper = mountReactQuill({}, editingArea);
     const quill = getQuillInstance(wrapper);
     expect(wrapper.getDOMNode().querySelector('div#venus')).not.to.be.null;
