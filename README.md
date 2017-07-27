@@ -42,7 +42,7 @@ npm install react-quill@v1.0.0
 ```
 
 Special thank you to everyone who contributed during the 1.0.0 release cycle!
- 
+
 ---
 
 🏵 **Welcoming @alexkrolick to the team!**
@@ -284,7 +284,7 @@ Editor.formats = [
  * PropType validation
  */
 Editor.propTypes = {
-  placeholder: React.PropTypes.string,
+  placeholder: PropTypes.string,
 }
 
 /*
@@ -618,30 +618,30 @@ class Editor extends React.Component {
     this.quillRef = null;      // Quill instance
     this.reactQuillRef = null; // ReactQuill component
   }
-  
+
   componentDidMount() {
     this.attachQuillRefs()
   }
-  
+
   componentDidUpdate() {
     this.attachQuillRefs()
   }
-  
+
   attachQuillRefs = () => {
     if (typeof this.reactQuillRef.getEditor !== 'function') return;
     this.quillRef = this.reactQuillRef.getEditor();
   }
-  
+
   insertText = () => {
     var range = this.quillRef.getSelection();
     let position = range ? range.index : 0;
     this.quillRef.insertText(position, 'Hello, World! ')
   }
-  
+
   render() {
     return (
       <div>
-        <ReactQuill 
+        <ReactQuill
           ref={(el) => { this.reactQuillRef = el }}
           theme={'snow'} />
         <button onClick={this.insertText}>Insert Text</button>
