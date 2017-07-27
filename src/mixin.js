@@ -20,32 +20,40 @@ var QuillMixin = {
 		// accidentally modifying editor state.
 		var unprivilegedEditor = this.makeUnprivilegedEditor(editor);
 
-		editor.on('text-change', function(delta, source) {
-			if (this.onEditorChange) {
-				this.onEditorChange(
-					editor.getHTML(), delta, source,
+		this.handleTextChange = function(delta, oldDelta, source) {
+			if (this.onEditorChangeText) {
+				this.onEditorChangeText(
+					editor.root.innerHTML, delta, source,
+					unprivilegedEditor
+				);
+				this.onEditorChangeSelection(
+					editor.getSelection(), source,
 					unprivilegedEditor
 				);
 			}
-		}.bind(this));
+		}.bind(this);
 
-		editor.on('selection-change', function(range, source) {
+		this.handleSelectionChange = function(range, oldRange, source) {
 			if (this.onEditorChangeSelection) {
 				this.onEditorChangeSelection(
 					range, source,
 					unprivilegedEditor
 				);
 			}
-		}.bind(this));
+		}.bind(this);
+
+		editor.on('text-change', this.handleTextChange);
+		editor.on('selection-change', this.handleSelectionChange);
 	},
 
-	destroyEditor: function(editor) {
-		editor.destroy();
+	unhookEditor: function(editor) {
+		editor.off('selection-change');
+		editor.off('editor-change');
 	},
 
 	setEditorReadOnly: function(editor, value) {
-		value? editor.editor.disable()
-		     : editor.editor.enable();
+		value? editor.disable()
+		     : editor.enable();
 	},
 
 	/*
@@ -55,7 +63,7 @@ var QuillMixin = {
 	*/
 	setEditorContents: function(editor, value) {
 		var sel = editor.getSelection();
-		editor.setHTML(value || '');
+		editor.clipboard.dangerouslyPasteHTML(value || '');
 		if (sel) this.setEditorSelection(editor, sel);
 	},
 
@@ -63,8 +71,8 @@ var QuillMixin = {
 		if (range) {
 			// Validate bounds before applying.
 			var length = editor.getLength();
-			range.start = Math.max(0, Math.min(range.start, length-1));
-			range.end = Math.max(range.start, Math.min(range.end, length-1));
+			range.index = Math.max(0, Math.min(range.index, length-1));
+			range.length = Math.max(0, Math.min(range.length, (length-1) - range.index));
 		}
 		editor.setSelection(range);
 	},
@@ -79,7 +87,6 @@ var QuillMixin = {
 		return {
 			getLength:    function(){ return e.getLength.apply(e, arguments); },
 			getText:      function(){ return e.getText.apply(e, arguments); },
-			getHTML:      function(){ return e.getHTML.apply(e, arguments); },
 			getContents:  function(){ return e.getContents.apply(e, arguments); },
 			getSelection: function(){ return e.getSelection.apply(e, arguments); },
 			getBounds:    function(){ return e.getBounds.apply(e, arguments); },

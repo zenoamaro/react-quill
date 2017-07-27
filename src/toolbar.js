@@ -1,8 +1,16 @@
+/*
+QuillToolbar is deprecated. Consider switching to the official Quill
+toolbar format, or providing your own toolbar instead. 
+See https://quilljs.com/docs/modules/toolbar
+*/
+
 'use strict';
 
-var React = require('react'),
-	ReactDOMServer = require('react-dom/server'),
-	T = React.PropTypes;
+var React = require('react');
+var ReactDOMServer = require('react-dom/server');
+var find = require('lodash/find');
+var isEqual = require('lodash/isEqual');
+var T = React.PropTypes;
 
 var defaultColors = [
 	'rgb(  0,   0,   0)', 'rgb(230,   0,   0)', 'rgb(255, 153,   0)',
@@ -27,16 +35,14 @@ var defaultItems = [
 			{ label:'Serif',       value:'serif' },
 			{ label:'Monospace',   value:'monospace' }
 		]},
-		{ type:'separator' },
 		{ label:'Size', type:'size', items: [
 			{ label:'Small',  value:'10px' },
 			{ label:'Normal', value:'13px', selected:true },
 			{ label:'Large',  value:'18px' },
 			{ label:'Huge',   value:'32px' }
 		]},
-		{ type:'separator' },
 		{ label:'Alignment', type:'align', items: [
-			{ label:'', value:'left', selected:true },
+			{ label:'', value:'', selected:true },
 			{ label:'', value:'center' },
 			{ label:'', value:'right' },
 			{ label:'', value:'justify' }
@@ -48,17 +54,14 @@ var defaultItems = [
 		{ type:'italic', label:'Italic' },
 		{ type:'strike', label:'Strike' },
 		{ type:'underline', label:'Underline' },
-		{ type:'separator' },
 		{ type:'color', label:'Color', items:defaultColors },
 		{ type:'background', label:'Background color', items:defaultColors },
-		{ type:'separator' },
 		{ type:'link', label:'Link' }
 	]},
 
 	{ label:'Blocks', type:'group', items: [
-		{ type:'bullet', label:'Bullet' },
-		{ type:'separator' },
-		{ type:'list', label:'List' }
+		{ type:'list', value:'bullet' },
+		{ type:'list', value:'ordered' }
 	]},
 
 	{ label:'Blocks', type:'group', items: [
@@ -74,26 +77,32 @@ var QuillToolbar = React.createClass({
 	propTypes: {
 		id:        T.string,
 		className: T.string,
+		style:     T.object,
 		items:     T.array
 	},
 
-	getDefaultProps: function(){
+	getDefaultProps: function() {
 		return {
 			items: defaultItems
 		};
 	},
 
-	renderSeparator: function(key) {
-		return React.DOM.span({
-			key: key,
-			className:'ql-format-separator'
-		});
+	componentDidMount: function() {
+		console.warn(
+			'QuillToolbar is deprecated. Consider switching to the official Quill ' +
+			'toolbar format, or providing your own toolbar instead. ' +
+			'See: https://github.com/zenoamaro/react-quill#upgrading-to-react-quill-v1-0-0'
+		);
+	},
+
+	shouldComponentUpdate: function(nextProps, nextState) {
+		return !isEqual(nextProps, this.props);
 	},
 
 	renderGroup: function(item, key) {
 		return React.DOM.span({
 			key: item.label || key,
-			className:'ql-format-group' },
+			className:'ql-formats' },
 			item.items.map(this.renderItem)
 		);
 	},
@@ -101,48 +110,67 @@ var QuillToolbar = React.createClass({
 	renderChoiceItem: function(item, key) {
 		return React.DOM.option({
 			key: item.label || item.value || key,
-			value:item.value },
+			value: item.value },
 			item.label
 		);
 	},
 
 	renderChoices: function(item, key) {
+		var choiceItems = item.items.map(this.renderChoiceItem);
+		var selectedItem = find(item.items, function(item){ return item.selected });
 		var attrs = {
 			key: item.label || key,
 			title: item.label,
-			className: 'ql-'+item.type
+			className: 'ql-'+item.type,
+			value: selectedItem.value,
 		};
-		var self = this;
-		var choiceItems = item.items.map(function(item, key) {
-			if (item.selected) {
-				attrs.defaultValue = item.value;
-			}
-			return self.renderChoiceItem(item, key);
-		})
 		return React.DOM.select(attrs, choiceItems);
 	},
 
-	renderAction: function(item, key) {
-		return React.DOM.span({
+	renderButton: function(item, key) {
+		return React.DOM.button({
+			type: 'button',
 			key: item.label || item.value || key,
-			className: 'ql-format-button ql-'+item.type,
+			value: item.value,
+			className: 'ql-'+item.type,
 			title: item.label },
 			item.children
 		);
 	},
 
+	renderAction: function(item, key) {
+		return React.DOM.button({
+			key: item.label || item.value || key,
+			className: 'ql-'+item.type,
+			title: item.label },
+			item.children
+		);
+	},
+
+	/* jshint maxcomplexity: false */
 	renderItem: function(item, key) {
 		switch (item.type) {
-			case 'separator':
-				return this.renderSeparator(key);
 			case 'group':
 				return this.renderGroup(item, key);
 			case 'font':
+			case 'header':
 			case 'align':
 			case 'size':
 			case 'color':
 			case 'background':
 				return this.renderChoices(item, key);
+			case 'bold':
+			case 'italic':
+			case 'underline':
+			case 'strike':
+			case 'link':
+			case 'list':
+			case 'bullet':
+			case 'ordered':
+			case 'indent':
+			case 'image':
+			case 'video':
+				return this.renderButton(item, key);
 			default:
 				return this.renderAction(item, key);
 		}
@@ -156,11 +184,12 @@ var QuillToolbar = React.createClass({
 		var children = this.props.items.map(this.renderItem);
 		var html = children.map(ReactDOMServer.renderToStaticMarkup).join('');
 		return React.DOM.div({
+			id: this.props.id,
 			className: this.getClassName(),
-			style: this.props.style || {},
+			style: this.props.style,
 			dangerouslySetInnerHTML: { __html:html }
 		});
-	}
+	},
 
 });
 

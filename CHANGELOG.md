@@ -1,6 +1,49 @@
 Changelog
 =========
 
+v1.0.0
+------
+This release supports Quill v1.0.0+. ⚠️ There are many breaking changes, so refer to the documentation for information on how to migrate your application.
+
+- Updated to support Quill v1.0.0+ (@clemmy, @alexkrolick)
+- Bundling Quill with ReactQuill (@clemmy)
+- Deprecated `toolbar` property and component
+- Deprecated the `styles` property
+- Deprecated custom formats via the `formats` property
+- Deprecated the `pollInterval` property
+- Rerendering on `style` property change (@lavrton)
+- Improved docs for `bounds`, which now rerenders on change
+- Performing deep props comparison to avoid rerenders
+- Fixed the unprivileged editor not returning values
+- Restoring selection event after text change
+- Fixed the order of parameters in change events (@webcarrot)
+- Using 'core' instead of 'base' CSS (@alexkrolick)
+- Added support for the `placeholder` property (@alexkrolick)
+- Enable/disable editor using top-level Quill API (@alexkrolick)
+- Prevent whitespace issues when initializing the editor (@bobrafie)
+- Using buttons instead of spans for toolbar actions (@clemmy)
+- Removed getHtml from unprivileged editor (@clemmy)
+- Fixed calculations for range fields (@clemmy)
+- Removed deprecated destroy functionality (@clemmy)
+- Added return statement to proxy editor methods (@druti)
+- Inline styles support for Quill Toolbar (@e-jigsaw)
+- Fixed custom font size definitions (@clemmy)
+- Support for bullet and ordered lists in toolbar (@clemmy)
+- Updated the toolbar alignment section (@clemmy)
+- Updated rendering of toolbar actions (@clemmy)
+- Improved toolbar renderChoices implementation (@zhang-z)
+- Fixed use of `defaultValue` in Toolbar selects
+- Fixed bounds validation in setEditorSelection (@wouterh)
+- Exposed Quill in exports (@tdg5)
+- Added unhook function to clean up event listeners on unmount (@alexkrolick, @jrmmnr)
+- Fixed documentation typos (@l3kn)
+- Started testing with Enzyme (@alexkrolick)
+- Fixed issue where changing props caused re-render artifacts (#147)
+- Fixed bounds validation in setEditorSelection (@wouterh)
+- Updated README.md to reference core.css instead of base.css (@sandbochs)
+- Updated React peerDependency (@rpellerin)
+- Removed inline Parchment formats for font-size and font-family (#217)
+
 v0.4.1
 ------
 - Added contents of `dist` to NPM package.
