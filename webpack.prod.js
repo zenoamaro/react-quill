@@ -38,7 +38,13 @@ module.exports = {
 			'commonjs2': 'react-dom/server',
 			'amd': 'react-dom/server',
 			'root': 'ReactDOMServer'
-		}
+		},
+    'prop-types': {
+      'commonjs': 'prop-types',
+      'commonjs2': 'prop-types',
+      'amd': 'prop-types',
+      'root': 'PropTypes'
+    }
 	},
 
 	plugins: [
