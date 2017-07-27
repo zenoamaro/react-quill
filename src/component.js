@@ -7,6 +7,7 @@ var find = require('lodash/find');
 var some = require('lodash/some');
 var isEqual = require('lodash/isEqual');
 var T = require('prop-types');
+var DOM = require('react-dom-factories');
 
 var QuillComponent = React.createClass({
 
@@ -304,13 +305,13 @@ var QuillComponent = React.createClass({
 
 		var editingArea = customElement
 			? React.cloneElement(customElement, properties)
-			: React.DOM.div(properties);
+			: DOM.div(properties);
 
 		return editingArea;
 	},
 
 	render: function() {
-		return React.DOM.div({
+		return DOM.div({
 			id: this.props.id,
 			style: this.props.style,
 			key: this.state.generation,

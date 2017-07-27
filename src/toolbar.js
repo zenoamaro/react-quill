@@ -11,6 +11,7 @@ var ReactDOMServer = require('react-dom/server');
 var find = require('lodash/find');
 var isEqual = require('lodash/isEqual');
 var T = require('prop-types');
+var DOM = require('react-dom-factories');
 
 var defaultColors = [
 	'rgb(  0,   0,   0)', 'rgb(230,   0,   0)', 'rgb(255, 153,   0)',
@@ -183,7 +184,7 @@ var QuillToolbar = React.createClass({
 	render: function() {
 		var children = this.props.items.map(this.renderItem);
 		var html = children.map(ReactDOMServer.renderToStaticMarkup).join('');
-		return React.DOM.div({
+		return DOM.div({
 			id: this.props.id,
 			className: this.getClassName(),
 			style: this.props.style,
