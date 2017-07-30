@@ -600,6 +600,12 @@ import ReactQuill, { Quill, Mixin, Toolbar } from 'react-quill'; // ES6
 `onChangeSelection(range, source, editor)`
 : Called back with the new selected range, or null when unfocused. It will be passed the selection range, the source of the change, and finally a read-only proxy to editor accessors such as `getBounds()`.
 
+`onFocus(range, source, editor)`
+: Called when the editor becomes focused. It will receive the new selection range.
+
+`onBlur(previousRange, source, editor)`
+: Called when the editor loses focus. It will receive the selection range it had right before losing focus.
+
 `onKeyPress(event)`
 : Called after a key has been pressed and released.
 : Note that, like its native counterpart, this won't be called for special keys such as <kbd>shift</kbd> or <kbd>enter</kbd>. If you need those, hook onto `onKeyDown` or `onKeyUp`.
