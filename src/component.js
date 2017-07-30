@@ -20,8 +20,8 @@ var QuillComponent = React.createClass({
 		theme: T.string,
 		style: T.object,
 		readOnly: T.bool,
-		value: T.string,
-		defaultValue: T.string,
+		value: T.oneOfType([T.string, T.shape({ops: T.array})]),
+		defaultValue: T.oneOfType([T.string, T.shape({ops: T.array})]),
 		placeholder: T.string,
 		bounds: T.oneOfType([T.string, T.element]),
 		onKeyPress: T.func,
@@ -154,13 +154,24 @@ var QuillComponent = React.createClass({
 		// Update only if we've been passed a new `value`.
 		// This leaves components using `defaultValue` alone.
 		if ('value' in nextProps) {
-			// NOTE: Seeing that Quill is missing a way to prevent
+			var currentContents = this.getEditorContents();
+			var nextContents = nextProps.value;
+
+			if (nextContents === this.lastDeltaChangeSet) throw new Error(
+				'You are passing the `delta` object from the `onChange` event back ' +
+				'as `value`. You most probably want `editor.getContents()` instead. ' +
+				'See: https://github.com/zenoamaro/react-quill#using-deltas'
+			);
+
+				// NOTE: Seeing that Quill is missing a way to prevent
 			//       edits, we have to settle for a hybrid between
 			//       controlled and uncontrolled mode. We can't prevent
 			//       the change, but we'll still override content
 			//       whenever `value` differs from current state.
-			if (nextProps.value !== this.getEditorContents()) {
-				this.setEditorContents(editor, nextProps.value);
+			// NOTE: Comparing an HTML string and a Quill Delta will always trigger 
+			//       a change, regardless of whether they represent the same document.
+			if (!this.isEqualValue(nextContents, currentContents)) {
+				this.setEditorContents(editor, nextContents);
 			}
 		}
 		
@@ -274,6 +285,24 @@ var QuillComponent = React.createClass({
 	},
 
 	/*
+	True if the value is a Delta instance or a Delta look-alike.
+	*/
+	isDelta: function(value) {
+		return value && value.ops;
+	},
+
+	/*
+	Special comparison function that knows how to compare Deltas.
+	*/
+	isEqualValue: function(value, nextValue) {
+		if (this.isDelta(value) && this.isDelta(nextValue)) {
+			return isEqual(value.ops, nextValue.ops);
+		} else {
+			return isEqual(value, nextValue);
+		}
+	},
+
+	/*
 	Regenerating the editor will cause the whole tree, including the container,
 	to be cleaned up and re-rendered from scratch.
 	*/
@@ -323,8 +352,21 @@ var QuillComponent = React.createClass({
 	},
 
 	onEditorChangeText: function(value, delta, source, editor) {
-		if (value !== this.getEditorContents()) {
-			this.setState({ value: value });
+		var currentContents = this.getEditorContents();
+
+		// We keep storing the same type of value as what the user gives us,
+		// so that value comparisons will be more stable and predictable.
+		var nextContents = this.isDelta(currentContents)
+			? editor.getContents()
+			: editor.getHTML();
+		
+		if (!this.isEqualValue(nextContents, currentContents)) {
+			// Taint this `delta` object, so we can recognize whether the user
+			// is trying to send it back as `value`, preventing a likely loop.
+			this.lastDeltaChangeSet = delta;
+
+			this.setState({ value: nextContents });
+
 			if (this.props.onChange) {
 				this.props.onChange(value, delta, source, editor);
 			}
