@@ -23,6 +23,7 @@ var QuillComponent = React.createClass({
 		value: T.string,
 		defaultValue: T.string,
 		placeholder: T.string,
+		tabIndex: T.number,
 		bounds: T.oneOfType([T.string, T.element]),
 		onKeyPress: T.func,
 		onKeyDown: T.func,
@@ -112,6 +113,7 @@ var QuillComponent = React.createClass({
 		'className',
 		'style',
 		'placeholder',
+		'tabIndex',
 		'onKeyPress',
 		'onKeyDown',
 		'onKeyUp',
@@ -295,6 +297,7 @@ var QuillComponent = React.createClass({
 
 		var properties = {
 			key: this.state.generation,
+			tabIndex: this.props.tabIndex,
 			ref: function(element) { self.editingArea = element },
 		};
 

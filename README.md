@@ -568,6 +568,9 @@ import ReactQuill, { Quill, Mixin, Toolbar } from 'react-quill'
 `theme`
 : The name of the theme to apply to the editor. Defaults to `snow`, Quill's standard theme. Pass `null` to use the minimal core theme. See the [docs on themes](#theme) for more information on including the required stylesheets.
 
+`tabIndex`
+: The order in which the editor becomes focused, among other controls in the page, during keyboard navigation.
+
 `bounds`
 : Selector or DOM element used by Quill to constrain position of popups. Defaults to `document.body`.
 
