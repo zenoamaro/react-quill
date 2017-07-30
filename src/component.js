@@ -163,7 +163,7 @@ var QuillComponent = React.createClass({
 				'See: https://github.com/zenoamaro/react-quill#using-deltas'
 			);
 
-				// NOTE: Seeing that Quill is missing a way to prevent
+			// NOTE: Seeing that Quill is missing a way to prevent
 			//       edits, we have to settle for a hybrid between
 			//       controlled and uncontrolled mode. We can't prevent
 			//       the change, but we'll still override content
