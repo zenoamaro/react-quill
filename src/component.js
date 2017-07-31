@@ -36,7 +36,7 @@ var QuillComponent = React.createClass({
 			if (isNotObject) return isNotObject;
 
 			if (
-				props.modules &&
+				props.modules && 
 				props.modules.toolbar &&
 				props.modules.toolbar[0] &&
 				props.modules.toolbar[0].type
@@ -186,8 +186,8 @@ var QuillComponent = React.createClass({
 		);
 		// Restore editor from Quill's native formats in regeneration scenario
 		if (this.quillDelta) {
-			this.editor.setContents(this.quillDelta);		
-			this.editor.setSelection(this.quillSelection);
+			this.editor.setContents(this.quillDelta);
+			this.editor.setSelection(this.quillSelection);		
 			this.editor.focus();
 			this.quillDelta = this.quillSelection = null;
 			return;
