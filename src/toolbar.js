@@ -1,6 +1,6 @@
 /*
 QuillToolbar is deprecated. Consider switching to the official Quill
-toolbar format, or providing your own toolbar instead.
+toolbar format, or providing your own toolbar instead. 
 See https://quilljs.com/docs/modules/toolbar
 */
 
