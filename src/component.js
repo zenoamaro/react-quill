@@ -93,7 +93,7 @@ var QuillComponent = React.createClass({
 			}
 		}
 	},
-
+		
 	/*
 	Changing one of these props should cause a full re-render.
 	*/
@@ -151,7 +151,7 @@ var QuillComponent = React.createClass({
 		// still undefined. Must check if editor is undefined
 		// before performing this call.
 		if (!editor) return;
-
+		
 		// Update only if we've been passed a new `value`.
 		// This leaves components using `defaultValue` alone.
 		if ('value' in nextProps) {
@@ -164,7 +164,7 @@ var QuillComponent = React.createClass({
 				this.setEditorContents(editor, nextProps.value);
 			}
 		}
-
+		
 		// We can update readOnly state in-place.
 		if ('readOnly' in nextProps) {
 			if (nextProps.readOnly !== this.props.readOnly) {
@@ -186,7 +186,7 @@ var QuillComponent = React.createClass({
 		);
 		// Restore editor from Quill's native formats in regeneration scenario
 		if (this.quillDelta) {
-			this.editor.setContents(this.quillDelta);
+			this.editor.setContents(this.quillDelta);		
 			this.editor.setSelection(this.quillSelection);
 			this.editor.focus();
 			this.quillDelta = this.quillSelection = null;
@@ -212,7 +212,7 @@ var QuillComponent = React.createClass({
 		if (this.state.generation !== nextState.generation) {
 			return true;
 		}
-
+		
 		// Compare props that require React updating the DOM.
 		return some(this.cleanProps, function(prop) {
 			// Note that `isEqual` compares deeply, making it safe to perform
