@@ -68,41 +68,41 @@ describe('<ReactQuill />', function() {
 
   it('allows using HTML strings as value', () => {
     const html = '<p>Hello, world!</p>';
-    const wrapper = mount(ReactQuillNode({value: html}));
-    const quill = wrapper.getNode().getEditor();
-    expect(wrapper.getDOMNode().querySelector('.ql-editor').innerHTML).to.equal(html);
+    const wrapper = mountReactQuill({value: html});
+    const quill = getQuillInstance(wrapper);
+    expect(getQuillContentsAsHTML(wrapper)).to.equal(html);
   });
 
   it('allows using HTML strings as defaultValue', () => {
     const html = '<p>Hello, world!</p>';
-    const wrapper = mount(ReactQuillNode({defaultValue: html}));
-    const quill = wrapper.getNode().getEditor();
-    expect(wrapper.getDOMNode().querySelector('.ql-editor').innerHTML).to.equal(html);
+    const wrapper = mountReactQuill({defaultValue: html});
+    const quill = getQuillInstance(wrapper);
+    expect(getQuillContentsAsHTML(wrapper)).to.equal(html);
   });
 
   it('allows using Deltas as value', () => {
     const html = '<p>Hello, world!</p>';
     const delta = {ops: [{insert: 'Hello, world!'}]};
-    const wrapper = mount(ReactQuillNode({value: html}));
-    const quill = wrapper.getNode().getEditor();
-    expect(wrapper.getDOMNode().querySelector('.ql-editor').innerHTML).to.equal(html);
+    const wrapper = mountReactQuill({value: html});
+    const quill = getQuillInstance(wrapper);
+    expect(getQuillContentsAsHTML(wrapper)).to.equal(html);
   });
 
   it('prevents using Delta changesets from events as value', () => {
     const value = {ops: []};
     const nextValue = {ops: [{insert: 'Hello, world!'}]};
     const onChange = (_, delta) => wrapper.setProps({value: delta});
-    const wrapper = mount(ReactQuillNode({value, onChange}));
-    const quill = wrapper.getNode().getEditor();
+    const wrapper = mountReactQuill({value, onChange});
+    const quill = getQuillInstance(wrapper);
     expect(() => wrapper.setProps({value: nextValue})).to.throw();
   });
 
   it('allows using Deltas as defaultValue', () => {
     const html = '<p>Hello, world!</p>';
     const delta = {ops: [{insert: 'Hello, world!'}]};
-    const wrapper = mount(ReactQuillNode({defaultValue: html}));
-    const quill = wrapper.getNode().getEditor();
-    expect(wrapper.getDOMNode().querySelector('.ql-editor').innerHTML).to.equal(html);
+    const wrapper = mountReactQuill({defaultValue: html});
+    const quill = getQuillInstance(wrapper);
+    expect(getQuillContentsAsHTML(wrapper)).to.equal(html);
   });
 
   it('calls onChange with the new value when Quill calls pasteHTML', () => {
