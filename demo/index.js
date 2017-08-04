@@ -5,6 +5,8 @@
 if (typeof React !== 'object') alert('React not found. Did you run "npm install"?');
 if (typeof ReactQuill !== 'function') alert('ReactQuill not found. Did you run "make build"?')
 
+var EMPTY_DELTA = {ops: []};
+
 var Editor = React.createClass({
 
 	getInitialState: function() {
@@ -12,7 +14,7 @@ var Editor = React.createClass({
 			theme: 'snow',
 			enabled: true,
 			readOnly: false,
-			value: '',
+			value: EMPTY_DELTA,
 			events: []
 		};
 	},
@@ -23,14 +25,9 @@ var Editor = React.createClass({
 			: 'none';
 	},
 
-	onTextareaChange: function(event) {
-		var value = event.target.value;
-		this.setState({ value:value });
-	},
-
-	onEditorChange: function(value, delta, source) {
+	onEditorChange: function(value, delta, source, editor) {
 		this.setState({
-			value: value,
+			value: editor.getContents(),
 			events: [
 				'text-change('+this.state.value+' -> '+value+')'
 			].concat(this.state.events)
@@ -104,12 +101,13 @@ var Editor = React.createClass({
 				style: { overflow:'hidden', float:'right' }},
 				React.DOM.textarea({
 					style: { display:'block', width:300, height:300 },
-					value: this.state.value,
-					onChange: this.onTextareaChange
+					value: JSON.stringify(this.state.value, null, 2),
+					readOnly: true
 				}),
 				React.DOM.textarea({
 					style: { display:'block', width:300, height:300 },
-					value: this.state.events.join('\n')
+					value: this.state.events.join('\n'),
+					readOnly: true
 				})
 			)
 		);

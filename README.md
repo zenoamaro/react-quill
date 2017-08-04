@@ -10,6 +10,11 @@ See a [live demo] or [Codepen](http://codepen.io/alexkrolick/pen/xgyOXQ/left?edi
 [live demo]: https://zenoamaro.github.io/react-quill/
 
 1. [Quick start](#quick-start)
+   1. [Import the component](#import-the-component)
+   1. [Import the stylesheet](#import-the-stylesheet)
+   1. [Use the component](#use-the-component)
+   1. [Using Deltas](#using-deltas)
+   1. [Controlled vs Uncontrolled Mode](#controlled-vs-uncontrolled-mode)
 1. [Options](#options)
    1. [Theme](#theme)
    1. [Custom Toolbar](#custom-toolbar)
@@ -53,17 +58,18 @@ His contributions have been incredible so far, and his passion and dedication wi
 
 ## Quick Start
 
-### Import the component (ES6 syntax below)
+### Import the component
 
 ```jsx
-import ReactQuill from 'react-quill'
+const ReactQuill = require('react-quill'); // CommonJS
+import ReactQuill from 'react-quill'; // ES6
 ```
 
-### Import styles
+### Import the stylesheet
 
 _Two common examples are shown below. How stylesheets are included in your app depends on build system (Webpack, SCSS, LESS, etc). See the documentation on [Themes](#theme) for more information._
 
-#### Using CDN
+#### Fetching styles from the CDN
 
 ```html
 <link rel="stylesheet" href="//cdn.quilljs.com/1.2.6/quill.snow.css">
@@ -72,7 +78,8 @@ _Two common examples are shown below. How stylesheets are included in your app d
 #### Using `css-loader` with Webpack or `create-react-app`
 
 ```jsx
-import theme from 'react-quill/dist/quill.snow.css'
+const theme = require('react-quill/dist/quill.snow.css'); // CommonJS
+import theme from 'react-quill/dist/quill.snow.css'; // ES6
 ```
 
 ### Use the component
@@ -81,7 +88,7 @@ import theme from 'react-quill/dist/quill.snow.css'
 class MyComponent extends React.Component {
   constructor(props) {
     super(props)
-    this.state = { text: '' }
+    this.state = { text: '' } // You can also pass a Quill Delta here
     this.handleChange = this.handleChange.bind(this)
   }
 
@@ -98,9 +105,17 @@ class MyComponent extends React.Component {
 }
 ```
 
+### Using Deltas
+
+You can pass a [Quill Delta](https://quilljs.com/docs/delta/), instead of an HTML string, as the `value` and `defaultValue` properties. Deltas have a number of advantages over HTML strings, so you might want use them instead. Be aware, however, that comparing Deltas for changes is more expensive than comparing HTML strings, so it might be worth to profile your usage patterns.
+
+Note that switching `value` from an HTML string to a Delta, or vice-versa, will trigger a change, regardless of whether they represent the same document, so you might want to stick to a format and keep using it consistently throughout.
+
+⚠️ Do not use the `delta` object you receive from the `onChange` event as `value`. This object does not contain the full document, but only the last modifications, and doing so will most likely trigger an infinite loop where the same changes are applied over and over again. Use `editor.getContents()` during the event to obtain a Delta of the full document instead. ReactQuill will prevent you from making such a mistake, however if you are absolutely sure that this is what you want, you can pass the object through `new Delta()` again to un-taint it.
+
 ### Controlled vs Uncontrolled Mode
 
-Pass `defaultValue` instead of `value` if you want to use DOM or Quill APIs to imperatively manipulate the editor state.
+Pass `defaultValue` instead of `value` if you need to use DOM or [Quill API](https://quilljs.com/docs/api/)s to imperatively manipulate the editor state.
 In this "uncontrolled" mode ReactQuill uses the prop as the initial value but allows the element to deviate after that. The `onChange` callback still works normally.
 
 - Read more about uncontrolled components in the [React docs][defaultvalues].
@@ -308,16 +323,11 @@ The component has two types of formats:
 <details>
 <summary>Example Code</summary>
 
-ES6 Import
 ```js
-import ReactQuill, { Quill } from 'react-quill'
+const ReactQuill = require('react-quill'); // CommonJS
+import ReactQuill, { Quill } from 'react-quill'; // ES6
 ```
 
-CommonJS Require
-```js
-var ReactQuill = require('react-quill');
-var Quill = ReactQuill.Quill;
-```
 
 ```jsx
 /*
@@ -522,7 +532,10 @@ This property previously set the frequency with which Quill polled the DOM for c
 ### Exports
 
 ```jsx
-import ReactQuill, { Quill, Mixin, Toolbar } from 'react-quill'
+const ReactQuill = require('react-quill'); // CommonJS
+const {Quill, Mixin, Toolbar} = ReactQuill;
+
+import ReactQuill, { Quill, Mixin, Toolbar } from 'react-quill'; // ES6
 ```
 
 `Mixin`
@@ -544,10 +557,13 @@ import ReactQuill, { Quill, Mixin, Toolbar } from 'react-quill'
 : Classes to be applied to the DOM element.
 
 `value`
-: Value for the editor as a controlled component. Note that due to limitations in Quill, this is actually a _semi-controlled_ mode, meaning that the edit is not prevented, but changing `value` will still replace the contents.
+: Value for the editor as a controlled component. Can be a string containing HTML, a [Quill Delta](https://quilljs.com/docs/delta/) instance, or a plain object representing a Delta.
+  Note that due to limitations in Quill, this is actually a _semi-controlled_ mode, meaning that the edit is not prevented, but changing `value` will still replace the contents. 
+  Also note that passing a Quill Delta here, and then an HTML string, or vice-versa, will always trigger a change, regardless of whether they represent the same document.
+  ⚠️ Do not pass the `delta` object from the `onChange` event as `value`, as it will cause a loop. See [Using Deltas](#using-deltas) for details.
 
 `defaultValue`
-: Initial value for the editor as an uncontrolled component.
+: Initial value for the editor as an uncontrolled component. Can be a string containing HTML, a [Quill Delta](https://quilljs.com/docs/delta/), or a plain object representing a Delta.
 
 `readOnly`
 : If true, the editor won't allow changing its contents.
@@ -575,7 +591,8 @@ import ReactQuill, { Quill, Mixin, Toolbar } from 'react-quill'
 : A single React element that will be used as the editing area for Quill in place of the default, which is a `<div>`. Note that you cannot use a `<textarea>`, as it is not a supported target. Also note that updating children is costly, as it will cause the Quill editor to be recreated. Set the `value` prop if you want to control the html contents of the editor.
 
 `onChange(content, delta, source, editor)`
-: Called back with the new contents of the editor after change. It will be passed the HTML contents of the editor, a delta object expressing the change-set itself, the source of the change, and finally a read-only proxy to editor accessors such as `getText()`.
+: Called back with the new contents of the editor after change. It will be passed the HTML contents of the editor, a delta object expressing the change, the source of the change, and finally a read-only proxy to [editor accessors](#the-unprivileged-editor) such as `getHTML()`.
+  ⚠️ Do not use this `delta` object as `value`, as it will cause a loop. Use `editor.getContents()` instead. See [Using Deltas](#using-deltas) for details.
 
 `onChangeSelection(range, source, editor)`
 : Called back with the new selected range, or null when unfocused. It will be passed the selection range, the source of the change, and finally a read-only proxy to editor accessors such as `getBounds()`.
@@ -603,13 +620,12 @@ If you have [a ref](https://facebook.github.io/react/docs/more-about-refs.html) 
 : Removes focus from the editor.
 
 `getEditor()`
-: Returns the Quill instance that backs the editor. While you can freely use this to access methods such as `getText()`, please avoid from imperatively manipulating the instance.
+: Returns the Quill instance that backs the editor. While you can freely use this to access methods such as `getText()`, please avoid from imperatively manipulating the instance, to avoid getting ReactQuill and Quill out-of-sync. A much-safer [unprivileged editor](#the-unprivileged-editor) is available as replacement.
 
 <details>
 <summary>Example</summary>
 
 [View this example on Codepen](https://codepen.io/alexkrolick/pen/YNmGar?editors=0011)
-
 
 ```jsx
 class Editor extends React.Component {
@@ -652,6 +668,28 @@ class Editor extends React.Component {
 ```
 
 </details>
+
+### The unprivileged editor
+
+During events, ReactQuill will make a restricted subset of the Quill API available as the `editor` argument. This prevents access to destructive methods, which might case ReactQuill to get out-of-sync with the component. It provides the following methods, which are mostly proxies of existing [Quill methods](https://quilljs.com/docs/api/):
+
+`getLength()`
+: Returns the length of the editor contents, in characters, not including any HTML tag.
+
+`getText()`
+: Returns the string contents of the editor, not including any HTML tag.
+
+`getHTML()`
+: Returns the full HTML contents of the editor.
+
+`getContents()`
+: Returns a [Quill Delta](https://quilljs.com/docs/delta/) of the complete document.
+
+`getSelection()`
+: Returns the current selection range, or `null` if the editor is unfocused.
+
+`getBounds()`
+: Returns the pixel position, relative to the editor container, and dimensions, of a selection, at a given location.
 
 
 ## Building and testing
