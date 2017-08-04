@@ -389,10 +389,10 @@ var QuillComponent = React.createClass({
 			return;
 		}
 		
-		this.setState({ selection: range });
+		this.setState({ selection: nextSelection });
 		
 		if (this.props.onChangeSelection) {
-			this.props.onChangeSelection(range, source, editor);
+			this.props.onChangeSelection(nextSelection, source, editor);
 		}
 
 		if (hasGainedFocus && this.props.onFocus) {
