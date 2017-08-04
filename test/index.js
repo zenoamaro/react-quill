@@ -6,115 +6,115 @@
  * https://github.com/airbnb/enzyme/blob/master/docs/api/mount.md
  */
 
-var React = require('react');
-var ReactQuill = require('../src/index');
-var Quill = ReactQuill.Quill;
-var { mount, shallow } = require('enzyme');
-var chai = require('chai');
-var { expect, assert } = chai;
-var chaiEnzyme = require('chai-enzyme');
-var sinon = require('sinon');
+const React = require('react');
+const sinon = require('sinon');
+const {expect, assert} = require('chai');
+const ReactQuill = require('../src/index');
+const Quill = ReactQuill.Quill;
 
-chai.use(chaiEnzyme());
+const {
+  mountReactQuill,
+  getQuillInstance,
+  getQuillContentsAsHTML,
+  setQuillContentsFromHTML,
+} = require('./utils');
 
 console.log('\n\
   Note that some functionality cannot be tested outside of a full browser environment.\n\n\
   To manually test the component:\n\
     1) Run "npm install" \& "npm run build"\n\
     2) Open "demo/index.html" in a web browser.\
-')
+');
 
 describe('<ReactQuill />', function() {
 
   it('calls componentDidMount', () => {
     sinon.spy(ReactQuill.prototype, 'componentDidMount');
-    const wrapper = mount(ReactQuillNode());
+    const wrapper = mountReactQuill();
     expect(ReactQuill.prototype.componentDidMount.calledOnce).to.equal(true);
   });
 
   it('allows props to be set', () => {
-    var props = {foo: 'bar'}
-    const wrapper = mount(ReactQuillNode(props));
+    const props = {foo: 'bar'}
+    const wrapper = mountReactQuill(props);
     expect(wrapper.props().foo).to.equal('bar');
     wrapper.setProps({ foo: 'baz' });
     expect(wrapper.props().foo).to.equal('baz');
   });
 
   it('attaches a Quill instance to the component', () => {
-    const wrapper = mount(ReactQuillNode());
-    const quill = wrapper.getNode().getEditor();
-    expect(quill instanceof Quill).to.equal(true)
+    const wrapper = mountReactQuill();
+    const quill = getQuillInstance(wrapper);
+    expect(quill instanceof Quill).to.equal(true);
   })
 
   it('passes options to Quill from props', () => {
-    var enabledFormats = ['underline', 'bold', 'italic'];
-    var props = {
+    const enabledFormats = ['underline', 'bold', 'italic'];
+    const props = {
       placeholder: 'foobar',
       readOnly: true,
       formats: enabledFormats,
       modules: {
         toolbar: enabledFormats,
-      }
-    }
-    const wrapper = mount(ReactQuillNode(props));
-    const quill = wrapper.getNode().getEditor();
-    expect(quill.options.placeholder).to.equal(props.placeholder)
-    expect(quill.options.readOnly).to.equal(props.readOnly)
-    expect(quill.options.modules).to.include.keys(Object.keys(props.modules))
-    expect(quill.options.formats).to.include.members(props.formats)
+      },
+    };
+    const wrapper = mountReactQuill(props);
+    const quill = getQuillInstance(wrapper);
+    expect(quill.options.placeholder).to.equal(props.placeholder);
+    expect(quill.options.readOnly).to.equal(props.readOnly);
+    expect(quill.options.modules).to.include.keys(Object.keys(props.modules));
+    expect(quill.options.formats).to.include.members(props.formats);
   })
 
   it('allows using HTML strings as value', () => {
     const html = '<p>Hello, world!</p>';
-    const wrapper = mount(ReactQuillNode({value: html}));
-    const quill = wrapper.getNode().getEditor();
-    expect(wrapper.getDOMNode().querySelector('.ql-editor').innerHTML).to.equal(html);
+    const wrapper = mountReactQuill({value: html});
+    const quill = getQuillInstance(wrapper);
+    expect(getQuillContentsAsHTML(wrapper)).to.equal(html);
   });
 
   it('allows using HTML strings as defaultValue', () => {
     const html = '<p>Hello, world!</p>';
-    const wrapper = mount(ReactQuillNode({defaultValue: html}));
-    const quill = wrapper.getNode().getEditor();
-    expect(wrapper.getDOMNode().querySelector('.ql-editor').innerHTML).to.equal(html);
+    const wrapper = mountReactQuill({defaultValue: html});
+    const quill = getQuillInstance(wrapper);
+    expect(getQuillContentsAsHTML(wrapper)).to.equal(html);
   });
 
   it('allows using Deltas as value', () => {
     const html = '<p>Hello, world!</p>';
     const delta = {ops: [{insert: 'Hello, world!'}]};
-    const wrapper = mount(ReactQuillNode({value: html}));
-    const quill = wrapper.getNode().getEditor();
-    expect(wrapper.getDOMNode().querySelector('.ql-editor').innerHTML).to.equal(html);
+    const wrapper = mountReactQuill({value: html});
+    const quill = getQuillInstance(wrapper);
+    expect(getQuillContentsAsHTML(wrapper)).to.equal(html);
   });
 
   it('prevents using Delta changesets from events as value', () => {
     const value = {ops: []};
     const nextValue = {ops: [{insert: 'Hello, world!'}]};
     const onChange = (_, delta) => wrapper.setProps({value: delta});
-    const wrapper = mount(ReactQuillNode({value, onChange}));
-    const quill = wrapper.getNode().getEditor();
+    const wrapper = mountReactQuill({value, onChange});
+    const quill = getQuillInstance(wrapper);
     expect(() => wrapper.setProps({value: nextValue})).to.throw();
   });
 
   it('allows using Deltas as defaultValue', () => {
     const html = '<p>Hello, world!</p>';
     const delta = {ops: [{insert: 'Hello, world!'}]};
-    const wrapper = mount(ReactQuillNode({defaultValue: html}));
-    const quill = wrapper.getNode().getEditor();
-    expect(wrapper.getDOMNode().querySelector('.ql-editor').innerHTML).to.equal(html);
+    const wrapper = mountReactQuill({defaultValue: html});
+    const quill = getQuillInstance(wrapper);
+    expect(getQuillContentsAsHTML(wrapper)).to.equal(html);
   });
 
   it('calls onChange with the new value when Quill calls pasteHTML', () => {
     const onChangeSpy = sinon.spy();
     const inHtml = '<p>Hello, world!</p>';
     const onChange = (value) => {
-      expect(inHtml).to.equal(value)
+      expect(inHtml).to.equal(value);
       onChangeSpy();
-    }
-    const wrapper = mount(ReactQuillNode({
-      onChange: onChange,
-    }));
-    wrapper.getNode().getEditor().clipboard.dangerouslyPasteHTML(inHtml)
-    expect(wrapper.getDOMNode().querySelector('.ql-editor').innerHTML).to.equal(inHtml)
+    };
+    const wrapper = mountReactQuill({onChange});
+    setQuillContentsFromHTML(wrapper, inHtml);
+    expect(getQuillContentsAsHTML(wrapper)).to.equal(inHtml)
     expect(onChangeSpy).to.have.property('callCount', 1);
   })
 
@@ -122,41 +122,38 @@ describe('<ReactQuill />', function() {
     const onChangeSpy = sinon.spy();
     const inHtml = '<p><strong>Hello, World!</strong></p>';
     const onChange = (value) => {
-      expect(inHtml).to.equal(value)
+      expect(inHtml).to.equal(value);
       onChangeSpy();
-    }
-    const wrapper = mount(ReactQuillNode({
-      onChange: onChange,
-    }));
-    wrapper.getNode().getEditor().insertText(0, 'Hello, World!', 'bold', true);
-    expect(wrapper.getDOMNode().querySelector('.ql-editor').innerHTML).to.equal(inHtml)
+    };
+    const wrapper = mountReactQuill({onChange});
+    const quill = getQuillInstance(wrapper);
+    quill.insertText(0, 'Hello, World!', 'bold', true);
+    expect(getQuillContentsAsHTML(wrapper)).to.equal(inHtml);
     expect(onChangeSpy).to.have.property('callCount', 1);
   })
 
   it('shows defaultValue if value prop is undefined', () => {
     const defaultValue = '<p>Hello, world!</p>';
-    const wrapper = mount(ReactQuillNode({
-      defaultValue: defaultValue,
-    }));
-    const quill = wrapper.getNode().getEditor();
-    expect(wrapper.getNode().getEditorContents()).to.equal(defaultValue)
+    const wrapper = mountReactQuill({defaultValue});
+    const quill = getQuillInstance(wrapper);
+    expect(wrapper.getNode().getEditorContents()).to.equal(defaultValue);
   })
 
   it('shows the value prop instead of defaultValue if both are defined', () => {
     const defaultValue = '<p>Hello, world!</p>';
     const value = '<p>Good night, moon!</p>';
-    const wrapper = mount(ReactQuillNode({
+    const wrapper = mountReactQuill({
       defaultValue: defaultValue,
       value: value,
-    }));
-    const quill = wrapper.getNode().getEditor();
-    expect(wrapper.getNode().getEditorContents()).to.equal(value)
+    });
+    const quill = getQuillInstance(wrapper);
+    expect(wrapper.getNode().getEditorContents()).to.equal(value);
   })
 
   it('uses a custom editing area if provided', () => {
     const editingArea = React.DOM.div({id:'venus'});
-    const wrapper = mount(ReactQuillNode({}, editingArea));
-    const quill = wrapper.getNode().getEditor();
+    const wrapper = mountReactQuill({}, editingArea);
+    const quill = getQuillInstance(wrapper);
     expect(wrapper.getDOMNode().querySelector('div#venus')).not.to.be.null;
   })
 
@@ -190,16 +187,3 @@ describe('<ReactQuill />', function() {
   it('calls onChange after keypresses are sent to the editor')
 
 });
-
-function ReactQuillNode(props, children) {
-  props = Object.assign({
-    modules: {'toolbar': ['underline', 'bold', 'italic']},
-    formats: ['underline', 'bold', 'italic']
-  }, props);
-  
-  return React.createElement(
-    ReactQuill,
-    props,
-    children
-  );
-}

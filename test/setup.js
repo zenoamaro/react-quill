@@ -9,3 +9,8 @@
 require('jsdom-global')()
 require('./polyfills/MutationObserver.js')(global)
 require('./polyfills/getSelection.js')(global)
+
+// Setup Chai to use Enzyme
+const chai = require('chai');
+const chaiEnzyme = require('chai-enzyme');
+chai.use(chaiEnzyme());
