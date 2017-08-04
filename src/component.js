@@ -25,11 +25,13 @@ var QuillComponent = React.createClass({
 		placeholder: T.string,
 		tabIndex: T.number,
 		bounds: T.oneOfType([T.string, T.element]),
+		onChange: T.func,
+		onChangeSelection: T.func,
+		onFocus: T.func,
+		onBlur: T.func,
 		onKeyPress: T.func,
 		onKeyDown: T.func,
 		onKeyUp: T.func,
-		onChange: T.func,
-		onChangeSelection: T.func,
 
 		modules: function(props) {
 			var isNotObject = T.object.apply(this, arguments);
@@ -114,11 +116,13 @@ var QuillComponent = React.createClass({
 		'style',
 		'placeholder',
 		'tabIndex',
+		'onChange',
+		'onChangeSelection',
+		'onFocus',
+		'onBlur',
 		'onKeyPress',
 		'onKeyDown',
 		'onKeyUp',
-		'onChange',
-		'onChangeSelection',
 	],
 
 	getDefaultProps: function() {
@@ -376,14 +380,25 @@ var QuillComponent = React.createClass({
 		}
 	},
 
-	onEditorChangeSelection: function(range, source, editor) {
-		var s = this.getEditorSelection() || {};
-		var r = range || {};
-		if (r.length !== s.length || r.index !== s.index) {
-			this.setState({ selection: range });
-			if (this.props.onChangeSelection) {
-				this.props.onChangeSelection(range, source, editor);
-			}
+	onEditorChangeSelection: function(nextSelection, source, editor) {
+		var currentSelection = this.getEditorSelection();
+		var hasGainedFocus = !currentSelection && nextSelection;
+		var hasLostFocus = currentSelection && !nextSelection;
+
+		if (isEqual(nextSelection, currentSelection)) {
+			return;
+		}
+		
+		this.setState({ selection: range });
+		
+		if (this.props.onChangeSelection) {
+			this.props.onChangeSelection(range, source, editor);
+		}
+
+		if (hasGainedFocus && this.props.onFocus) {
+			this.props.onFocus(nextSelection, source, editor);
+		} else if (hasLostFocus && this.props.onBlur) {
+			this.props.onBlur(currentSelection, source, editor);
 		}
 	},
 
