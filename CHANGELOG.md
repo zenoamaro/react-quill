@@ -1,6 +1,14 @@
 Changelog
 =========
 
+v1.1.0
+------
+
+- Add support for React 16 and onwards by depending on `prop-types` and `create-react-class` (#181 @mikecousins)
+- Allow setting contents with a Quill Delta via the `value` prop (#101)
+- Add onFocus/onBlur props (#110)
+- Add tabindex support (#232)
+
 v1.0.0
 ------
 This release supports Quill v1.0.0+. ⚠️ There are many breaking changes, so refer to the documentation for information on how to migrate your application.

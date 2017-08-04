@@ -754,6 +754,12 @@ Please check the browser support table for the upstream [Quill](https://github.c
 
 ## Changelog
 
+### v1.1.0
+- Add support for React 16 and onwards by depending on `prop-types` and `create-react-class` (#181 @mikecousins)
+- Allow setting contents with a Quill Delta via the `value` prop (#101)
+- Add onFocus/onBlur props (#110)
+- Add tabindex support (#232)
+
 #### v1.0.0
 This release adds support for Quill v1.0.0+. ⚠️ There are many breaking changes, both in Quill and in ReactQuill. See [Upgrading to React-Quill v1.0.0](#upgrading-to-react-quill-v100).
 
