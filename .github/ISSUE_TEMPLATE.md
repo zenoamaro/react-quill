@@ -34,4 +34,5 @@ https://github.com/quilljs/quill/issues
 - [ ] 1.0.0-rc-2
 - [ ] 1.0.0-rc-3
 - [ ] 1.0.0
+- [ ] 1.1.0
 - [ ] Other (fork)
