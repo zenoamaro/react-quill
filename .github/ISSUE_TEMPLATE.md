@@ -22,7 +22,7 @@ Please refer to the [Quill issues page].
 [Quill issues page]: 
 https://github.com/quilljs/quill/issues
 
-#### Quill version 
+#### React-Quill version 
 - [ ] master
 - [ ] 0.4.1
 - [ ] 1.0.0-beta-1
