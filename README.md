@@ -78,8 +78,8 @@ _Two common examples are shown below. How stylesheets are included in your app d
 #### Using `css-loader` with Webpack or `create-react-app`
 
 ```jsx
-const theme = require('react-quill/dist/quill.snow.css'); // CommonJS
-import theme from 'react-quill/dist/quill.snow.css'; // ES6
+require('react-quill/dist/quill.snow.css'); // CommonJS
+import 'react-quill/dist/quill.snow.css'; // ES6
 ```
 
 ### Use the component
