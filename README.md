@@ -566,7 +566,7 @@ import ReactQuill, { Quill, Mixin, Toolbar } from 'react-quill'; // ES6
 : Initial value for the editor as an uncontrolled component. Can be a string containing HTML, a [Quill Delta](https://quilljs.com/docs/delta/), or a plain object representing a Delta.
 
 `readOnly`
-: If true, the editor won't allow changing its contents.
+: If true, the editor won't allow changing its contents. Wraps the Quill [`disable` API](https://quilljs.com/docs/api/#enable).
 
 `placeholder`
 : The default value for the empty editor.
