@@ -346,7 +346,7 @@ Quill.register(BoldBlot);
  */
 class MyComponent extends React.Component {
   constructor(props) {
-    this.formats = ['italic, 'underline'] // default formats
+    this.formats = ['italic', 'underline'] // default formats
     this.state = { text: '' }
   }
 
