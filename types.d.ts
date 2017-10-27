@@ -10,7 +10,7 @@ interface ToolbarOptionObject {
     };
 }
 
-export interface QuillModules {
+export interface Modules {
     toolbar: string | ToolbarOptionObject | ToolbarOptionItem[];
 }
 
@@ -22,50 +22,57 @@ export interface UnprivilegedEditor {
     getSelection(focus?: boolean): Quill.RangeStatic;
 }
 
-export interface QuillComponentProps {
-    id: string;
-    className: string;
-    theme: string;
-    style: React.CSSProperties;
-    readOnly: boolean;
-    value: string | Quill.Delta;
-    defaultValue: string | Quill.Delta;
-    placeholder: string;
-    tabIndex: number;
-    bounds: string | HTMLElement;
-    onChange(content: string, delta: Quill.Delta, source: Quill.Sources, editor: UnprivilegedEditor): void;
-    onChangeSelection(range: Quill.RangeStatic, source: Quill.Sources, editor: UnprivilegedEditor): void;
-    onFocus(range: Quill.RangeStatic, source: Quill.Sources, editor: UnprivilegedEditor): void;
-    onBlur(previousRange: Quill.RangeStatic, source: Quill.Sources, editor: UnprivilegedEditor): void;
-    onKeyPress: React.EventHandler<any>;
-    onKeyDown: React.EventHandler<any>;
-    onKeyUp: React.EventHandler<any>;
-    modules: QuillModules;
-    // toolbar: never;
-    formats: string[];
-    // styles: never;
-    // pollInterval: never;
-    children: React.ReactElement<any>;
+export interface ComponentProps {
+    id?: string;
+    className?: string;
+    theme?: string;
+    style?: React.CSSProperties;
+    readOnly?: boolean;
+    value?: string | Quill.Delta;
+    defaultValue?: string | Quill.Delta;
+    placeholder?: string;
+    tabIndex?: number;
+    bounds?: string | HTMLElement;
+    onChange?: (content: string, delta: Quill.Delta, source: Quill.Sources, editor: UnprivilegedEditor) => void;
+    onChangeSelection?: (range: Quill.RangeStatic, source: Quill.Sources, editor: UnprivilegedEditor) => void;
+    onFocus?: (range: Quill.RangeStatic, source: Quill.Sources, editor: UnprivilegedEditor) => void;
+    onBlur?: (previousRange: Quill.RangeStatic, source: Quill.Sources, editor: UnprivilegedEditor) => void;
+    onKeyPress?: React.EventHandler<any>;
+    onKeyDown?: React.EventHandler<any>;
+    onKeyUp?: React.EventHandler<any>;
+    formats?: string[];
+    children?: React.ReactElement<any>;
+    modules?: Modules;
+
+    // Deprecated props
+    toolbar?: never;
+    styles?: never;
+    pollInterval?: never;
 }
 
-export default class QuillComponent extends React.Component<QuillComponentProps> {
+export default class Component extends React.Component<ComponentProps> {
     focus(): void;
     blur(): void;
     getEditor(): Quill.Quill;
 }
 
-export interface QuillToolbarItems {}
-
-export interface QuillToolbarProps {
-    id: string;
-    className: string;
-    style: Object;
-    items: any[];
+export interface ToolbarItem {
+    type: string;
+    label?: string;
+    value?: string;
+    items?: ToolbarItem[];
 }
 
-export class QuillToolbar extends React.Component<QuillToolbarProps> {}
+export interface ToolbarProps {
+    id?: string;
+    className?: string;
+    style?: Object;
+    items?: ToolbarItem[];
+}
 
-export interface QuillMixin {
+export class Toolbar extends React.Component<ToolbarProps> {}
+
+export interface Mixin {
     createEditor(element: HTMLElement, config: Quill.QuillOptionsStatic): Quill.Quill;
     hookEditor(editor: Quill.Quill): void;
     unhookEditor(editor: Quill.Quill): void;
