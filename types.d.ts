@@ -21,12 +21,12 @@ export interface Modules {
 }
 
 export interface UnprivilegedEditor {
-	getLength: () => number;
-	getText: () => string;
-	getHTML: () => string;
+	getLength(): number;
+    getText(index?: number, length?: number): string;
+	getHTML(): string;
 	getBounds(index: number, length?: number): Quill.BoundsStatic;
-	getSelection(focus?: boolean): Quill.RangeStatic;
-}
+    getSelection(focus?: boolean): Quill.RangeStatic;
+    getContents(index?: number, length?: number): DeltaStatic;}
 
 export interface ComponentProps {
 	id?: string;
