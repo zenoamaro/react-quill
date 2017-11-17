@@ -15,6 +15,7 @@
   },
   "main": "lib/index.js",
   "browser": "lib/index.js",
+  "types": "types.d.ts",
   "scripts": {
     "test": "make test",
     "build": "make build",
@@ -43,6 +44,8 @@
     "LICENSE"
   ],
   "dependencies": {
+    "@types/quill": "*",
+    "@types/react": "*",
     "create-react-class": "^15.6.0",
     "lodash": "^4.17.4",
     "prop-types": "^15.5.10",
