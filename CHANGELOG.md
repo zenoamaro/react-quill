@@ -1,6 +1,11 @@
 Changelog
 =========
 
+v1.2.0
+------
+
+- Add Typescript definitions (#277 @Charrondev)
+
 v1.1.0
 ------
 

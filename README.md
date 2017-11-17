@@ -41,10 +41,10 @@ Thanks to @clemmy and @alexkrolick for landing this much-awaited change. There a
 
 ---
 
-🎧 **Latest published package version: `v1.1.0`**  
+🎧 **Latest published package version: `v1.2.0`**  
 
 ```sh
-npm install react-quill@v1.1.0
+npm install react-quill@v1.2.0
 ```
 
 Special thank you to everyone who contributed during the 1.0.0 release cycle!
@@ -754,6 +754,10 @@ See [#7](https://github.com/zenoamaro/react-quill/issues/7) for more details.
 Please check the browser support table for the upstream [Quill](https://github.com/quilljs/quill) dependency. The React part of the codebase is ES5-compatible.
 
 ## Changelog
+
+### v1.2.0
+
+- Add Typescript definitions (#277 @Charrondev)
 
 ### v1.1.0
 - Add support for React 16 and onwards by depending on `prop-types` and `create-react-class` (#181 @mikecousins)
