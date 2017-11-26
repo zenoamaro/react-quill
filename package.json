@@ -39,6 +39,7 @@
   "files": [
     "dist/",
     "lib/",
+    "types.d.ts",
     "README.md",
     "CHANGELOG.md",
     "LICENSE"
