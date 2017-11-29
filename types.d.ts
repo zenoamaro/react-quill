@@ -26,7 +26,7 @@ export interface UnprivilegedEditor {
 	getHTML(): string;
 	getBounds(index: number, length?: number): Quill.BoundsStatic;
     getSelection(focus?: boolean): Quill.RangeStatic;
-    getContents(index?: number, length?: number): DeltaStatic;}
+    getContents(index?: number, length?: number): Quill.DeltaStatic;}
 
 export interface ComponentProps {
 	id?: string;
@@ -97,8 +97,8 @@ export interface Mixin {
 	createEditor(element: HTMLElement, config: Quill.QuillOptionsStatic): Quill.Quill;
 	hookEditor(editor: Quill.Quill): void;
 	unhookEditor(editor: Quill.Quill): void;
-	setEditorReadOnly(editor: Quill.Quill, value: boolean);
-	setEditorContents(editor: Quill.Quill, value: Quill.Delta | string);
-	setEditorSelection(editor: Quill.Quill, range: Quill.RangeStatic);
+	setEditorReadOnly(editor: Quill.Quill, value: boolean): void;
+	setEditorContents(editor: Quill.Quill, value: Quill.Delta | string): void;
+	setEditorSelection(editor: Quill.Quill, range: Quill.RangeStatic): void;
 	makeUnprivilegedEditor(editor: Quill.Quill): UnprivilegedEditor;
 }
