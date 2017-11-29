@@ -25,7 +25,7 @@ export interface Modules {
 
 export interface UnprivilegedEditor {
 	getLength(): number;
-  getText(index?: number, length?: number): string;
+	getText(index?: number, length?: number): string;
 	getHTML(): string;
 	getBounds(index: number, length?: number): Quill.BoundsStatic;
   getSelection(focus?: boolean): Quill.RangeStatic;
