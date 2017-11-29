@@ -3,6 +3,11 @@ import * as Quill from "quill";
 
 type ToolbarOptionItem = string | string[] | Object[];
 
+type Format = 'align' | 'background' | 'blockquote' | 'bold' | 'bullet' | 'code' |
+	'code-block' | 'color' | 'direction' | 'font' | 'formula' | 'header' |
+ 	'image' | 'indent' | 'italic'| 'link' | 'list' | 'script' | 'size' | 'strike' |
+	'underline' | 'video';
+
 interface ToolbarOptionObject {
 	container: string;
 	handlers?: {
@@ -11,22 +16,20 @@ interface ToolbarOptionObject {
 }
 
 export interface Modules {
-	/**
-	 * @deprecated
-	 * 'Since v1.0.0, React Quill will not create a custom toolbar for you anymore.
-	 * Create a toolbar explictly, or let Quill create one.
-	 * See: https://github.com/zenoamaro/react-quill#upgrading-to-react-quill-v100
-	 */
-	toolbar?: never;
+	toolbar?: (
+		Format |
+		{[key: string]: string | boolean | number | (string | boolean | number)[]}
+	)[][];
+	formats? : Format[]
 }
 
 export interface UnprivilegedEditor {
 	getLength(): number;
-    getText(index?: number, length?: number): string;
+  getText(index?: number, length?: number): string;
 	getHTML(): string;
 	getBounds(index: number, length?: number): Quill.BoundsStatic;
-    getSelection(focus?: boolean): Quill.RangeStatic;
-    getContents(index?: number, length?: number): Quill.DeltaStatic;}
+  getSelection(focus?: boolean): Quill.RangeStatic;
+  getContents(index?: number, length?: number): Quill.DeltaStatic;}
 
 export interface ComponentProps {
 	id?: string;
