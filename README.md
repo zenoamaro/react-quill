@@ -41,10 +41,10 @@ Thanks to @clemmy and @alexkrolick for landing this much-awaited change. There a
 
 ---
 
-🎧 **Latest published package version: `v1.2.0`**  
+🎧 **Latest published package version: `v1.2.2`**  
 
 ```sh
-npm install react-quill@v1.2.0
+npm install react-quill@v1.2.2
 ```
 
 Special thank you to everyone who contributed during the 1.0.0 release cycle!

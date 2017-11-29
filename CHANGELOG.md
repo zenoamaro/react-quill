@@ -1,10 +1,12 @@
 Changelog
 =========
 
-v1.2.0
+
+v1.2.2
 ------
 
 - Add Typescript definitions (#277 @Charrondev)
+- Fixes for TS definitions  (#294 @jdhungtington, #296 @ajaska)
 
 v1.1.0
 ------
