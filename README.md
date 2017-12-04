@@ -41,7 +41,7 @@ Thanks to @clemmy and @alexkrolick for landing this much-awaited change. There a
 
 ---
 
-🎧 **Latest published package version: `v1.2.2`**  
+🎧 **Latest published package version: `v1.2.3`**  
 
 ```sh
 npm install react-quill@v1.2.2
