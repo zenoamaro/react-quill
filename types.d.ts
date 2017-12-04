@@ -1,32 +1,14 @@
 import * as React from "react";
 import * as Quill from "quill";
 
-type ToolbarOptionItem = string | string[] | Object[];
-
-interface ToolbarOptionObject {
-	container: string;
-	handlers?: {
-		[key: string]: Function;
-	};
-}
-
-export interface Modules {
-	/**
-	 * @deprecated
-	 * 'Since v1.0.0, React Quill will not create a custom toolbar for you anymore.
-	 * Create a toolbar explictly, or let Quill create one.
-	 * See: https://github.com/zenoamaro/react-quill#upgrading-to-react-quill-v100
-	 */
-	toolbar?: never;
-}
-
 export interface UnprivilegedEditor {
 	getLength(): number;
-    getText(index?: number, length?: number): string;
+	getText(index?: number, length?: number): string;
 	getHTML(): string;
 	getBounds(index: number, length?: number): Quill.BoundsStatic;
-    getSelection(focus?: boolean): Quill.RangeStatic;
-    getContents(index?: number, length?: number): Quill.DeltaStatic;}
+	getSelection(focus?: boolean): Quill.RangeStatic;
+	getContents(index?: number, length?: number): Quill.DeltaStatic;
+}
 
 export interface ComponentProps {
 	id?: string;
@@ -48,7 +30,7 @@ export interface ComponentProps {
 	onKeyUp?: React.EventHandler<any>;
 	formats?: string[];
 	children?: React.ReactElement<any>;
-	modules?: Modules;
+	modules?: Quill.StringMap;
 
 	/** @deprecated
 	 * The `toolbar` prop has been deprecated. Use `modules.toolbar` instead.
@@ -61,7 +43,7 @@ export interface ComponentProps {
 	 * See: https://github.com/zenoamaro/react-quill#upgrading-to-react-quill-v100
 	 */
 
-	 styles?: never;
+	styles?: never;
 	/**
 	 * @deprecated
 	 * The `pollInterval` property does not have any effect anymore.
@@ -76,22 +58,6 @@ export default class Component extends React.Component<ComponentProps> {
 	blur(): void;
 	getEditor(): Quill.Quill;
 }
-
-export interface ToolbarItem {
-	type: string;
-	label?: string;
-	value?: string;
-	items?: ToolbarItem[];
-}
-
-export interface ToolbarProps {
-	id?: string;
-	className?: string;
-	style?: Object;
-	items?: ToolbarItem[];
-}
-
-export class Toolbar extends React.Component<ToolbarProps> {}
 
 export interface Mixin {
 	createEditor(element: HTMLElement, config: Quill.QuillOptionsStatic): Quill.Quill;
