@@ -63,14 +63,14 @@ var QuillMixin = {
 	*/
 	setEditorContents: function(editor, value) {
 		var sel = editor.getSelection();
-		
+
 		if (typeof value === 'string') {
 			editor.clipboard.dangerouslyPasteHTML(value);
 		} else {
 			editor.setContents(value);
 		}
 
-		if (sel) this.setEditorSelection(editor, sel);
+		if (sel && editor.hasFocus()) this.setEditorSelection(editor, sel);
 	},
 
 	setEditorSelection: function(editor, range) {
