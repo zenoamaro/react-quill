@@ -102,7 +102,7 @@ var QuillToolbar = createClass({
 	},
 
 	renderGroup: function(item, key) {
-		return React.DOM.span({
+		return DOM.span({
 			key: item.label || key,
 			className:'ql-formats' },
 			item.items.map(this.renderItem)
@@ -110,7 +110,7 @@ var QuillToolbar = createClass({
 	},
 
 	renderChoiceItem: function(item, key) {
-		return React.DOM.option({
+		return DOM.option({
 			key: item.label || item.value || key,
 			value: item.value },
 			item.label
@@ -126,11 +126,11 @@ var QuillToolbar = createClass({
 			className: 'ql-'+item.type,
 			value: selectedItem.value,
 		};
-		return React.DOM.select(attrs, choiceItems);
+		return DOM.select(attrs, choiceItems);
 	},
 
 	renderButton: function(item, key) {
-		return React.DOM.button({
+		return DOM.button({
 			type: 'button',
 			key: item.label || item.value || key,
 			value: item.value,
@@ -141,7 +141,7 @@ var QuillToolbar = createClass({
 	},
 
 	renderAction: function(item, key) {
-		return React.DOM.button({
+		return DOM.button({
 			key: item.label || item.value || key,
 			className: 'ql-'+item.type,
 			title: item.label },
