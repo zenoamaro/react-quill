@@ -41,10 +41,9 @@ Thanks to @clemmy and @alexkrolick for landing this much-awaited change. There a
 
 ---
 
-🎧 **Latest published package version: `v1.2.3`**  
-
 ```sh
-npm install react-quill@v1.2.2
+npm install react-quill
+yarn add react-quill
 ```
 
 Special thank you to everyone who contributed during the 1.0.0 release cycle!
@@ -755,6 +754,10 @@ Please check the browser support table for the upstream [Quill](https://github.c
 
 ## Changelog
 
+### v1.2.4
+
+- Only restore focus if editor had focus (#312 @MattKunze)
+
 ### v1.2.0
 
 - Add Typescript definitions (#277 @Charrondev)
@@ -856,6 +859,7 @@ React Quill would not be where it is today without the contributions of many peo
 - @rpellerin
 - @sandbochs
 - @wouterh
+- @MattKunze
 
 ## Roadmap
 
