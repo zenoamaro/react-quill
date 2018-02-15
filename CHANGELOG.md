@@ -1,6 +1,11 @@
 Changelog
 =========
 
+v1.2.4
+------
+
+- Only restore focus if editor had focus (#312 @MattKunze)
+
 
 v1.2.2
 ------
