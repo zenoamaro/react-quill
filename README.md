@@ -221,7 +221,7 @@ function insertStar () {
  */
 const CustomToolbar = () => (
   <div id="toolbar">
-    <select className="ql-header">
+    <select className="ql-header" defaultValue={""} onChange={e => e.persist()}>
       <option value="1"></option>
       <option value="2"></option>
       <option selected></option>
