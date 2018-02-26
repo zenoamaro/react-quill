@@ -30,7 +30,7 @@ See a [live demo] or [Codepen](http://codepen.io/alexkrolick/pen/xgyOXQ/left?edi
 1. [Browser support](#browser-support)
 1. [Building and testing](#building-and-testing)
    1. [Bundling with Webpack](#bundling-with-webpack)
-1. [Changelog](#changelog)
+1. [Changelog](./Changelog.md)
 1. [Contributors](#contributors)
 1. [License](#license)
 
@@ -754,83 +754,7 @@ Please check the browser support table for the upstream [Quill](https://github.c
 
 ## Changelog
 
-### v1.2.4
-
-- Only restore focus if editor had focus (#312 @MattKunze)
-
-### v1.2.0
-
-- Add Typescript definitions (#277 @Charrondev)
-
-### v1.1.0
-- Add support for React 16 and onwards by depending on `prop-types` and `create-react-class` (#181 @mikecousins)
-- Allow setting contents with a Quill Delta via the `value` prop (#101)
-- Add onFocus/onBlur props (#110)
-- Add tabindex support (#232)
-
-#### v1.0.0
-This release adds support for Quill v1.0.0+. ⚠️ There are many breaking changes, both in Quill and in ReactQuill. See [Upgrading to React-Quill v1.0.0](#upgrading-to-react-quill-v100).
-
-- Updated to support Quill v1.0.0+ (@clemmy, @alexkrolick)
-- Bundling Quill with ReactQuill (@clemmy)
-- Bundling CSS files in the NPM package
-- Removed `dist` from source control (@alexkrolick)
-- Deprecated `toolbar` property and component
-- Deprecated the `styles` property
-- Deprecated custom formats via the `formats` property
-- Deprecated the `pollInterval` property
-- Rerendering on `style` property change (@lavrton)
-- Improved docs for `bounds`, which now rerenders on change
-- Performing deep props comparison to avoid rerenders
-- Fixed the unprivileged editor not returning values
-- Restoring selection event after text change
-- Fixed the order of parameters in change events (@webcarrot)
-- Using 'core' instead of 'base' CSS (@alexkrolick)
-- Added support for the `placeholder` property (@alexkrolick)
-- Enable/disable editor using top-level Quill API (@alexkrolick)
-- Prevent whitespace issues when initializing the editor (@bobrafie)
-- Using buttons instead of spans for toolbar actions (@clemmy)
-- Removed getHtml from unprivileged editor (@clemmy)
-- Fixed calculations for range fields (@clemmy)
-- Removed deprecated destroy functionality (@clemmy)
-- Added return statement to proxy editor methods (@druti)
-- Inline styles support for Quill Toolbar (@e-jigsaw)
-- Fixed custom font size definitions (@clemmy)
-- Support for bullet and ordered lists in toolbar (@clemmy)
-- Updated the toolbar alignment section (@clemmy)
-- Updated rendering of toolbar actions (@clemmy)
-- Improved toolbar renderChoices implementation (@zhang-z)
-- Fixed use of `defaultValue` in Toolbar selects
-- Fixed bounds validation in setEditorSelection (@wouterh)
-- Exposed Quill in exports (@tdg5)
-- Added unhook function to clean up event listeners on unmount (@alexkrolick, @jrmmnr)
-- Fixed documentation typos (@l3kn)
-- Started testing with Enzyme (@alexkrolick)
-- Fixed issue where changing props caused re-render artifacts (#147)
-- Fixed bounds validation in setEditorSelection (@wouterh)
-- Updated README.md to reference core.css instead of base.css (@sandbochs)
-- Updated React peerDependency (@rpellerin)
-- Removed inline Parchment formats for font-size and font-family (#217)
-
-#### v0.4.1
-- Added contents of `dist` to NPM package.
-
-#### v0.4.0
-This release adds support for React 0.14. ⚠️ Shims to support older versions of React have been removed.
-
-- React 0.14 support (@jacktrades, #49)
-- Removed shims for React 0.12 and 0.13
-- Bumped Quill.js to v0.20.1
-- _Normal_ and _smaller_ sizes are not swapped anymore. (#63)
-- Various toolbar choice items are now correctly ordered.
-- Added image tooltips to the default set of modules (@kairxa, #54)
-- Fixed extra white-space in classnames (@asiniy, #67)
-- Published the Quill namespace on ReactQuill (@Sajam, #60)
-- Quill stylesheets are now linked to `dist/` for convenience. (#70)
-- Exposed editor accessor methods in change events. (#33)
-
 [Full changelog](CHANGELOG.md)
-
 
 ## Contributors
 
