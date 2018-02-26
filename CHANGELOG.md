@@ -1,6 +1,17 @@
 Changelog
 =========
 
+v1.2.6 
+------
+
+Replaced React.DOM with react-dom-factories (#319 thienanle)
+
+v1.2.5
+------
+
+- Fix issue with unnecessary editor focus on mount (#321 jetzhou)
+- Switch to Quill's clipboard.convert from the paste API that now grabs focus automatically
+
 v1.2.4
 ------
 
