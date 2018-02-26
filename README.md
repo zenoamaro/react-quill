@@ -30,7 +30,7 @@ See a [live demo] or [Codepen](http://codepen.io/alexkrolick/pen/xgyOXQ/left?edi
 1. [Browser support](#browser-support)
 1. [Building and testing](#building-and-testing)
    1. [Bundling with Webpack](#bundling-with-webpack)
-1. [Changelog](./Changelog.md)
+1. [Changelog](./CHANGELOG.md)
 1. [Contributors](#contributors)
 1. [License](#license)
 
