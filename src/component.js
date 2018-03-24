@@ -130,7 +130,11 @@ var QuillComponent = createClass({
 	getDefaultProps: function() {
 		return {
 			theme: 'snow',
-			modules: {},
+			modules: {
+				history: {
+					userOnly: true,
+				},
+			},
 		};
 	},
 
