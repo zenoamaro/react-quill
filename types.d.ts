@@ -1,6 +1,8 @@
 import * as React from "react";
 import * as Quill from "quill";
 
+export { Quill } from "quill";
+
 export interface UnprivilegedEditor {
 	getLength(): number;
 	getText(index?: number, length?: number): string;
