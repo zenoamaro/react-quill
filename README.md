@@ -61,8 +61,9 @@ His contributions have been incredible so far, and his passion and dedication wi
 ### Import the component
 
 ```jsx
-const ReactQuill = require('react-quill'); // CommonJS
 import ReactQuill from 'react-quill'; // ES6
+import * as ReactQuill from 'react-quill'; // Typescript
+const ReactQuill = require('react-quill'); // CommonJS
 ```
 
 ### Import the stylesheet
