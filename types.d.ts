@@ -85,10 +85,10 @@ declare namespace ReactQuill {
 	}
 }
 
-declare class ReactQuill extends React.Component<ReactQuill.ComponentProps> {
+export default class ReactQuill extends React.Component<ReactQuill.ComponentProps> {
 	focus(): void;
 	blur(): void;
 	getEditor(): Quill.Quill;
 }
 
-export = ReactQuill;
+export { Quill } from "quill";
