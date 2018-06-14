@@ -679,6 +679,15 @@ class Editor extends React.Component {
 }
 ```
 
+To make an unprivileged editor instance use the ref to pass in the editor:
+
+```jsx
+const editor = this.reactQuillRef.getEditor();
+const unprivilegedEditor = this.reactQuillRef.makeUnprivilegedEditor(editor);
+// You may now use the unprivilegedEditor proxy methods
+unprivilegedEditor.getText();
+```
+
 </details>
 
 ### The unprivileged editor
