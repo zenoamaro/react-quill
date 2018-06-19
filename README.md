@@ -679,7 +679,15 @@ class Editor extends React.Component {
 }
 ```
 
-To make an unprivileged editor instance use the ref to pass in the editor:
+</details>
+
+
+`makeUnprivilegedEditor`
+: Creates an [unprivileged editor](#unprivileged-editor). Pass this method a reference to the Quill instance from `getEditor`.
+
+
+<details>
+<summary>Example</summary>
 
 ```jsx
 const editor = this.reactQuillRef.getEditor();
@@ -711,7 +719,6 @@ During events, ReactQuill will make a restricted subset of the Quill API availab
 
 `getBounds()`
 : Returns the pixel position, relative to the editor container, and dimensions, of a selection, at a given location.
-
 
 ## Building and testing
 
