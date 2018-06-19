@@ -10,6 +10,9 @@ var QuillMixin = {
 	*/
 	createEditor: function($el, config) {
 		var editor = new Quill($el, config);
+		if (config.tabIndex !== undefined) {
+			this.setEditorTabIndex(editor, config.tabIndex);
+		}
 		this.hookEditor(editor);
 		return editor;
 	},
@@ -81,6 +84,12 @@ var QuillMixin = {
 			range.length = Math.max(0, Math.min(range.length, (length-1) - range.index));
 		}
 		editor.setSelection(range);
+	},
+
+	setEditorTabIndex: function(editor, tabIndex) {
+		if (editor.editor && editor.editor.scroll && editor.editor.scroll.domNode) {
+			editor.editor.scroll.domNode.tabIndex = tabIndex;
+		}
 	},
 
 	/*

@@ -267,13 +267,14 @@ var QuillComponent = createClass({
 
 	getEditorConfig: function() {
 		return {
-			bounds:             this.props.bounds,
-			formats:            this.props.formats,
-			modules:            this.props.modules,
-			placeholder:        this.props.placeholder,
-			readOnly:           this.props.readOnly,
-			theme:              this.props.theme,
-			scrollingContainer: this.props.scrollingContainer,
+			bounds:       this.props.bounds,
+			formats:      this.props.formats,
+			modules:      this.props.modules,
+			placeholder:  this.props.placeholder,
+			readOnly:     this.props.readOnly,
+      			scrollingContainer: this.props.scrollingContainer,
+			tabIndex:     this.props.tabIndex,
+			theme:        this.props.theme,
 		};
 	},
 
