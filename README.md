@@ -61,8 +61,9 @@ His contributions have been incredible so far, and his passion and dedication wi
 ### Import the component
 
 ```jsx
-const ReactQuill = require('react-quill'); // CommonJS
 import ReactQuill from 'react-quill'; // ES6
+import * as ReactQuill from 'react-quill'; // Typescript
+const ReactQuill = require('react-quill'); // CommonJS
 ```
 
 ### Import the stylesheet
@@ -371,6 +372,8 @@ class MyComponent extends React.Component {
 
 If you instantiate ReactQuill without children, it will create a `<div>` for you, to be used as the editing area for Quill. If you prefer, you can specify your own element for ReactQuill to use. Note that `<textarea>`s are not supported by Quill at this time.
 
+Note: Custom editing areas lose focus when using React 16 as a peer dep at this time ([bug](https://github.com/zenoamaro/react-quill/issues/309)).
+
 <details>
 
 ```jsx
@@ -569,7 +572,7 @@ import ReactQuill, { Quill, Mixin, Toolbar } from 'react-quill'; // ES6
 : If true, the editor won't allow changing its contents. Wraps the Quill [`disable` API](https://quilljs.com/docs/api/#enable).
 
 `placeholder`
-: The default value for the empty editor.
+: The default value for the empty editor. Note: The Quill API does not support changing this value dynamically. Use refs and data-attributes instead (see [#340](https://github.com/zenoamaro/react-quill/issues/340#issuecomment-376176878)).
 
 `modules`
 : An object specifying which modules are enabled, and their configuration. The editor toolbar is a commonly customized module. See the [modules section](http://quilljs.com/docs/modules/) over the Quill documentation for more information on what modules are available.
@@ -678,6 +681,23 @@ class Editor extends React.Component {
 
 </details>
 
+
+`makeUnprivilegedEditor`
+: Creates an [unprivileged editor](#unprivileged-editor). Pass this method a reference to the Quill instance from `getEditor`. Normally you do not need to use this method since the editor exposed to event handlers is already unprivileged.
+
+
+<details>
+<summary>Example</summary>
+
+```jsx
+const editor = this.reactQuillRef.getEditor();
+const unprivilegedEditor = this.reactQuillRef.makeUnprivilegedEditor(editor);
+// You may now use the unprivilegedEditor proxy methods
+unprivilegedEditor.getText();
+```
+
+</details>
+
 ### The unprivileged editor
 
 During events, ReactQuill will make a restricted subset of the Quill API available as the `editor` argument. This prevents access to destructive methods, which might case ReactQuill to get out-of-sync with the component. It provides the following methods, which are mostly proxies of existing [Quill methods](https://quilljs.com/docs/api/):
@@ -699,7 +719,6 @@ During events, ReactQuill will make a restricted subset of the Quill API availab
 
 `getBounds()`
 : Returns the pixel position, relative to the editor container, and dimensions, of a selection, at a given location.
-
 
 ## Building and testing
 

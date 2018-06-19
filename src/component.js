@@ -272,6 +272,7 @@ var QuillComponent = createClass({
 			modules:      this.props.modules,
 			placeholder:  this.props.placeholder,
 			readOnly:     this.props.readOnly,
+      scrollingContainer: this.props.scrollingContainer,
 			tabIndex:     this.props.tabIndex,
 			theme:        this.props.theme,
 		};
