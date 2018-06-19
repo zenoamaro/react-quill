@@ -683,7 +683,7 @@ class Editor extends React.Component {
 
 
 `makeUnprivilegedEditor`
-: Creates an [unprivileged editor](#unprivileged-editor). Pass this method a reference to the Quill instance from `getEditor`.
+: Creates an [unprivileged editor](#unprivileged-editor). Pass this method a reference to the Quill instance from `getEditor`. Normally you do not need to use this method since the editor exposed to event handlers is already unprivileged.
 
 
 <details>
