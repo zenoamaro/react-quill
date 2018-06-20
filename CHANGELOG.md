@@ -1,6 +1,13 @@
 Changelog
 =========
 
+v1.3.0
+------
+
+- Add scrollingContainer prop
+- Fix Typescript exports 
+- Fix tabindex prop
+
 v1.2.6 
 ------
 
