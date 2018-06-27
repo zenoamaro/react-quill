@@ -47,14 +47,6 @@ yarn add react-quill
 ```
 
 Special thank you to everyone who contributed during the 1.0.0 release cycle!
- 
----
-
-🏵 **Welcoming @alexkrolick to the team!**
-His contributions have been incredible so far, and his passion and dedication will bring some much-deserved love to this project.
-
----
-
 
 ## Quick Start
 
