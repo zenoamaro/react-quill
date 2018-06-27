@@ -6,13 +6,13 @@ See https://quilljs.com/docs/modules/toolbar
 
 'use strict';
 
-var React = require('react');
-var ReactDOMServer = require('react-dom/server');
-var createClass = require('create-react-class');
-var find = require('lodash/find');
-var isEqual = require('lodash/isEqual');
-var T = require('prop-types');
-var DOM = require('react-dom-factories');
+import React from 'react';
+import ReactDOMServer from 'react-dom/server';
+import createClass from 'create-react-class';
+import find from 'lodash/find';
+import isEqual from 'lodash/isEqual';
+import T from 'prop-types';
+import DOM from 'react-dom-factories';
 
 var defaultColors = [
 	'rgb(  0,   0,   0)', 'rgb(230,   0,   0)', 'rgb(255, 153,   0)',
@@ -195,6 +195,7 @@ var QuillToolbar = createClass({
 
 });
 
-module.exports = QuillToolbar;
 QuillToolbar.defaultItems = defaultItems;
 QuillToolbar.defaultColors = defaultColors;
+
+export default QuillToolbar;

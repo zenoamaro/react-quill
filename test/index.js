@@ -10,7 +10,7 @@ const React = require('react');
 const DOM = require('react-dom-factories');
 const sinon = require('sinon');
 const {expect, assert} = require('chai');
-const ReactQuill = require('../src/index');
+const ReactQuill = require('../dist/index');
 const Quill = ReactQuill.Quill;
 
 const {

@@ -2,11 +2,21 @@
 React-Quill v1.0.0
 https://github.com/zenoamaro/react-quill
 */
-var Quill = require('quill');
-var Component = require('./component');
+import Quill from 'quill';
+import Component from './component' ;
+import Mixin from './mixin';
+import Toolbar from './toolbar';
 
+// For legacy API compatibility, define CommonJS export:
 module.exports = Component;
-module.exports.default = Component;
+module.exports.Mixin = Mixin;
+module.exports.Toolbar = Toolbar;
 module.exports.Quill = Quill;
-module.exports.Mixin = require('./mixin');
-module.exports.Toolbar = require('./toolbar');
+
+export {
+  Mixin,
+  Toolbar,
+  Quill
+};
+
+export default Component;

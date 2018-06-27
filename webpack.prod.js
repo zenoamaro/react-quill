@@ -1,15 +1,17 @@
 'use strict';
+
 var webpack = require('webpack');
 
 module.exports = {
 
+	mode: 'production',
+
 	entry: './src/index.js',
 
-	debug: false,
 	devtool: 'module-source-map',
 
 	output: {
-		filename: './dist/react-quill.min.js',
+		filename: 'react-quill.min.js',
 		library: 'ReactQuill',
 		libraryTarget: 'umd'
 	},
@@ -45,11 +47,6 @@ module.exports = {
 			'amd': 'prop-types',
 			'root': 'PropTypes'
 		}
-	},
-
-	plugins: [
-		new webpack.optimize.UglifyJsPlugin(),
-		new webpack.optimize.OccurenceOrderPlugin()
-	]
+	}
 
 };

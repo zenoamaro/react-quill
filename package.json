@@ -13,10 +13,13 @@
     "type": "git",
     "url": "https://github.com/zenoamaro/react-quill.git"
   },
-  "main": "lib/index.js",
-  "browser": "lib/index.js",
+  "main": "dist/index.js",
+  "umd:main": "dist/react-quill.min.js",
+  "module": "lib/index.js",
+  "sideEffects": false,
   "types": "types.d.ts",
   "scripts": {
+    "lint": "make lint",
     "test": "make test",
     "build": "make build",
     "prepack": "make build",
@@ -57,6 +60,11 @@
     "react": "^0.14.9 || ^15.3.0 || ^16.0.0"
   },
   "devDependencies": {
+    "babel-cli": "^6",
+    "babel-plugin-add-module-exports": "^0.2.1",
+    "babel-plugin-transform-es2015-modules-commonjs": "^6.26.2",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-react-app": "^3",
     "blanket": "^1.2.3",
     "chai": "^4.1.0",
     "chai-enzyme": "^0.8.0",
@@ -75,6 +83,7 @@
     "sinon": "^2.3.5",
     "travis-cov": "^0.2.5",
     "uglify-js": "^3.0.18",
-    "webpack": "^1.4.13"
+    "webpack": "4",
+    "webpack-command": "^0.3.0"
   }
 }

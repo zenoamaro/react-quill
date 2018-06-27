@@ -1,6 +1,6 @@
 'use strict';
 
-var Quill = require('quill');
+import Quill from 'quill';
 
 var QuillMixin = {
 
@@ -111,4 +111,4 @@ var QuillMixin = {
 
 };
 
-module.exports = QuillMixin;
+export default QuillMixin;

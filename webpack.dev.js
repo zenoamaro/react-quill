@@ -3,14 +3,15 @@ var webpack = require('webpack');
 
 module.exports = {
 
+	mode: 'development',
+
 	entry: './src/index.js',
 
-	debug: true,
 	devtool: 'module-source-map',
 
 	output: {
 		pathinfo: true,
-		filename: './dist/react-quill.js',
+		filename: 'react-quill.js',
 		library: 'ReactQuill',
 		libraryTarget: 'umd'
 	},

@@ -1,14 +1,14 @@
 'use strict';
 
-var React = require('react');
-var ReactDOM = require('react-dom');
-var createClass = require('create-react-class');
-var QuillMixin = require('./mixin');
-var find = require('lodash/find');
-var some = require('lodash/some');
-var isEqual = require('lodash/isEqual');
-var T = require('prop-types');
-var DOM = require('react-dom-factories');
+import React from 'react';
+import ReactDOM from 'react-dom';
+import createClass from 'create-react-class';
+import QuillMixin from './mixin';
+import find from 'lodash/find';
+import some from 'lodash/some';
+import isEqual from 'lodash/isEqual';
+import T from 'prop-types';
+import DOM from 'react-dom-factories';
 
 var QuillComponent = createClass({
 
@@ -416,4 +416,4 @@ var QuillComponent = createClass({
 
 });
 
-module.exports = QuillComponent;
+export default QuillComponent;

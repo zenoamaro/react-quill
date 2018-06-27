@@ -1,5 +1,6 @@
 {
 	"browser": true,
+	"esversion": 6,
 	"node": true,
 	"bitwise": true,
 	"camelcase": true,

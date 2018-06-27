@@ -4,8 +4,10 @@ TEST=./node_modules/.bin/mocha --recursive --require=./test/setup.js
 SPEC_FLAGS=-R spec
 COVERAGE_FLAGS=-R mocha-text-cov
 WEBPACK=./node_modules/.bin/webpack
+BABEL=./node_modules/.bin/babel
 SOURCE=./src
 LIB=./lib
+DIST=./dist
 
 usage:
 	@echo lint: lints the source
@@ -36,7 +38,8 @@ build:
 	@cp node_modules/quill/dist/quill.snow.css dist
 	@cp node_modules/quill/dist/quill.bubble.css dist
 	@mkdir -p $(LIB)
-	@cp -Rfv $(SOURCE)/* $(LIB)
+	@BABEL_ENV=cjs $(BABEL) $(SOURCE) -d $(DIST)
+	@BABEL_ENV=esmodule $(BABEL) $(SOURCE) -d $(LIB)
 
 watch:
 	@$(WEBPACK) --watch --config webpack.dev.js

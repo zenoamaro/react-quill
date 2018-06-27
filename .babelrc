@@ -1,0 +1,34 @@
+{
+  "env": {
+    "esmodule": {
+      "presets": [
+        [
+          "env",
+          {
+            "modules": false,
+            "loose": true,
+            "browsers": ">0.25%"
+          }
+        ],
+        "react-app/prod"
+      ]
+    },
+    "cjs": {
+      "presets": [
+        [
+          "env",
+          {
+            "modules": "commonjs",
+            "loose": true,
+            "browsers": ">0.25%"
+          }
+        ],
+        "react-app/prod"
+      ],
+      "plugins": [
+        "add-module-exports",
+        "transform-es2015-modules-commonjs"
+      ]
+    }
+  }
+}
