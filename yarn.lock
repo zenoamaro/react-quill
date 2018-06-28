@@ -5548,9 +5548,9 @@ webidl-conversions@^4.0.2:
   version "4.0.2"
   resolved "https://registry.yarnpkg.com/webidl-conversions/-/webidl-conversions-4.0.2.tgz#a855980b1f0b6b359ba1d5d9fb39ae941faa63ad"
 
-webpack-command@^0.3.0:
-  version "0.3.0"
-  resolved "https://registry.yarnpkg.com/webpack-command/-/webpack-command-0.3.0.tgz#33d6181919d4d532b569897802019cf4e502f741"
+webpack-command@^0.3.1:
+  version "0.3.1"
+  resolved "https://registry.yarnpkg.com/webpack-command/-/webpack-command-0.3.1.tgz#e1917d48e3285da6c1d8e5c0a432cab031c3970f"
   dependencies:
     "@webpack-contrib/config-loader" "^1.0.0"
     "@webpack-contrib/schema-utils" "^1.0.0-beta.0"

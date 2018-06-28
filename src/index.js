@@ -7,12 +7,6 @@ import Component from './component' ;
 import Mixin from './mixin';
 import Toolbar from './toolbar';
 
-// For legacy API compatibility, define CommonJS export:
-module.exports = Component;
-module.exports.Mixin = Mixin;
-module.exports.Toolbar = Toolbar;
-module.exports.Quill = Quill;
-
 export {
   Mixin,
   Toolbar,

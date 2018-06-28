@@ -13,7 +13,7 @@
     "type": "git",
     "url": "https://github.com/zenoamaro/react-quill.git"
   },
-  "main": "dist/index.js",
+  "main": "dist/legacy.js",
   "umd:main": "dist/react-quill.min.js",
   "module": "lib/index.js",
   "sideEffects": false,
@@ -84,6 +84,6 @@
     "travis-cov": "^0.2.5",
     "uglify-js": "^3.0.18",
     "webpack": "4",
-    "webpack-command": "^0.3.0"
+    "webpack-command": "^0.3.1"
   }
 }

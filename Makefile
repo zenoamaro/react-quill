@@ -38,8 +38,8 @@ build:
 	@cp node_modules/quill/dist/quill.snow.css dist
 	@cp node_modules/quill/dist/quill.bubble.css dist
 	@mkdir -p $(LIB)
-	@BABEL_ENV=cjs $(BABEL) $(SOURCE) -d $(DIST)
-	@BABEL_ENV=esmodule $(BABEL) $(SOURCE) -d $(LIB)
+	@BABEL_ENV=cjs $(BABEL) $(SOURCE) -d $(DIST) --ignore=index.js
+	@BABEL_ENV=esmodule $(BABEL) $(SOURCE) -d $(LIB) --ignore=legacy.js
 
 watch:
 	@$(WEBPACK) --watch --config webpack.dev.js
