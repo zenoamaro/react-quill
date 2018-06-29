@@ -6,7 +6,7 @@ module.exports = {
 
 	mode: 'production',
 
-	entry: './src/index.js',
+	entry: './src/legacy.js',
 
 	devtool: 'module-source-map',
 

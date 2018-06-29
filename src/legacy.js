@@ -7,7 +7,7 @@ https://github.com/zenoamaro/react-quill
 module.exports = require('./component');
 module.exports.Mixin = require('./mixin');
 module.exports.Toolbar = require('./toolbar');
-module.exports.Quill = require('./quill');
+module.exports.Quill = require('quill');
 
 // Define `default` For ES Module compatibility
 // This should only be used if the ES Modules in `lib` aren't discovered
