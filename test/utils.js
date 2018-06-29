@@ -1,6 +1,6 @@
 var React = require('react');
 var {mount, shallow} = require('enzyme');
-var ReactQuill = require('../dist/index');
+var ReactQuill = require('../dist/legacy');
 var Quill = ReactQuill.Quill;
 
 function ReactQuillNode(props, children) {
