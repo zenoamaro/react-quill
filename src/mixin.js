@@ -53,7 +53,7 @@ var QuillMixin = {
 			if (eventType === Quill.events.TEXT_CHANGE) {
 				this.handleTextChange(rangeOrDelta, oldRangeOrOldDelta, source);
 			}
-		});
+		}.bind(this));
 	},
 
 	unhookEditor: function(editor) {
