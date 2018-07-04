@@ -45,7 +45,7 @@ var QuillMixin = {
 			}
 		}.bind(this);
 
-		editor.on('editor-change', (eventType, rangeOrDelta, oldRangeOrOldDelta, source) => {
+		editor.on('editor-change', function(eventType, rangeOrDelta, oldRangeOrOldDelta, source) {
 			if (eventType === Quill.events.SELECTION_CHANGE) {
 				this.handleSelectionChange(rangeOrDelta, oldRangeOrOldDelta, source);
 			}
