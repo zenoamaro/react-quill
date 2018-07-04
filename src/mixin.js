@@ -45,8 +45,15 @@ var QuillMixin = {
 			}
 		}.bind(this);
 
-		editor.on('text-change', this.handleTextChange);
-		editor.on('selection-change', this.handleSelectionChange);
+		editor.on('editor-change', (eventType, rangeOrDelta, oldRangeOrOldDelta, source) => {
+			if (eventType === Quill.events.SELECTION_CHANGE) {
+				this.handleSelectionChange(rangeOrDelta, oldRangeOrOldDelta, source);
+			}
+			
+			if (eventType === Quill.events.TEXT_CHANGE) {
+				this.handleTextChange(rangeOrDelta, oldRangeOrOldDelta, source);
+			}
+		});
 	},
 
 	unhookEditor: function(editor) {
