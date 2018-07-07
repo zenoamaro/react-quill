@@ -326,19 +326,22 @@ import ReactQuill, { Quill } from 'react-quill'; // ES6
 /*
  * Example Parchment format from
  * https://quilljs.com/guides/cloning-medium-with-parchment/
+ * See the video example in the guide for a complex format
  */
 let Inline = Quill.import('blots/inline');
 class BoldBlot extends Inline { }
 BoldBlot.blotName = 'bold';
 BoldBlot.tagName = 'strong';
-Quill.register(BoldBlot);
+Quill.register('formats/bold', BoldBlot);
+
+const formats = ["bold"] // add custom format name + any built-in formats you need
 
 /*
  * Editor component with default and custom formats
  */
 class MyComponent extends React.Component {
   constructor(props) {
-    this.formats = ['italic', 'underline'] // default formats
+    this.formats = formats
     this.state = { text: '' }
   }
 
@@ -351,7 +354,7 @@ class MyComponent extends React.Component {
       <ReactQuill
         value={this.state.text}
         onChange={this.handleChange}
-        formats={this.formats} // the custom format is already registered
+        formats={this.formats}
       />
     )
   }
