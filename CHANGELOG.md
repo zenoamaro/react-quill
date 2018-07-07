@@ -1,6 +1,11 @@
 Changelog
 =========
 
+v1.3.1
+------
+
+- Add back default export (#374, #384 one19)
+
 v1.3.0
 ------
 
