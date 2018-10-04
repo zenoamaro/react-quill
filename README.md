@@ -695,7 +695,7 @@ unprivilegedEditor.getText();
 
 ### The unprivileged editor
 
-During events, ReactQuill will make a restricted subset of the Quill API available as the `editor` argument. This prevents access to destructive methods, which might case ReactQuill to get out-of-sync with the component. It provides the following methods, which are mostly proxies of existing [Quill methods](https://quilljs.com/docs/api/):
+During events, ReactQuill will make a restricted subset of the Quill API available as the `editor` argument. This prevents access to destructive methods, which might cause ReactQuill to get out-of-sync with the component. It provides the following methods, which are mostly proxies of existing [Quill methods](https://quilljs.com/docs/api/):
 
 `getLength()`
 : Returns the length of the editor contents, in characters, not including any HTML tag.
