@@ -148,9 +148,15 @@ The [Quill Toolbar Module](http://quilljs.com/docs/modules/toolbar/) API provide
 <summary>Example Code</summary>
 
 ```jsx
-var MyComponent = React.createClass({
+class MyComponent extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      text: "",
+    }
+  }
 
-  modules: {
+  modules = {
     toolbar: [
       [{ 'header': [1, 2, false] }],
       ['bold', 'italic', 'underline','strike', 'blockquote'],
@@ -160,14 +166,14 @@ var MyComponent = React.createClass({
     ],
   },
 
-  formats: [
+  formats = [
     'header',
     'bold', 'italic', 'underline', 'strike', 'blockquote',
     'list', 'bullet', 'indent',
     'link', 'image'
   ],
 
-  render: function() {
+  render() {
     return (
       <div className="text-editor">
         <ReactQuill theme="snow"
@@ -176,9 +182,10 @@ var MyComponent = React.createClass({
         </ReactQuill>
       </div>
     );
-  },
+  }
+}
 
-});
+export default MyComponent;
 ```
 
 </details>
