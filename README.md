@@ -622,6 +622,9 @@ import ReactQuill, { Quill, Mixin, Toolbar } from 'react-quill'; // ES6
 `onKeyUp(event)`
 : Called after a key has been released.
 
+`preserveWhitespace`
+: If true, a `pre` tag is used for the editor area instead of the default `div` tag. This prevents Quill from
+collapsing continuous whitespaces on paste. [Related issue](https://github.com/quilljs/quill/issues/1751).
 
 ### Methods
 

@@ -34,6 +34,7 @@ var QuillComponent = createClass({
 		onKeyPress: T.func,
 		onKeyDown: T.func,
 		onKeyUp: T.func,
+		preserveWhitespace: T.bool,
 
 		modules: function(props) {
 			var isNotObject = T.object.apply(this, arguments);
@@ -331,6 +332,7 @@ var QuillComponent = createClass({
 	renderEditingArea: function() {
 		var self = this;
 		var children = this.props.children;
+		var preserveWhitespace = this.props.preserveWhitespace;
 
 		var properties = {
 			key: this.state.generation,
@@ -341,10 +343,10 @@ var QuillComponent = createClass({
 		var customElement = React.Children.count(children)
 			? React.Children.only(children)
 			: null;
-
+		var defaultElement = preserveWhitespace ? DOM.pre : DOM.div;
 		var editingArea = customElement
 			? React.cloneElement(customElement, properties)
-			: DOM.div(properties);
+			: defaultElement(properties);
 
 		return editingArea;
 	},
