@@ -1,6 +1,16 @@
 Changelog
 =========
 
+v1.3.3
+------
+
+- Pin Quill types version (#420 @daggmano)
+
+v1.3.2
+------
+
+- Add preserveWhitespace prop (#407 @royshouvik) 
+
 v1.3.1
 ------
 
