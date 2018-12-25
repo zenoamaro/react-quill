@@ -336,7 +336,6 @@ var QuillComponent = createClass({
 
 		var properties = {
 			key: this.state.generation,
-			tabIndex: this.props.tabIndex,
 			ref: function(element) { self.editingArea = element },
 		};
 
