@@ -48,7 +48,7 @@ declare namespace ReactQuill {
 		onKeyDown?: React.EventHandler<any>;
 		onKeyUp?: React.EventHandler<any>;
 		formats?: string[];
-		children?: React.ReactElement<any>;
+		children?: React.ReactNode;
 		modules?: Quill.StringMap;
 
 		/** @deprecated
