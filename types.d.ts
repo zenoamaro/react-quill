@@ -1,7 +1,7 @@
 import * as React from "react";
 import * as Quill from "quill";
 
-declare namespace ReactQuill {
+export namespace ReactQuill {
 	export interface UnprivilegedEditor {
 		getLength(): number;
 		getText(index?: number, length?: number): string;
