@@ -53,8 +53,8 @@ Special thank you to everyone who contributed during the 1.0.0 release cycle!
 ### Import the component
 
 ```jsx
-import ReactQuill from 'react-quill'; // ES6
-import * as ReactQuill from 'react-quill'; // Typescript
+import ReactQuill from 'react-quill'; // ES6 and Typescript
+import { ReactQuill as rq } from 'react-quill'; // Typescript namespace
 const ReactQuill = require('react-quill'); // CommonJS
 ```
 
