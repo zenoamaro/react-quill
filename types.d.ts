@@ -50,6 +50,7 @@ declare namespace ReactQuill {
 		formats?: string[];
 		children?: React.ReactElement<any>;
 		modules?: Quill.StringMap;
+		preserveWhitespace?: boolean;
 
 		/** @deprecated
 		 * The `toolbar` prop has been deprecated. Use `modules.toolbar` instead.
