@@ -75,7 +75,7 @@ var QuillMixin = {
 		var sel = editor.getSelection();
 
 		if (typeof value === 'string') {
-			editor.setContents(editor.clipboard.convert(value));
+			editor.setContents(editor.clipboard.convert({html: value}));
 		} else {
 			editor.setContents(value);
 		}
