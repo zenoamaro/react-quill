@@ -206,9 +206,13 @@ var QuillComponent = createClass({
 		// Restore editor from Quill's native formats in regeneration scenario
 		if (this.quillDelta) {
 			this.editor.setContents(this.quillDelta);
-			this.editor.setSelection(this.quillSelection);		
-			this.editor.focus();
-			this.quillDelta = this.quillSelection = null;
+			if (this.quillSelection) {
+				this.editor.setSelection(this.quillSelection);
+			}
+			if (this.quillHasFocus) {
+				this.editor.focus();
+			}
+			this.quillDelta = this.quillSelection = this.quillHasFocus = null;
 			return;
 		}
 		if (this.state.value) {
@@ -321,6 +325,7 @@ var QuillComponent = createClass({
 		// Cache selection and contents in Quill's native format to be restored later
 		this.quillDelta = this.editor.getContents();
 		this.quillSelection = this.editor.getSelection();
+		this.quillHasFocus = this.editor.hasFocus();
 		this.setState({
 			generation: this.state.generation + 1,
 		});
