@@ -206,7 +206,9 @@ var QuillComponent = createClass({
 		// Restore editor from Quill's native formats in regeneration scenario
 		if (this.quillDelta) {
 			this.editor.setContents(this.quillDelta);
-			this.editor.setSelection(this.quillSelection);		
+			if (this.quillSelection) {
+				this.editor.setSelection(this.quillSelection);
+			}
 			if (this.quillHasFocus) {
 				this.editor.focus();
 			}
