@@ -165,12 +165,17 @@ var QuillComponent = createClass({
 		if ('value' in nextProps) {
 			var currentContents = this.getEditorContents();
 			var nextContents = nextProps.value;
-
-			if (nextContents === this.lastDeltaChangeSet) throw new Error(
-				'You are passing the `delta` object from the `onChange` event back ' +
-				'as `value`. You most probably want `editor.getContents()` instead. ' +
-				'See: https://github.com/zenoamaro/react-quill#using-deltas'
-			);
+			
+			if (typeof nextContents !== 'undefined' 
+			&& typeof this.lastDeltaChangeSet !== 'undefined' &&
+			nextContents === this.lastDeltaChangeSet) {
+					throw new Error(
+						'You are passing the `delta` object from the `onChange` event back ' +
+						'as `value`. You most probably want `editor.getContents()` instead. ' +
+						'See: https://github.com/zenoamaro/react-quill#using-deltas'
+					);
+			}
+			 
 
 			// NOTE: Seeing that Quill is missing a way to prevent
 			//       edits, we have to settle for a hybrid between
