@@ -151,7 +151,7 @@ var QuillComponent = createClass({
 		};
 	},
 
-	componentWillReceiveProps: function(nextProps, nextState) {
+	UNSAFE_componentWillReceiveProps: function(nextProps, nextState) {
 		var editor = this.editor;
 
 		// If the component is unmounted and mounted too quickly
@@ -254,7 +254,7 @@ var QuillComponent = createClass({
 	If we could not update settings from the new props in-place, we have to tear
 	down everything and re-render from scratch.
 	*/
-	componentWillUpdate: function(nextProps, nextState) {
+	UNSAFE_componentWillUpdate: function(nextProps, nextState) {
 		if (this.state.generation !== nextState.generation) {
 			this.componentWillUnmount();
 		}
