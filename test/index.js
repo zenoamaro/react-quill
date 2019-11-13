@@ -6,7 +6,7 @@
  * https://github.com/airbnb/enzyme/blob/master/docs/api/mount.md
  */
 
-const DOM = require('react-dom-factories');
+const React = require('react');
 const sinon = require('sinon');
 const {expect} = require('chai');
 const Quill = require('quill');
@@ -94,7 +94,12 @@ describe('<ReactQuill />', function() {
     const onChange = (_, delta) => wrapper.setProps({value: delta});
     const wrapper = mountReactQuill({value, onChange});
     const quill = getQuillInstance(wrapper);
+    // Mock console.error to prevent the caught error from showing up
+    // https://github.com/facebook/react/issues/11098
+    const oldConsole = console.error;
+    console.error = () => {};
     expect(() => wrapper.setProps({value: nextValue})).to.throw();
+    console.error = oldConsole;
   });
 
   it('allows using Deltas as defaultValue', () => {
@@ -136,7 +141,7 @@ describe('<ReactQuill />', function() {
     const defaultValue = '<p>Hello, world!</p>';
     const wrapper = mountReactQuill({defaultValue});
     const quill = getQuillInstance(wrapper);
-    expect(wrapper.getNode().getEditorContents()).to.equal(defaultValue);
+    expect(wrapper.instance().getEditorContents()).to.equal(defaultValue);
   })
 
   it('shows the value prop instead of defaultValue if both are defined', () => {
@@ -147,11 +152,12 @@ describe('<ReactQuill />', function() {
       value: value,
     });
     const quill = getQuillInstance(wrapper);
-    expect(wrapper.getNode().getEditorContents()).to.equal(value);
+    expect(wrapper.instance().getEditorContents()).to.equal(value);
   })
 
   it('uses a custom editing area if provided', () => {
-    const editingArea = DOM.div({id:'venus'});
+    const div = React.createFactory('div');
+    const editingArea = div({id:'venus'});
     const wrapper = mountReactQuill({}, editingArea);
     const quill = getQuillInstance(wrapper);
     expect(wrapper.getDOMNode().querySelector('div#venus')).not.to.be.null;

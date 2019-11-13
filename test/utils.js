@@ -20,7 +20,7 @@ function mountReactQuill(props, node) {
 }
 
 function getQuillInstance(wrapper) {
-	return wrapper.getNode().getEditor();
+	return wrapper.instance().getEditor();
 }
 
 function getQuillDOMNode(wrapper) {
