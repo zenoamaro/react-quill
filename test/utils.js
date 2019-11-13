@@ -1,14 +1,13 @@
 var React = require('react');
-var {mount, shallow} = require('enzyme');
-var ReactQuill = require('../src/index');
-var Quill = ReactQuill.Quill;
+var {mount} = require('enzyme');
+var ReactQuill = require('../lib/index').default; // FIXME
 
 function ReactQuillNode(props, children) {
   props = Object.assign({
     modules: {'toolbar': ['underline', 'bold', 'italic']},
     formats: ['underline', 'bold', 'italic']
   }, props);
-  
+
   return React.createElement(
     ReactQuill,
     props,

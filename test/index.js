@@ -1,17 +1,16 @@
 /**
  * Test suite uses mocha and enzyme to mock browser APIs
- * 
- * See Enzyme docs: 
+ *
+ * See Enzyme docs:
  * https://github.com/airbnb/enzyme/blob/master/docs/guides/jsdom.md
  * https://github.com/airbnb/enzyme/blob/master/docs/api/mount.md
  */
 
-const React = require('react');
 const DOM = require('react-dom-factories');
 const sinon = require('sinon');
-const {expect, assert} = require('chai');
-const ReactQuill = require('../src/index');
-const Quill = ReactQuill.Quill;
+const {expect} = require('chai');
+const Quill = require('quill');
+const ReactQuill = require('../lib/index').default; // FIXME
 
 const {
   mountReactQuill,
@@ -159,9 +158,9 @@ describe('<ReactQuill />', function() {
   })
 
   /**
-   * This can't be tested with the current state of JSDOM. 
-   * The selection functions have been shimmed in this test suite, 
-   * but they  will not work until DOM traversal is implemented in 
+   * This can't be tested with the current state of JSDOM.
+   * The selection functions have been shimmed in this test suite,
+   * but they  will not work until DOM traversal is implemented in
    * https://github.com/tmpvar/jsdom/issues/317.
    * Leaving this pending test as a reminder to follow up.
    */
@@ -175,14 +174,14 @@ describe('<ReactQuill />', function() {
   it('removes focus from the editor when calling blur()')
 
   /**
-   * In a browser, querySelector('.ql-editor').textContent = 'hi' would 
+   * In a browser, querySelector('.ql-editor').textContent = 'hi' would
    * trigger a 'text-change' event, but here it doesn't. Is the polyfill
    * for MutationObserver not working?
    */
   it('calls onChange after the textContent of the editor changes')
 
   /**
-   * This is hard to do without Selenium's 'type' function, but it is the 
+   * This is hard to do without Selenium's 'type' function, but it is the
    * ultimate test of whether everything is working or not
    */
   it('calls onChange after keypresses are sent to the editor')
