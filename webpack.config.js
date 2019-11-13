@@ -1,24 +1,19 @@
-'use strict';
-var webpack = require('webpack');
+const Path = require('path');
+const dir = (...args) => Path.resolve(__dirname, ...args);
 
 module.exports = {
+  mode: 'production',
+  entry: dir('src/index.js'),
 
-	entry: './src/index.js',
+  resolve: {
+    extensions: ['.js', '.jsx'],
+  },
 
-	debug: false,
-	devtool: 'module-source-map',
-
-	output: {
-		filename: './dist/react-quill.min.js',
-		library: 'ReactQuill',
-		libraryTarget: 'umd'
-	},
-
-	module: {
-		// Shut off warnings about using pre-built javascript files
-		// as Quill.js unfortunately ships one as its `main`.
-		noParse: /node_modules\/quill\/dist/
-	},
+  module: {
+    rules: [
+      {test:/\.jsx?$/, loader:'ts-loader', exclude:/node_modules/},
+    ],
+  },
 
 	externals: {
 		'react': {
@@ -45,11 +40,18 @@ module.exports = {
 			'amd': 'prop-types',
 			'root': 'PropTypes'
 		}
-	},
+  },
 
-	plugins: [
-		new webpack.optimize.UglifyJsPlugin(),
-		new webpack.optimize.OccurenceOrderPlugin()
-	]
+  output: {
+    path: dir('dist'),
+    filename: 'react-quill.js',
+    library: 'ReactQuill',
+    libraryTarget: 'umd',
+  },
+
+  devServer: {
+    contentBase: dir('dist'),
+    stats: 'errors-only',
+  },
 
 };

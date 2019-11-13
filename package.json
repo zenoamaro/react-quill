@@ -45,8 +45,6 @@
     "LICENSE"
   ],
   "dependencies": {
-    "@types/quill": "^1.3.10",
-    "@types/react": "*",
     "create-react-class": "^15.6.0",
     "lodash": "^4.17.4",
     "prop-types": "^15.5.10",
@@ -57,24 +55,33 @@
     "react": "^0.14.9 || ^15.3.0 || ^16.0.0"
   },
   "devDependencies": {
+    "@types/create-react-class": "^15.6.3",
+    "@types/lodash": "^4.14.146",
+    "@types/prop-types": "^15.7.3",
+    "@types/quill": "^1.3.7",
+    "@types/react-dom-factories": "^1.0.2",
+    "@types/react-dom": "^16.9.4",
+    "@types/react": "*",
     "blanket": "^1.2.3",
-    "chai": "^4.1.0",
     "chai-enzyme": "^0.8.0",
+    "chai": "^4.1.0",
     "cheerio": "^1.0.0-rc.1",
     "enzyme": "^2.9.1",
-    "jsdom": "^11.0.0",
     "jsdom-global": "^3.0.2",
+    "jsdom": "^11.0.0",
     "jshint": "^2.9.4",
-    "mocha": "^3.4.2",
     "mocha-text-cov": "^0.1.1",
-    "react": "^15.6.1",
+    "mocha": "^3.4.2",
     "react-addons-test-utils": "^15.6.0",
     "react-dom": "^15.6.1",
     "react-test-renderer": "^15.6.1",
+    "react": "^15.6.1",
     "should": "^4.3.0",
     "sinon": "^2.3.5",
     "travis-cov": "^0.2.5",
-    "uglify-js": "^3.0.18",
-    "webpack": "^1.4.13"
+    "ts-loader": "^6.2.1",
+    "typescript": "^3.7.2",
+    "webpack": "^4.41.2",
+    "webpack-cli": "^3.3.10"
   }
 }

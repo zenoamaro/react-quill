@@ -1,8 +1,6 @@
-'use strict';
+import Quill from 'quill';
 
-var Quill = require('quill');
-
-var QuillMixin = {
+export default {
 
 	/**
 	Creates an editor on the given element. The editor will
@@ -49,7 +47,7 @@ var QuillMixin = {
 			if (eventType === Quill.events.SELECTION_CHANGE) {
 				this.handleSelectionChange(rangeOrDelta, oldRangeOrOldDelta, source);
 			}
-			
+
 			if (eventType === Quill.events.TEXT_CHANGE) {
 				this.handleTextChange(rangeOrDelta, oldRangeOrOldDelta, source);
 			}
@@ -117,5 +115,3 @@ var QuillMixin = {
 	}
 
 };
-
-module.exports = QuillMixin;

@@ -1,16 +1,13 @@
-'use strict';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import createClass from 'create-react-class';
+import QuillMixin from './mixin';
+import some from 'lodash/some';
+import isEqual from 'lodash/isEqual';
+import T from 'prop-types';
+import DOM from 'react-dom-factories';
 
-var React = require('react');
-var ReactDOM = require('react-dom');
-var createClass = require('create-react-class');
-var QuillMixin = require('./mixin');
-var find = require('lodash/find');
-var some = require('lodash/some');
-var isEqual = require('lodash/isEqual');
-var T = require('prop-types');
-var DOM = require('react-dom-factories');
-
-var QuillComponent = createClass({
+const Component = createClass({
 
 	displayName: 'Quill',
 
@@ -41,7 +38,7 @@ var QuillComponent = createClass({
 			if (isNotObject) return isNotObject;
 
 			if (
-				props.modules && 
+				props.modules &&
 				props.modules.toolbar &&
 				props.modules.toolbar[0] &&
 				props.modules.toolbar[0].type
@@ -98,7 +95,7 @@ var QuillComponent = createClass({
 			}
 		}
 	},
-		
+
 	/*
 	Changing one of these props should cause a full re-render.
 	*/
@@ -159,7 +156,7 @@ var QuillComponent = createClass({
 		// still undefined. Must check if editor is undefined
 		// before performing this call.
 		if (!editor) return;
-		
+
 		// Update only if we've been passed a new `value`.
 		// This leaves components using `defaultValue` alone.
 		if ('value' in nextProps) {
@@ -177,13 +174,13 @@ var QuillComponent = createClass({
 			//       controlled and uncontrolled mode. We can't prevent
 			//       the change, but we'll still override content
 			//       whenever `value` differs from current state.
-			// NOTE: Comparing an HTML string and a Quill Delta will always trigger 
+			// NOTE: Comparing an HTML string and a Quill Delta will always trigger
 			//       a change, regardless of whether they represent the same document.
 			if (!this.isEqualValue(nextContents, currentContents)) {
 				this.setEditorContents(editor, nextContents);
 			}
 		}
-		
+
 		// We can update readOnly state in-place.
 		if ('readOnly' in nextProps) {
 			if (nextProps.readOnly !== this.props.readOnly) {
@@ -206,7 +203,7 @@ var QuillComponent = createClass({
 		// Restore editor from Quill's native formats in regeneration scenario
 		if (this.quillDelta) {
 			this.editor.setContents(this.quillDelta);
-			this.editor.setSelection(this.quillSelection);		
+			this.editor.setSelection(this.quillSelection);
 			this.editor.focus();
 			this.quillDelta = this.quillSelection = null;
 			return;
@@ -231,7 +228,7 @@ var QuillComponent = createClass({
 		if (this.state.generation !== nextState.generation) {
 			return true;
 		}
-		
+
 		// Compare props that require React updating the DOM.
 		return some(this.cleanProps, function(prop) {
 			// Note that `isEqual` compares deeply, making it safe to perform
@@ -372,7 +369,7 @@ var QuillComponent = createClass({
 		var nextContents = this.isDelta(currentContents)
 			? editor.getContents()
 			: editor.getHTML();
-		
+
 		if (!this.isEqualValue(nextContents, currentContents)) {
 			// Taint this `delta` object, so we can recognize whether the user
 			// is trying to send it back as `value`, preventing a likely loop.
@@ -394,9 +391,9 @@ var QuillComponent = createClass({
 		if (isEqual(nextSelection, currentSelection)) {
 			return;
 		}
-		
+
 		this.setState({ selection: nextSelection });
-		
+
 		if (this.props.onChangeSelection) {
 			this.props.onChangeSelection(nextSelection, source, editor);
 		}
@@ -418,4 +415,4 @@ var QuillComponent = createClass({
 
 });
 
-module.exports = QuillComponent;
+export default Component;

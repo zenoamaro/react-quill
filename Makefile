@@ -4,6 +4,7 @@ TEST=./node_modules/.bin/mocha --recursive --require=./test/setup.js
 SPEC_FLAGS=-R spec
 COVERAGE_FLAGS=-R mocha-text-cov
 WEBPACK=./node_modules/.bin/webpack
+TSC=./node_modules/.bin/tsc
 SOURCE=./src
 LIB=./lib
 
@@ -30,16 +31,14 @@ test:
 	@make coverage COVERAGE_FLAGS="-R travis-cov"
 
 build:
-	@$(WEBPACK) --config webpack.dev.js
-	@$(WEBPACK) --config webpack.prod.js
+	@$(TSC)
+	@$(WEBPACK)
 	@cp node_modules/quill/dist/quill.core.css dist
 	@cp node_modules/quill/dist/quill.snow.css dist
 	@cp node_modules/quill/dist/quill.bubble.css dist
-	@mkdir -p $(LIB)
-	@cp -Rfv $(SOURCE)/* $(LIB)
 
 watch:
-	@$(WEBPACK) --watch --config webpack.dev.js
+	@$(WEBPACK) --watch --mode development
 
 clean:
 	@if [ -d dist ]; then rm -r dist; fi

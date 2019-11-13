@@ -3,7 +3,9 @@
 'use strict';
 
 if (typeof React !== 'object') alert('React not found. Did you run "npm install"?');
-if (typeof ReactQuill !== 'function') alert('ReactQuill not found. Did you run "make build"?')
+
+// FIXME: Export a more traditional module
+if (typeof ReactQuill.default !== 'function') alert('ReactQuill not found. Did you run "make build"?')
 
 var EMPTY_DELTA = {ops: []};
 
@@ -134,7 +136,7 @@ var Editor = React.createClass({
 });
 
 Editor = React.createFactory(Editor);
-ReactQuill = React.createFactory(ReactQuill);
+ReactQuill = React.createFactory(ReactQuill.default);
 
 ReactDOM.render(
 	Editor(),

@@ -1,0 +1,20 @@
+{
+  "include": [
+    "./src/**/*.js",
+    "./src/**/*.jsx",
+  ],
+  "compilerOptions": {
+    "strict": true,
+    "target": "es2018",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "sourceMap": true,
+    "outDir": "lib",
+    "lib": ["dom", "esnext"],
+    "types": ["node"],
+    "jsx": "react",
+    "skipLibCheck": true,
+    "allowJs": true
+  }
+}
