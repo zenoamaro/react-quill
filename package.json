@@ -17,12 +17,16 @@
   "browser": "lib/index.js",
   "types": "types.d.ts",
   "scripts": {
-    "test": "make test",
-    "build": "make build",
-    "prepack": "make build",
-    "postpack": "make clean",
-    "prepublish": "make build",
-    "postpublish": "make clean"
+    "build": "npm run build:lib && npm run build:dist && npm run build:css",
+    "build:lib": "tsc",
+    "build:dist": "webpack",
+    "build:css": "cp node_modules/quill/dist/quill.{core,snow,bubble}.css dist",
+    "watch": "tsc --watch",
+    "clean": "rm -rf lib dist",
+    "test": "npm run test:unit && npm run test:coverage",
+    "test:unit": "mocha --recursive --require=./test/setup.js -R spec test/index",
+    "test:coverage": "mocha --recursive --require=./test/setup.js -R mocha-text-cov test/index",
+    "prepublishOnly": "npm run build"
   },
   "engines": {
     "node": ">= 0.8.x"
@@ -45,6 +49,8 @@
     "LICENSE"
   ],
   "dependencies": {
+    "react-dom": "^15.6.1",
+    "react": "^15.6.1",
     "create-react-class": "^15.6.0",
     "lodash": "^4.17.4",
     "prop-types": "^15.5.10",
@@ -60,8 +66,8 @@
     "@types/prop-types": "^15.7.3",
     "@types/quill": "^1.3.7",
     "@types/react-dom-factories": "^1.0.2",
-    "@types/react-dom": "^16.9.4",
-    "@types/react": "*",
+    "@types/react-dom": "^15.5.11",
+    "@types/react": "^15.6.1",
     "blanket": "^1.2.3",
     "chai-enzyme": "^0.8.0",
     "chai": "^4.1.0",
@@ -69,13 +75,10 @@
     "enzyme": "^2.9.1",
     "jsdom-global": "^3.0.2",
     "jsdom": "^11.0.0",
-    "jshint": "^2.9.4",
     "mocha-text-cov": "^0.1.1",
     "mocha": "^3.4.2",
     "react-addons-test-utils": "^15.6.0",
-    "react-dom": "^15.6.1",
     "react-test-renderer": "^15.6.1",
-    "react": "^15.6.1",
     "should": "^4.3.0",
     "sinon": "^2.3.5",
     "travis-cov": "^0.2.5",

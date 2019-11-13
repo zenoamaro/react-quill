@@ -563,7 +563,7 @@ import ReactQuill, { Quill, Mixin, Toolbar } from 'react-quill'; // ES6
 
 `value`
 : Value for the editor as a controlled component. Can be a string containing HTML, a [Quill Delta](https://quilljs.com/docs/delta/) instance, or a plain object representing a Delta.
-  Note that due to limitations in Quill, this is actually a _semi-controlled_ mode, meaning that the edit is not prevented, but changing `value` will still replace the contents. 
+  Note that due to limitations in Quill, this is actually a _semi-controlled_ mode, meaning that the edit is not prevented, but changing `value` will still replace the contents.
   Also note that passing a Quill Delta here, and then an HTML string, or vice-versa, will always trigger a change, regardless of whether they represent the same document.
   ⚠️ Do not pass the `delta` object from the `onChange` event as `value`, as it will cause a loop. See [Using Deltas](#using-deltas) for details.
 
@@ -651,30 +651,30 @@ class Editor extends React.Component {
     this.quillRef = null;      // Quill instance
     this.reactQuillRef = null; // ReactQuill component
   }
-  
+
   componentDidMount() {
     this.attachQuillRefs()
   }
-  
+
   componentDidUpdate() {
     this.attachQuillRefs()
   }
-  
+
   attachQuillRefs = () => {
     if (typeof this.reactQuillRef.getEditor !== 'function') return;
     this.quillRef = this.reactQuillRef.getEditor();
   }
-  
+
   insertText = () => {
     var range = this.quillRef.getSelection();
     let position = range ? range.index : 0;
     this.quillRef.insertText(position, 'Hello, World! ')
   }
-  
+
   render() {
     return (
       <div>
-        <ReactQuill 
+        <ReactQuill
           ref={(el) => { this.reactQuillRef = el }}
           theme={'snow'} />
         <button onClick={this.insertText}>Insert Text</button>
@@ -739,15 +739,17 @@ And build a minificated version of the source:
 npm run build
 ```
 
-More tasks are available on the [Makefile](Makefile):
+More tasks are available as package scripts:
 
-    lint: lints the source
-    spec: runs the test specs
-    coverage: runs the code coverage test
-    test: lint, spec and coverage threshold test
-    build: builds the minified version
+| Script                  | Description                               |
+|-------------------------|-------------------------------------------|
+| `npm run build`         | builds the library and the browser bundle |
+| `npm run watch`         | builds the library on modification        |
+| `npm run test`          | runs unit tests and test coverage         |
+| `npm run test:unit`     | runs the unit tests                       |
+| `npm run test:coverage` | runs the code coverage test               |
 
-Note that `dist` is ignored in the git repository as of version 1.0.0. If you need to use the built files without downloading the package from NPM, you can run the build tasks yourself or use a CDN like [unpkg](https://unpkg.com/react-quill@1.0.0-beta-1/dist/react-quill.min.js).
+Note that `lib` and `dist` are ignored in the git repository as of version 1.0.0. If you need to use the built files without downloading the package from NPM, you can run the build tasks yourself or use a CDN like [unpkg](https://unpkg.com/react-quill@1.0.0-beta-1/dist/react-quill.min.js).
 
 ### Bundling with Webpack
 
