@@ -4,15 +4,8 @@ toolbar format, or providing your own toolbar instead.
 See https://quilljs.com/docs/modules/toolbar
 */
 
-'use strict';
-
 import React from 'react';
-import ReactDOMServer from 'react-dom/server';
-import createClass from 'create-react-class';
-import find from 'lodash/find';
 import isEqual from 'lodash/isEqual';
-import T from 'prop-types';
-import DOM from 'react-dom-factories';
 
 var defaultColors = [
 	'rgb(  0,   0,   0)', 'rgb(230,   0,   0)', 'rgb(255, 153,   0)',
@@ -72,85 +65,94 @@ var defaultItems = [
 
 ];
 
-const QuillToolbar = createClass({
+export default class Toolbar extends React.Component {
 
-	displayName: 'Quill Toolbar',
+	static displayName = 'React Quill Toolbar'
 
-	propTypes: {
-		id:        T.string,
-		className: T.string,
-		style:     T.object,
-		items:     T.array
-	},
+	static defaultProps = {
+		items: defaultItems
+	}
 
-	getDefaultProps: function() {
-		return {
-			items: defaultItems
-		};
-	},
+	static defaultItems = defaultItems
+	static defaultColors = defaultColors
 
-	componentDidMount: function() {
+	constructor(props) {
+		super(props);
 		console.warn(
 			'QuillToolbar is deprecated. Consider switching to the official Quill ' +
 			'toolbar format, or providing your own toolbar instead. ' +
 			'See: https://github.com/zenoamaro/react-quill#upgrading-to-react-quill-v1-0-0'
 		);
-	},
+	}
 
-	shouldComponentUpdate: function(nextProps, nextState) {
+	shouldComponentUpdate(nextProps, nextState) {
 		return !isEqual(nextProps, this.props);
-	},
+	}
 
-	renderGroup: function(item, key) {
-		return DOM.span({
-			key: item.label || key,
-			className:'ql-formats' },
-			item.items.map(this.renderItem)
+	renderGroup = (item, key) => {
+		return (
+			<span
+				key={item.label || key}
+				className={'ql-formats'}
+			>
+				{item.items.map(this.renderItem)}
+			</span>
 		);
-	},
+	}
 
-	renderChoiceItem: function(item, key) {
-		return DOM.option({
-			key: item.label || item.value || key,
-			value: item.value },
-			item.label
+	renderChoiceItem = (item, key) => {
+		return (
+			<option
+				key={item.label || item.value || key}
+				value={item.valu}
+			>
+				{item.label}
+			</option>
 		);
-	},
+	}
 
-	renderChoices: function(item, key) {
+	renderChoices = (item, key) => {
 		var choiceItems = item.items.map(this.renderChoiceItem);
 		var selectedItem = find(item.items, function(item){ return item.selected });
-		var attrs = {
-			key: item.label || key,
-			title: item.label,
-			className: 'ql-'+item.type,
-			value: selectedItem.value,
-		};
-		return DOM.select(attrs, choiceItems);
-	},
-
-	renderButton: function(item, key) {
-		return DOM.button({
-			type: 'button',
-			key: item.label || item.value || key,
-			value: item.value,
-			className: 'ql-'+item.type,
-			title: item.label },
-			item.children
+		return (
+			<select
+				key={item.label || key}
+				title={item.label}
+				className={'ql-'+item.type}
+				value={selectedItem.value}
+			>
+				{choiceItems}
+			</select>
 		);
-	},
+	}
 
-	renderAction: function(item, key) {
-		return DOM.button({
-			key: item.label || item.value || key,
-			className: 'ql-'+item.type,
-			title: item.label },
-			item.children
+	renderButton = (item, key) => {
+		return (
+			<button
+				type={'button'}
+				key={item.label || item.value || key}
+				value={item.value}
+				className={'ql-'+item.type}
+				title={item.label}
+			>
+				{item.children}
+			</button>
 		);
-	},
+	}
 
-	/* jshint maxcomplexity: false */
-	renderItem: function(item, key) {
+	renderAction = (item, key) => {
+		return (
+			<button
+				key={item.label || item.value || key}
+				className={'ql-'+item.type}
+				title={item.label}
+			>
+				{item.children}
+			</button>
+		);
+	}
+
+	renderItem = (item, key) => {
 		switch (item.type) {
 			case 'group':
 				return this.renderGroup(item, key);
@@ -176,25 +178,23 @@ const QuillToolbar = createClass({
 			default:
 				return this.renderAction(item, key);
 		}
-	},
+	}
 
-	getClassName: function() {
+	getClassName() {
 		return 'quill-toolbar ' + (this.props.className||'');
-	},
+	}
 
-	render: function() {
+	render() {
 		var children = this.props.items.map(this.renderItem);
 		var html = children.map(ReactDOMServer.renderToStaticMarkup).join('');
-		return DOM.div({
-			id: this.props.id,
-			className: this.getClassName(),
-			style: this.props.style,
-			dangerouslySetInnerHTML: { __html:html }
-		});
-	},
+		return (
+			<div
+				id={this.props.id}
+				className={this.getClassName()}
+				style={this.props.style}
+				dangerouslySetInnerHTML={{ __html:html }}
+			/>
+		);
+	}
 
-});
-
-QuillToolbar.defaultItems = defaultItems;
-QuillToolbar.defaultColors = defaultColors;
-export default QuillToolbar;
+}
