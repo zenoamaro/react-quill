@@ -90,16 +90,15 @@ describe('<ReactQuill />', function() {
 
   it('prevents using Delta changesets from events as value', () => {
     const value = {ops: []};
-    const nextValue = {ops: [{insert: 'Hello, world!'}]};
-    const onChange = (_, delta) => wrapper.setProps({value: delta});
+    const onChange = (_, delta) => {
+      // Mock console.error to prevent the caught error from showing up
+      // https://github.com/facebook/react/issues/11098
+      const oldConsole = console.error;
+      console.error = () => {};
+      expect(() => wrapper.setProps({value: delta})).to.throw();
+      console.error = oldConsole;
+    };
     const wrapper = mountReactQuill({value, onChange});
-    const quill = getQuillInstance(wrapper);
-    // Mock console.error to prevent the caught error from showing up
-    // https://github.com/facebook/react/issues/11098
-    const oldConsole = console.error;
-    console.error = () => {};
-    expect(() => wrapper.setProps({value: nextValue})).to.throw();
-    console.error = oldConsole;
   });
 
   it('allows using Deltas as defaultValue', () => {
