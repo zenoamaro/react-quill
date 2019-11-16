@@ -13,7 +13,7 @@
     "build": "npm run build:lib && npm run build:dist && npm run build:css",
     "build:lib": "tsc",
     "build:dist": "webpack",
-    "build:css": "cp node_modules/quill/dist/quill.{core,snow,bubble}.css dist",
+    "build:css": "cp node_modules/quill/dist/quill.*.css dist",
     "watch": "tsc --watch",
     "clean": "rm -rf lib dist",
     "test": "npm run test:unit && npm run test:coverage",
