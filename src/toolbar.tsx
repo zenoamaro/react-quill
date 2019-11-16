@@ -70,29 +70,31 @@ export interface ReactQuillToolbarProps {
 }
 
 export type ToolbarItem = (
-	ToolbarGroupItem |
-	ToolbarChoiceItem |
-	ToolbarButtonItem |
-	ToolbarActionItem
+	ToolbarGroup |
+	ToolbarChoice |
+	ToolbarButton |
+	ToolbarAction
 );
 
-export interface ToolbarGroupItem {
+export interface ToolbarGroup {
 	type: 'group',
 	label: string,
 	items: ToolbarItem[],
 }
 
 export interface ToolbarChoiceItem {
-	type: 'font'|'header'|'align'|'size'|'color'|'background',
 	label: string,
-	items: {
-		label: string,
-		value: string,
-		selected: boolean,
-	}[],
+	value: string,
+	selected: boolean,
 }
 
-export interface ToolbarButtonItem {
+export interface ToolbarChoice {
+	type: 'font'|'header'|'align'|'size'|'color'|'background',
+	label: string,
+	items: ToolbarChoiceItem[],
+}
+
+export interface ToolbarButton {
 	type: (
 		'bold'|'italic'|'underline'|'strike'|'link'| 'list'|'bullet'|'ordered'|
 		'indent'|'image'|'video'
@@ -102,7 +104,7 @@ export interface ToolbarButtonItem {
 	children: React.ReactNode,
 }
 
-export interface ToolbarActionItem {
+export interface ToolbarAction {
 	type: 'action',
 	label: string,
 	value: string,
@@ -136,21 +138,21 @@ export default class ReactQuillToolbar extends React.Component<
 		return !isEqual(nextProps, this.props);
 	}
 
-	renderGroup = (item: ToolbarGroupItem, key: number) => {
+	renderGroup = (item: ToolbarGroup, key: number): JSX.Element => {
 		return (
 			<span
-				key={item.label || key}
-				className={'ql-formats'}
+				key={item.label ?? key}
+				className="ql-formats"
 			>
 				{item.items.map(this.renderItem)}
 			</span>
 		);
 	}
 
-	renderChoiceItem = (item: ToolbarChoiceItem["items"][0], key: number) => {
+	renderChoiceItem = (item: ToolbarChoiceItem, key: number): JSX.Element => {
 		return (
 			<option
-				key={item.label || item.value || key}
+				key={item.label ?? item.value ?? key}
 				value={item.value}
 			>
 				{item.label}
@@ -158,14 +160,14 @@ export default class ReactQuillToolbar extends React.Component<
 		);
 	}
 
-	renderChoices = (item: ToolbarChoiceItem, key: number) => {
+	renderChoices = (item: ToolbarChoice, key: number): JSX.Element => {
 		const choiceItems = item.items.map(this.renderChoiceItem);
-		const selectedItem = find(item.items, function(item){ return item.selected });
+		const selectedItem = find(item.items, item => item.selected);
 		return (
 			<select
-				key={item.label || key}
+				key={item.label ?? key}
 				title={item.label}
-				className={'ql-'+item.type}
+				className={`ql-${item.type}`}
 				value={selectedItem?.value}
 			>
 				{choiceItems}
@@ -173,13 +175,13 @@ export default class ReactQuillToolbar extends React.Component<
 		);
 	}
 
-	renderButton = (item: ToolbarButtonItem, key: number) => {
+	renderButton = (item: ToolbarButton, key: number): JSX.Element => {
 		return (
 			<button
 				type={'button'}
-				key={item.label || item.value || key}
+				key={item.label ?? item.value ?? key}
 				value={item.value}
-				className={'ql-'+item.type}
+				className={`ql-${item.type}`}
 				title={item.label}
 			>
 				{item.children}
@@ -187,11 +189,11 @@ export default class ReactQuillToolbar extends React.Component<
 		);
 	}
 
-	renderAction = (item: ToolbarActionItem, key: number) => {
+	renderAction = (item: ToolbarAction, key: number): JSX.Element => {
 		return (
 			<button
-				key={item.label || item.value || key}
-				className={'ql-'+item.type}
+				key={item.label ?? item.value ?? key}
+				className={`ql-${item.type}`}
 				title={item.label}
 			>
 				{item.children}
@@ -199,7 +201,7 @@ export default class ReactQuillToolbar extends React.Component<
 		);
 	}
 
-	renderItem = (item: ToolbarItem, key: number) => {
+	renderItem = (item: ToolbarItem, key: number): JSX.Element => {
 		switch (item.type) {
 			case 'group':
 				return this.renderGroup(item, key);
@@ -228,18 +230,19 @@ export default class ReactQuillToolbar extends React.Component<
 	}
 
 	getClassName() {
-		return 'quill-toolbar ' + (this.props.className||'');
+		return `quill-toolbar ${this.props.className??''}`;
 	}
 
 	render() {
-		const children = (this.props.items||[]).map(this.renderItem);
+		const {id, style, items=[]} = this.props;
+		const children = items.map(this.renderItem);
 		const html = children.map(ReactDOMServer.renderToStaticMarkup).join('');
 		return (
 			<div
-				id={this.props.id}
+				id={id}
 				className={this.getClassName()}
-				style={this.props.style}
-				dangerouslySetInnerHTML={{ __html:html }}
+				style={style}
+				dangerouslySetInnerHTML={{__html:html}}
 			/>
 		);
 	}

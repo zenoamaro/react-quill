@@ -6,6 +6,9 @@ import Quill, {
 	Sources as QuillSources,
 } from 'quill';
 
+export type Value = string | DeltaStatic;
+export type Range = RangeStatic | null;
+
 export interface QuillOptions extends QuillOptionsStatic {
 	tabIndex?: number,
 }
@@ -15,13 +18,27 @@ export interface ReactQuillMixin {
 	hookEditor(editor: Quill): void,
 	unhookEditor(editor: Quill): void,
 	setEditorReadOnly(editor: Quill, value: boolean): void,
-	setEditorContents(editor: Quill, value: string | DeltaStatic): void,
-	setEditorSelection(editor: Quill, range: RangeStatic | null): void,
+	setEditorContents(editor: Quill, value: Value): void,
+	setEditorSelection(editor: Quill, range: Range): void,
 	setEditorTabIndex(editor: Quill, tabIndex: number): void,
 	makeUnprivilegedEditor(editor: Quill): UnprivilegedEditor,
-	handleChange?(eventType: string, rangeOrDelta: RangeStatic | DeltaStatic | null, oldRangeOrOldDelta: RangeStatic | DeltaStatic | null, source: QuillSources): void,
-	onEditorChangeText?(value: string, delta: DeltaStatic, source: QuillSources, editor: UnprivilegedEditor): void;
-	onEditorChangeSelection?(selection: RangeStatic | null, source: QuillSources, editor: UnprivilegedEditor): void;
+	handleChange?(
+		eventType: string,
+		rangeOrDelta: RangeStatic | DeltaStatic | null,
+		oldRangeOrOldDelta: RangeStatic | DeltaStatic | null,
+		source: QuillSources,
+	): void,
+	onEditorChangeText?(
+		value: string,
+		delta: DeltaStatic,
+		source: QuillSources,
+		editor: UnprivilegedEditor,
+	): void;
+	onEditorChangeSelection?(
+		selection: Range,
+		source: QuillSources,
+		editor: UnprivilegedEditor,
+	): void;
 }
 
 export interface UnprivilegedEditor {
@@ -36,8 +53,8 @@ export interface UnprivilegedEditor {
 const Mixin: ReactQuillMixin = {
 
 	/**
-	Creates an editor on the given element. The editor will
-	be passed the configuration, have its events bound,
+	Creates an editor on the given element. The editor will be passed the
+	configuration, have its events bound,
 	*/
 	createEditor: function(element, config) {
 		const editor = new Quill(element, config);
@@ -56,17 +73,16 @@ const Mixin: ReactQuillMixin = {
 		this.handleChange = (eventType, rangeOrDelta, _, source) => {
 			if (eventType === 'text-change') {
 				this.onEditorChangeText?.(
-					editor.root.innerHTML, rangeOrDelta as DeltaStatic, source,
-					unprivilegedEditor
-				);
-				this.onEditorChangeSelection?.(
-					editor.getSelection(), source,
+					editor.root.innerHTML,
+					rangeOrDelta as DeltaStatic,
+					source,
 					unprivilegedEditor
 				);
 			}
-			if (eventType === 'selection-change') {
+			if (eventType === 'text-change' || eventType === 'selection-change') {
 				this.onEditorChangeSelection?.(
-					rangeOrDelta as RangeStatic, source,
+					rangeOrDelta as RangeStatic,
+					source,
 					unprivilegedEditor
 				);
 			}
@@ -82,24 +98,24 @@ const Mixin: ReactQuillMixin = {
 	},
 
 	setEditorReadOnly: function(editor, value) {
-		value? editor.disable()
-		     : editor.enable();
+		if (value) {
+			editor.disable();
+		} else {
+			editor.enable();
+		}
 	},
 
 	/*
-	Replace the contents of the editor, but keep
-	the previous selection hanging around so that
-	the cursor won't move.
+	Replace the contents of the editor, but keep the previous selection hanging
+	around so that the cursor won't move.
 	*/
 	setEditorContents: function(editor, value) {
 		const sel = editor.getSelection();
-
 		if (typeof value === 'string') {
 			editor.setContents(editor.clipboard.convert(value));
 		} else {
 			editor.setContents(value);
 		}
-
 		if (sel && editor.hasFocus()) this.setEditorSelection(editor, sel);
 	},
 
@@ -110,7 +126,7 @@ const Mixin: ReactQuillMixin = {
 			range.index = Math.max(0, Math.min(range.index, length-1));
 			range.length = Math.max(0, Math.min(range.length, (length-1) - range.index));
 		}
-		// Quill type erroneously does not accept null
+		// Quill types (erroneously) do not specify that `null` is accepted here.
 		editor.setSelection(range!);
 	},
 

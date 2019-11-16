@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Mixin, {UnprivilegedEditor, ReactQuillMixin} from './mixin';
 import some from 'lodash/some';
 import isEqual from 'lodash/isEqual';
+import Mixin, {UnprivilegedEditor, ReactQuillMixin, QuillOptions, Range, Value} from './mixin';
 
 import Quill, {
 	DeltaStatic,
@@ -15,7 +15,7 @@ interface ReactQuillProps {
 	bounds?: string | HTMLElement,
 	children?: React.ReactElement<any>,
 	className?: string,
-	defaultValue?: string | DeltaStatic,
+	defaultValue?: Value,
 	formats?: string[],
 	id?: string,
 	modules?: QuillStringMap,
@@ -26,17 +26,17 @@ interface ReactQuillProps {
 		editor: UnprivilegedEditor,
 	): void,
 	onChangeSelection?(
-		selection: RangeStatic | null,
+		selection: Range,
 		source: QuillSources,
 		editor: UnprivilegedEditor,
 	): void,
 	onFocus?(
-		selection: RangeStatic | null,
+		selection: Range,
 		source: QuillSources,
 		editor: UnprivilegedEditor,
 	): void,
 	onBlur?(
-		previousSelection: RangeStatic | null,
+		previousSelection: Range,
 		source: QuillSources,
 		editor: UnprivilegedEditor,
 	): void,
@@ -50,7 +50,7 @@ interface ReactQuillProps {
 	style?: React.CSSProperties,
 	tabIndex?: number,
 	theme?: string,
-	value?: string | DeltaStatic,
+	value?: Value,
 
 	/** @deprecated
 	 * The `toolbar` prop has been deprecated. Use `modules.toolbar` instead.
@@ -75,8 +75,8 @@ interface ReactQuillProps {
 
 interface ReactQuillState {
 	generation: number,
-	value: string | DeltaStatic,
-	selection: RangeStatic | null,
+	value: Value,
+	selection: Range,
 }
 
 interface ReactQuill extends ReactQuillMixin {};
@@ -87,7 +87,7 @@ class ReactQuill extends React.Component<ReactQuillProps, ReactQuillState> {
 
 	/*
 	Changing one of these props should cause a full re-render and a
-	reinstantiation of the Quill editor.
+	re-instantiation of the Quill editor.
 	*/
 	dirtyProps: (keyof ReactQuillProps)[] = [
 		'modules',
@@ -130,35 +130,35 @@ class ReactQuill extends React.Component<ReactQuillProps, ReactQuillState> {
 	}
 
 	/*
-	The Quill Editor instance
+	The Quill Editor instance.
 	*/
 	editor?: Quill
 
 	/*
-
+	Reference to the element holding the Quill editing area.
 	*/
 	editingArea?: React.ReactInstance | null
 
 	/*
-	Used to compare whether deltas from `onChange` are being used as `value`
+	Used to compare whether deltas from `onChange` are being used as `value`.
 	*/
 	lastDeltaChangeSet?: DeltaStatic
 
 	/*
-	Stores the contents of the editor to be restored after regeneration
+	Stores the contents of the editor to be restored after regeneration.
 	*/
 	regenerationSnapshot?: {
 		delta: DeltaStatic,
-		selection: RangeStatic | null,
+		selection: Range,
 	}
 
 	constructor(props: ReactQuillProps) {
 		super(props);
 		const value = this.isControlled()? props.value : props.defaultValue;
-		this.state.value = value || '';
+		this.state.value = value ?? '';
 	}
 
-	validateProps(props: ReactQuillProps) {
+	validateProps(props: ReactQuillProps): void {
 		if ('toolbar' in props) throw new Error(
 			'The `toolbar` prop has been deprecated. Use `modules.toolbar` instead. ' +
 			'See: https://github.com/zenoamaro/react-quill#upgrading-to-react-quill-v100'
@@ -224,7 +224,7 @@ class ReactQuill extends React.Component<ReactQuillProps, ReactQuillState> {
 		});
 	}
 
-	shouldComponentRegenerate(nextProps: ReactQuillProps) {
+	shouldComponentRegenerate(nextProps: ReactQuillProps): boolean {
 		// Whenever a `dirtyProp` changes, the editor needs reinstantiation.
 		return some(this.dirtyProps, (prop) => {
 			return !isEqual(nextProps[prop], this.props[prop]);
@@ -292,7 +292,7 @@ class ReactQuill extends React.Component<ReactQuillProps, ReactQuillState> {
 		}
 	}
 
-	instantiateEditor() {
+	instantiateEditor(): void {
 		if (this.editor) {
 			throw new Error('Editor is already instantiated');
 		}
@@ -302,7 +302,7 @@ class ReactQuill extends React.Component<ReactQuillProps, ReactQuillState> {
 		);
 	}
 
-	destroyEditor() {
+	destroyEditor(): void {
 		if (!this.editor) {
 			throw new Error('Destroying editor before instantiation');
 		}
@@ -313,24 +313,25 @@ class ReactQuill extends React.Component<ReactQuillProps, ReactQuillState> {
 	/*
 	We consider the component to be controlled if `value` is being sent in props.
 	*/
-	isControlled() {
+	isControlled(): boolean {
 		return 'value' in this.props;
 	}
 
-	getEditorConfig() {
+	getEditorConfig(): QuillOptions {
 		return {
-			bounds:       this.props.bounds,
-			formats:      this.props.formats,
-			modules:      this.props.modules,
-			placeholder:  this.props.placeholder,
-			readOnly:     this.props.readOnly,
+			bounds: this.props.bounds,
+			formats: this.props.formats,
+			modules: this.props.modules,
+			placeholder: this.props.placeholder,
+			readOnly: this.props.readOnly,
 			scrollingContainer: this.props.scrollingContainer,
-			tabIndex:     this.props.tabIndex,
-			theme:        this.props.theme,
+			tabIndex: this.props.tabIndex,
+			theme: this.props.theme,
 		};
 	}
 
-	getEditor() {
+	getEditor(): Quill {
+		if (!this.editor) throw new Error('Accessing non-instantiated editor');
 		return this.editor;
 	}
 
@@ -348,11 +349,11 @@ class ReactQuill extends React.Component<ReactQuillProps, ReactQuillState> {
 		return element as Element;
 	}
 
-	getEditorContents() {
+	getEditorContents(): Value {
 		return this.state.value;
 	}
 
-	getEditorSelection() {
+	getEditorSelection(): Range {
 		return this.state.selection;
 	}
 
@@ -366,7 +367,7 @@ class ReactQuill extends React.Component<ReactQuillProps, ReactQuillState> {
 	/*
 	Special comparison function that knows how to compare Deltas.
 	*/
-	isEqualValue(value: any, nextValue: any) {
+	isEqualValue(value: any, nextValue: any): boolean {
 		if (this.isDelta(value) && this.isDelta(nextValue)) {
 			return isEqual(value.ops, nextValue.ops);
 		} else {
@@ -377,13 +378,13 @@ class ReactQuill extends React.Component<ReactQuillProps, ReactQuillState> {
 	/*
 	Renders an editor area, unless it has been provided one to clone.
 	*/
-	renderEditingArea() {
-		const children = this.props.children;
-		const preserveWhitespace = this.props.preserveWhitespace;
+	renderEditingArea(): JSX.Element {
+		const {children, preserveWhitespace, tabIndex} = this.props;
+		const {generation} = this.state;
 
 		const properties = {
-			key: this.state.generation,
-			tabIndex: this.props.tabIndex,
+			tabIndex,
+			key: generation,
 			ref: (instance: React.ReactInstance | null) => {
 				this.editingArea = instance
 			},
@@ -407,7 +408,7 @@ class ReactQuill extends React.Component<ReactQuillProps, ReactQuillState> {
 				id={this.props.id}
 				style={this.props.style}
 				key={this.state.generation}
-				className={`quill ${this.props.className}`}
+				className={`quill ${this.props.className ?? ''}`}
 				onKeyPress={this.props.onKeyPress}
 				onKeyDown={this.props.onKeyDown}
 				onKeyUp={this.props.onKeyUp}
@@ -422,7 +423,7 @@ class ReactQuill extends React.Component<ReactQuillProps, ReactQuillState> {
 		delta: DeltaStatic,
 		source: QuillSources,
 		editor: UnprivilegedEditor,
-	) {
+	): void {
 		const currentContents = this.getEditorContents();
 
 		// We keep storing the same type of value as what the user gives us,
@@ -435,12 +436,8 @@ class ReactQuill extends React.Component<ReactQuillProps, ReactQuillState> {
 			// Taint this `delta` object, so we can recognize whether the user
 			// is trying to send it back as `value`, preventing a likely loop.
 			this.lastDeltaChangeSet = delta;
-
 			this.setState({ value: nextContents });
-
-			if (this.props.onChange) {
-				this.props.onChange(value, delta, source, editor);
-			}
+			this.props.onChange?.(value, delta, source, editor);
 		}
 	}
 
@@ -448,41 +445,35 @@ class ReactQuill extends React.Component<ReactQuillProps, ReactQuillState> {
 		nextSelection: RangeStatic,
 		source: QuillSources,
 		editor: UnprivilegedEditor,
-	) {
+	): void {
 		const currentSelection = this.getEditorSelection();
 		const hasGainedFocus = !currentSelection && nextSelection;
 		const hasLostFocus = currentSelection && !nextSelection;
 
-		if (isEqual(nextSelection, currentSelection)) {
-			return;
-		}
+		if (isEqual(nextSelection, currentSelection)) return;
 
 		this.setState({ selection: nextSelection });
+		this.props.onChangeSelection?.(nextSelection, source, editor);
 
-		if (this.props.onChangeSelection) {
-			this.props.onChangeSelection(nextSelection, source, editor);
-		}
-
-		if (hasGainedFocus && this.props.onFocus) {
-			this.props.onFocus(nextSelection, source, editor);
-		} else if (hasLostFocus && this.props.onBlur) {
-			this.props.onBlur(currentSelection, source, editor);
+		if (hasGainedFocus) {
+			this.props.onFocus?.(nextSelection, source, editor);
+		} else if (hasLostFocus) {
+			this.props.onBlur?.(currentSelection, source, editor);
 		}
 	}
 
-	focus() {
+	focus(): void {
 		if (!this.editor) return;
 		this.editor.focus();
 	}
 
-	blur() {
+	blur(): void {
 		if (!this.editor) return;
 		this.setEditorSelection(this.editor, null);
 	}
-
 }
 
-// FIXME: Understand what to do with Mixin
+// TODO: Understand what to do with Mixin.
 Object.assign(ReactQuill.prototype, Mixin);
 
 export default ReactQuill;
