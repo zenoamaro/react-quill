@@ -3,15 +3,15 @@ const dir = (...args) => Path.resolve(__dirname, ...args);
 
 module.exports = {
   mode: 'production',
-  entry: dir('src/index.js'),
+  entry: dir('src/index.ts'),
 
   resolve: {
-    extensions: ['.js', '.jsx'],
+    extensions: ['.js', '.ts', '.tsx'],
   },
 
   module: {
     rules: [
-      {test:/\.jsx?$/, loader:'ts-loader', exclude:/node_modules/},
+      {test:/\.tsx?$/, loader:'ts-loader', exclude:/node_modules/},
     ],
   },
 
@@ -33,12 +33,6 @@ module.exports = {
 			'commonjs2': 'react-dom/server',
 			'amd': 'react-dom/server',
 			'root': 'ReactDOMServer'
-		},
-		'prop-types': {
-			'commonjs': 'prop-types',
-			'commonjs2': 'prop-types',
-			'amd': 'prop-types',
-			'root': 'PropTypes'
 		}
   },
 

@@ -4,10 +4,12 @@ toolbar format, or providing your own toolbar instead.
 See https://quilljs.com/docs/modules/toolbar
 */
 
-import React from 'react';
+import React, {CSSProperties} from 'react';
+import ReactDOMServer from 'react-dom/server';
+import find from 'lodash/find';
 import isEqual from 'lodash/isEqual';
 
-var defaultColors = [
+const defaultColors = [
 	'rgb(  0,   0,   0)', 'rgb(230,   0,   0)', 'rgb(255, 153,   0)',
 	'rgb(255, 255,   0)', 'rgb(  0, 138,   0)', 'rgb(  0, 102, 204)',
 	'rgb(153,  51, 255)', 'rgb(255, 255, 255)', 'rgb(250, 204, 204)',
@@ -22,8 +24,7 @@ var defaultColors = [
 	'rgb(  0,  41, 102)', 'rgb( 61,  20,  10)',
 ].map(function(color){ return { value: color } });
 
-var defaultItems = [
-
+const defaultItems = [
 	{ label:'Formats', type:'group', items: [
 		{ label:'Font', type:'font', items: [
 			{ label:'Sans Serif',  value:'sans-serif', selected:true },
@@ -43,7 +44,6 @@ var defaultItems = [
 			{ label:'', value:'justify' }
 		]}
 	]},
-
 	{ label:'Text', type:'group', items: [
 		{ type:'bold', label:'Bold' },
 		{ type:'italic', label:'Italic' },
@@ -53,31 +53,78 @@ var defaultItems = [
 		{ type:'background', label:'Background color', items:defaultColors },
 		{ type:'link', label:'Link' }
 	]},
-
 	{ label:'Blocks', type:'group', items: [
 		{ type:'list', value:'bullet' },
 		{ type:'list', value:'ordered' }
 	]},
-
 	{ label:'Blocks', type:'group', items: [
 		{ type:'image', label:'Image' }
 	]}
-
 ];
 
-export default class Toolbar extends React.Component {
+export interface ReactQuillToolbarProps {
+	className?: string,
+	items?: ToolbarItem[],
+	id?: string,
+	style?: CSSProperties,
+}
+
+export type ToolbarItem = (
+	ToolbarGroupItem |
+	ToolbarChoiceItem |
+	ToolbarButtonItem |
+	ToolbarActionItem
+);
+
+export interface ToolbarGroupItem {
+	type: 'group',
+	label: string,
+	items: ToolbarItem[],
+}
+
+export interface ToolbarChoiceItem {
+	type: 'font'|'header'|'align'|'size'|'color'|'background',
+	label: string,
+	items: {
+		label: string,
+		value: string,
+		selected: boolean,
+	}[],
+}
+
+export interface ToolbarButtonItem {
+	type: (
+		'bold'|'italic'|'underline'|'strike'|'link'| 'list'|'bullet'|'ordered'|
+		'indent'|'image'|'video'
+	),
+	label: string,
+	value: string,
+	children: React.ReactNode,
+}
+
+export interface ToolbarActionItem {
+	type: 'action',
+	label: string,
+	value: string,
+	children: React.ReactNode,
+}
+
+export default class ReactQuillToolbar extends React.Component<
+	ReactQuillToolbarProps
+> {
 
 	static displayName = 'React Quill Toolbar'
 
 	static defaultProps = {
-		items: defaultItems
+		items: defaultItems,
 	}
 
 	static defaultItems = defaultItems
 	static defaultColors = defaultColors
 
-	constructor(props) {
+	constructor(props: ReactQuillToolbarProps) {
 		super(props);
+
 		console.warn(
 			'QuillToolbar is deprecated. Consider switching to the official Quill ' +
 			'toolbar format, or providing your own toolbar instead. ' +
@@ -85,11 +132,11 @@ export default class Toolbar extends React.Component {
 		);
 	}
 
-	shouldComponentUpdate(nextProps, nextState) {
+	shouldComponentUpdate(nextProps: ReactQuillToolbarProps) {
 		return !isEqual(nextProps, this.props);
 	}
 
-	renderGroup = (item, key) => {
+	renderGroup = (item: ToolbarGroupItem, key: number) => {
 		return (
 			<span
 				key={item.label || key}
@@ -100,33 +147,33 @@ export default class Toolbar extends React.Component {
 		);
 	}
 
-	renderChoiceItem = (item, key) => {
+	renderChoiceItem = (item: ToolbarChoiceItem["items"][0], key: number) => {
 		return (
 			<option
 				key={item.label || item.value || key}
-				value={item.valu}
+				value={item.value}
 			>
 				{item.label}
 			</option>
 		);
 	}
 
-	renderChoices = (item, key) => {
-		var choiceItems = item.items.map(this.renderChoiceItem);
-		var selectedItem = find(item.items, function(item){ return item.selected });
+	renderChoices = (item: ToolbarChoiceItem, key: number) => {
+		const choiceItems = item.items.map(this.renderChoiceItem);
+		const selectedItem = find(item.items, function(item){ return item.selected });
 		return (
 			<select
 				key={item.label || key}
 				title={item.label}
 				className={'ql-'+item.type}
-				value={selectedItem.value}
+				value={selectedItem?.value}
 			>
 				{choiceItems}
 			</select>
 		);
 	}
 
-	renderButton = (item, key) => {
+	renderButton = (item: ToolbarButtonItem, key: number) => {
 		return (
 			<button
 				type={'button'}
@@ -140,7 +187,7 @@ export default class Toolbar extends React.Component {
 		);
 	}
 
-	renderAction = (item, key) => {
+	renderAction = (item: ToolbarActionItem, key: number) => {
 		return (
 			<button
 				key={item.label || item.value || key}
@@ -152,7 +199,7 @@ export default class Toolbar extends React.Component {
 		);
 	}
 
-	renderItem = (item, key) => {
+	renderItem = (item: ToolbarItem, key: number) => {
 		switch (item.type) {
 			case 'group':
 				return this.renderGroup(item, key);
@@ -185,8 +232,8 @@ export default class Toolbar extends React.Component {
 	}
 
 	render() {
-		var children = this.props.items.map(this.renderItem);
-		var html = children.map(ReactDOMServer.renderToStaticMarkup).join('');
+		const children = (this.props.items||[]).map(this.renderItem);
+		const html = children.map(ReactDOMServer.renderToStaticMarkup).join('');
 		return (
 			<div
 				id={this.props.id}

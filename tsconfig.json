@@ -1,7 +1,7 @@
 {
   "include": [
-    "./src/**/*.js",
-    "./src/**/*.jsx",
+    "./src/**/*.ts",
+    "./src/**/*.tsx",
   ],
   "compilerOptions": {
     "strict": true,
@@ -9,12 +9,11 @@
     "module": "commonjs",
     "moduleResolution": "node",
     "esModuleInterop": true,
+    "declaration": true,
     "sourceMap": true,
     "outDir": "lib",
     "lib": ["dom", "esnext"],
     "types": ["node"],
-    "jsx": "react",
-    "skipLibCheck": true,
-    "allowJs": true
+    "jsx": "react"
   }
 }

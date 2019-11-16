@@ -1,5 +1,5 @@
 /*
-React-Quill v1.0.0
+React-Quill
 https://github.com/zenoamaro/react-quill
 */
 import Component from './component';
