@@ -211,7 +211,6 @@ class ReactQuill extends React.Component<ReactQuillProps, ReactQuillState> {
 	}
 
 	shouldComponentUpdate(nextProps: ReactQuillProps, nextState: ReactQuillState) {
-		// TODO: Is there a better place to validate props?
 		this.validateProps(nextProps);
 
 		// If the component has been regenerated, we already know we should update.
@@ -424,6 +423,7 @@ class ReactQuill extends React.Component<ReactQuillProps, ReactQuillState> {
 		source: QuillSources,
 		editor: UnprivilegedEditor,
 	): void {
+		if (!this.editor) return;
 		const currentContents = this.getEditorContents();
 
 		// We keep storing the same type of value as what the user gives us,
@@ -446,6 +446,7 @@ class ReactQuill extends React.Component<ReactQuillProps, ReactQuillState> {
 		source: QuillSources,
 		editor: UnprivilegedEditor,
 	): void {
+		if (!this.editor) return;
 		const currentSelection = this.getEditorSelection();
 		const hasGainedFocus = !currentSelection && nextSelection;
 		const hasLostFocus = currentSelection && !nextSelection;
