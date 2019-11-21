@@ -36,10 +36,20 @@ function setQuillContentsFromHTML(wrapper, html) {
 	return editor.clipboard.dangerouslyPasteHTML(html);
 }
 
+function withMockedConsole(fn) {
+	// Mock console.error to prevent the caught error from showing up
+	// https://github.com/facebook/react/issues/11098
+	const oldConsole = console.error;
+	console.error = () => {};
+	fn();
+	console.error = oldConsole;
+}
+
 module.exports = {
 	mountReactQuill,
 	getQuillInstance,
 	getQuillDOMNode,
 	getQuillContentsAsHTML,
 	setQuillContentsFromHTML,
+	withMockedConsole,
 };

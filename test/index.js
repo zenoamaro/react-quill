@@ -17,6 +17,7 @@ const {
   getQuillInstance,
   getQuillContentsAsHTML,
   setQuillContentsFromHTML,
+  withMockedConsole,
 } = require('./utils');
 
 console.log('\n\
@@ -88,17 +89,17 @@ describe('<ReactQuill />', function() {
     expect(getQuillContentsAsHTML(wrapper)).to.equal(html);
   });
 
-  it('prevents using Delta changesets from events as value', () => {
-    const value = {ops: []};
+  it('prevents using Delta changesets from events as value', (done) => {
+    const value = '<p>Hello, world!</p>';
+    const changedValue = '<p>Adieu, world!</p>';
     const onChange = (_, delta) => {
-      // Mock console.error to prevent the caught error from showing up
-      // https://github.com/facebook/react/issues/11098
-      const oldConsole = console.error;
-      console.error = () => {};
-      expect(() => wrapper.setProps({value: delta})).to.throw();
-      console.error = oldConsole;
+      withMockedConsole(() => {
+        expect(() => wrapper.setProps({value: delta})).to.throw();
+        done();
+      });
     };
     const wrapper = mountReactQuill({value, onChange});
+    setQuillContentsFromHTML(wrapper, changedValue);
   });
 
   it('allows using Deltas as defaultValue', () => {
