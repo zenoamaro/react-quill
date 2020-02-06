@@ -83,10 +83,8 @@ var QuillToolbar = createClass({
 		items:     T.array
 	},
 
-	getDefaultProps: function() {
-		return {
-			items: defaultItems
-		};
+	defaultProps: {
+		items: defaultItems,
 	},
 
 	componentDidMount: function() {
