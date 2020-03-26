@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import some from 'lodash/some';
 import isEqual from 'lodash/isEqual';
 
 import Quill, {
@@ -191,7 +190,7 @@ export default class ReactQuill extends React.Component<ReactQuillProps, ReactQu
 
 		if (props.formats && (
 			!(props.formats instanceof Array) ||
-			some(props.formats, x => typeof x !== 'string')
+			props.formats.some(x => typeof x !== 'string')
 		)) throw new Error(
 			'You cannot specify custom `formats` anymore. Use Parchment instead.  ' +
 			'See: https://github.com/zenoamaro/react-quill#upgrading-to-react-quill-v100.'
@@ -237,14 +236,14 @@ export default class ReactQuill extends React.Component<ReactQuillProps, ReactQu
 			return true;
 		}
 
-		return some([...this.cleanProps, ...this.dirtyProps], (prop) => {
+		return [...this.cleanProps, ...this.dirtyProps].some((prop) => {
 			return !isEqual(nextProps[prop], this.props[prop]);
 		});
 	}
 
 	shouldComponentRegenerate(nextProps: ReactQuillProps): boolean {
 		// Whenever a `dirtyProp` changes, the editor needs reinstantiation.
-		return some(this.dirtyProps, (prop) => {
+		return this.dirtyProps.some((prop) => {
 			return !isEqual(nextProps[prop], this.props[prop]);
 		});
 	}
