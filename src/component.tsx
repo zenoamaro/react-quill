@@ -58,26 +58,6 @@ export interface ReactQuillProps {
 	tabIndex?: number,
 	theme?: string,
 	value?: Value,
-
-	/** @deprecated
-	 * The `toolbar` prop has been deprecated. Use `modules.toolbar` instead.
-	 * See: https://github.com/zenoamaro/react-quill#upgrading-to-react-quill-v100.
-	 * */
-	toolbar?: never,
-
-	/** @deprecated
-	 * The `styles` prop has been deprecated. Use custom stylesheets instead.
-	 * See: https://github.com/zenoamaro/react-quill#upgrading-to-react-quill-v100
-	 */
-	styles?: never,
-
-	/**
-	 * @deprecated
-	 * The `pollInterval` property does not have any effect anymore.
-	 * You can safely remove it from your props.
-	 * See: https://github.com/zenoamaro/react-quill#upgrading-to-react-quill-v100.
-	 */
-	pollInterval?: never,
 }
 
 export interface UnprivilegedEditor {
@@ -177,36 +157,6 @@ export default class ReactQuill extends React.Component<ReactQuillProps, ReactQu
 	}
 
 	validateProps(props: ReactQuillProps): void {
-		if ('toolbar' in props) throw new Error(
-			'The `toolbar` prop has been deprecated. Use `modules.toolbar` instead. ' +
-			'See: https://github.com/zenoamaro/react-quill#upgrading-to-react-quill-v100'
-		);
-
-		if (props.modules?.toolbar?.[0]?.type) throw new Error(
-			'Since v1.0.0, React Quill will not create a custom toolbar for you ' +
-			'anymore. Create a toolbar explictly, or let Quill create one. ' +
-			'See: https://github.com/zenoamaro/react-quill#upgrading-to-react-quill-v100'
-		);
-
-		if (props.formats && (
-			!(props.formats instanceof Array) ||
-			props.formats.some(x => typeof x !== 'string')
-		)) throw new Error(
-			'You cannot specify custom `formats` anymore. Use Parchment instead.  ' +
-			'See: https://github.com/zenoamaro/react-quill#upgrading-to-react-quill-v100.'
-		);
-
-		if ('styles' in props) throw new Error(
-			'The `styles` prop has been deprecated. Use custom stylesheets instead. ' +
-			'See: https://github.com/zenoamaro/react-quill#upgrading-to-react-quill-v100.'
-		);
-
-		if ('pollInterval' in props) throw new Error(
-			'The `pollInterval` property does not have any effect anymore. ' +
-			'Remove it from your props. ' +
-			'See: https://github.com/zenoamaro/react-quill#upgrading-to-react-quill-v100.'
-		);
-
 		if (React.Children.count(props.children) > 1) throw new Error(
 			'The Quill editing area can only be composed of a single React element.'
 		);
