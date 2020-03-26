@@ -1,6 +1,14 @@
 Changelog
 =========
 
+Next
+----
+
+- Fully ported to TypeScript (#549)
+- Fully React16 compliant (#549)
+- Removed Mixin (#549)
+- Removed Toolbar (#549)
+
 v1.3.4
 ------
 

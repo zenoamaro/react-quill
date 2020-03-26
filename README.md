@@ -1,4 +1,4 @@
-React-Quill [![Build Status](https://travis-ci.org/zenoamaro/react-quill.svg?branch=master)](https://travis-ci.org/zenoamaro/react-quill) [![npm](https://img.shields.io/npm/v/react-quill.svg)](https://www.npmjs.com/package/react-quill)
+ReactQuill [![Build Status](https://travis-ci.org/zenoamaro/react-quill.svg?branch=master)](https://travis-ci.org/zenoamaro/react-quill) [![npm](https://img.shields.io/npm/v/react-quill.svg)](https://www.npmjs.com/package/react-quill)
 [![npm downloads](https://img.shields.io/npm/dt/react-quill.svg?maxAge=2592000)](http://www.npmtrends.com/react-quill)
 ==============================================================================
 
@@ -22,31 +22,29 @@ See a [live demo] or [Codepen](http://codepen.io/alexkrolick/pen/xgyOXQ/left?edi
    1. [Custom Formats](#custom-formats)
    1. [Custom Editing Area](#custom-editing-area)
    1. [Mixin](#mixin)
-1. [Upgrading to React-Quill v1.0.0](#upgrading-to-react-quill-v100)
-1. [API reference](#api-reference)
+2. [Upgrading to ReactQuill v2](#upgrading-to-react-quill-v2)
+3. [API reference](#api-reference)
    1. [Exports](#exports)
-   1. [Props](#props)
-   1. [Methods](#methods)
-1. [Browser support](#browser-support)
-1. [Building and testing](#building-and-testing)
+   2. [Props](#props)
+   3. [Methods](#methods)
+4. [Browser support](#browser-support)
+5. [Building and testing](#building-and-testing)
    1. [Bundling with Webpack](#bundling-with-webpack)
-1. [Changelog](./CHANGELOG.md)
-1. [Contributors](#contributors)
-1. [License](#license)
+6. [Changelog](./CHANGELOG.md)
+7. [Contributors](#contributors)
+8. [License](#license)
 
 ---
 
-💯 **React Quill now supports Quill v1.0.0!**
-Thanks to @clemmy and @alexkrolick for landing this much-awaited change. There are many breaking changes, so be sure to read the [migration guide](#upgrading-to-react-quill-v100).
+💯 **ReactQuill 2.0 is out!**
+
+ReactQuill is back, baby! Now fully TypeScript and React 16.
+
+We worked hard to avoid introducing any behavioral changes. For the vast majority of the cases, no migration is necessary at all, and the upgrade is drop-in. However, support for long-deprecated props, the ReactQuill Mixin, and the Toolbar component have been removed. Be sure to read the [migration guide](#upgrading-to-react-quill-v2).
+
+Special thank you to everyone who contributed during the 2.0.0 beta, feedback and testing!
 
 ---
-
-```sh
-npm install react-quill
-yarn add react-quill
-```
-
-Special thank you to everyone who contributed during the 1.0.0 release cycle!
 
 ## Quick Start
 
@@ -54,7 +52,6 @@ Special thank you to everyone who contributed during the 1.0.0 release cycle!
 
 ```jsx
 import ReactQuill from 'react-quill'; // ES6
-import * as ReactQuill from 'react-quill'; // Typescript
 const ReactQuill = require('react-quill'); // CommonJS
 ```
 
@@ -62,49 +59,30 @@ const ReactQuill = require('react-quill'); // CommonJS
 
 _Two common examples are shown below. How stylesheets are included in your app depends on build system (Webpack, SCSS, LESS, etc). See the documentation on [Themes](#theme) for more information._
 
-#### Fetching styles from the CDN
+Example: Using `css-loader` with Webpack or `create-react-app`
+
+```jsx
+import 'react-quill/dist/quill.snow.css'; // ES6
+require('react-quill/dist/quill.snow.css'); // CommonJS
+```
+
+Example: Getting styles from the CDN
 
 ```html
-<link rel="stylesheet" href="//cdn.quilljs.com/1.2.6/quill.snow.css">
+<link rel="stylesheet" href="//cdn.quilljs.com/1.3.6/quill.snow.css">
 ```
 
-#### Using `css-loader` with Webpack or `create-react-app`
+### Render the component
 
 ```jsx
-require('react-quill/dist/quill.snow.css'); // CommonJS
-import 'react-quill/dist/quill.snow.css'; // ES6
-```
+function MyComponent(props) {
+  const [value, setValue] = useState('');
 
-### Use the component
-
-```jsx
-class MyComponent extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = { text: '' } // You can also pass a Quill Delta here
-    this.handleChange = this.handleChange.bind(this)
-  }
-
-  handleChange(value) {
-    this.setState({ text: value })
-  }
-
-  render() {
-    return (
-      <ReactQuill value={this.state.text}
-                  onChange={this.handleChange} />
-    )
-  }
+  return (
+    <ReactQuill value={value} onChange={setValue}>
+  );
 }
 ```
-
-### Using Deltas
-
-You can pass a [Quill Delta](https://quilljs.com/docs/delta/), instead of an HTML string, as the `value` and `defaultValue` properties. Deltas have a number of advantages over HTML strings, so you might want use them instead. Be aware, however, that comparing Deltas for changes is more expensive than comparing HTML strings, so it might be worth to profile your usage patterns.
-
-Note that switching `value` from an HTML string to a Delta, or vice-versa, will trigger a change, regardless of whether they represent the same document, so you might want to stick to a format and keep using it consistently throughout.
-
-⚠️ Do not use the `delta` object you receive from the `onChange` event as `value`. This object does not contain the full document, but only the last modifications, and doing so will most likely trigger an infinite loop where the same changes are applied over and over again. Use `editor.getContents()` during the event to obtain a Delta of the full document instead. ReactQuill will prevent you from making such a mistake, however if you are absolutely sure that this is what you want, you can pass the object through `new Delta()` again to un-taint it.
 
 ### Controlled vs Uncontrolled Mode
 
@@ -116,13 +94,26 @@ In this "uncontrolled" mode ReactQuill uses the prop as the initial value but al
 
 [defaultvalues]: https://facebook.github.io/react/docs/uncontrolled-components.html#default-values
 
+```sh
+npm install react-quill
+yarn add react-quill
+```
+
+### Using Deltas
+
+You can pass a [Quill Delta](https://quilljs.com/docs/delta/), instead of an HTML string, as the `value` and `defaultValue` properties. Deltas have a number of advantages over HTML strings, so you might want use them instead. Be aware, however, that comparing Deltas for changes is more expensive than comparing HTML strings, so it might be worth to profile your usage patterns.
+
+Note that switching `value` from an HTML string to a Delta, or vice-versa, will trigger a change, regardless of whether they represent the same document, so you might want to stick to a format and keep using it consistently throughout.
+
+⚠️ Do not use the `delta` object you receive from the `onChange` event as `value`. This object does not contain the full document, but only the last modifications, and doing so will most likely trigger an infinite loop where the same changes are applied over and over again. Use `editor.getContents()` during the event to obtain a Delta of the full document instead. ReactQuill will prevent you from making such a mistake, however if you are absolutely sure that this is what you want, you can pass the object through `new Delta()` again to un-taint it.
+
 ## Options
 
 ### Theme
 
 The Quill editor supports [themes](http://quilljs.com/docs/themes/). It includes a full-fledged theme, called _snow_, that is Quill's standard appearance, a _bubble_ theme that is similar to the inline editor on Medium, and a _core_ theme containing only the bare essentials to allow modules like toolbars or tooltips to work.
 
-These stylesheets can be found in the Quill distribution, but for convenience they are also linked in React Quill's `dist` folder. In a common case you would activate a theme by setting the theme [prop](#props). Pass a falsy value (`null`) to disable the theme.
+These stylesheets can be found in the Quill distribution, but for convenience they are also linked in ReactQuill's `dist` folder. In a common case you would activate a theme by setting the theme [prop](#props). Pass a falsy value (`null`) to disable the theme.
 
 ```jsx
 <ReactQuill theme="snow" /> // or "bubble", null to use minimal core theme
@@ -324,8 +315,8 @@ The component has two types of formats:
 <summary>Example Code</summary>
 
 ```js
+import ReactQuill, {Quill} from 'react-quill'; // ES6
 const ReactQuill = require('react-quill'); // CommonJS
-import ReactQuill, { Quill } from 'react-quill'; // ES6
 ```
 
 
@@ -394,160 +385,40 @@ class MyComponent extends React.Component {
 
 </details>
 
-### Mixin
-
-The module exports a mixin which can be used to create custom editor components. (Note that mixins will be deprecated in a future version of React).
-
-<details>
-<summary>Example Code</summary>
-
-The ReactQuill default component is built using the mixin. See [component.js](src/component.js) for source.
-
-```jsx
-import {Mixin} from 'react-quill'
-
-var MyComponent = React.createClass({
-  mixins: [ ReactQuill.Mixin ],
-
-  componentDidMount: function() {
-    var editor = this.createEditor(
-      this.getEditingArea(),
-      this.getEditorConfig()
-    );
-    this.setState({ editor:editor });
-  },
-
-  componentWillReceiveProps: function(nextProps) {
-    if ('value' in nextProps && nextProps.value !== this.props.value) {
-      this.setEditorContents(this.state.editor, nextProps.value);
-    }
-  },
-
-});
-```
-
-</details>
-
-## Upgrading to React-Quill v1.0.0
+## Upgrading to ReactQuill v2.0.0
 
 In most cases, ReactQuill will raise useful warnings to help you perform any necessary migration steps.
 
-Please note that many [migration steps to Quill v1.0](http://quilljs.com/guides/upgrading-to-1-0/) may also apply.
+### Deprecated props
 
-<details>
-<summary>Expand Upgrade Guide</summary>
+Support for the `toolbar`, `styles`, `pollInterval` Quill options has long been deprecated, and has been disabled since quite some time. ReactQuill will not warn you anymore if you try using them.
 
-### The toolbar module
+### ReactQuill Mixin
 
-With v1.0.0, Quill adopted a new [toolbar configuration format](https://quilljs.com/docs/modules/toolbar/), to which React Quill will delegates all toolbar functionality, and which is now the preferred way to customize the toolbar.
+The ReactQuill Mixin allowed injecting the core functionality that made ReactQuill tick into your own components, and create deeply customized versions.
 
-Previously, toolbar properties could be set by passing a `toolbar` prop to React Quill. Pass the same options as `modules.toolbar` instead.
+A tiny amount of people have been using the Mixin, and have been considered an anti-pattern for a long time now, so we have decided to finalize its deprecation.
 
-<details>
-<summary>Read More</summary>
+There is no upgrade path from the Mixin. If you have a use case that relied on the Mixin, you're encouraged to open an issue, and we will try to provide you with a new feature to make it possible, or dedicated support to migrate out of it.
 
-```diff
-+ modules: {
-    toolbar: [
-       ...
-    ],
-+ },
+### Toolbar component
 
-  <ReactQuill
--   toolbar={this.toolbar}
-+   modules={this.modules}
-  />
-```
+Quill has long provided built-in support for custom toolbars, which replaced ReactQuill's (quite inflexible) Toolbar component.
 
-If you used to provide your own HTML toolbar component, you can still do the same:
-
-```diff
-+ modules: {
-+   toolbar: '#my-toolbar-component',
-+ },
-
-  <ReactQuill
--   toolbar="#my-toolbar-component"
-+   modules={this.modules}
-  />
-```
-
-Note that it is not possible to pass a toolbar component as a child to ReactQuill anymore.
-
-Previously, React Quill would create a custom HTML toolbar for you if you passed a configuration object as the `toolbar` prop. This will not happen anymore. You can still create a `ReactQuill.Toolbar` explicitly:
-
-```diff
-+ modules: {
-+   toolbar: '#my-quill-toolbar',
-+ },
-
-+ <ReactQuill.Toolbar
-+   id='my-quill-toolbar'
-+   items={this.oldStyleToolbarItems}
-+ />
-
-  <ReactQuill
--   toolbar={this.oldStyleToolbarItems}
-+   modules={this.modules}
-  />
-```
-
-However, consider switching to the new Quill format instead, or provide your own [toolbar component](#html-toolbar).
-
-React Quill now follows the Quill toolbar format closely. See the [Quill toolbar documentation](https://quilljs.com/docs/modules/toolbar/) for a complete reference on all supported options.
-
-</details>
-
-### Custom editing areas and refs
-
-Previously, to provide a custom element for Quill to mount on, it was necessary to pass a child identified by a specific `ref`: `editor`.
-
-This is now unnecessary, so you can omit the `ref` entirely if you don't need it. In addition, any `ref` you keep won't be stolen from the owner component anymore.
-
-Note, however, that React Quill will now ensure that the element is compatible with Quill. This means that passing a `<textarea>` now produces an error.
-
-### Passing children to ReactQuill
-
-Previously, it was possible to pass arbitrary components as children of React Quill. Their `ref` would identify them as either a custom toolbar or a custom editing area.
-
-This is not possible anymore, and the only child you can pass now is an optional [custom Editing Area](#custom-editing-area) element.
-
-### Adding custom formats with the `formats` property is deprecated
-
-As of 1.0.0, [use Parchment to define new formats](https://github.com/quilljs/parchment). Use the [Quill export](#exports) from the module to register and extend formats:
-
-```js
-Quill.register('formats/CustomFormat', MyCustomFormat);
-```
-
-### The `styles` property
-
-Previously, it was allowed to inject CSS styles by providing an object to the `styles` property. This option has been removed from Quill 1.0, and support for it in React Quill has gone as well. If you need to inject styles, link an external stylesheet instead.
-
-See the [Quill Release Notes](http://quilljs.com/guides/upgrading-to-1-0/#configuration).
-
-### The `pollInterval` property
-
-This property previously set the frequency with which Quill polled the DOM for changes. It does not have any effect anymore, and can safely be removed from the props.
-
-</details>
+Use the [Toolbar Module](#default-toolbar-elements) or the [HTML Toolbar](#html-toolbar) feature instead.
 
 ## API reference
 
 ### Exports
 
 ```jsx
-const ReactQuill = require('react-quill'); // CommonJS
-const {Quill, Mixin, Toolbar} = ReactQuill;
+// ES6
+import ReactQuill, {Quill} from 'react-quill';
 
-import ReactQuill, { Quill, Mixin, Toolbar } from 'react-quill'; // ES6
+// CommonJS
+const ReactQuill = require('react-quill');
+const {Quill} = ReactQuill;
 ```
-
-`Mixin`
-: Provides the bridge between React and Quill. `ReactQuill` implements this mixin; in the same way you can use it to build your own component, or replace it to implement a new core for the default component. _Note that mixins are deprecated in React and this export will be replaced by an HOC in the future._
-
-`Toolbar`
-: The component that renders the custom ReactQuill toolbar. The default collection of items and color swatches is available as `ReactQuill.Toolbar.defaultItems` and `ReactQuill.Toolbar.defaultColors` respectively. ⚠️ The Toolbar component is deprecated since v1.0.0. See [upgrading to React Quill v1.0.0](#upgrading-to-react-quill-v100).
 
 `Quill`
 : The `Quill` namespace on which you can call `registerModule` and such.
@@ -686,10 +557,8 @@ class Editor extends React.Component {
 
 </details>
 
-
 `makeUnprivilegedEditor`
 : Creates an [unprivileged editor](#unprivileged-editor). Pass this method a reference to the Quill instance from `getEditor`. Normally you do not need to use this method since the editor exposed to event handlers is already unprivileged.
-
 
 <details>
 <summary>Example</summary>
@@ -727,27 +596,26 @@ During events, ReactQuill will make a restricted subset of the Quill API availab
 
 ## Building and testing
 
-You can run the automated test suite:
+You can build libs, types and bundles:
+
+```sh
+npm build  # or watch
+```
+
+You can also run the automated test suite:
 
 ```sh
 npm test
-```
-
-And build a minificated version of the source:
-
-```sh
-npm run build
 ```
 
 More tasks are available as package scripts:
 
 | Script                  | Description                               |
 |-------------------------|-------------------------------------------|
-| `npm run build`         | builds the library and the browser bundle |
-| `npm run watch`         | builds the library on modification        |
-| `npm run test`          | runs unit tests and test coverage         |
-| `npm run test:unit`     | runs the unit tests                       |
-| `npm run test:coverage` | runs the code coverage test               |
+| `npm run build`         | Builds lib and browser bundle             |
+| `npm run watch`         | Rebuilds on source code changes           |
+| `npm run test`          | Runs unit tests and coverage              |
+| `npm run clean`         | Cleans build artifacts                    |
 
 Note that `lib` and `dist` are ignored in the git repository as of version 1.0.0. If you need to use the built files without downloading the package from NPM, you can run the build tasks yourself or use a CDN like [unpkg](https://unpkg.com/react-quill@1.0.0-beta-1/dist/react-quill.min.js).
 
@@ -784,7 +652,7 @@ Please check the browser support table for the upstream [Quill](https://github.c
 
 ## Contributors
 
-React Quill would not be where it is today without the contributions of many people, which we are incredibly grateful for:
+ReactQuill would not be where it is today without the contributions of many people, which we are incredibly grateful for:
 - @zenoamaro (maintainer)
 - @alexkrolick (maintainer)
 - @clemmy
@@ -811,19 +679,11 @@ React Quill would not be where it is today without the contributions of many peo
 - @wouterh
 - @MattKunze
 
-## Roadmap
-
-- [x] React 0.14 support
-- [x] Quill v1.0.0+ support
-- [x] Tests!
-- [x] Compatibility with React 16
-- [ ] Additional APIs for working with Quill
-
 ## License
 
 The MIT License (MIT)
 
-Copyright (c) 2016, zenoamaro <zenoamaro@gmail.com>
+Copyright (c) 2020, zenoamaro <zenoamaro@gmail.com>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
