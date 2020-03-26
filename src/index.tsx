@@ -1,3 +1,8 @@
+/*
+React-Quill
+https://github.com/zenoamaro/react-quill
+*/
+
 import React from 'react';
 import ReactDOM from 'react-dom';
 import isEqual from 'lodash/isEqual';
