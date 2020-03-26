@@ -2,42 +2,50 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import some from 'lodash/some';
 import isEqual from 'lodash/isEqual';
-import Mixin, {UnprivilegedEditor, ReactQuillMixin, QuillOptions, Range, Value} from './mixin';
 
 import Quill, {
+	QuillOptionsStatic,
 	DeltaStatic,
 	RangeStatic,
-	StringMap as QuillStringMap,
-	Sources as QuillSources,
+	BoundsStatic,
+	StringMap,
+	Sources,
 } from 'quill';
 
-interface ReactQuillProps {
+export type Value = string | DeltaStatic;
+export type Range = RangeStatic | null;
+
+export interface QuillOptions extends QuillOptionsStatic {
+	tabIndex?: number,
+}
+
+export interface ReactQuillProps {
 	bounds?: string | HTMLElement,
 	children?: React.ReactElement<any>,
 	className?: string,
 	defaultValue?: Value,
 	formats?: string[],
 	id?: string,
-	modules?: QuillStringMap,
+	modules?: StringMap,
 	onChange?(
 		value: string,
 		delta: DeltaStatic,
-		source: QuillSources,
+		source: Sources,
 		editor: UnprivilegedEditor,
 	): void,
 	onChangeSelection?(
 		selection: Range,
-		source: QuillSources,
+		source: Sources,
 		editor: UnprivilegedEditor,
 	): void,
 	onFocus?(
 		selection: Range,
-		source: QuillSources,
+		source: Sources,
 		editor: UnprivilegedEditor,
 	): void,
 	onBlur?(
 		previousSelection: Range,
-		source: QuillSources,
+		source: Sources,
 		editor: UnprivilegedEditor,
 	): void,
 	onKeyDown?: React.EventHandler<any>,
@@ -73,15 +81,22 @@ interface ReactQuillProps {
 	pollInterval?: never,
 }
 
+export interface UnprivilegedEditor {
+	getLength(): number;
+	getText(index?: number, length?: number): string;
+	getHTML(): string;
+	getBounds(index: number, length?: number): BoundsStatic;
+	getSelection(focus?: boolean): RangeStatic;
+	getContents(index?: number, length?: number): DeltaStatic;
+}
+
 interface ReactQuillState {
 	generation: number,
 	value: Value,
 	selection: Range,
 }
 
-interface ReactQuill extends ReactQuillMixin {};
-
-class ReactQuill extends React.Component<ReactQuillProps, ReactQuillState> {
+export default class ReactQuill extends React.Component<ReactQuillProps, ReactQuillState> {
 
 	static displayName = 'React Quill'
 
@@ -151,6 +166,10 @@ class ReactQuill extends React.Component<ReactQuillProps, ReactQuillState> {
 		delta: DeltaStatic,
 		selection: Range,
 	}
+
+	// A weaker, unprivileged proxy for the editor that does not allow
+	// accidentally modifying editor state.
+	unprivilegedEditor?: UnprivilegedEditor
 
 	constructor(props: ReactQuillProps) {
 		super(props);
@@ -334,18 +353,28 @@ class ReactQuill extends React.Component<ReactQuillProps, ReactQuillState> {
 		return this.editor;
 	}
 
-	getEditingArea(): Element {
-		if (!this.editingArea) {
-			throw new Error('Instantiating on missing editing area');
+	/**
+	Creates an editor on the given element. The editor will be passed the
+	configuration, have its events bound,
+	*/
+	createEditor(element: Element, config: QuillOptions) {
+		const editor = new Quill(element, config);
+		if (config.tabIndex != null) {
+			this.setEditorTabIndex(editor, config.tabIndex);
 		}
-		const element = ReactDOM.findDOMNode(this.editingArea);
-		if (!element) {
-			throw new Error('Cannot find element for editing area');
-		}
-		if (element.nodeType === 3) {
-			throw new Error('Editing area cannot be a text node');
-		}
-		return element as Element;
+		this.hookEditor(editor);
+		return editor;
+	}
+
+	hookEditor(editor: Quill) {
+		// Expose the editor on change events via a weaker, unprivileged proxy
+		// object that does not allow accidentally modifying editor state.
+		this.unprivilegedEditor = this.makeUnprivilegedEditor(editor);
+		editor.on('editor-change', this.onEditorChange);
+	}
+
+	unhookEditor(editor: Quill) {
+		editor.off('editor-change', this.onEditorChange);
 	}
 
 	getEditorContents(): Value {
@@ -372,6 +401,75 @@ class ReactQuill extends React.Component<ReactQuillProps, ReactQuillState> {
 		} else {
 			return isEqual(value, nextValue);
 		}
+	}
+
+	/*
+	Replace the contents of the editor, but keep the previous selection hanging
+	around so that the cursor won't move.
+	*/
+	setEditorContents(editor: Quill, value: Value) {
+		const sel = editor.getSelection();
+		if (typeof value === 'string') {
+			editor.setContents(editor.clipboard.convert(value));
+		} else {
+			editor.setContents(value);
+		}
+		if (sel && editor.hasFocus()) this.setEditorSelection(editor, sel);
+	}
+
+	setEditorSelection(editor: Quill, range: Range) {
+		if (range) {
+			// Validate bounds before applying.
+			const length = editor.getLength();
+			range.index = Math.max(0, Math.min(range.index, length-1));
+			range.length = Math.max(0, Math.min(range.length, (length-1) - range.index));
+		}
+		// Quill types (erroneously) do not specify that `null` is accepted here.
+		editor.setSelection(range!);
+	}
+
+	setEditorTabIndex(editor: Quill, tabIndex: number) {
+		if (editor?.scroll?.domNode) {
+			(editor.scroll.domNode as HTMLElement).tabIndex = tabIndex;
+		}
+	}
+
+	setEditorReadOnly(editor: Quill, value: boolean) {
+		if (value) {
+			editor.disable();
+		} else {
+			editor.enable();
+		}
+	}
+
+	/*
+	Returns a weaker, unprivileged proxy object that only exposes read-only
+	accessors found on the editor instance, without any state-modifying methods.
+	*/
+	makeUnprivilegedEditor(editor: Quill) {
+		const e = editor;
+		return {
+			getHTML:      () => e.root.innerHTML,
+			getLength:    e.getLength.bind(e),
+			getText:      e.getText.bind(e),
+			getContents:  e.getContents.bind(e),
+			getSelection: e.getSelection.bind(e),
+			getBounds:    e.getBounds.bind(e),
+		};
+	}
+
+	getEditingArea(): Element {
+		if (!this.editingArea) {
+			throw new Error('Instantiating on missing editing area');
+		}
+		const element = ReactDOM.findDOMNode(this.editingArea);
+		if (!element) {
+			throw new Error('Cannot find element for editing area');
+		}
+		if (element.nodeType === 3) {
+			throw new Error('Editing area cannot be a text node');
+		}
+		return element as Element;
 	}
 
 	/*
@@ -417,10 +515,33 @@ class ReactQuill extends React.Component<ReactQuillProps, ReactQuillState> {
 		);
 	}
 
+	onEditorChange = (
+		eventName: 'text-change' | 'selection-change',
+		rangeOrDelta: Range | DeltaStatic,
+		oldRangeOrDelta: Range | DeltaStatic,
+		source: Sources,
+	) => {
+		if (eventName === 'text-change') {
+			this.onEditorChangeText?.(
+				this.editor!.root.innerHTML,
+				rangeOrDelta as DeltaStatic,
+				source,
+				this.unprivilegedEditor!
+			);
+		}
+		if (eventName === 'text-change' || eventName === 'selection-change') {
+			this.onEditorChangeSelection?.(
+				rangeOrDelta as RangeStatic,
+				source,
+				this.unprivilegedEditor!
+			);
+		}
+	};
+
 	onEditorChangeText(
 		value: string,
 		delta: DeltaStatic,
-		source: QuillSources,
+		source: Sources,
 		editor: UnprivilegedEditor,
 	): void {
 		if (!this.editor) return;
@@ -443,7 +564,7 @@ class ReactQuill extends React.Component<ReactQuillProps, ReactQuillState> {
 
 	onEditorChangeSelection(
 		nextSelection: RangeStatic,
-		source: QuillSources,
+		source: Sources,
 		editor: UnprivilegedEditor,
 	): void {
 		if (!this.editor) return;
@@ -473,8 +594,3 @@ class ReactQuill extends React.Component<ReactQuillProps, ReactQuillState> {
 		this.setEditorSelection(this.editor, null);
 	}
 }
-
-// TODO: Understand what to do with Mixin.
-Object.assign(ReactQuill.prototype, Mixin);
-
-export default ReactQuill;
