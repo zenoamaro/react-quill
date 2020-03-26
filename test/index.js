@@ -9,8 +9,8 @@
 const React = require('react');
 const sinon = require('sinon');
 const {expect} = require('chai');
-const Quill = require('quill');
 const ReactQuill = require('../lib/index').default; // FIXME
+const Quill = require('../lib/index').Quill; // FIXME
 
 const {
   mountReactQuill,

@@ -16,6 +16,9 @@ import Quill, {
 	Sources,
 } from 'quill';
 
+// Re-export Quill to be able to call `registerModule` and such
+export {Quill};
+
 export type Value = string | DeltaStatic;
 export type Range = RangeStatic | null;
 
