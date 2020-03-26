@@ -32,15 +32,16 @@ describe('<ReactQuill />', function() {
   it('calls componentDidMount', () => {
     sinon.spy(ReactQuill.prototype, 'componentDidMount');
     const wrapper = mountReactQuill();
+    // @ts-ignore method injected by sinon spy
     expect(ReactQuill.prototype.componentDidMount.calledOnce).to.equal(true);
   });
 
   it('allows props to be set', () => {
-    const props = {foo: 'bar'}
+    const props = {readOnly: true}
     const wrapper = mountReactQuill(props);
-    expect(wrapper.props().foo).to.equal('bar');
-    wrapper.setProps({ foo: 'baz' });
-    expect(wrapper.props().foo).to.equal('baz');
+    expect(wrapper.props().readOnly).to.equal(true);
+    wrapper.setProps({readOnly: false});
+    expect(wrapper.props().readOnly).to.equal(false);
   });
 
   it('attaches a Quill instance to the component', () => {
@@ -141,6 +142,7 @@ describe('<ReactQuill />', function() {
     const defaultValue = '<p>Hello, world!</p>';
     const wrapper = mountReactQuill({defaultValue});
     const quill = getQuillInstance(wrapper);
+    // @ts-ignore untyped instance
     expect(wrapper.instance().getEditorContents()).to.equal(defaultValue);
   })
 
@@ -152,6 +154,7 @@ describe('<ReactQuill />', function() {
       value: value,
     });
     const quill = getQuillInstance(wrapper);
+    // @ts-ignore untyped instance
     expect(wrapper.instance().getEditorContents()).to.equal(value);
   })
 
