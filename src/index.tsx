@@ -551,3 +551,7 @@ export default class ReactQuill extends React.Component<ReactQuillProps, ReactQu
 		this.setEditorSelection(this.editor, null);
 	}
 }
+
+// Re-export to avoid having to `require(...).default`
+module.exports = ReactQuill;
+module.exports.Quill = Quill;
