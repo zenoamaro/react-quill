@@ -644,7 +644,7 @@ See [#7](https://github.com/zenoamaro/react-quill/issues/7) for more details.
 
 ## Browser support
 
-Please check the browser support table for the upstream [Quill](https://github.com/quilljs/quill) dependency. The React part of the codebase is ES5-compatible.
+Please check the browser support table for the upstream [Quill](https://github.com/quilljs/quill) dependency. The ReactQuill distributable itself is ES5-compatible.
 
 ## Changelog
 

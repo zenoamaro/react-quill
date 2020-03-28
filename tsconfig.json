@@ -5,7 +5,7 @@
   ],
   "compilerOptions": {
     "strict": true,
-    "target": "es2018",
+    "target": "es5",
     "module": "commonjs",
     "moduleResolution": "node",
     "esModuleInterop": true,
