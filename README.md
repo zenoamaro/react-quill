@@ -619,29 +619,6 @@ More tasks are available as package scripts:
 
 Note that `lib` and `dist` are ignored in the git repository as of version 1.0.0. If you need to use the built files without downloading the package from NPM, you can run the build tasks yourself or use a CDN like [unpkg](https://unpkg.com/react-quill@1.0.0-beta-1/dist/react-quill.min.js).
 
-### Bundling with Webpack
-
-Quill ships only a pre-built javascript file, so Webpack will complain after building a bundle:
-
-```
-Error: ./~/react-quill/~/quill/dist/quill.js
-Critical dependencies:
-6:478-485 This seems to be a pre-built javascript file. Though this is possible, it's not recommended. Try to require the original source to get better results.
-@ ./~/react-quill/~/quill/dist/quill.js 6:478-485
-```
-
-The warning is harmless, but if you want to silence it you can avoid parsing Quill by adding this to your Webpack configuration:
-
-```js
-module: {
-  // Shut off warnings about using pre-built javascript files
-  // as Quill.js unfortunately ships one as its `main`.
-  noParse: /node_modules\/quill\/dist/
-}
-```
-
-See [#7](https://github.com/zenoamaro/react-quill/issues/7) for more details.
-
 ## Browser support
 
 Please check the browser support table for the upstream [Quill](https://github.com/quilljs/quill) dependency. The ReactQuill distributable itself is ES5-compatible.
