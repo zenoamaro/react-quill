@@ -36,9 +36,9 @@ See a [live demo] or [Codepen](http://codepen.io/alexkrolick/pen/xgyOXQ/left?edi
 
 ---
 
-💯 **ReactQuill 2.0 is out!**
+💯 **ReactQuill 2 is here!**
 
-ReactQuill is back, baby! Now fully TypeScript and React 16.
+ReactQuill is back, baby! Now fully written in TypeScript and React 16+.
 
 We worked hard to avoid introducing any behavioral changes. For the vast majority of the cases, no migration is necessary at all, and the upgrade is drop-in. However, support for long-deprecated props, the ReactQuill Mixin, and the Toolbar component have been removed. Be sure to read the [migration guide](#upgrading-to-react-quill-v2).
 
@@ -47,6 +47,14 @@ Special thank you to everyone who contributed during the 2.0.0 beta, feedback an
 ---
 
 ## Quick Start
+
+### Add the dependency
+
+```sh
+# Make sure you have react and react-dom as well
+npm install react-quill --save
+yarn add react-quill
+```
 
 ### Import the component
 
@@ -79,7 +87,7 @@ function MyComponent(props) {
   const [value, setValue] = useState('');
 
   return (
-    <ReactQuill value={value} onChange={setValue}>
+    <ReactQuill value={value} onChange={setValue}/>
   );
 }
 ```
@@ -93,11 +101,6 @@ In this "uncontrolled" mode ReactQuill uses the prop as the initial value but al
 - Read more about the available [props](#props).
 
 [defaultvalues]: https://facebook.github.io/react/docs/uncontrolled-components.html#default-values
-
-```sh
-npm install react-quill
-yarn add react-quill
-```
 
 ### Using Deltas
 
@@ -119,15 +122,21 @@ These stylesheets can be found in the Quill distribution, but for convenience th
 <ReactQuill theme="snow" /> // or "bubble", null to use minimal core theme
 ```
 
-And then link the appropriate stylesheet (only link the CSS for the themes you want to use):
+And then link the appropriate stylesheet (only link the CSS for the themes you want to use). This may vary depending how application is structured, directories or otherwise. For example, if you use a CSS pre-processor like SASS, you may want to import that stylesheet inside your own.
 
-```html
-<link rel="stylesheet" href="node_modules/react-quill/dist/quill.snow.css">
-<link rel="stylesheet" href="node_modules/react-quill/dist/quill.bubble.css">
-<link rel="stylesheet" href="node_modules/react-quill/dist/quill.core.css">
+Example: Using `css-loader` with Webpack or `create-react-app`
+
+```jsx
+import 'react-quill/dist/quill.snow.css'; // ES6
+require('react-quill/dist/quill.snow.css'); // CommonJS
 ```
 
-This may vary depending how application is structured, directories or otherwise. For example, if you use a CSS pre-processor like SASS, you may want to import that stylesheet inside your own.
+Example: Getting styles from the CDN
+
+```html
+<link rel="stylesheet" href="//cdn.quilljs.com/1.3.6/quill.snow.css">
+```
+
 
 ### Custom Toolbar
 
@@ -319,7 +328,6 @@ import ReactQuill, {Quill} from 'react-quill'; // ES6
 const ReactQuill = require('react-quill'); // CommonJS
 ```
 
-
 ```jsx
 /*
  * Example Parchment format from
@@ -385,9 +393,9 @@ class MyComponent extends React.Component {
 
 </details>
 
-## Upgrading to ReactQuill v2.0.0
+## Upgrading to ReactQuill v2
 
-In most cases, ReactQuill will raise useful warnings to help you perform any necessary migration steps.
+Upgrading to ReactQuill v2 should be as simple as updating your dependency. However, it also removes support for long-deprecated props, the ReactQuill Mixin, and the Toolbar component.
 
 ### Deprecated props
 
@@ -421,7 +429,7 @@ const {Quill} = ReactQuill;
 ```
 
 `Quill`
-: The `Quill` namespace on which you can call `registerModule` and such.
+: The `Quill` namespace on which you can call `register`.
 
 
 ### Props
