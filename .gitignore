@@ -18,3 +18,7 @@
 # Packaging artifacts
 /react-quill-*.tgz
 /package
+
+# Test artifacts
+.cypress/screenshots
+.cypress/videos
