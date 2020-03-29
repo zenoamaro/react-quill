@@ -1,6 +1,11 @@
 Changelog
 =========
 
+v1.3.5
+------
+
+- Moved un-exported @types to dev dependencies (#316)
+
 v1.3.4
 ------
 
