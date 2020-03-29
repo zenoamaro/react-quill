@@ -1,8 +1,8 @@
 Changelog
 =========
 
-Next
-----
+v1.3.4
+------
 
 - Bump Quill to 1.3.7 to close a security vulnerability (#575)
 
