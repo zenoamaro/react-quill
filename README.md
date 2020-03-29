@@ -618,12 +618,13 @@ npm test
 
 More tasks are available as package scripts:
 
-| Script                  | Description                               |
-|-------------------------|-------------------------------------------|
-| `npm run build`         | Builds lib and browser bundle             |
-| `npm run watch`         | Rebuilds on source code changes           |
-| `npm run test`          | Runs unit tests and coverage              |
-| `npm run clean`         | Cleans build artifacts                    |
+| Script          | Description                                 |
+|-----------------|---------------------------------------------|
+| `npm run build` | Builds lib and browser bundle               |
+| `npm run watch` | Rebuilds on source code changes             |
+| `npm run test`  | Runs unit tests and coverage                |
+| `npm run clean` | Cleans build artifacts                      |
+| `npm run demo`  | Serves a simple ReactQuill test application |
 
 Note that `lib` and `dist` are ignored in the git repository as of version 1.0.0. If you need to use the built files without downloading the package from NPM, you can run the build tasks yourself or use a CDN like [unpkg](https://unpkg.com/react-quill@1.0.0-beta-1/dist/react-quill.min.js).
 
