@@ -1,0 +1,19 @@
+{
+  "include": [
+    "./src/**/*.ts",
+    "./src/**/*.tsx",
+  ],
+  "compilerOptions": {
+    "strict": true,
+    "target": "es5",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "declaration": true,
+    "sourceMap": true,
+    "outDir": "lib",
+    "lib": ["dom", "esnext"],
+    "types": ["node"],
+    "jsx": "react"
+  }
+}

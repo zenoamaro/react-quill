@@ -1,23 +1,23 @@
 /**
  * Test suite uses mocha and enzyme to mock browser APIs
- * 
- * See Enzyme docs: 
+ *
+ * See Enzyme docs:
  * https://github.com/airbnb/enzyme/blob/master/docs/guides/jsdom.md
  * https://github.com/airbnb/enzyme/blob/master/docs/api/mount.md
  */
 
 const React = require('react');
-const DOM = require('react-dom-factories');
 const sinon = require('sinon');
-const {expect, assert} = require('chai');
-const ReactQuill = require('../src/index');
-const Quill = ReactQuill.Quill;
+const {expect} = require('chai');
+const ReactQuill = require('../lib/index');
+const {Quill} = require('../lib/index');
 
 const {
   mountReactQuill,
   getQuillInstance,
   getQuillContentsAsHTML,
   setQuillContentsFromHTML,
+  withMockedConsole,
 } = require('./utils');
 
 console.log('\n\
@@ -32,15 +32,16 @@ describe('<ReactQuill />', function() {
   it('calls componentDidMount', () => {
     sinon.spy(ReactQuill.prototype, 'componentDidMount');
     const wrapper = mountReactQuill();
+    // @ts-ignore method injected by sinon spy
     expect(ReactQuill.prototype.componentDidMount.calledOnce).to.equal(true);
   });
 
   it('allows props to be set', () => {
-    const props = {foo: 'bar'}
+    const props = {readOnly: true}
     const wrapper = mountReactQuill(props);
-    expect(wrapper.props().foo).to.equal('bar');
-    wrapper.setProps({ foo: 'baz' });
-    expect(wrapper.props().foo).to.equal('baz');
+    expect(wrapper.props().readOnly).to.equal(true);
+    wrapper.setProps({readOnly: false});
+    expect(wrapper.props().readOnly).to.equal(false);
   });
 
   it('attaches a Quill instance to the component', () => {
@@ -89,13 +90,17 @@ describe('<ReactQuill />', function() {
     expect(getQuillContentsAsHTML(wrapper)).to.equal(html);
   });
 
-  it('prevents using Delta changesets from events as value', () => {
-    const value = {ops: []};
-    const nextValue = {ops: [{insert: 'Hello, world!'}]};
-    const onChange = (_, delta) => wrapper.setProps({value: delta});
+  it('prevents using Delta changesets from events as value', (done) => {
+    const value = '<p>Hello, world!</p>';
+    const changedValue = '<p>Adieu, world!</p>';
+    const onChange = (_, delta) => {
+      withMockedConsole(() => {
+        expect(() => wrapper.setProps({value: delta})).to.throw();
+        done();
+      });
+    };
     const wrapper = mountReactQuill({value, onChange});
-    const quill = getQuillInstance(wrapper);
-    expect(() => wrapper.setProps({value: nextValue})).to.throw();
+    setQuillContentsFromHTML(wrapper, changedValue);
   });
 
   it('allows using Deltas as defaultValue', () => {
@@ -137,7 +142,8 @@ describe('<ReactQuill />', function() {
     const defaultValue = '<p>Hello, world!</p>';
     const wrapper = mountReactQuill({defaultValue});
     const quill = getQuillInstance(wrapper);
-    expect(wrapper.getNode().getEditorContents()).to.equal(defaultValue);
+    // @ts-ignore untyped instance
+    expect(wrapper.instance().getEditorContents()).to.equal(defaultValue);
   })
 
   it('shows the value prop instead of defaultValue if both are defined', () => {
@@ -148,20 +154,22 @@ describe('<ReactQuill />', function() {
       value: value,
     });
     const quill = getQuillInstance(wrapper);
-    expect(wrapper.getNode().getEditorContents()).to.equal(value);
+    // @ts-ignore untyped instance
+    expect(wrapper.instance().getEditorContents()).to.equal(value);
   })
 
   it('uses a custom editing area if provided', () => {
-    const editingArea = DOM.div({id:'venus'});
+    const div = React.createFactory('div');
+    const editingArea = div({id:'venus'});
     const wrapper = mountReactQuill({}, editingArea);
     const quill = getQuillInstance(wrapper);
     expect(wrapper.getDOMNode().querySelector('div#venus')).not.to.be.null;
   })
 
   /**
-   * This can't be tested with the current state of JSDOM. 
-   * The selection functions have been shimmed in this test suite, 
-   * but they  will not work until DOM traversal is implemented in 
+   * This can't be tested with the current state of JSDOM.
+   * The selection functions have been shimmed in this test suite,
+   * but they  will not work until DOM traversal is implemented in
    * https://github.com/tmpvar/jsdom/issues/317.
    * Leaving this pending test as a reminder to follow up.
    */
@@ -175,14 +183,14 @@ describe('<ReactQuill />', function() {
   it('removes focus from the editor when calling blur()')
 
   /**
-   * In a browser, querySelector('.ql-editor').textContent = 'hi' would 
+   * In a browser, querySelector('.ql-editor').textContent = 'hi' would
    * trigger a 'text-change' event, but here it doesn't. Is the polyfill
    * for MutationObserver not working?
    */
   it('calls onChange after the textContent of the editor changes')
 
   /**
-   * This is hard to do without Selenium's 'type' function, but it is the 
+   * This is hard to do without Selenium's 'type' function, but it is the
    * ultimate test of whether everything is working or not
    */
   it('calls onChange after keypresses are sent to the editor')

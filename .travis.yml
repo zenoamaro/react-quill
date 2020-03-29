@@ -7,6 +7,4 @@ install:
   - npm install
 
 script:
-  - make build
-  - make spec
-  - make lint
+  - npm run test
