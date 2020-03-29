@@ -14,7 +14,7 @@ See a [live demo] or [Codepen](http://codepen.io/alexkrolick/pen/xgyOXQ/left?edi
   - [With webpack or create-react-app](#with-webpack-or-create-react-app)
   - [With the browser bundle](#with-the-browser-bundle)
 - [Usage](#usage)
-  - [Controlled vs Uncontrolled Mode](#controlled-vs-uncontrolled-mode)
+  - [Controlled mode caveats](#controlled-mode-caveats)
   - [Using Deltas](#using-deltas)
   - [Themes](#themes)
   - [Custom Toolbar](#custom-toolbar)
@@ -89,15 +89,15 @@ function MyComponent() {
 
 ## Usage
 
-### Controlled vs Uncontrolled Mode
+### Controlled mode caveats
 
-Pass `defaultValue` instead of `value` if you need to use DOM or [Quill API](https://quilljs.com/docs/api/)s to imperatively manipulate the editor state.
-In this "uncontrolled" mode ReactQuill uses the prop as the initial value but allows the element to deviate after that. The `onChange` callback still works normally.
+In controlled mode, components are supposed to prevent local stateful changes, and instead only have them happen through `onChange` and `value`.
 
-- Read more about uncontrolled components in the [React docs][defaultvalues].
-- Read more about the available [props](#props).
+Because Quill handles its own changes, and does not allow preventing edits, ReactQuill has to settle for a hybrid between controlled and uncontrolled mode. It can't prevent the change, but will still override the content whenever `value` differs from current state.
 
-[defaultvalues]: https://facebook.github.io/react/docs/uncontrolled-components.html#default-values
+If you frequently need to manipulate the DOM or use the [Quill API](https://quilljs.com/docs/api/)s imperatively, you might consider switching to fully uncontrolled mode. ReactQuill will initialize the editor using `defaultValue`, but won't try to reset it after that. The `onChange` callback will still work as expected.
+
+Read more about uncontrolled components in the [React docs](https://facebook.github.io/react/docs/uncontrolled-components.html#default-values).
 
 ### Using Deltas
 
@@ -394,15 +394,15 @@ Upgrading to ReactQuill v2 should be as simple as updating your dependency. Howe
 
 ### Deprecated props
 
-Support for the `toolbar`, `styles`, `pollInterval` Quill options has long been deprecated, and has been disabled since quite some time. ReactQuill will not warn you anymore if you try using them.
+Support for the `toolbar`, `styles`, `pollInterval` Quill options has long disabled. Starting from this release, ReactQuill will not warn you anymore if you try using them.
 
 ### ReactQuill Mixin
 
 The ReactQuill Mixin allowed injecting the core functionality that made ReactQuill tick into your own components, and create deeply customized versions.
 
-A tiny amount of people have been using the Mixin, and have been considered an anti-pattern for a long time now, so we have decided to finalize its deprecation.
+The Mixin has been considered an anti-pattern for a long time now, so we have decided to finalize its deprecation.
 
-There is no upgrade path from the Mixin. If you have a use case that relied on the Mixin, you're encouraged to open an issue, and we will try to provide you with a new feature to make it possible, or dedicated support to migrate out of it.
+There is no upgrade path. If you have a use case that relied on the Mixin, you're encouraged to open an issue, and we will try to provide you with a new feature to make it possible, or dedicated support to migrate out of it.
 
 ### Toolbar component
 
