@@ -39,13 +39,23 @@ See a [live demo] or [Codepen](http://codepen.io/alexkrolick/pen/xgyOXQ/left?edi
 
 ---
 
-💯 **ReactQuill 2 is here!**
+This is the documentation for ReactQuill v2 — Previous releases: [v1](/../../tree/v1)
 
-ReactQuill is back, baby! Now fully written in TypeScript and React 16+.
+---
 
-We worked hard to avoid introducing any behavioral changes. For the vast majority of the cases, no migration is necessary at all, and the upgrade is drop-in. However, support for long-deprecated props, the ReactQuill Mixin, and the Toolbar component have been removed. Be sure to read the [migration guide](#upgrading-to-react-quill-v2).
+💯 **ReactQuill v2 beta period**
 
-Special thank you to everyone who contributed during the 2.0.0 beta, feedback and testing!
+ReactQuill 2 is here, baby! And it brings a full port to TypeScript and React 16+, a refactored build system, and a general tightening of the internal logic.
+
+We worked hard to avoid introducing any behavioral changes. For the vast majority of the cases, no migration is necessary at all. However, support for long-deprecated props, the ReactQuill Mixin, and the Toolbar component have been removed. Be sure to read the [migration guide](#upgrading-to-react-quill-v2).
+
+Help us test the beta, and finalize this release! To try it out, simply update the dependency:
+
+~~~sh
+npm install react-quill@beta
+~~~
+
+We expect this release to be a drop-in upgrade – if that isn't the case, please [file an issue](/../../issues/new) with the `v2` label.
 
 ---
 
