@@ -1,3 +1,6 @@
+// load Cypress TypeScript definitions for IntelliSense
+/// <reference types="cypress" />
+
 beforeEach(() => {
   cy.visit("/");
 });
