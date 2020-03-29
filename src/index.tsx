@@ -342,6 +342,8 @@ class ReactQuill extends React.Component<ReactQuillProps, ReactQuillState> {
     // Expose the editor on change events via a weaker, unprivileged proxy
     // object that does not allow accidentally modifying editor state.
     this.unprivilegedEditor = this.makeUnprivilegedEditor(editor);
+    // Using `editor-change` allows picking up silent updates, like selection
+    // changes on typing.
     editor.on('editor-change', this.onEditorChange);
   }
 
@@ -500,8 +502,7 @@ class ReactQuill extends React.Component<ReactQuillProps, ReactQuillState> {
         source,
         this.unprivilegedEditor!
       );
-    }
-    if (eventName === 'text-change' || eventName === 'selection-change') {
+    } else if (eventName === 'selection-change') {
       this.onEditorChangeSelection?.(
         rangeOrDelta as RangeStatic,
         source,
