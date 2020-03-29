@@ -10,29 +10,32 @@ See a [live demo] or [Codepen](http://codepen.io/alexkrolick/pen/xgyOXQ/left?edi
 [React]: https://facebook.github.io/react/
 [live demo]: https://zenoamaro.github.io/react-quill/
 
-1. [Quick start](#quick-start)
-   1. [Import the component](#import-the-component)
-   1. [Import the stylesheet](#import-the-stylesheet)
-   1. [Use the component](#use-the-component)
-   1. [Using Deltas](#using-deltas)
-   1. [Controlled vs Uncontrolled Mode](#controlled-vs-uncontrolled-mode)
-1. [Options](#options)
-   1. [Theme](#theme)
-   1. [Custom Toolbar](#custom-toolbar)
-   1. [Custom Formats](#custom-formats)
-   1. [Custom Editing Area](#custom-editing-area)
-   1. [Mixin](#mixin)
-2. [Upgrading to ReactQuill v2](#upgrading-to-react-quill-v2)
-3. [API reference](#api-reference)
-   1. [Exports](#exports)
-   2. [Props](#props)
-   3. [Methods](#methods)
-4. [Browser support](#browser-support)
-5. [Building and testing](#building-and-testing)
-   1. [Bundling with Webpack](#bundling-with-webpack)
-6. [Changelog](./CHANGELOG.md)
-7. [Contributors](#contributors)
-8. [License](#license)
+- [Quick Start](#quick-start)
+  - [With webpack or create-react-app](#with-webpack-or-create-react-app)
+  - [With the browser bundle](#with-the-browser-bundle)
+- [Usage](#usage)
+  - [Controlled vs Uncontrolled Mode](#controlled-vs-uncontrolled-mode)
+  - [Using Deltas](#using-deltas)
+  - [Themes](#themes)
+  - [Custom Toolbar](#custom-toolbar)
+    - [Default Toolbar Elements](#default-toolbar-elements)
+    - [HTML Toolbar](#html-toolbar)
+  - [Custom Formats](#custom-formats)
+  - [Custom editing area](#custom-editing-area)
+- [Upgrading to ReactQuill v2](#upgrading-to-reactquill-v2)
+  - [Deprecated props](#deprecated-props)
+  - [ReactQuill Mixin](#reactquill-mixin)
+  - [Toolbar component](#toolbar-component)
+- [API reference](#api-reference)
+  - [Exports](#exports)
+  - [Props](#props)
+  - [Methods](#methods)
+  - [The unprivileged editor](#the-unprivileged-editor)
+- [Building and testing](#building-and-testing)
+- [Browser support](#browser-support)
+- [Changelog](#changelog)
+- [Contributors](#contributors)
+- [License](#license)
 
 ---
 
@@ -48,49 +51,43 @@ Special thank you to everyone who contributed during the 2.0.0 beta, feedback an
 
 ## Quick Start
 
-### Add the dependency
+### With webpack or create-react-app
 
-```sh
-# Make sure you have react and react-dom as well
+Make sure you have `react` and `react-dom`, and some way to load styles, like [style-loader](https://www.npmjs.com/package/style-loader). See the documentation on [themes](#themes) for more information.
+
+~~~sh
 npm install react-quill --save
-yarn add react-quill
-```
+~~~
 
-### Import the component
+~~~jsx
+import React from 'react';
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 
-```jsx
-import ReactQuill from 'react-quill'; // ES6
-const ReactQuill = require('react-quill'); // CommonJS
-```
-
-### Import the stylesheet
-
-_Two common examples are shown below. How stylesheets are included in your app depends on build system (Webpack, SCSS, LESS, etc). See the documentation on [Themes](#theme) for more information._
-
-Example: Using `css-loader` with Webpack or `create-react-app`
-
-```jsx
-import 'react-quill/dist/quill.snow.css'; // ES6
-require('react-quill/dist/quill.snow.css'); // CommonJS
-```
-
-Example: Getting styles from the CDN
-
-```html
-<link rel="stylesheet" href="//cdn.quilljs.com/1.3.6/quill.snow.css">
-```
-
-### Render the component
-
-```jsx
-function MyComponent(props) {
+function MyComponent() {
   const [value, setValue] = useState('');
 
   return (
-    <ReactQuill value={value} onChange={setValue}/>
+    <ReactQuill theme="snow"value={value} onChange={setValue}/>
   );
 }
-```
+~~~
+
+### With the browser bundle
+
+~~~html
+<link rel="stylesheet" href="https://unpkg.com/react-quill@1.3.3/dist/quill.snow.css">
+~~~
+
+~~~html
+<script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
+<script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
+<script src="https://unpkg.com/react-quill@1.3.3/dist/react-quill.js"></script>
+<script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+<script type="text/babel" src="/my-scripts.js"></script>
+~~~
+
+## Usage
 
 ### Controlled vs Uncontrolled Mode
 
@@ -110,33 +107,31 @@ Note that switching `value` from an HTML string to a Delta, or vice-versa, will 
 
 ⚠️ Do not use the `delta` object you receive from the `onChange` event as `value`. This object does not contain the full document, but only the last modifications, and doing so will most likely trigger an infinite loop where the same changes are applied over and over again. Use `editor.getContents()` during the event to obtain a Delta of the full document instead. ReactQuill will prevent you from making such a mistake, however if you are absolutely sure that this is what you want, you can pass the object through `new Delta()` again to un-taint it.
 
-## Options
+### Themes
 
-### Theme
+The Quill editor supports [themes](http://quilljs.com/docs/themes/). It includes a full-fledged theme, called _snow_, that is Quill's standard appearance, and a _bubble_ theme that is similar to the inline editor on Medium. At the very least, the _core_ theme must be included for modules like toolbars or tooltips to work.
 
-The Quill editor supports [themes](http://quilljs.com/docs/themes/). It includes a full-fledged theme, called _snow_, that is Quill's standard appearance, a _bubble_ theme that is similar to the inline editor on Medium, and a _core_ theme containing only the bare essentials to allow modules like toolbars or tooltips to work.
+To activate a theme, pass the name of the theme to the `theme` [prop](#props). Pass a falsy value (eg. `null`) to use the core theme.
 
-These stylesheets can be found in the Quill distribution, but for convenience they are also linked in ReactQuill's `dist` folder. In a common case you would activate a theme by setting the theme [prop](#props). Pass a falsy value (`null`) to disable the theme.
+~~~jsx
+<ReactQuill theme="snow" .../>
+~~~
 
-```jsx
-<ReactQuill theme="snow" /> // or "bubble", null to use minimal core theme
-```
+Then, import the stylesheet for the themes you want to use.
 
-And then link the appropriate stylesheet (only link the CSS for the themes you want to use). This may vary depending how application is structured, directories or otherwise. For example, if you use a CSS pre-processor like SASS, you may want to import that stylesheet inside your own.
+This may vary depending how application is structured, directories or otherwise. For example, if you use a CSS pre-processor like SASS, you may want to import that stylesheet inside your own. These stylesheets can be found in the Quill distribution, but for convenience they are also linked in ReactQuill's `dist` folder.
 
-Example: Using `css-loader` with Webpack or `create-react-app`
+Here's an example using [style-loader](https://www.npmjs.com/package/style-loader) for Webpack, or `create-react-app`, that will automatically inject the styles on the page:
 
-```jsx
-import 'react-quill/dist/quill.snow.css'; // ES6
-require('react-quill/dist/quill.snow.css'); // CommonJS
-```
+~~~jsx
+import 'react-quill/dist/quill.snow.css';
+~~~
 
-Example: Getting styles from the CDN
+The styles are also available via CDN:
 
-```html
-<link rel="stylesheet" href="//cdn.quilljs.com/1.3.6/quill.snow.css">
-```
-
+~~~html
+<link rel="stylesheet" href="https://unpkg.com/react-quill@1.3.3/dist/quill.snow.css">
+~~~
 
 ### Custom Toolbar
 
@@ -147,7 +142,7 @@ The [Quill Toolbar Module](http://quilljs.com/docs/modules/toolbar/) API provide
 <details>
 <summary>Example Code</summary>
 
-```jsx
+~~~jsx
 class MyComponent extends Component {
   constructor(props) {
     super(props);
@@ -186,7 +181,7 @@ class MyComponent extends Component {
 }
 
 export default MyComponent;
-```
+~~~
 
 </details>
 
@@ -199,7 +194,7 @@ See this example live on Codepen: [Custom Toolbar Example](https://codepen.io/al
 <details>
 <summary>Example Code</summary>
 
-```jsx
+~~~jsx
 /*
  * Custom "star" icon for the toolbar using an Octicon
  * https://octicons.github.io
@@ -309,7 +304,7 @@ ReactDOM.render(
   <Editor placeholder={'Write something or insert a star ★'}/>,
   document.querySelector('.app')
 )
-```
+~~~
 
 </details>
 
@@ -323,12 +318,12 @@ The component has two types of formats:
 <details>
 <summary>Example Code</summary>
 
-```js
+~~~js
 import ReactQuill, {Quill} from 'react-quill'; // ES6
 const ReactQuill = require('react-quill'); // CommonJS
-```
+~~~
 
-```jsx
+~~~jsx
 /*
  * Example Parchment format from
  * https://quilljs.com/guides/cloning-medium-with-parchment/
@@ -365,7 +360,7 @@ class MyComponent extends React.Component {
     )
   }
 }
-```
+~~~
 
 </details>
 
@@ -377,7 +372,7 @@ Note: Custom editing areas lose focus when using React 16 as a peer dep at this 
 
 <details>
 
-```jsx
+~~~jsx
 class MyComponent extends React.Component {
 
   render() {
@@ -389,7 +384,7 @@ class MyComponent extends React.Component {
   }
 
 });
-```
+~~~
 
 </details>
 
@@ -419,14 +414,14 @@ Use the [Toolbar Module](#default-toolbar-elements) or the [HTML Toolbar](#html-
 
 ### Exports
 
-```jsx
+~~~jsx
 // ES6
 import ReactQuill, {Quill} from 'react-quill';
 
 // CommonJS
 const ReactQuill = require('react-quill');
 const {Quill} = ReactQuill;
-```
+~~~
 
 `Quill`
 : The `Quill` namespace on which you can call `register`.
@@ -466,7 +461,7 @@ const {Quill} = ReactQuill;
 : An object with custom CSS rules to apply on the editor's container. Rules should be in React's "camelCased" naming style.
 
 `theme`
-: The name of the theme to apply to the editor. Defaults to `snow`, Quill's standard theme. Pass `null` to use the minimal core theme. See the [docs on themes](#theme) for more information on including the required stylesheets.
+: The name of the theme to apply to the editor. Defaults to `snow`, Quill's standard theme. Pass `null` to use the minimal core theme. See the [docs on themes](#themes) for more information on including the required stylesheets.
 
 `tabIndex`
 : The order in which the editor becomes focused, among other controls in the page, during keyboard navigation.
@@ -523,7 +518,7 @@ If you have [a ref](https://facebook.github.io/react/docs/more-about-refs.html) 
 
 [View this example on Codepen](https://codepen.io/alexkrolick/pen/YNmGar?editors=0011)
 
-```jsx
+~~~jsx
 class Editor extends React.Component {
   constructor(props) {
     super(props)
@@ -561,7 +556,7 @@ class Editor extends React.Component {
     )
   }
 }
-```
+~~~
 
 </details>
 
@@ -571,12 +566,12 @@ class Editor extends React.Component {
 <details>
 <summary>Example</summary>
 
-```jsx
+~~~jsx
 const editor = this.reactQuillRef.getEditor();
 const unprivilegedEditor = this.reactQuillRef.makeUnprivilegedEditor(editor);
 // You may now use the unprivilegedEditor proxy methods
 unprivilegedEditor.getText();
-```
+~~~
 
 </details>
 
@@ -606,15 +601,15 @@ During events, ReactQuill will make a restricted subset of the Quill API availab
 
 You can build libs, types and bundles:
 
-```sh
+~~~sh
 npm build  # or watch
-```
+~~~
 
 You can also run the automated test suite:
 
-```sh
+~~~sh
 npm test
-```
+~~~
 
 More tasks are available as package scripts:
 
@@ -625,8 +620,6 @@ More tasks are available as package scripts:
 | `npm run test`  | Runs unit tests and coverage                |
 | `npm run clean` | Cleans build artifacts                      |
 | `npm run demo`  | Serves a simple ReactQuill test application |
-
-Note that `lib` and `dist` are ignored in the git repository as of version 1.0.0. If you need to use the built files without downloading the package from NPM, you can run the build tasks yourself or use a CDN like [unpkg](https://unpkg.com/react-quill@1.0.0-beta-1/dist/react-quill.min.js).
 
 ## Browser support
 
