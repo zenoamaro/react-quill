@@ -1,6 +1,11 @@
 Changelog
 =========
 
+Next
+----
+
+- Bump Quill to 1.3.7 to close a security vulnerability (#575)
+
 v1.3.3
 ------
 
@@ -9,7 +14,7 @@ v1.3.3
 v1.3.2
 ------
 
-- Add preserveWhitespace prop (#407 @royshouvik) 
+- Add preserveWhitespace prop (#407 @royshouvik)
 
 v1.3.1
 ------
@@ -20,10 +25,10 @@ v1.3.0
 ------
 
 - Add scrollingContainer prop
-- Fix Typescript exports 
+- Fix Typescript exports
 - Fix tabindex prop
 
-v1.2.6 
+v1.2.6
 ------
 
 Replaced React.DOM with react-dom-factories (#319 thienanle)
