@@ -68,7 +68,7 @@ function MyComponent() {
   const [value, setValue] = useState('');
 
   return (
-    <ReactQuill theme="snow"value={value} onChange={setValue}/>
+    <ReactQuill theme="snow" value={value} onChange={setValue}/>
   );
 }
 ~~~
