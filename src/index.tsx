@@ -16,66 +16,74 @@ import Quill, {
   Sources,
 } from 'quill';
 
-// Re-export Quill to be able to call `registerModule` and such
-export {Quill};
+// Merged namespace hack to export types along with default object
+// See: https://github.com/Microsoft/TypeScript/issues/2719
+namespace ReactQuill {
+  export type Value = string | DeltaStatic;
+  export type Range = RangeStatic | null;
 
-export type Value = string | DeltaStatic;
-export type Range = RangeStatic | null;
+  export interface QuillOptions extends QuillOptionsStatic {
+    tabIndex?: number,
+  }
 
-export interface QuillOptions extends QuillOptionsStatic {
-  tabIndex?: number,
+  export interface ReactQuillProps {
+    bounds?: string | HTMLElement,
+    children?: React.ReactElement<any>,
+    className?: string,
+    defaultValue?: Value,
+    formats?: string[],
+    id?: string,
+    modules?: StringMap,
+    onChange?(
+      value: string,
+      delta: DeltaStatic,
+      source: Sources,
+      editor: UnprivilegedEditor,
+    ): void,
+    onChangeSelection?(
+      selection: Range,
+      source: Sources,
+      editor: UnprivilegedEditor,
+    ): void,
+    onFocus?(
+      selection: Range,
+      source: Sources,
+      editor: UnprivilegedEditor,
+    ): void,
+    onBlur?(
+      previousSelection: Range,
+      source: Sources,
+      editor: UnprivilegedEditor,
+    ): void,
+    onKeyDown?: React.EventHandler<any>,
+    onKeyPress?: React.EventHandler<any>,
+    onKeyUp?: React.EventHandler<any>,
+    placeholder?: string,
+    preserveWhitespace?: boolean,
+    readOnly?: boolean,
+    scrollingContainer?: string | HTMLElement,
+    style?: React.CSSProperties,
+    tabIndex?: number,
+    theme?: string,
+    value?: Value,
+  }
+
+  export interface UnprivilegedEditor {
+    getLength(): number;
+    getText(index?: number, length?: number): string;
+    getHTML(): string;
+    getBounds(index: number, length?: number): BoundsStatic;
+    getSelection(focus?: boolean): RangeStatic;
+    getContents(index?: number, length?: number): DeltaStatic;
+  }
 }
 
-export interface ReactQuillProps {
-  bounds?: string | HTMLElement,
-  children?: React.ReactElement<any>,
-  className?: string,
-  defaultValue?: Value,
-  formats?: string[],
-  id?: string,
-  modules?: StringMap,
-  onChange?(
-    value: string,
-    delta: DeltaStatic,
-    source: Sources,
-    editor: UnprivilegedEditor,
-  ): void,
-  onChangeSelection?(
-    selection: Range,
-    source: Sources,
-    editor: UnprivilegedEditor,
-  ): void,
-  onFocus?(
-    selection: Range,
-    source: Sources,
-    editor: UnprivilegedEditor,
-  ): void,
-  onBlur?(
-    previousSelection: Range,
-    source: Sources,
-    editor: UnprivilegedEditor,
-  ): void,
-  onKeyDown?: React.EventHandler<any>,
-  onKeyPress?: React.EventHandler<any>,
-  onKeyUp?: React.EventHandler<any>,
-  placeholder?: string,
-  preserveWhitespace?: boolean,
-  readOnly?: boolean,
-  scrollingContainer?: string | HTMLElement,
-  style?: React.CSSProperties,
-  tabIndex?: number,
-  theme?: string,
-  value?: Value,
-}
-
-export interface UnprivilegedEditor {
-  getLength(): number;
-  getText(index?: number, length?: number): string;
-  getHTML(): string;
-  getBounds(index: number, length?: number): BoundsStatic;
-  getSelection(focus?: boolean): RangeStatic;
-  getContents(index?: number, length?: number): DeltaStatic;
-}
+// Re-import everything from namespace into scope for comfort
+import Value = ReactQuill.Value;
+import Range = ReactQuill.Range;
+import QuillOptions = ReactQuill.QuillOptions;
+import ReactQuillProps = ReactQuill.ReactQuillProps;
+import UnprivilegedEditor = ReactQuill.UnprivilegedEditor;
 
 interface ReactQuillState {
   generation: number,
@@ -83,9 +91,14 @@ interface ReactQuillState {
   selection: Range,
 }
 
-export default class ReactQuill extends React.Component<ReactQuillProps, ReactQuillState> {
+class ReactQuill extends React.Component<ReactQuillProps, ReactQuillState> {
 
   static displayName = 'React Quill'
+
+  /*
+  Export Quill to be able to call `register`
+  */
+  static Quill = Quill;
 
   /*
   Changing one of these props should cause a full re-render and a
@@ -154,8 +167,10 @@ export default class ReactQuill extends React.Component<ReactQuillProps, ReactQu
     selection: Range,
   }
 
-  // A weaker, unprivileged proxy for the editor that does not allow
-  // accidentally modifying editor state.
+  /*
+  A weaker, unprivileged proxy for the editor that does not allow accidentally
+  modifying editor state.
+  */
   unprivilegedEditor?: UnprivilegedEditor
 
   constructor(props: ReactQuillProps) {
@@ -552,6 +567,6 @@ export default class ReactQuill extends React.Component<ReactQuillProps, ReactQu
   }
 }
 
-// Re-export to avoid having to `require(...).default`
-module.exports = ReactQuill;
-module.exports.Quill = Quill;
+// Compatibility Export to avoid `require(...).default` on CommonJS.
+// See: https://github.com/Microsoft/TypeScript/issues/2719
+export = ReactQuill;
