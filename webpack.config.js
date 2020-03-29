@@ -15,25 +15,25 @@ module.exports = {
     ],
   },
 
-	externals: {
-		'react': {
-			'commonjs': 'react',
-			'commonjs2': 'react',
-			'amd': 'react',
-			'root': 'React'
-		},
-		'react-dom': {
-			'commonjs': 'react-dom',
-			'commonjs2': 'react-dom',
-			'amd': 'react-dom',
-			'root': 'ReactDOM'
-		},
-		'react-dom/server': {
-			'commonjs': 'react-dom/server',
-			'commonjs2': 'react-dom/server',
-			'amd': 'react-dom/server',
-			'root': 'ReactDOMServer'
-		}
+  externals: {
+    'react': {
+      'commonjs': 'react',
+      'commonjs2': 'react',
+      'amd': 'react',
+      'root': 'React'
+    },
+    'react-dom': {
+      'commonjs': 'react-dom',
+      'commonjs2': 'react-dom',
+      'amd': 'react-dom',
+      'root': 'ReactDOM'
+    },
+    'react-dom/server': {
+      'commonjs': 'react-dom/server',
+      'commonjs2': 'react-dom/server',
+      'amd': 'react-dom/server',
+      'root': 'ReactDOMServer'
+    }
   },
 
   output: {
