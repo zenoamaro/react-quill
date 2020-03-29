@@ -1,6 +1,6 @@
 var React = require('react');
 var {mount} = require('enzyme');
-var ReactQuill = require('../lib/index').default; // FIXME
+var ReactQuill = require('../lib/index');
 
 function ReactQuillNode(props, children) {
   props = Object.assign({
