@@ -2,10 +2,13 @@
 /* global ReactQuill */
 'use strict';
 
-if (typeof React !== 'object') alert('React not found. Did you run "npm install"?');
+if (typeof React !== 'object') {
+  alert('React not found. Did you run "npm install"?');
+}
 
-// FIXME: Export a more traditional module
-if (typeof ReactQuill.default !== 'function') alert('ReactQuill not found. Did you run "make build"?')
+if (typeof ReactQuill !== 'function') {
+  alert('ReactQuill not found. Did you run "make build"?')
+}
 
 var EMPTY_DELTA = {ops: []};
 
@@ -80,7 +83,7 @@ class Editor extends React.Component {
         {this.renderToolbar()}
         <hr/>
         {this.renderSidebar()}
-        {this.state.enabled && <ReactQuill.default
+        {this.state.enabled && <ReactQuill
           theme={this.state.theme}
           value={this.state.value}
           readOnly={this.state.readOnly}
