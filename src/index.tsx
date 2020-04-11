@@ -390,14 +390,15 @@ class ReactQuill extends React.Component<ReactQuillProps, ReactQuillState> {
   */
   setEditorContents(editor: Quill, value: Value) {
     this.value = value;
-    const sel = editor.getSelection();
+    const restoreFocus = editor.hasFocus();
+    const sel = this.getEditorSelection();
     if (typeof value === 'string') {
       editor.setContents(editor.clipboard.convert(value));
     } else {
       editor.setContents(value);
     }
-    if (sel && editor.hasFocus()) {
-      this.setEditorSelection(editor, sel);
+    if (restoreFocus) {
+      Promise.resolve().then(() => this.setEditorSelection(editor, sel));
     }
   }
 
@@ -409,6 +410,7 @@ class ReactQuill extends React.Component<ReactQuillProps, ReactQuillState> {
       range.length = Math.max(0, Math.min(range.length, (length-1) - range.index));
     }
     // Quill types (erroneously) do not specify that `null` is accepted here.
+    this.selection = range;
     editor.setSelection(range!);
   }
 
