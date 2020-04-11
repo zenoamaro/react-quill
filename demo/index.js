@@ -34,9 +34,7 @@ class Editor extends React.Component {
   onEditorChange = (value, delta, source, editor) => {
     this.setState({
       value: editor.getContents(),
-      events: [
-        'text-change('+this.state.value+' -> '+value+')'
-      ].concat(this.state.events)
+      events: [`[${source}] text-change`, ...this.state.events],
     });
   }
 
@@ -44,19 +42,16 @@ class Editor extends React.Component {
     this.setState({
       selection: range,
       events: [
-        'selection-change('+
-          this.formatRange(this.state.selection)
-        +' -> '+
-          this.formatRange(range)
-        +')'
-      ].concat(this.state.events)
+        `[${source}] selection-change(${this.formatRange(this.state.selection)} -> ${this.formatRange(range)})`,
+        ...this.state.events,
+      ]
     });
   }
 
   onEditorFocus = (range, source) => {
     this.setState({
       events: [
-        'focus('+this.formatRange(range)+')'
+        `[${source}] focus(${this.formatRange(range)})`
       ].concat(this.state.events)
     });
   }
@@ -64,7 +59,7 @@ class Editor extends React.Component {
   onEditorBlur = (previousRange, source) => {
     this.setState({
       events: [
-        'blur('+this.formatRange(previousRange)+')'
+        `[${source}] blur(${this.formatRange(previousRange)})`
       ].concat(this.state.events)
     });
   }
@@ -75,6 +70,10 @@ class Editor extends React.Component {
 
   onToggleReadOnly = () => {
     this.setState({ readOnly: !this.state.readOnly });
+  }
+
+  onSetContents = () => {
+    this.setState({ value: 'This is some <b>fine</b> example content' });
   }
 
   render() {
@@ -108,6 +107,9 @@ class Editor extends React.Component {
         </button>
         <button onClick={this.onToggleReadOnly}>
           Set {readOnly? 'read/Write' : 'read-only'}
+        </button>
+        <button onClick={this.onSetContents}>
+          Fill contents programmatically
         </button>
         <button disabled={true}>
           Selection: ({selection})
