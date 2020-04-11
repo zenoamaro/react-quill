@@ -87,8 +87,6 @@ import UnprivilegedEditor = ReactQuill.UnprivilegedEditor;
 
 interface ReactQuillState {
   generation: number,
-  value: Value,
-  selection: Range,
 }
 
 class ReactQuill extends React.Component<ReactQuillProps, ReactQuillState> {
@@ -120,7 +118,6 @@ class ReactQuill extends React.Component<ReactQuillProps, ReactQuillState> {
     'id',
     'className',
     'style',
-    'readOnly',
     'placeholder',
     'tabIndex',
     'onChange',
@@ -140,8 +137,6 @@ class ReactQuill extends React.Component<ReactQuillProps, ReactQuillState> {
 
   state: ReactQuillState = {
     generation: 0,
-    selection: null,
-    value: '',
   }
 
   /*
@@ -153,6 +148,16 @@ class ReactQuill extends React.Component<ReactQuillProps, ReactQuillState> {
   Reference to the element holding the Quill editing area.
   */
   editingArea?: React.ReactInstance | null
+
+  /*
+  Tracks the internal value of the Quill editor
+  */
+  value: Value
+
+  /*
+  Tracks the internal selection of the Quill editor
+  */
+  selection: Range = null
 
   /*
   Used to compare whether deltas from `onChange` are being used as `value`.
@@ -176,7 +181,7 @@ class ReactQuill extends React.Component<ReactQuillProps, ReactQuillState> {
   constructor(props: ReactQuillProps) {
     super(props);
     const value = this.isControlled()? props.value : props.defaultValue;
-    this.state.value = value ?? '';
+    this.value = value ?? '';
   }
 
   validateProps(props: ReactQuillProps): void {
@@ -204,11 +209,37 @@ class ReactQuill extends React.Component<ReactQuillProps, ReactQuillState> {
   shouldComponentUpdate(nextProps: ReactQuillProps, nextState: ReactQuillState) {
     this.validateProps(nextProps);
 
+    // If no editor has been instantiated, the component should update
+    if (!this.editor) return true;
+    const editor = this.editor!;
+
     // If the component has been regenerated, we already know we should update.
     if (this.state.generation !== nextState.generation) {
       return true;
     }
 
+    // Handle value changes in-place
+    if ('value' in nextProps) {
+      const prevContents = this.getEditorContents();
+      const nextContents = nextProps.value ?? '';
+
+      // NOTE: Seeing that Quill is missing a way to prevent edits, we have to
+      //       settle for a hybrid between controlled and uncontrolled mode. We
+      //       can't prevent the change, but we'll still override content
+      //       whenever `value` differs from current state.
+      // NOTE: Comparing an HTML string and a Quill Delta will always trigger a
+      //       change, regardless of whether they represent the same document.
+      if (!this.isEqualValue(nextContents, prevContents)) {
+        this.setEditorContents(editor, nextContents);
+      }
+    }
+
+    // Handle read-only changes in-place
+    if (nextProps.readOnly !== this.props.readOnly) {
+      this.setEditorReadOnly(editor, nextProps.readOnly!);
+    }
+
+    // Clean and Dirty props require a render
     return [...this.cleanProps, ...this.dirtyProps].some((prop) => {
       return !isEqual(nextProps[prop], this.props[prop]);
     });
@@ -223,7 +254,7 @@ class ReactQuill extends React.Component<ReactQuillProps, ReactQuillState> {
 
   componentDidMount() {
     this.instantiateEditor();
-    this.setEditorContents(this.editor!, this.state.value);
+    this.setEditorContents(this.editor!, this.getEditorContents());
   }
 
   componentWillUnmount() {
@@ -255,30 +286,6 @@ class ReactQuill extends React.Component<ReactQuillProps, ReactQuillState> {
       editor.setContents(delta);
       if (selection) editor.setSelection(selection);
       editor.focus();
-    }
-
-    // Update only if we've been passed a new `value`. This leaves components
-    // using `defaultValue` alone.
-    if ('value' in this.props) {
-      const prevContents = prevState.value;
-      const nextContents = this.props.value ?? '';
-
-      // NOTE: Seeing that Quill is missing a way to prevent edits, we have to
-      //       settle for a hybrid between controlled and uncontrolled mode. We
-      //       can't prevent the change, but we'll still override content
-      //       whenever `value` differs from current state.
-      // NOTE: Comparing an HTML string and a Quill Delta will always trigger a
-      //       change, regardless of whether they represent the same document.
-      if (!this.isEqualValue(nextContents, prevContents)) {
-        this.setEditorContents(editor, nextContents);
-      }
-    }
-
-    // We can update readOnly state in-place.
-    if ('readOnly' in this.props) {
-      if (this.props.readOnly !== prevProps.readOnly) {
-        this.setEditorReadOnly(editor, this.props.readOnly!);
-      }
     }
   }
 
@@ -352,11 +359,11 @@ class ReactQuill extends React.Component<ReactQuillProps, ReactQuillState> {
   }
 
   getEditorContents(): Value {
-    return this.state.value;
+    return this.value;
   }
 
   getEditorSelection(): Range {
-    return this.state.selection;
+    return this.selection;
   }
 
   /*
@@ -382,13 +389,16 @@ class ReactQuill extends React.Component<ReactQuillProps, ReactQuillState> {
   around so that the cursor won't move.
   */
   setEditorContents(editor: Quill, value: Value) {
+    this.value = value;
     const sel = editor.getSelection();
     if (typeof value === 'string') {
       editor.setContents(editor.clipboard.convert(value));
     } else {
       editor.setContents(value);
     }
-    if (sel && editor.hasFocus()) this.setEditorSelection(editor, sel);
+    if (sel && editor.hasFocus()) {
+      this.setEditorSelection(editor, sel);
+    }
   }
 
   setEditorSelection(editor: Quill, range: Range) {
@@ -518,19 +528,19 @@ class ReactQuill extends React.Component<ReactQuillProps, ReactQuillState> {
     editor: UnprivilegedEditor,
   ): void {
     if (!this.editor) return;
-    const currentContents = this.getEditorContents();
 
     // We keep storing the same type of value as what the user gives us,
     // so that value comparisons will be more stable and predictable.
-    const nextContents = this.isDelta(currentContents)
+    const nextContents = this.isDelta(this.value)
       ? editor.getContents()
       : editor.getHTML();
 
-    if (!this.isEqualValue(nextContents, currentContents)) {
+    if (nextContents !== this.getEditorContents()) {
       // Taint this `delta` object, so we can recognize whether the user
       // is trying to send it back as `value`, preventing a likely loop.
       this.lastDeltaChangeSet = delta;
-      this.setState({ value: nextContents });
+
+      this.value = nextContents;
       this.props.onChange?.(value, delta, source, editor);
     }
   }
@@ -547,7 +557,7 @@ class ReactQuill extends React.Component<ReactQuillProps, ReactQuillState> {
 
     if (isEqual(nextSelection, currentSelection)) return;
 
-    this.setState({ selection: nextSelection });
+    this.selection = nextSelection;
     this.props.onChangeSelection?.(nextSelection, source, editor);
 
     if (hasGainedFocus) {
