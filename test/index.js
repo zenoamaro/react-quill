@@ -85,7 +85,7 @@ describe('<ReactQuill />', function() {
   it('allows using Deltas as value', () => {
     const html = '<p>Hello, world!</p>';
     const delta = { ops: [{ insert: 'Hello, world!' }] };
-    const wrapper = mountReactQuill({ value: html });
+    const wrapper = mountReactQuill({ value: delta });
     const quill = getQuillInstance(wrapper);
     expect(getQuillContentsAsHTML(wrapper)).to.equal(html);
   });
@@ -93,9 +93,12 @@ describe('<ReactQuill />', function() {
   it('prevents using Delta changesets from events as value', done => {
     const value = '<p>Hello, world!</p>';
     const changedValue = '<p>Adieu, world!</p>';
+    let calledDone = false;
     let wrapper;
-    const onChange = (_, delta) => {
-      wrapper.setProps({ value: delta });
+
+    const onChange = (value, delta) => {
+      // Setting props unconditionally here will cause a change loop
+      if (!calledDone) wrapper.setProps({ value: delta });
     };
     wrapper = mountReactQuill({ value, onChange });
 
@@ -103,15 +106,15 @@ describe('<ReactQuill />', function() {
     // this test knows a lot about the implementation,
     // but we need to wrap the right function with a catch
     // in order to prevent errors from it from propagating
-    const origValidateProps = wrapper.instance().validateProps;
-    let calledDone = false; // might get called more than once
+    const originalValidateProps = wrapper.instance().validateProps;
+
     wrapper.instance().validateProps = function(props) {
       try {
-        origValidateProps.call(wrapper.instance(), props);
+        originalValidateProps.call(wrapper.instance(), props);
       } catch (err) {
-        if (expectedErr.test(err) && calledDone === false) {
-          done();
+        if (!calledDone && expectedErr.test(err)) {
           calledDone = true;
+          done();
         }
       }
     }.bind(wrapper.instance());
