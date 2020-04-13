@@ -66,6 +66,28 @@ describe("<ReactQuill />", () => {
     cy.getEditor().should("contain", text);
   });
 
+  it("updates the content when the value prop changes", () => {
+    const text = "Hello, world";
+    const change = "Goodbye, world";
+    cy.renderWithProps({value: text})
+      .getEditor()
+        .should("contain", text)
+      .setProps({value: change})
+      .getEditor()
+        .should("contain", change)
+        .should("not.contain", text);
+  });
+
+
+  it("allows using Deltas as defaultValue", () => {
+    const text = "Hello, world";
+    const delta = { ops: [{ insert: text }] };
+    cy.renderWithProps({
+      defaultValue: delta
+    });
+    cy.getEditor().should("contain", text);
+  });
+
   it("allows using Deltas as defaultValue", () => {
     const text = "Hello, world";
     const delta = { ops: [{ insert: text }] };
