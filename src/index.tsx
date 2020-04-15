@@ -284,8 +284,8 @@ class ReactQuill extends React.Component<ReactQuillProps, ReactQuillState> {
       delete this.regenerationSnapshot;
       this.instantiateEditor();
       editor.setContents(delta);
+      // NOTE: The editor will also set focus iff selection is non-null.
       if (selection) editor.setSelection(selection);
-      editor.focus();
     }
   }
 
