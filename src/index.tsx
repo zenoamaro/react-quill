@@ -209,12 +209,9 @@ class ReactQuill extends React.Component<ReactQuillProps, ReactQuillState> {
   shouldComponentUpdate(nextProps: ReactQuillProps, nextState: ReactQuillState) {
     this.validateProps(nextProps);
 
-    // If no editor has been instantiated, the component should update
-    if (!this.editor) return true;
-    const editor = this.editor!;
-
-    // If the component has been regenerated, we already know we should update.
-    if (this.state.generation !== nextState.generation) {
+    // If the editor hasn't been instantiated yet, or the component has been
+    // regenerated, we already know we should update.
+    if (!this.editor || this.state.generation !== nextState.generation) {
       return true;
     }
 
@@ -230,13 +227,13 @@ class ReactQuill extends React.Component<ReactQuillProps, ReactQuillState> {
       // NOTE: Comparing an HTML string and a Quill Delta will always trigger a
       //       change, regardless of whether they represent the same document.
       if (!this.isEqualValue(nextContents, prevContents)) {
-        this.setEditorContents(editor, nextContents);
+        this.setEditorContents(this.editor, nextContents);
       }
     }
 
     // Handle read-only changes in-place
     if (nextProps.readOnly !== this.props.readOnly) {
-      this.setEditorReadOnly(editor, nextProps.readOnly!);
+      this.setEditorReadOnly(this.editor, nextProps.readOnly!);
     }
 
     // Clean and Dirty props require a render
@@ -262,16 +259,13 @@ class ReactQuill extends React.Component<ReactQuillProps, ReactQuillState> {
   }
 
   componentDidUpdate(prevProps: ReactQuillProps, prevState: ReactQuillState) {
-    if (!this.editor) return;
-    const editor = this.editor;
-
     // If we're changing one of the `dirtyProps`, the entire Quill Editor needs
     // to be re-instantiated. Regenerating the editor will cause the whole tree,
     // including the container, to be cleaned up and re-rendered from scratch.
     // Store the contents so they can be restored later.
     if (this.shouldComponentRegenerate(prevProps)) {
-      const delta = editor.getContents();
-      const selection = editor.getSelection();
+      const delta = this.editor!.getContents();
+      const selection = this.editor!.getSelection();
       this.regenerationSnapshot = {delta, selection};
       this.setState({generation: this.state.generation + 1});
       this.destroyEditor();
@@ -283,9 +277,8 @@ class ReactQuill extends React.Component<ReactQuillProps, ReactQuillState> {
       const {delta, selection} = this.regenerationSnapshot!;
       delete this.regenerationSnapshot;
       this.instantiateEditor();
-      editor.setContents(delta);
-      // NOTE: The editor will also set focus iff selection is non-null.
-      if (selection) editor.setSelection(selection);
+      this.editor!.setContents(delta);
+      postpone(() => this.editor!.setSelection(selection!));
     }
   }
 
@@ -390,16 +383,13 @@ class ReactQuill extends React.Component<ReactQuillProps, ReactQuillState> {
   */
   setEditorContents(editor: Quill, value: Value) {
     this.value = value;
-    const restoreFocus = editor.hasFocus();
     const sel = this.getEditorSelection();
     if (typeof value === 'string') {
       editor.setContents(editor.clipboard.convert(value));
     } else {
       editor.setContents(value);
     }
-    if (restoreFocus) {
-      Promise.resolve().then(() => this.setEditorSelection(editor, sel));
-    }
+    postpone(() => this.setEditorSelection(editor, sel));
   }
 
   setEditorSelection(editor: Quill, range: Range) {
@@ -578,6 +568,13 @@ class ReactQuill extends React.Component<ReactQuillProps, ReactQuillState> {
     if (!this.editor) return;
     this.setEditorSelection(this.editor, null);
   }
+}
+
+/*
+Small helper to execute a function in the next micro-tick.
+*/
+function postpone(fn: (value: void) => void) {
+  Promise.resolve().then(fn);
 }
 
 // Compatibility Export to avoid `require(...).default` on CommonJS.
