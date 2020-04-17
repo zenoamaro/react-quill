@@ -390,15 +390,14 @@ class ReactQuill extends React.Component<ReactQuillProps, ReactQuillState> {
   }
 
   setEditorSelection(editor: Quill, range: Range) {
+    this.selection = range;
     if (range) {
       // Validate bounds before applying.
       const length = editor.getLength();
       range.index = Math.max(0, Math.min(range.index, length-1));
       range.length = Math.max(0, Math.min(range.length, (length-1) - range.index));
+      editor.setSelection(range);
     }
-    // Quill types (erroneously) do not specify that `null` is accepted here.
-    this.selection = range;
-    if (range) editor.setSelection(range);
   }
 
   setEditorTabIndex(editor: Quill, tabIndex: number) {
