@@ -263,9 +263,9 @@ class ReactQuill extends React.Component<ReactQuillProps, ReactQuillState> {
     // to be re-instantiated. Regenerating the editor will cause the whole tree,
     // including the container, to be cleaned up and re-rendered from scratch.
     // Store the contents so they can be restored later.
-    if (this.shouldComponentRegenerate(prevProps)) {
-      const delta = this.editor!.getContents();
-      const selection = this.editor!.getSelection();
+    if (this.editor && this.shouldComponentRegenerate(prevProps)) {
+      const delta = this.editor.getContents();
+      const selection = this.editor.getSelection();
       this.regenerationSnapshot = {delta, selection};
       this.setState({generation: this.state.generation + 1});
       this.destroyEditor();
@@ -277,15 +277,14 @@ class ReactQuill extends React.Component<ReactQuillProps, ReactQuillState> {
       const {delta, selection} = this.regenerationSnapshot!;
       delete this.regenerationSnapshot;
       this.instantiateEditor();
-      this.editor!.setContents(delta);
-      postpone(() => this.editor!.setSelection(selection!));
+      const editor = this.editor!;
+      editor.setContents(delta);
+      postpone(() => this.setEditorSelection(editor, selection));
     }
   }
 
   instantiateEditor(): void {
-    if (this.editor) {
-      throw new Error('Editor is already instantiated');
-    }
+    if (this.editor) return;
     this.editor = this.createEditor(
       this.getEditingArea(),
       this.getEditorConfig()
@@ -293,9 +292,7 @@ class ReactQuill extends React.Component<ReactQuillProps, ReactQuillState> {
   }
 
   destroyEditor(): void {
-    if (!this.editor) {
-      throw new Error('Destroying editor before instantiation');
-    }
+    if (!this.editor) return;
     this.unhookEditor(this.editor);
     delete this.editor;
   }
@@ -393,15 +390,14 @@ class ReactQuill extends React.Component<ReactQuillProps, ReactQuillState> {
   }
 
   setEditorSelection(editor: Quill, range: Range) {
+    this.selection = range;
     if (range) {
       // Validate bounds before applying.
       const length = editor.getLength();
       range.index = Math.max(0, Math.min(range.index, length-1));
       range.length = Math.max(0, Math.min(range.length, (length-1) - range.index));
+      editor.setSelection(range);
     }
-    // Quill types (erroneously) do not specify that `null` is accepted here.
-    this.selection = range;
-    editor.setSelection(range!);
   }
 
   setEditorTabIndex(editor: Quill, tabIndex: number) {
@@ -566,7 +562,8 @@ class ReactQuill extends React.Component<ReactQuillProps, ReactQuillState> {
 
   blur(): void {
     if (!this.editor) return;
-    this.setEditorSelection(this.editor, null);
+    this.selection = null;
+    this.editor.blur();
   }
 }
 
