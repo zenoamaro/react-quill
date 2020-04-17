@@ -263,9 +263,9 @@ class ReactQuill extends React.Component<ReactQuillProps, ReactQuillState> {
     // to be re-instantiated. Regenerating the editor will cause the whole tree,
     // including the container, to be cleaned up and re-rendered from scratch.
     // Store the contents so they can be restored later.
-    if (this.shouldComponentRegenerate(prevProps)) {
-      const delta = this.editor!.getContents();
-      const selection = this.editor!.getSelection();
+    if (this.editor && this.shouldComponentRegenerate(prevProps)) {
+      const delta = this.editor.getContents();
+      const selection = this.editor.getSelection();
       this.regenerationSnapshot = {delta, selection};
       this.setState({generation: this.state.generation + 1});
       this.destroyEditor();
