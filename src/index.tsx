@@ -398,7 +398,7 @@ class ReactQuill extends React.Component<ReactQuillProps, ReactQuillState> {
     }
     // Quill types (erroneously) do not specify that `null` is accepted here.
     this.selection = range;
-    editor.setSelection(range!);
+    if (range) editor.setSelection(range);
   }
 
   setEditorTabIndex(editor: Quill, tabIndex: number) {
@@ -563,7 +563,8 @@ class ReactQuill extends React.Component<ReactQuillProps, ReactQuillState> {
 
   blur(): void {
     if (!this.editor) return;
-    this.setEditorSelection(this.editor, null);
+    this.selection = null;
+    this.editor.blur();
   }
 }
 
