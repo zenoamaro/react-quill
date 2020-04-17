@@ -284,9 +284,7 @@ class ReactQuill extends React.Component<ReactQuillProps, ReactQuillState> {
   }
 
   instantiateEditor(): void {
-    if (this.editor) {
-      throw new Error('Editor is already instantiated');
-    }
+    if (this.editor) return;
     this.editor = this.createEditor(
       this.getEditingArea(),
       this.getEditorConfig()
@@ -294,9 +292,7 @@ class ReactQuill extends React.Component<ReactQuillProps, ReactQuillState> {
   }
 
   destroyEditor(): void {
-    if (!this.editor) {
-      throw new Error('Destroying editor before instantiation');
-    }
+    if (!this.editor) return;
     this.unhookEditor(this.editor);
     delete this.editor;
   }
