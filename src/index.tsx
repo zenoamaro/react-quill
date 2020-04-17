@@ -279,7 +279,7 @@ class ReactQuill extends React.Component<ReactQuillProps, ReactQuillState> {
       this.instantiateEditor();
       const editor = this.editor!;
       editor.setContents(delta);
-      if (selection) postpone(() => editor.setSelection(selection));
+      postpone(() => this.setEditorSelection(editor, selection));
     }
   }
 
