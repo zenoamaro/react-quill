@@ -448,11 +448,10 @@ class ReactQuill extends React.Component<ReactQuillProps, ReactQuillState> {
   Renders an editor area, unless it has been provided one to clone.
   */
   renderEditingArea(): JSX.Element {
-    const {children, preserveWhitespace, tabIndex} = this.props;
+    const {children, preserveWhitespace} = this.props;
     const {generation} = this.state;
 
     const properties = {
-      tabIndex,
       key: generation,
       ref: (instance: React.ReactInstance | null) => {
         this.editingArea = instance
