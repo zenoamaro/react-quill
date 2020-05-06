@@ -414,7 +414,7 @@ The Mixin has been considered an anti-pattern for a long time now, so we have de
 
 There is no upgrade path. If you have a use case that relied on the Mixin, you're encouraged to open an issue, and we will try to provide you with a new feature to make it possible, or dedicated support to migrate out of it.
 
-## Clipboard Matchers
+### Clipboard Matchers
 
 Clipboards matchers are used for converting values in controlled components, in v2 you are able to disable and enable matchers during an update event in order to be able to have control
 over the way values are converted to deltas vs during an update event where the editor contents is being set
