@@ -414,6 +414,14 @@ The Mixin has been considered an anti-pattern for a long time now, so we have de
 
 There is no upgrade path. If you have a use case that relied on the Mixin, you're encouraged to open an issue, and we will try to provide you with a new feature to make it possible, or dedicated support to migrate out of it.
 
+## Clipboard Matchers
+
+Clipboards matchers are used for converting values in controlled components, in v2 you are able to disable and enable matchers during an update event in order to be able to have control
+over the way values are converted to deltas vs during an update event where the editor contents is being set
+
+This is specially useful if for instance you have content which value can change (eg. a realtime text editor) but you want to only allow plaintext to be pasted via a matcher, you can disable
+the plaintext matcher from the clipboard during the update event
+
 ### Toolbar component
 
 Quill has long provided built-in support for custom toolbars, which replaced ReactQuill's (quite inflexible) Toolbar component.
@@ -509,6 +517,53 @@ const {Quill} = ReactQuill;
 `preserveWhitespace`
 : If true, a `pre` tag is used for the editor area instead of the default `div` tag. This prevents Quill from
 collapsing continuous whitespaces on paste. [Related issue](https://github.com/quilljs/quill/issues/1751).
+
+`disableClipboardMatchersOnUpdate`
+: An array of matchers similar in shape to the matchers that exist in your module clipboard config that will be disabled during an update event
+
+<details>
+<summary>Example</summary>
+
+~~~tsx
+function plainTextOnly(node: Node) {
+  return new Delta().insert(node.textContent);
+}
+const PLAINTEXT_ONLY_MATCHERS: ReactQuill.ClipboardMatcher[] = [
+  [Node.ELEMENT_NODE, plainTextOnly],
+];
+// prevent modules from updating in each render
+const DEFAULT_MODULES = {
+  clipboard: {
+    matchVisual: false,
+    matchers: PLAINTEXT_ONLY_MATCHERS,
+  }
+}
+
+class RealtimeEditor extends React.Component<RealtimeEditorProps> {
+  constructor(props: RealtimeEditorProps) {
+    super(props)
+  }
+
+  public render() {
+    return (
+      <div>
+        <ReactQuill
+          value={this.props.value}
+          onChange={this.props.onChange}
+          modules={DEFAULT_MODULES}
+          disableClipboardMatchersOnUpdate={PLAINTEXT_ONLY_MATCHERS}
+          theme={'snow'} />
+      </div>
+    )
+  }
+}
+~~~
+
+</details>
+
+`enableClipboardMatchersOnUpdate`
+: An array of matchers, similar to the matchers in the module clipboard, this time they will be added during an update event, and only exist during such event, you might use
+this to have matching functionality that you don't want to have on a paste event
 
 ### Methods
 
