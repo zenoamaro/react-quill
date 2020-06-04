@@ -35,6 +35,12 @@ namespace ReactQuill {
     formats?: string[],
     id?: string,
     modules?: StringMap,
+    beforeChange?(
+      value: string,
+      delta: DeltaStatic,
+      source: Sources,
+      editor: UnprivilegedEditor,
+    ): boolean,
     onChange?(
       value: string,
       delta: DeltaStatic,
@@ -561,6 +567,19 @@ class ReactQuill extends React.Component<ReactQuillProps, ReactQuillState> {
       : editor.getHTML();
 
     if (nextContents !== this.getEditorContents()) {
+      // this allows us to do a thin change definition so we can consider whether
+      // the change goes through and it's informed or not, sometimes arguments
+      // can be in the wrong order, and it's up to the user of the library to decide whether
+      // the content is actually equal, this allows our own custom validation function
+      // of the content itself
+      const changeIsValid =
+        this.props.beforeChange ? this.props.beforeChange(value, delta, source, editor) : true;
+
+      // if the change is not considered to be a valid change we cancel
+      if (!changeIsValid) {
+        return;
+      }
+
       // Taint this `delta` object, so we can recognize whether the user
       // is trying to send it back as `value`, preventing a likely loop.
       this.lastDeltaChangeSet = delta;

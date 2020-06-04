@@ -16,6 +16,7 @@ See a [live demo] or [Codepen](http://codepen.io/alexkrolick/pen/xgyOXQ/left?edi
 - [Usage](#usage)
   - [Controlled mode caveats](#controlled-mode-caveats)
   - [Using Deltas](#using-deltas)
+  - [SSR](#ssr)
   - [Themes](#themes)
   - [Custom Toolbar](#custom-toolbar)
     - [Default Toolbar Elements](#default-toolbar-elements)
@@ -107,6 +108,11 @@ Because Quill handles its own changes, and does not allow preventing edits, Reac
 
 If you frequently need to manipulate the DOM or use the [Quill API](https://quilljs.com/docs/api/)s imperatively, you might consider switching to fully uncontrolled mode. ReactQuill will initialize the editor using `defaultValue`, but won't try to reset it after that. The `onChange` callback will still work as expected.
 
+If you need to control what is considered a change you might use the `beforeChange` method which takes exactly the same arguments as the
+`onChange` method but returns a boolean, a truthful value means that it is considered a change and `onChange` triggers afterwards updating
+the internal state of the react component, otherwise it is considered that the old state is what remains true, despite the editor containing
+an actual different value, this is very powerful when combined with the source type
+
 Read more about uncontrolled components in the [React docs](https://facebook.github.io/react/docs/uncontrolled-components.html#default-values).
 
 ### Using Deltas
@@ -116,6 +122,72 @@ You can pass a [Quill Delta](https://quilljs.com/docs/delta/), instead of an HTM
 Note that switching `value` from an HTML string to a Delta, or vice-versa, will trigger a change, regardless of whether they represent the same document, so you might want to stick to a format and keep using it consistently throughout.
 
 ⚠️ Do not use the `delta` object you receive from the `onChange` event as `value`. This object does not contain the full document, but only the last modifications, and doing so will most likely trigger an infinite loop where the same changes are applied over and over again. Use `editor.getContents()` during the event to obtain a Delta of the full document instead. ReactQuill will prevent you from making such a mistake, however if you are absolutely sure that this is what you want, you can pass the object through `new Delta()` again to un-taint it.
+
+### SSR
+
+Quill doesn't support SSR (Server side rendering), In order to use Server Side rendering you might be able to do so using this technique, unlike other techniques this one allows the same code to be rendered both in the server and client side but it needs a double pass, otherwise you will get a warning about content mismatch.
+
+~~~tsx
+import OriginalReactQuill from "react-quill";
+let ReactQuill: typeof OriginalReactQuill;
+if (!__SERVER__) { // this vairable must be populated by your builder, you might also check for document instead
+  ReactQuill = require("react-quill");
+} else {
+  const dead: any = () => null as any;
+  // you might need to add more functions here as you see fit, this is in order
+  // to be able to register blots, add the functionality that you use inside the
+  // dead function
+  ReactQuill = {
+    Quill: {
+      import: dead,
+      register: dead,
+    }
+  } as any;
+}
+
+// You might have your custom blots and imports here
+const BlockEmbed = ReactQuill.Quill.import("blots/block/embed");
+const Embed = ReactQuill.Quill.import("blots/embed");
+const Delta = ReactQuill.Quill.import("delta");
+
+// etc... watch out that these can and will be null in the server, note
+// that null is still extendable to build your custom blots even if they will
+// do nothing in the server, it won't crash
+
+// should work just fine
+class MyEmbed extends BlockEmbed {
+}
+~~~
+
+However this is not enough, because this will cause an error when ReactQuill isn't a component if you try to use it that's why it must be used within a double pass, in your component that uses react-quill you must do the equivalent of
+
+~~~tsx
+class MyComponent extends React.Component<{}, {isReady: boolean}> {
+  constructor(props: {}) {
+    super(props: {});
+
+    this.state = {
+      isReady: false,
+    }
+  }
+
+  componentDidMount() {
+    this.setState({
+      isReady: true,
+    });
+  }
+
+  render() {
+    return (
+      <div>
+        {this.isReady ? <ReactQuill theme={'snow'} /> : true}
+      </div>
+    )
+  }
+}
+~~~
+
+This will ensure that no `div` which contains react quill is rendered in the server side, and the client side will execute a double pass in it during the hydration process, mantaining consistency, this is the recommended way react uses.
 
 ### Themes
 
@@ -489,6 +561,64 @@ const {Quill} = ReactQuill;
 
 `children`
 : A single React element that will be used as the editing area for Quill in place of the default, which is a `<div>`. Note that you cannot use a `<textarea>`, as it is not a supported target. Also note that updating children is costly, as it will cause the Quill editor to be recreated. Set the `value` prop if you want to control the html contents of the editor.
+
+`beforeChange(content, delta, source, editor): boolean`
+: Called before a change event might be called, in order to invalidate changes, this is very useful when you are using a lot of custom logic and the event of change triggers during the intial settings, yet HTML content is equal, you might want to use custom code in order to invalidate these initial changes that might trigger unwanted state changes, this means that when you return false, the onChange event doesn't get called and react content value doesn't change as it's considered equal and equivalent.
+
+When used with blots and sanitazation, eg. sanitizers might return HTML that is different from the content blots that Quill can use, this can cause equivalent HTML change events that do not really represent a change, and while it is possible to patch these events outside you can use your own custom function to keep the process streamlined on what is equal and what is not, also, specifying the source, usually you want every "user" change to be allowed as always non equal, but maybe not "api" changes.
+
+<details>
+<summary>Example</summary>
+
+~~~tsx
+function plainTextOnly(node: Node) {
+  return new Delta().insert(node.textContent);
+}
+const PLAINTEXT_ONLY_MATCHERS: ReactQuill.ClipboardMatcher[] = [
+  [Node.ELEMENT_NODE, plainTextOnly],
+];
+// prevent modules from updating in each render
+const DEFAULT_MODULES = {
+  clipboard: {
+    matchVisual: false,
+    matchers: PLAINTEXT_ONLY_MATCHERS,
+  }
+}
+
+class RealtimeEditor extends React.Component<RealtimeEditorProps> {
+  constructor(props: RealtimeEditorProps) {
+    super(props)
+  }
+
+  public beforeChange(value: string, delta: any, source: string, editor: ReactQuill.UnprivilegedEditor) {
+    if (source === "api") {
+      const customElem = document.createElement("div");
+      customElem.innerHTML = value;
+      const customElem2 = document.createElement("div");
+      customElem2.innerHTML = this.props.value;
+
+      return !customElem.isEqualNode(customElem2);
+    }
+    return true;
+  }
+
+  public render() {
+    return (
+      <div>
+        <ReactQuill
+          value={this.props.value}
+          onChange={this.props.onChange}
+          beforeChange={this.beforeChange}
+          modules={DEFAULT_MODULES}
+          disableClipboardMatchersOnUpdate={PLAINTEXT_ONLY_MATCHERS}
+          theme={'snow'} />
+      </div>
+    )
+  }
+}
+~~~
+
+</details>
 
 `onChange(content, delta, source, editor)`
 : Called back with the new contents of the editor after change. It will be passed the HTML contents of the editor, a delta object expressing the change, the source of the change, and finally a read-only proxy to [editor accessors](#the-unprivileged-editor) such as `getHTML()`.
