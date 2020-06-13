@@ -70,7 +70,7 @@ npm install react-quill --save
 ~~~
 
 ~~~jsx
-import React from 'react';
+import React, { useState } from "react";
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 
