@@ -200,8 +200,8 @@ class ReactQuill extends React.Component<ReactQuillProps, ReactQuillState> {
     if (this.lastDeltaChangeSet && props.value === this.lastDeltaChangeSet)
       throw new Error(
         'You are passing the `delta` object from the `onChange` event back ' +
-          'as `value`. You most probably want `editor.getContents()` instead. ' +
-          'See: https://github.com/zenoamaro/react-quill#using-deltas'
+        'as `value`. You most probably want `editor.getContents()` instead. ' +
+        'See: https://github.com/zenoamaro/react-quill#using-deltas'
       );
   }
 
@@ -260,10 +260,7 @@ class ReactQuill extends React.Component<ReactQuillProps, ReactQuillState> {
     this.destroyEditor();
   }
 
-  UNSAFE_componentWillUpdate(
-    prevProps: ReactQuillProps,
-    prevState: ReactQuillState
-  ) {
+  UNSAFE_componentWillUpdate(prevProps: ReactQuillProps, prevState: ReactQuillState) {
     // If we're changing one of the `dirtyProps`, the entire Quill Editor needs
     // to be re-instantiated. Regenerating the editor will cause the whole tree,
     // including the container, to be cleaned up and re-rendered from scratch.
@@ -473,8 +470,8 @@ class ReactQuill extends React.Component<ReactQuillProps, ReactQuillState> {
     return preserveWhitespace ? (
       <pre {...properties} />
     ) : (
-      <div {...properties} />
-    );
+        <div {...properties} />
+      );
   }
 
   render() {
