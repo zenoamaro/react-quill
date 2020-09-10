@@ -66,6 +66,7 @@ namespace ReactQuill {
     tabIndex?: number,
     theme?: string,
     value?: Value,
+    ref?: React.Ref<any>
   }
 
   export interface UnprivilegedEditor {
