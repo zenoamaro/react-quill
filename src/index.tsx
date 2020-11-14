@@ -21,6 +21,7 @@ import Quill, {
 namespace ReactQuill {
   export type Value = string | DeltaStatic;
   export type Range = RangeStatic | null;
+  export type ClipboardMatcher = [number | string, (node: any, delta: DeltaStatic) => DeltaStatic];
 
   export interface QuillOptions extends QuillOptionsStatic {
     tabIndex?: number,
@@ -66,6 +67,8 @@ namespace ReactQuill {
     tabIndex?: number,
     theme?: string,
     value?: Value,
+    disableClipboardMatchersOnUpdate?: ClipboardMatcher[],
+    enableClipboardMatchersOnUpdate?: ClipboardMatcher[],
   }
 
   export interface UnprivilegedEditor {
@@ -382,7 +385,42 @@ class ReactQuill extends React.Component<ReactQuillProps, ReactQuillState> {
     this.value = value;
     const sel = this.getEditorSelection();
     if (typeof value === 'string') {
-      editor.setContents(editor.clipboard.convert(value));
+      // if we have matchers to disable during an update event in order to sanitize our data differently than on a paste event
+      if (this.props.disableClipboardMatchersOnUpdate || this.props.enableClipboardMatchersOnUpdate) {
+
+        // first we grab our old clipboard matchers as we want to restore them after the update
+        // sadly the type of this is a ClipboardStatic type which doesn't expect to be modified
+        // however it can indded be manually modified, the issue is that Quill lacks removeMatcher functionality
+        // and as so it has to be performed manually
+        const oldClipboardMatchers: ReactQuill.ClipboardMatcher[] = (editor.clipboard as any).matchers;
+        // now we build new clipboard matchers based on these, as we filter we create a new array in place
+        let newClipboardMatchers: ReactQuill.ClipboardMatcher[] =
+          (editor.clipboard as any).matchers.filter((matcher: ReactQuill.ClipboardMatcher) => {
+            // if we have no matchers to disable we return true and it goes in
+            if (!this.props.disableClipboardMatchersOnUpdate) {
+              return true;
+            }
+            // otherwise we check if it exists within the list
+            return !this.props.disableClipboardMatchersOnUpdate
+              .find((disabledMatcher) => disabledMatcher[0] === matcher[0] && disabledMatcher[1] === matcher[1])
+          });
+        
+        // now if we have matchers to enable we add them
+        if (this.props.enableClipboardMatchersOnUpdate) {
+          newClipboardMatchers = newClipboardMatchers.concat(this.props.enableClipboardMatchersOnUpdate)
+        }
+
+        // now we update the matcher list
+        (editor.clipboard as any).matchers = newClipboardMatchers;
+
+        // perform the set contents action
+        editor.setContents(editor.clipboard.convert(value));
+
+        // and then restore the matchers
+        (editor.clipboard as any).matchers = oldClipboardMatchers;
+      } else {
+        editor.setContents(editor.clipboard.convert(value));
+      }
     } else {
       editor.setContents(value);
     }
