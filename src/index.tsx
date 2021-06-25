@@ -9,12 +9,12 @@ import isEqual from 'lodash/isEqual';
 
 import Quill, {
   QuillOptionsStatic,
-  DeltaStatic,
   RangeStatic,
   BoundsStatic,
   StringMap,
   Sources,
 } from 'quill';
+import DeltaStatic from "quill-delta";
 
 // Merged namespace hack to export types along with default object
 // See: https://github.com/Microsoft/TypeScript/issues/2719
@@ -382,7 +382,7 @@ class ReactQuill extends React.Component<ReactQuillProps, ReactQuillState> {
     this.value = value;
     const sel = this.getEditorSelection();
     if (typeof value === 'string') {
-      editor.setContents(editor.clipboard.convert(value));
+      editor.setContents(editor.clipboard.convert({ html: value }));
     } else {
       editor.setContents(value);
     }
