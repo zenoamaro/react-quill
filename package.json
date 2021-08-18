@@ -43,9 +43,9 @@
     "LICENSE"
   ],
   "dependencies": {
-    "@types/quill": "^1.3.10",
+    "@types/quill": "^2.0.6",
     "lodash": "^4.17.4",
-    "quill": "^1.3.7"
+    "quill": "https://github.com/Scholar-6/quill/tarball/master"
   },
   "peerDependencies": {
     "react": "^16 || ^17",
