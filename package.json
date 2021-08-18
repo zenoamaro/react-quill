@@ -1,6 +1,6 @@
 {
   "name": "react-quill",
-  "version": "2.0.0-beta.2",
+  "version": "2.0.0-beta.3",
   "description": "The Quill rich-text editor as a React component.",
   "author": "zenoamaro <zenoamaro@gmail.com>",
   "license": "MIT",
@@ -48,8 +48,8 @@
     "quill": "^1.3.7"
   },
   "peerDependencies": {
-    "react": "^16.0.0",
-    "react-dom": "^16.0.0"
+    "react": "^16 || ^17",
+    "react-dom": "^16 || ^17"
   },
   "devDependencies": {
     "@types/chai": "^4.2.11",
