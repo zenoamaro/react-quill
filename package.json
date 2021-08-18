@@ -1,6 +1,6 @@
 {
   "name": "react-quill",
-  "version": "2.0.0-beta.3",
+  "version": "2.0.0-beta.4",
   "description": "The Quill rich-text editor as a React component.",
   "author": "zenoamaro <zenoamaro@gmail.com>",
   "license": "MIT",
