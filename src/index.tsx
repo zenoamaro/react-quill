@@ -476,7 +476,7 @@ class ReactQuill extends React.Component<ReactQuillProps, ReactQuillState> {
         id={this.props.id}
         style={this.props.style}
         key={this.state.generation}
-        className={`quill ${this.props.className ?? ''}`}
+        className={`quill ${this.props.className ?? ''}`.trim()}
         onKeyPress={this.props.onKeyPress}
         onKeyDown={this.props.onKeyDown}
         onKeyUp={this.props.onKeyUp}
