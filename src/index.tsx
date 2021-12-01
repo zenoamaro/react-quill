@@ -66,6 +66,7 @@ namespace ReactQuill {
     tabIndex?: number,
     theme?: string,
     value?: Value,
+    ariaLabel: string,
   }
 
   export interface UnprivilegedEditor {
@@ -127,6 +128,7 @@ class ReactQuill extends React.Component<ReactQuillProps, ReactQuillState> {
     'onKeyPress',
     'onKeyDown',
     'onKeyUp',
+    'ariaLabel',
   ]
 
   static defaultProps = {
@@ -480,6 +482,7 @@ class ReactQuill extends React.Component<ReactQuillProps, ReactQuillState> {
         onKeyPress={this.props.onKeyPress}
         onKeyDown={this.props.onKeyDown}
         onKeyUp={this.props.onKeyUp}
+        aria-label={this.props.ariaLabel}
       >
         {this.renderEditingArea()}
       </div>
