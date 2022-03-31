@@ -48,8 +48,8 @@
     "quill": "^1.3.7"
   },
   "peerDependencies": {
-    "react": "^16 || ^17",
-    "react-dom": "^16 || ^17"
+    "react": "^16 || ^17 || ^18",
+    "react-dom": "^16 || ^17 || ^18"
   },
   "devDependencies": {
     "@types/chai": "^4.2.11",
