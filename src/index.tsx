@@ -294,7 +294,6 @@ class ReactQuill extends React.Component<ReactQuillProps, ReactQuillState> {
   destroyEditor(): void {
     if (!this.editor) return;
     this.unhookEditor(this.editor);
-    delete this.editor;
   }
 
   /*
