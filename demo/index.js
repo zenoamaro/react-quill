@@ -137,7 +137,10 @@ class Editor extends React.Component {
 
 }
 
-ReactDOM.render(
-  <Editor/>,
-  document.getElementById('app')
+const root = ReactDOM.createRoot(document.getElementById('app'));
+
+root.render(
+  <React.StrictMode>
+    <Editor />
+  </React.StrictMode>
 );
