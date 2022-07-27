@@ -284,11 +284,14 @@ class ReactQuill extends React.Component<ReactQuillProps, ReactQuillState> {
   }
 
   instantiateEditor(): void {
-    if (this.editor) return;
-    this.editor = this.createEditor(
-      this.getEditingArea(),
-      this.getEditorConfig()
-    );
+    if (this.editor) {
+      this.hookEditor(this.editor);
+    } else {
+      this.editor = this.createEditor(
+        this.getEditingArea(),
+        this.getEditorConfig()
+      );
+    }
   }
 
   destroyEditor(): void {
