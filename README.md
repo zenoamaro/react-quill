@@ -6,8 +6,8 @@ A [Quill] component for [React].
 
 See a [live demo] or [Codepen](http://codepen.io/alexkrolick/pen/xgyOXQ/left?editors=0010#0).
 
-[Quill]: https://quilljs.com
-[React]: https://facebook.github.io/react/
+[quill]: https://quilljs.com
+[react]: https://facebook.github.io/react/
 [live demo]: https://zenoamaro.github.io/react-quill/
 
 - [Quick Start](#quick-start)
@@ -43,17 +43,11 @@ This is the documentation for ReactQuill v2 — Previous releases: [v1](/../../t
 
 ---
 
-💯 **ReactQuill v2 beta period**
+💯 **ReactQuill v2**
 
 ReactQuill 2 is here, baby! And it brings a full port to TypeScript and React 16+, a refactored build system, and a general tightening of the internal logic.
 
 We worked hard to avoid introducing any behavioral changes. For the vast majority of the cases, no migration is necessary at all. However, support for long-deprecated props, the ReactQuill Mixin, and the Toolbar component have been removed. Be sure to read the [migration guide](#upgrading-to-reactquill-v2).
-
-Help us test the beta, and finalize this release! To try it out, simply update the dependency:
-
-~~~sh
-npm install react-quill@beta
-~~~
 
 We expect this release to be a drop-in upgrade – if that isn't the case, please [file an issue](/../../issues/new) with the `v2` label.
 
@@ -65,37 +59,44 @@ We expect this release to be a drop-in upgrade – if that isn't the case, plea
 
 Make sure you have `react` and `react-dom`, and some way to load styles, like [style-loader](https://www.npmjs.com/package/style-loader). See the documentation on [themes](#themes) for more information.
 
-~~~sh
+```sh
 npm install react-quill --save
-~~~
+```
 
-~~~jsx
-import React, { useState } from "react";
+```jsx
+import React, { useState } from 'react';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 
 function MyComponent() {
   const [value, setValue] = useState('');
 
-  return (
-    <ReactQuill theme="snow" value={value} onChange={setValue}/>
-  );
+  return <ReactQuill theme="snow" value={value} onChange={setValue} />;
 }
-~~~
+```
 
 ### With the browser bundle
 
-~~~html
-<link rel="stylesheet" href="https://unpkg.com/react-quill@1.3.3/dist/quill.snow.css">
-~~~
+```html
+<link
+  rel="stylesheet"
+  href="https://unpkg.com/react-quill@1.3.3/dist/quill.snow.css"
+/>
+```
 
-~~~html
-<script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
-<script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
+```html
+<script
+  src="https://unpkg.com/react@16/umd/react.development.js"
+  crossorigin
+></script>
+<script
+  src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"
+  crossorigin
+></script>
 <script src="https://unpkg.com/react-quill@1.3.3/dist/react-quill.js"></script>
 <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
 <script type="text/babel" src="/my-scripts.js"></script>
-~~~
+```
 
 ## Usage
 
@@ -123,9 +124,9 @@ The Quill editor supports [themes](http://quilljs.com/docs/themes/). It includes
 
 To activate a theme, pass the name of the theme to the `theme` [prop](#props). Pass a falsy value (eg. `null`) to use the core theme.
 
-~~~jsx
+```jsx
 <ReactQuill theme="snow" .../>
-~~~
+```
 
 Then, import the stylesheet for the themes you want to use.
 
@@ -133,15 +134,18 @@ This may vary depending how application is structured, directories or otherwise.
 
 Here's an example using [style-loader](https://www.npmjs.com/package/style-loader) for Webpack, or `create-react-app`, that will automatically inject the styles on the page:
 
-~~~jsx
+```jsx
 import 'react-quill/dist/quill.snow.css';
-~~~
+```
 
 The styles are also available via CDN:
 
-~~~html
-<link rel="stylesheet" href="https://unpkg.com/react-quill@1.3.3/dist/quill.snow.css">
-~~~
+```html
+<link
+  rel="stylesheet"
+  href="https://unpkg.com/react-quill@1.3.3/dist/quill.snow.css"
+/>
+```
 
 ### Custom Toolbar
 
@@ -152,7 +156,7 @@ The [Quill Toolbar Module](http://quilljs.com/docs/modules/toolbar/) API provide
 <details>
 <summary>Example Code</summary>
 
-~~~jsx
+```jsx
 class MyComponent extends Component {
   constructor(props) {
     super(props);
@@ -191,7 +195,7 @@ class MyComponent extends Component {
 }
 
 export default MyComponent;
-~~~
+```
 
 </details>
 
@@ -204,21 +208,21 @@ See this example live on Codepen: [Custom Toolbar Example](https://codepen.io/al
 <details>
 <summary>Example Code</summary>
 
-~~~jsx
+```jsx
 /*
  * Custom "star" icon for the toolbar using an Octicon
  * https://octicons.github.io
  */
-const CustomButton = () => <span className="octicon octicon-star" />
+const CustomButton = () => <span className="octicon octicon-star" />;
 
 /*
  * Event handler to be attached using Quill toolbar module
  * http://quilljs.com/docs/modules/toolbar/
  */
-function insertStar () {
-  const cursorPosition = this.quill.getSelection().index
-  this.quill.insertText(cursorPosition, "★")
-  this.quill.setSelection(cursorPosition + 1)
+function insertStar() {
+  const cursorPosition = this.quill.getSelection().index;
+  this.quill.insertText(cursorPosition, '★');
+  this.quill.setSelection(cursorPosition + 1);
 }
 
 /*
@@ -226,7 +230,11 @@ function insertStar () {
  */
 const CustomToolbar = () => (
   <div id="toolbar">
-    <select className="ql-header" defaultValue={""} onChange={e => e.persist()}>
+    <select
+      className="ql-header"
+      defaultValue={''}
+      onChange={(e) => e.persist()}
+    >
       <option value="1"></option>
       <option value="2"></option>
       <option selected></option>
@@ -246,20 +254,20 @@ const CustomToolbar = () => (
       <CustomButton />
     </button>
   </div>
-)
+);
 
 /*
  * Editor component with custom toolbar and content containers
  */
 class Editor extends React.Component {
-  constructor (props) {
-    super(props)
-    this.state = { editorHtml: '' }
-    this.handleChange = this.handleChange.bind(this)
+  constructor(props) {
+    super(props);
+    this.state = { editorHtml: '' };
+    this.handleChange = this.handleChange.bind(this);
   }
 
-  handleChange (html) {
-  	this.setState({ editorHtml: html });
+  handleChange(html) {
+    this.setState({ editorHtml: html });
   }
 
   render() {
@@ -272,7 +280,7 @@ class Editor extends React.Component {
           modules={Editor.modules}
         />
       </div>
-    )
+    );
   }
 }
 
@@ -282,39 +290,49 @@ class Editor extends React.Component {
  */
 Editor.modules = {
   toolbar: {
-    container: "#toolbar",
+    container: '#toolbar',
     handlers: {
-      "insertStar": insertStar,
-    }
-  }
-}
+      insertStar: insertStar,
+    },
+  },
+};
 
 /*
  * Quill editor formats
  * See http://quilljs.com/docs/formats/
  */
 Editor.formats = [
-  'header', 'font', 'size',
-  'bold', 'italic', 'underline', 'strike', 'blockquote',
-  'list', 'bullet', 'indent',
-  'link', 'image', 'color',
-]
+  'header',
+  'font',
+  'size',
+  'bold',
+  'italic',
+  'underline',
+  'strike',
+  'blockquote',
+  'list',
+  'bullet',
+  'indent',
+  'link',
+  'image',
+  'color',
+];
 
 /*
  * PropType validation
  */
 Editor.propTypes = {
   placeholder: React.PropTypes.string,
-}
+};
 
 /*
  * Render component on page
  */
 ReactDOM.render(
-  <Editor placeholder={'Write something or insert a star ★'}/>,
+  <Editor placeholder={'Write something or insert a star ★'} />,
   document.querySelector('.app')
-)
-~~~
+);
+```
 
 </details>
 
@@ -328,36 +346,36 @@ The component has two types of formats:
 <details>
 <summary>Example Code</summary>
 
-~~~js
-import ReactQuill, {Quill} from 'react-quill'; // ES6
+```js
+import ReactQuill, { Quill } from 'react-quill'; // ES6
 const ReactQuill = require('react-quill'); // CommonJS
-~~~
+```
 
-~~~jsx
+```jsx
 /*
  * Example Parchment format from
  * https://quilljs.com/guides/cloning-medium-with-parchment/
  * See the video example in the guide for a complex format
  */
 let Inline = Quill.import('blots/inline');
-class BoldBlot extends Inline { }
+class BoldBlot extends Inline {}
 BoldBlot.blotName = 'bold';
 BoldBlot.tagName = 'strong';
 Quill.register('formats/bold', BoldBlot);
 
-const formats = ["bold"] // add custom format name + any built-in formats you need
+const formats = ['bold']; // add custom format name + any built-in formats you need
 
 /*
  * Editor component with default and custom formats
  */
 class MyComponent extends React.Component {
   constructor(props) {
-    this.formats = formats
-    this.state = { text: '' }
+    this.formats = formats;
+    this.state = { text: '' };
   }
 
   handleChange(value) {
-    this.setState({text: value})
+    this.setState({ text: value });
   }
 
   render() {
@@ -367,10 +385,10 @@ class MyComponent extends React.Component {
         onChange={this.handleChange}
         formats={this.formats}
       />
-    )
+    );
   }
 }
-~~~
+```
 
 </details>
 
@@ -382,7 +400,7 @@ Note: Custom editing areas lose focus when using React 16 as a peer dep at this 
 
 <details>
 
-~~~jsx
+```jsx
 class MyComponent extends React.Component {
 
   render() {
@@ -394,7 +412,7 @@ class MyComponent extends React.Component {
   }
 
 });
-~~~
+```
 
 </details>
 
@@ -424,18 +442,17 @@ Use the [Toolbar Module](#default-toolbar-elements) or the [HTML Toolbar](#html-
 
 ### Exports
 
-~~~jsx
+```jsx
 // ES6
-import ReactQuill, {Quill} from 'react-quill';
+import ReactQuill, { Quill } from 'react-quill';
 
 // CommonJS
 const ReactQuill = require('react-quill');
-const {Quill} = ReactQuill;
-~~~
+const { Quill } = ReactQuill;
+```
 
 `Quill`
 : The `Quill` namespace on which you can call `register`.
-
 
 ### Props
 
@@ -447,9 +464,9 @@ const {Quill} = ReactQuill;
 
 `value`
 : Value for the editor as a controlled component. Can be a string containing HTML, a [Quill Delta](https://quilljs.com/docs/delta/) instance, or a plain object representing a Delta.
-  Note that due to limitations in Quill, this is actually a _semi-controlled_ mode, meaning that the edit is not prevented, but changing `value` will still replace the contents.
-  Also note that passing a Quill Delta here, and then an HTML string, or vice-versa, will always trigger a change, regardless of whether they represent the same document.
-  ⚠️ Do not pass the `delta` object from the `onChange` event as `value`, as it will cause a loop. See [Using Deltas](#using-deltas) for details.
+Note that due to limitations in Quill, this is actually a _semi-controlled_ mode, meaning that the edit is not prevented, but changing `value` will still replace the contents.
+Also note that passing a Quill Delta here, and then an HTML string, or vice-versa, will always trigger a change, regardless of whether they represent the same document.
+⚠️ Do not pass the `delta` object from the `onChange` event as `value`, as it will cause a loop. See [Using Deltas](#using-deltas) for details.
 
 `defaultValue`
 : Initial value for the editor as an uncontrolled component. Can be a string containing HTML, a [Quill Delta](https://quilljs.com/docs/delta/), or a plain object representing a Delta.
@@ -465,7 +482,7 @@ const {Quill} = ReactQuill;
 
 `formats`
 : An array of formats to be enabled during editing. All implemented formats are enabled by default. See [Formats](http://quilljs.com/docs/formats/) for a list.
-  Custom formats should not be included in the array as of version 1.0.0. Instead they should be created through [Parchment](https://github.com/quilljs/parchment) and registered with the module's [Quill export](#exports).
+Custom formats should not be included in the array as of version 1.0.0. Instead they should be created through [Parchment](https://github.com/quilljs/parchment) and registered with the module's [Quill export](#exports).
 
 `style`
 : An object with custom CSS rules to apply on the editor's container. Rules should be in React's "camelCased" naming style.
@@ -484,7 +501,7 @@ const {Quill} = ReactQuill;
 
 `onChange(content, delta, source, editor)`
 : Called back with the new contents of the editor after change. It will be passed the HTML contents of the editor, a delta object expressing the change, the source of the change, and finally a read-only proxy to [editor accessors](#the-unprivileged-editor) such as `getHTML()`.
-  ⚠️ Do not use this `delta` object as `value`, as it will cause a loop. Use `editor.getContents()` instead. See [Using Deltas](#using-deltas) for details.
+⚠️ Do not use this `delta` object as `value`, as it will cause a loop. Use `editor.getContents()` instead. See [Using Deltas](#using-deltas) for details.
 
 `onChangeSelection(range, source, editor)`
 : Called back with the new selected range, or null when unfocused. It will be passed the selection range, the source of the change, and finally a read-only proxy to editor accessors such as `getBounds()`.
@@ -528,45 +545,48 @@ If you have [a ref](https://facebook.github.io/react/docs/more-about-refs.html) 
 
 [View this example on Codepen](https://codepen.io/alexkrolick/pen/YNmGar?editors=0011)
 
-~~~jsx
+```jsx
 class Editor extends React.Component {
   constructor(props) {
-    super(props)
-    this.quillRef = null;      // Quill instance
+    super(props);
+    this.quillRef = null; // Quill instance
     this.reactQuillRef = null; // ReactQuill component
   }
 
   componentDidMount() {
-    this.attachQuillRefs()
+    this.attachQuillRefs();
   }
 
   componentDidUpdate() {
-    this.attachQuillRefs()
+    this.attachQuillRefs();
   }
 
   attachQuillRefs = () => {
     if (typeof this.reactQuillRef.getEditor !== 'function') return;
     this.quillRef = this.reactQuillRef.getEditor();
-  }
+  };
 
   insertText = () => {
     var range = this.quillRef.getSelection();
     let position = range ? range.index : 0;
-    this.quillRef.insertText(position, 'Hello, World! ')
-  }
+    this.quillRef.insertText(position, 'Hello, World! ');
+  };
 
   render() {
     return (
       <div>
         <ReactQuill
-          ref={(el) => { this.reactQuillRef = el }}
-          theme={'snow'} />
+          ref={(el) => {
+            this.reactQuillRef = el;
+          }}
+          theme={'snow'}
+        />
         <button onClick={this.insertText}>Insert Text</button>
       </div>
-    )
+    );
   }
 }
-~~~
+```
 
 </details>
 
@@ -576,12 +596,12 @@ class Editor extends React.Component {
 <details>
 <summary>Example</summary>
 
-~~~jsx
+```jsx
 const editor = this.reactQuillRef.getEditor();
 const unprivilegedEditor = this.reactQuillRef.makeUnprivilegedEditor(editor);
 // You may now use the unprivilegedEditor proxy methods
 unprivilegedEditor.getText();
-~~~
+```
 
 </details>
 
@@ -611,20 +631,20 @@ During events, ReactQuill will make a restricted subset of the Quill API availab
 
 You can build libs, types and bundles:
 
-~~~sh
+```sh
 npm build  # or watch
-~~~
+```
 
 You can also run the automated test suite:
 
-~~~sh
+```sh
 npm test
-~~~
+```
 
 More tasks are available as package scripts:
 
 | Script          | Description                                 |
-|-----------------|---------------------------------------------|
+| --------------- | ------------------------------------------- |
 | `npm run build` | Builds lib and browser bundle               |
 | `npm run watch` | Rebuilds on source code changes             |
 | `npm run test`  | Runs unit tests and coverage                |
@@ -642,6 +662,7 @@ Please check the browser support table for the upstream [Quill](https://github.c
 ## Contributors
 
 ReactQuill would not be where it is today without the contributions of many people, which we are incredibly grateful for:
+
 - @zenoamaro (maintainer)
 - @alexkrolick (maintainer)
 - @clemmy
