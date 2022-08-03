@@ -665,6 +665,7 @@ ReactQuill would not be where it is today without the contributions of many peop
 
 - @zenoamaro (maintainer)
 - @alexkrolick (maintainer)
+- @g12i
 - @clemmy
 - @asiniy
 - @webcarrot

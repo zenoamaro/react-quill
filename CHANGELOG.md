@@ -1,74 +1,62 @@
-Changelog
-=========
+# Changelog
 
-Next
-----
+## v2.0.0
 
 - Fully ported to TypeScript (#549)
 - Fully React16 compliant (#549)
 - Removed Mixin (#549)
 - Removed Toolbar (#549)
+- Support for React 18 (#793, #822)
 
-v1.3.4
-------
+## v1.3.4
 
 - Bump Quill to 1.3.7 to close a security vulnerability (#575)
 
-v1.3.3
-------
+## v1.3.3
 
 - Pin Quill types version (#420 @daggmano)
 
-v1.3.2
-------
+## v1.3.2
 
 - Add preserveWhitespace prop (#407 @royshouvik)
 
-v1.3.1
-------
+## v1.3.1
 
 - Add back default export (#374, #384 one19)
 
-v1.3.0
-------
+## v1.3.0
 
 - Add scrollingContainer prop
 - Fix Typescript exports
 - Fix tabindex prop
 
-v1.2.6
-------
+## v1.2.6
 
 Replaced React.DOM with react-dom-factories (#319 thienanle)
 
-v1.2.5
-------
+## v1.2.5
 
 - Fix issue with unnecessary editor focus on mount (#321 jetzhou)
 - Switch to Quill's clipboard.convert from the paste API that now grabs focus automatically
 
-v1.2.4
-------
+## v1.2.4
 
 - Only restore focus if editor had focus (#312 @MattKunze)
 
-
-v1.2.2
-------
+## v1.2.2
 
 - Add Typescript definitions (#277 @Charrondev)
-- Fixes for TS definitions  (#294 @jdhungtington, #296 @ajaska)
+- Fixes for TS definitions (#294 @jdhungtington, #296 @ajaska)
 
-v1.1.0
-------
+## v1.1.0
 
 - Add support for React 16 and onwards by depending on `prop-types` and `create-react-class` (#181 @mikecousins)
 - Allow setting contents with a Quill Delta via the `value` prop (#101)
 - Add onFocus/onBlur props (#110)
 - Add tabindex support (#232)
 
-v1.0.0
-------
+## v1.0.0
+
 This release supports Quill v1.0.0+. ⚠️ There are many breaking changes, so refer to the documentation for information on how to migrate your application.
 
 - Updated to support Quill v1.0.0+ (@clemmy, @alexkrolick)
@@ -110,12 +98,12 @@ This release supports Quill v1.0.0+. ⚠️ There are many breaking changes, so 
 - Updated React peerDependency (@rpellerin)
 - Removed inline Parchment formats for font-size and font-family (#217)
 
-v0.4.1
-------
+## v0.4.1
+
 - Added contents of `dist` to NPM package.
 
-v0.4.0
-------
+## v0.4.0
+
 This release finally adds support for React 0.14. ⚠️ Shims to support older versions of React have been removed.
 
 - React 0.14 support (@jacktrades, #49)
@@ -129,8 +117,8 @@ This release finally adds support for React 0.14. ⚠️ Shims to support older 
 - Quill stylesheets are now linked to `dist/` for convenience. (#70)
 - Exposed editor accessor methods in change events. (#33)
 
-v0.3.0
-------
+## v0.3.0
+
 - Bumped Quill.js to v0.2.0
 - Exposed `focus` and `blur` public methods from component.
 - Exposed `getEditor` public method to retrieve the backing Quill instance from the component.
@@ -146,60 +134,60 @@ v0.3.0
 - Fixes an issue where the editor would be instantiated with the wrong value. Fixes #50.
 - Avoiding parsing Quill's `dist` directory with webpack.
 
-v0.2.2
-------
+## v0.2.2
+
 - Added missing `modules` propType and documentation.
 - Children are now cloned so ReactQuill can own their refs. Fixes #20.
 
-v0.2.1
-------
+## v0.2.1
+
 - Link toolbar button and module are now enabled by default. Fixes #19.
 
-v0.2.0
-------
+## v0.2.0
+
 - Fix React warnings about unique `key` props in toolbar (@Janekk).
 - Sending `delta` and `source` from editor change events. Fixes #17.
 - Rewritten uncontrolled and semi-controlled operation. Should fix #9, #10 and #14.
 - Editor props can now be changed after mounting.
 - Added callback for selection change event. Closes #12.
 
-v0.1.1
-------
+## v0.1.1
+
 - The pre-compiled distributable is not shipped with the NPM package anymore. Should fix #2.
 - Sourcemaps are now emitted for both distributables, as separate files.
 - Avoiding parsing Quill as it ships with a pre-built main.
 
-v0.1.0
-------
+## v0.1.0
+
 - Added support for toolbar separators.
 - Added support for font family selectors.
 - Updated the default toolbar to match Quill's.
 - Updated Quill to v0.19.12.
 
-v0.0.6
-------
+## v0.0.6
+
 - Added keywords for inclusion in [React.parts](https://react.parts).
 
-v0.0.5
-------
+## v0.0.5
+
 - Default empty content for components with no value.
 - Fixes wrong `QuillToolbar` propType.
 
-v0.0.4
-------
+## v0.0.4
+
 - Added color toggle to toolbar (@chrismcv)
 - Exporting default item sets on `QuillToolbar`
 - Fixed `QuillComponent` only accepting a single child.
 
-v0.0.3
-------
+## v0.0.3
+
 - Switched from `quilljs` package to `quill`.
 - Using the new `destroy()` from Quill.
 
-v0.0.2
-------
+## v0.0.2
+
 - Compatible with React 0.12.
 
-v0.0.1
-------
+## v0.0.1
+
 - Initial version.
