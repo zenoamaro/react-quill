@@ -7,7 +7,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import isEqual from 'lodash/isEqual';
 
-import Quill, {
+import type Quill from 'quill';
+import type {
   QuillOptionsStatic,
   DeltaStatic,
   RangeStatic,
@@ -96,7 +97,7 @@ class ReactQuill extends React.Component<ReactQuillProps, ReactQuillState> {
   /*
   Export Quill to be able to call `register`
   */
-  static Quill = Quill;
+  static Quill: undefined | { new(...args: any): Quill } = undefined;
 
   /*
   Changing one of these props should cause a full re-render and a
@@ -329,7 +330,11 @@ class ReactQuill extends React.Component<ReactQuillProps, ReactQuillState> {
   configuration, have its events bound,
   */
   createEditor(element: Element, config: QuillOptions) {
-    const editor = new Quill(element, config);
+    const QuillClass = ReactQuill.Quill;
+    if (!QuillClass) {
+      throw Error("You must define ReactQuill.Quill before using ReactQuill");
+    }
+    const editor = new QuillClass(element, config);
     if (config.tabIndex != null) {
       this.setEditorTabIndex(editor, config.tabIndex);
     }
