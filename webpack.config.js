@@ -3,7 +3,7 @@ const dir = (...args) => Path.resolve(__dirname, ...args);
 
 module.exports = {
   mode: 'production',
-  entry: dir('src/index.tsx'),
+  entry: dir('src/index.ts'),
 
   resolve: {
     extensions: ['.js', '.ts', '.tsx'],
