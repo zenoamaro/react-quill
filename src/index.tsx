@@ -276,6 +276,7 @@ class ReactQuill extends React.Component<ReactQuillProps, ReactQuillState> {
     if (this.state.generation !== prevState.generation) {
       const {delta, selection} = this.regenerationSnapshot!;
       delete this.regenerationSnapshot;
+      delete this.editor;
       this.instantiateEditor();
       const editor = this.editor!;
       editor.setContents(delta);
