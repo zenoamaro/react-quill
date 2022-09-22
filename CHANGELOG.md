@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+- Fix issue where editor disappears after certain prop changes (#836)
+
 ## v2.0.0
 
 - Fully ported to TypeScript (#549)
