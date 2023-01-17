@@ -30,6 +30,7 @@ namespace ReactQuill {
     bounds?: string | HTMLElement,
     children?: React.ReactElement<any>,
     className?: string,
+    ref?: React.LegacyRef<ReactQuill>,
     defaultValue?: Value,
     formats?: string[],
     id?: string,
