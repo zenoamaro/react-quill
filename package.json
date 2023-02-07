@@ -54,7 +54,7 @@
     "react-dom-factories": "^1.0.0"
   },
   "peerDependencies": {
-    "react": "^0.14.9 || ^15.3.0 || ^16.0.0"
+    "react": "^0.14.9 || ^15.3.0 || ^16.0.0 || ^17.0.0"
   },
   "devDependencies": {
     "blanket": "^1.2.3",
