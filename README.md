@@ -663,32 +663,9 @@ Please check the browser support table for the upstream [Quill](https://github.c
 
 ReactQuill would not be where it is today without the contributions of many people, which we are incredibly grateful for:
 
-- @zenoamaro (maintainer)
-- @alexkrolick (maintainer)
-- @g12i
-- @clemmy
-- @asiniy
-- @webcarrot
-- @druti
-- @e-jigsaw
-- @zhang-z
-- @Sajam
-- @0bird512
-- @jacktrades
-- @1000hz
-- @kkerr1
-- @csk157
-- @Janekk
-- @AndyTheGiant
-- @chrismcv
-- @wouterh
-- @tdg5
-- @jrmmnr
-- @l3kn
-- @rpellerin
-- @sandbochs
-- @wouterh
-- @MattKunze
+<p align="center">
+  <img src="https://contributors-img.web.app/image?repo=zenoamaro/react-quill" />
+</p>
 
 ## License
 
