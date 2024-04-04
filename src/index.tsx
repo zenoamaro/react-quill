@@ -185,7 +185,7 @@ class ReactQuill extends React.Component<ReactQuillProps, ReactQuillState> {
   validateProps(props: ReactQuillProps): void {
     if (React.Children.count(props.children) > 1) throw new Error(
       'The Quill editing area can only be composed of a single React element.'
-      );
+    );
 
     if (React.Children.count(props.children)) {
       const child = React.Children.only(props.children);
@@ -199,8 +199,8 @@ class ReactQuill extends React.Component<ReactQuillProps, ReactQuillState> {
       props.value === this.lastDeltaChangeSet
       ) throw new Error(
         'You are passing the `delta` object from the `onChange` event back ' +
-          'as `value`. You most probably want `editor.getContents()` instead. ' +
-          'See: https://github.com/zenoamaro/react-quill#using-deltas'
+        'as `value`. You most probably want `editor.getContents()` instead. ' +
+        'See: https://github.com/zenoamaro/react-quill#using-deltas'
       );
   }
 
@@ -519,8 +519,8 @@ class ReactQuill extends React.Component<ReactQuillProps, ReactQuillState> {
     // We keep storing the same type of value as what the user gives us,
     // so that value comparisons will be more stable and predictable.
     const nextContents = this.isDelta(this.value)
-    ? editor.getContents()
-    : editor.getHTML();
+      ? editor.getContents()
+      : editor.getHTML();
 
     if (nextContents !== this.getEditorContents()) {
       // Taint this `delta` object, so we can recognize whether the user
