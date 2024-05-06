@@ -7,9 +7,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import isEqual from 'lodash/isEqual';
 
-import Quill, { QuillOptions as QuillOptionsStatic } from 'quill';
-import type { EmitterSource as Sources } from 'quill/core/emitter';
-import type { Range as RangeStatic } from 'quill/core/selection';
+import Quill, { EmitterSource, Range as RangeStatic, QuillOptions as QuillOptionsStatic } from 'quill';
 import type DeltaStatic from 'quill-delta';
 
 // Merged namespace hack to export types along with default object
@@ -35,22 +33,22 @@ namespace ReactQuill {
     onChange?(
       value: string,
       delta: DeltaStatic,
-      source: Sources,
+      source: EmitterSource,
       editor: UnprivilegedEditor,
     ): void,
     onChangeSelection?(
       selection: Range,
-      source: Sources,
+      source: EmitterSource,
       editor: UnprivilegedEditor,
     ): void,
     onFocus?(
       selection: Range,
-      source: Sources,
+      source: EmitterSource,
       editor: UnprivilegedEditor,
     ): void,
     onBlur?(
       previousSelection: Range,
-      source: Sources,
+      source: EmitterSource,
       editor: UnprivilegedEditor,
     ): void,
     onKeyDown?: React.EventHandler<any>,
@@ -490,7 +488,7 @@ class ReactQuill extends React.Component<ReactQuillProps, ReactQuillState> {
     eventName: 'text-change' | 'selection-change',
     rangeOrDelta: Range | DeltaStatic,
     oldRangeOrDelta: Range | DeltaStatic,
-    source: Sources,
+    source: EmitterSource,
   ) => {
     if (eventName === 'text-change') {
       this.onEditorChangeText?.(
@@ -511,7 +509,7 @@ class ReactQuill extends React.Component<ReactQuillProps, ReactQuillState> {
   onEditorChangeText(
     value: string,
     delta: DeltaStatic,
-    source: Sources,
+    source: EmitterSource,
     editor: UnprivilegedEditor,
   ): void {
     if (!this.editor) return;
@@ -534,7 +532,7 @@ class ReactQuill extends React.Component<ReactQuillProps, ReactQuillState> {
 
   onEditorChangeSelection(
     nextSelection: RangeStatic,
-    source: Sources,
+    source: EmitterSource,
     editor: UnprivilegedEditor,
   ): void {
     if (!this.editor) return;
