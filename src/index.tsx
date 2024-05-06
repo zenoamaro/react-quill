@@ -7,7 +7,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import isEqual from 'lodash/isEqual';
 
-import Quill, { EmitterSource, Range as RangeStatic, QuillOptions as QuillOptionsStatic } from 'quill';
+import Quill, { type EmitterSource, type Range as RangeStatic, QuillOptions as QuillOptionsStatic } from 'quill';
 import type DeltaStatic from 'quill-delta';
 
 // Merged namespace hack to export types along with default object
