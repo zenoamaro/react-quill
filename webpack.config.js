@@ -11,7 +11,12 @@ module.exports = {
 
   module: {
     rules: [
-      {test:/\.tsx?$/, loader:'ts-loader', exclude:/node_modules/},
+      {
+        test:/\.(ts|tsx|js|jsx)$/,
+        loader:'ts-loader',
+        // Quill uses ES6 syntax, so we need to transpile it
+        exclude:/node_modules\/(?!quill)/
+      },
     ],
   },
 
