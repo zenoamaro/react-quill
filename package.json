@@ -1,11 +1,12 @@
 {
   "name": "react-quill-new",
-  "version": "3.0.0",
+  "version": "3.1.0-beta.1",
   "description": "The Quill rich-text editor as a React component.",
   "author": "zenoamaro <zenoamaro@gmail.com>, VaguelySerious <mittgfu@gmail.com>",
   "license": "MIT",
   "homepage": "https://github.com/VaguelySerious/react-quill",
   "bugs": "https://github.com/VaguelySerious/react-quill/issues",
+  "type": "module",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/VaguelySerious/react-quill.git"
@@ -13,9 +14,8 @@
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "scripts": {
-    "build": "npm run build:lib && npm run build:dist && npm run build:css",
+    "build": "npm run build:lib && npm run build:css",
     "build:lib": "tsc",
-    "build:dist": "NODE_OPTIONS=--openssl-legacy-provider webpack",
     "build:css": "cpx 'node_modules/quill/dist/quill.*.css' dist",
     "watch": "tsc --watch",
     "pretest": "npm run build",
@@ -55,9 +55,9 @@
     "react-dom": "^16 || ^17 || ^18"
   },
   "devDependencies": {
-    "@types/chai": "^4.2.11",
+    "@types/chai": "^4.3.16",
     "@types/lodash": "^4.14.202",
-    "@types/mocha": "^7.0.2",
+    "@types/mocha": "^10.0.6",
     "@types/react": "^16.9.11",
     "@types/react-dom": "^16.9.4",
     "@types/sinon": "^7.5.2",
@@ -82,8 +82,7 @@
     "superstatic": "^6.0.4",
     "travis-cov": "^0.2.5",
     "ts-loader": "^6.2.1",
-    "typescript": "^5.4.2",
-    "webpack": "^4.41.2",
-    "webpack-cli": "^3.3.10"
+    "ts-node": "^10.9.2",
+    "typescript": "^5.4.2"
   }
 }

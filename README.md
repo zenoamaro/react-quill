@@ -101,7 +101,6 @@ function MyComponent() {
   src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"
   crossorigin
 ></script>
-<script src="https://unpkg.com/react-quill@1.3.3/dist/react-quill.js"></script>
 <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
 <script type="text/babel" src="/my-scripts.js"></script>
 ```
@@ -356,7 +355,6 @@ The component has two types of formats:
 
 ```js
 import ReactQuill, { Quill } from 'react-quill'; // ES6
-const ReactQuill = require('react-quill'); // CommonJS
 ```
 
 ```jsx
@@ -453,10 +451,6 @@ Use the [Toolbar Module](#default-toolbar-elements) or the [HTML Toolbar](#html-
 ```jsx
 // ES6
 import ReactQuill, { Quill } from 'react-quill';
-
-// CommonJS
-const ReactQuill = require('react-quill');
-const { Quill } = ReactQuill;
 ```
 
 `Quill`
