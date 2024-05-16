@@ -1,18 +1,21 @@
 {
-  "name": "react-quill-v2",
+  "name": "react-quill-new",
   "version": "3.0.0",
   "description": "The Quill rich-text editor as a React component.",
-  "author": "zenoamaro <zenoamaro@gmail.com>",
+  "author": "zenoamaro <zenoamaro@gmail.com>, VaguelySerious <mittgfu@gmail.com>",
   "license": "MIT",
-  "homepage": "https://github.com/zenoamaro/react-quill",
-  "bugs": "https://github.com/zenoamaro/react-quill/issues",
-  "repository": "https://github.com/zenoamaro/react-quill.git",
+  "homepage": "https://github.com/VaguelySerious/react-quill",
+  "bugs": "https://github.com/VaguelySerious/react-quill/issues",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/VaguelySerious/react-quill.git"
+  },
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "scripts": {
     "build": "npm run build:lib && npm run build:dist && npm run build:css",
     "build:lib": "tsc",
-    "build:dist": "webpack",
+    "build:dist": "NODE_OPTIONS=--openssl-legacy-provider webpack",
     "build:css": "cpx 'node_modules/quill/dist/quill.*.css' dist",
     "watch": "tsc --watch",
     "pretest": "npm run build",
