@@ -9,6 +9,9 @@ import isEqual from 'lodash/isEqual';
 import Quill, { type EmitterSource, type Range as RangeStatic, QuillOptions as QuillOptionsStatic } from 'quill';
 import type DeltaStatic from 'quill-delta';
 
+export { Quill }
+export type { DeltaStatic, EmitterSource, RangeStatic, QuillOptionsStatic }
+
 // Merged namespace hack to export types along with default object
 // See: https://github.com/Microsoft/TypeScript/issues/2719
 namespace ReactQuill {
@@ -557,6 +560,4 @@ function postpone(fn: (value: void) => void) {
   Promise.resolve().then(fn);
 }
 
-// Compatibility Export to avoid `require(...).default` on CommonJS.
-// See: https://github.com/Microsoft/TypeScript/issues/2719
-export = ReactQuill;
+export default ReactQuill;
