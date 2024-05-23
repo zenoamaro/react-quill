@@ -67,7 +67,7 @@ namespace ReactQuill {
   export interface UnprivilegedEditor {
     getLength: Quill['getLength'];
     getText: Quill['getText'];
-    getHTML: string;
+    getHTML: () => string;
     getSemanticHTML: Quill['getSemanticHTML'];
     getBounds: Quill['getBounds'];
     getSelection: Quill['getSelection'];
