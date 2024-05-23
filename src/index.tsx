@@ -67,7 +67,8 @@ namespace ReactQuill {
   export interface UnprivilegedEditor {
     getLength: Quill['getLength'];
     getText: Quill['getText'];
-    getHTML: Quill['getSemanticHTML'];
+    getHTML: string;
+    getSemanticHTML: Quill['getSemanticHTML'];
     getBounds: Quill['getBounds'];
     getSelection: Quill['getSelection'];
     getContents: Quill['getContents'];
@@ -419,12 +420,13 @@ class ReactQuill extends React.Component<ReactQuillProps, ReactQuillState> {
   makeUnprivilegedEditor(editor: Quill) {
     const e = editor;
     return {
-      getHTML:      () => e.root.innerHTML,
-      getLength:    e.getLength.bind(e),
-      getText:      e.getText.bind(e),
-      getContents:  e.getContents.bind(e),
-      getSelection: e.getSelection.bind(e),
-      getBounds:    e.getBounds.bind(e),
+      getHTML:         () => e.root.innerHTML,
+      getSemanticHTML: e.getSemanticHTML.bind(e),
+      getLength:       e.getLength.bind(e),
+      getText:         e.getText.bind(e),
+      getContents:     e.getContents.bind(e),
+      getSelection:    e.getSelection.bind(e),
+      getBounds:       e.getBounds.bind(e),
     };
   }
 
