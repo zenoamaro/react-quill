@@ -16,7 +16,6 @@ namespace ReactQuill {
   export type Range = RangeStatic | null;
 
   export interface QuillOptions extends QuillOptionsStatic {
-    strict?: boolean | undefined,
     tabIndex?: number,
   }
 
