@@ -1,12 +1,9 @@
 {
-  "include": [
-    "./src/**/*.ts",
-    "./src/**/*.tsx",
-  ],
+  "include": ["./src/**/*.ts", "./src/**/*.tsx"],
   "compilerOptions": {
     "strict": true,
-    "target": "es5",
-    "module": "commonjs",
+    "target": "ES2020",
+    "module": "ES2020",
     "moduleResolution": "node",
     "esModuleInterop": true,
     "declaration": true,

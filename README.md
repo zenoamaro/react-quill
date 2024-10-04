@@ -1,14 +1,14 @@
-ReactQuill [![Build Status](https://travis-ci.org/zenoamaro/react-quill.svg?branch=master)](https://travis-ci.org/zenoamaro/react-quill) [![npm](https://img.shields.io/npm/v/react-quill.svg)](https://www.npmjs.com/package/react-quill)
-[![npm downloads](https://img.shields.io/npm/dt/react-quill.svg?maxAge=2592000)](http://www.npmtrends.com/react-quill)
+ReactQuillNew [![npm](https://img.shields.io/npm/v/react-quill-new.svg)](https://www.npmjs.com/package/react-quill-new)
+[![npm downloads](https://img.shields.io/npm/dt/react-quill-new.svg?maxAge=2592000)](http://www.npmtrends.com/react-quill-new)
 ==============================================================================
 
-A [Quill] component for [React].
+A modernized [Quill] component for [React].
 
-See a [live demo] or [Codepen](http://codepen.io/alexkrolick/pen/xgyOXQ/left?editors=0010#0).
+Note: This is fork of [react-quill](https://zenoamaro.github.io/react-quill/) that updates its QuillJS dependency from 1.3.7 to >=2.0.2 and tries to keep on top of dependency updates and issues, as the original maintainers are no longer active.
 
+[live demo]: https://zenoamaro.github.io/react-quill/
 [quill]: https://quilljs.com
 [react]: https://facebook.github.io/react/
-[live demo]: https://zenoamaro.github.io/react-quill/
 
 - [Quick Start](#quick-start)
   - [With webpack or create-react-app](#with-webpack-or-create-react-app)
@@ -22,7 +22,7 @@ See a [live demo] or [Codepen](http://codepen.io/alexkrolick/pen/xgyOXQ/left?edi
     - [HTML Toolbar](#html-toolbar)
   - [Custom Formats](#custom-formats)
   - [Custom editing area](#custom-editing-area)
-- [Upgrading to ReactQuill v2](#upgrading-to-reactquill-v2)
+- [Upgrading to ReactQuill v3](#upgrading-to-reactquill-v3)
   - [Deprecated props](#deprecated-props)
   - [ReactQuill Mixin](#reactquill-mixin)
   - [Toolbar component](#toolbar-component)
@@ -39,17 +39,11 @@ See a [live demo] or [Codepen](http://codepen.io/alexkrolick/pen/xgyOXQ/left?edi
 
 ---
 
-This is the documentation for ReactQuill v2 — Previous releases: [v1](/../../tree/v1)
+💯 **ReactQuill v3**
 
----
+This is the documentation fro ReactQuill 3, which is written in TypeScript and supports React 16+, and runs Quill ^2.0.2. We work hard to avoid introducing any behavioral changes. For the vast majority of the cases, no migration from `react-quill@1` or `react-quill@2` is necessary at all. However, be sure to read the [migration guide](#upgrading-to-reactquill-v3).
 
-💯 **ReactQuill v2**
-
-ReactQuill 2 is here, baby! And it brings a full port to TypeScript and React 16+, a refactored build system, and a general tightening of the internal logic.
-
-We worked hard to avoid introducing any behavioral changes. For the vast majority of the cases, no migration is necessary at all. However, support for long-deprecated props, the ReactQuill Mixin, and the Toolbar component have been removed. Be sure to read the [migration guide](#upgrading-to-reactquill-v2).
-
-We expect this release to be a drop-in upgrade – if that isn't the case, please [file an issue](/../../issues/new) with the `v2` label.
+We expect this release to be a drop-in upgrade – if that isn't the case, please [file an issue](/../../issues/new) with the `v2` labelbb.
 
 ---
 
@@ -60,7 +54,7 @@ We expect this release to be a drop-in upgrade – if that isn't the case, plea
 Make sure you have `react` and `react-dom`, and some way to load styles, like [style-loader](https://www.npmjs.com/package/style-loader). See the documentation on [themes](#themes) for more information.
 
 ```sh
-npm install react-quill --save
+npm install react-quill-new --save
 ```
 
 ```jsx
@@ -73,29 +67,6 @@ function MyComponent() {
 
   return <ReactQuill theme="snow" value={value} onChange={setValue} />;
 }
-```
-
-### With the browser bundle
-
-```html
-<link
-  rel="stylesheet"
-  href="https://unpkg.com/react-quill@1.3.3/dist/quill.snow.css"
-/>
-```
-
-```html
-<script
-  src="https://unpkg.com/react@16/umd/react.development.js"
-  crossorigin
-></script>
-<script
-  src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"
-  crossorigin
-></script>
-<script src="https://unpkg.com/react-quill@1.3.3/dist/react-quill.js"></script>
-<script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
-<script type="text/babel" src="/my-scripts.js"></script>
 ```
 
 ## Usage
@@ -136,15 +107,6 @@ Here's an example using [style-loader](https://www.npmjs.com/package/style-loade
 
 ```jsx
 import 'react-quill/dist/quill.snow.css';
-```
-
-The styles are also available via CDN:
-
-```html
-<link
-  rel="stylesheet"
-  href="https://unpkg.com/react-quill@1.3.3/dist/quill.snow.css"
-/>
 ```
 
 ### Custom Toolbar
@@ -348,7 +310,6 @@ The component has two types of formats:
 
 ```js
 import ReactQuill, { Quill } from 'react-quill'; // ES6
-const ReactQuill = require('react-quill'); // CommonJS
 ```
 
 ```jsx
@@ -416,13 +377,45 @@ class MyComponent extends React.Component {
 
 </details>
 
-## Upgrading to ReactQuill v2
+## Upgrading to ReactQuill v3
 
-Upgrading to ReactQuill v2 should be as simple as updating your dependency. However, it also removes support for long-deprecated props, the ReactQuill Mixin, and the Toolbar component.
+Upgrading to ReactQuill v3 should be as simple as updating your dependency. However, it also removes support for long-deprecated props, the ReactQuill Mixin, and the Toolbar component.
+
+### Native ES Modules
+
+Quill 2, and as a result ReactQuill 3 which uses it, has moved to native ES modules. If you are
+using webpack without ESM support, you will need to make sure you have babel-loader installed and use it to transpile this package by ignoring it in the exclude clause for babel-loader.
+
+It will look something like this:
+
+```js
+module.exports = {
+  entry: {
+    // your entry points
+  },
+  module: {
+    rules: [
+      // ... other loaders
+      {
+        test: /\.(js|jsx|ts|tsx|cjs)$/,
+        exclude: /node_modules\/(?!(react-quill-new)\/).*/,
+        loader: 'babel-loader',
+        options: {
+          plugins: [
+            /* your plugins */
+          ],
+          presets: ['@babel/preset-env', '@babel/preset-react'],
+        },
+      },
+      // ... other loaders
+    ],
+  },
+};
+```
 
 ### Deprecated props
 
-Support for the `toolbar`, `styles`, `pollInterval` Quill options has long disabled. Starting from this release, ReactQuill will not warn you anymore if you try using them.
+Support for the `toolbar`, `styles`, `pollInterval` Quill options has long disabled. Starting from release v2, ReactQuill will not warn you anymore if you try using them.
 
 ### ReactQuill Mixin
 
@@ -445,10 +438,6 @@ Use the [Toolbar Module](#default-toolbar-elements) or the [HTML Toolbar](#html-
 ```jsx
 // ES6
 import ReactQuill, { Quill } from 'react-quill';
-
-// CommonJS
-const ReactQuill = require('react-quill');
-const { Quill } = ReactQuill;
 ```
 
 `Quill`
@@ -661,10 +650,11 @@ Please check the browser support table for the upstream [Quill](https://github.c
 
 ## Contributors
 
-ReactQuill would not be where it is today without the contributions of many people, which we are incredibly grateful for:
+ReactQuillNew would not be where it is today without the contributions of many people, which we are incredibly grateful for:
 
-- @zenoamaro (maintainer)
-- @alexkrolick (maintainer)
+- @zenoamaro (maintainer of react-quill)
+- @alexkrolick (maintainer of react-quill)
+- @vaguelyserious (maintainer of react-quill-new)
 - @g12i
 - @clemmy
 - @asiniy
@@ -689,12 +679,15 @@ ReactQuill would not be where it is today without the contributions of many peop
 - @sandbochs
 - @wouterh
 - @MattKunze
+- @jameskip
+- @generalov-epm
+- @hamidrezahanafi
 
 ## License
 
 The MIT License (MIT)
 
-Copyright (c) 2020, zenoamaro <zenoamaro@gmail.com>
+Copyright (c) 2020, zenoamaro <zenoamaro@gmail.com> and vaguelyserious <mittgfu@gmail.com>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 

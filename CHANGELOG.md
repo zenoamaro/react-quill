@@ -1,5 +1,21 @@
 # Changelog
 
+## v3.3.0
+
+- Expose `getSemanticHTML` from editor instance
+
+## v3.2.0
+
+- Update Quill to 2.0.2
+
+## v3.1.0
+
+- Swap `lodash` dependency with `lodash-es` to reduce bundle size
+
+## v3.0.0
+
+- Upgrade Quill to 2.0.0
+
 ## v2.0.0
 
 - Fully ported to TypeScript (#549)
