@@ -4,6 +4,10 @@ ReactQuill [![Build Status](https://travis-ci.org/zenoamaro/react-quill.svg?bran
 
 A [Quill] component for [React].
 
+> **2025 Note**
+> 
+> You probably don't need this library to use Quill with React. See https://quilljs.com/playground/react
+
 See a [live demo] or [Codepen](http://codepen.io/alexkrolick/pen/xgyOXQ/left?editors=0010#0).
 
 [quill]: https://quilljs.com
