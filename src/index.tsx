@@ -3,8 +3,7 @@ React-Quill
 https://github.com/zenoamaro/react-quill
 */
 
-import React from 'react';
-import ReactDOM from 'react-dom';
+import React, { createRef } from 'react';
 import isEqual from 'lodash/isEqual';
 
 import Quill, {
@@ -90,6 +89,7 @@ interface ReactQuillState {
 }
 
 class ReactQuill extends React.Component<ReactQuillProps, ReactQuillState> {
+  editingAreaRef = createRef<any>()
 
   static displayName = 'React Quill'
 
@@ -433,10 +433,10 @@ class ReactQuill extends React.Component<ReactQuillProps, ReactQuillState> {
   }
 
   getEditingArea(): Element {
-    if (!this.editingArea) {
+    if (!this.editingAreaRef.current) {
       throw new Error('Instantiating on missing editing area');
     }
-    const element = ReactDOM.findDOMNode(this.editingArea);
+    const element = this.editingAreaRef.current;
     if (!element) {
       throw new Error('Cannot find element for editing area');
     }
@@ -455,9 +455,7 @@ class ReactQuill extends React.Component<ReactQuillProps, ReactQuillState> {
 
     const properties = {
       key: generation,
-      ref: (instance: React.ReactInstance | null) => {
-        this.editingArea = instance
-      },
+      ref: this.editingAreaRef,
     };
 
     if (React.Children.count(children)) {
