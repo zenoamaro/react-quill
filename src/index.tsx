@@ -530,7 +530,7 @@ class ReactQuill extends React.Component<ReactQuillProps, ReactQuillState> {
       this.lastDeltaChangeSet = delta;
 
       this.value = nextContents;
-      this.props.onChange?.(value, delta, source, editor);
+      this.props.onChange?.(value?.replace(/(^([ ]*<p><br><\/p>)*)|((<p><br><\/p>)*[ ]*$)/gi, '').trim(), delta, source, editor);
     }
   }
 
